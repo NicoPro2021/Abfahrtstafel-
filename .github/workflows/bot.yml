@@ -1,15 +1,15 @@
 name: DB-Fahrplan-Bot
 
 on:
-  workflow_dispatch: # Erlaubt das manuelle Starten per Button
+  workflow_dispatch:
   schedule:
-    - cron: '*/15 * * * *' # Startet automatisch alle 15 Minuten
+    - cron: '*/15 * * * *' # Aktualisiert alle 15 Minuten automatisch
 
 jobs:
   run-bot:
     runs-on: ubuntu-latest
     
-    permissions: # Stellt sicher, dass der Bot Schreibrechte hat
+    permissions:
       contents: write
 
     steps:
@@ -24,7 +24,10 @@ jobs:
       - name: Bibliotheken installieren
         run: pip install requests
 
-      - name: Script ausfueren
+      - name: Script ausfuehren
+        env:
+          DB_CLIENT_ID: ${{ secrets.DB_CLIENT_ID }}
+          DB_CLIENT_SECRET: ${{ secrets.DB_CLIENT_SECRET }}
         run: python fetch_data.py
 
       - name: Daten speichern und hochladen
@@ -34,7 +37,6 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add daten.json
-          # Commit nur ausfuehren, wenn sich die Daten geaendert haben
-          git commit -m "Echtzeit-Update Zerbst" || echo "Keine Aenderungen gefunden"
-          # Push mit Token-Authentifizierung
+          git commit -m "Zerbst Update mit offizieller API" || echo "Keine Änderungen"
           git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git main
+          
