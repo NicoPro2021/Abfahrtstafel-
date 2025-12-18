@@ -3,7 +3,7 @@ name: DB-Fahrplan-Bot
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/15 * * * *' # Aktualisiert alle 15 Minuten automatisch
+    - cron: '*/15 * * * *' # Alle 15 Minuten
 
 jobs:
   run-bot:
@@ -37,6 +37,6 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add daten.json
-          git commit -m "Zerbst Update mit offizieller API" || echo "Keine Änderungen"
-          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git main
+          git commit -m "Update Zerbst mit DB-API" || echo "Keine Änderungen"
+          git push
           
