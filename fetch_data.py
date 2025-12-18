@@ -1,31 +1,47 @@
 import requests
 import json
 
-# ID für Zerbst/Anhalt
+# Die korrekte IBNR fuer Zerbst/Anhalt
 STATION_ID = "8010386"
-URL = f"https://db-abfahrt.vve.workers.dev/?station={STATION_ID}"
+# Die absolut stabilste Schnittstelle (DB-HAFAS via Transport.rest)
+URL = f"https://v6.db.transport.rest/stops/{STATION_ID}/departures?duration=60&results=5"
 
-def fetch_and_save():
+def fetch():
     try:
-        response = requests.get(URL, timeout=10)
+        # User-Agent hilft gegen Blockaden
+        headers = {'User-Agent': 'Fahrplan-Display-Project'}
+        response = requests.get(URL, headers=headers, timeout=20)
         data = response.json()
         
         fahrplan = []
-        # Wir nehmen die nächsten 6 Züge
-        for zug in data[:6]:
+        # Wir holen die Liste der Abfahrten
+        departures = data.get('departures', [])
+        
+        for d in departures:
+            # Zeit von "2024-03-21T12:30:00" auf "12:30" kuerzen
+            zeit = d.get('when', '')[11:16] or d.get('plannedWhen', '')[11:16]
+            linie = d.get('line', {}).get('name', '---')
+            ziel = d.get('direction', 'Ziel unbekannt')
+            gleis = d.get('platform', '-')
+            
+            # Verspaetung in Minuten
+            delay = d.get('delay', 0)
+            status = f"+{int(delay/60)}" if delay and delay > 0 else "pünktl."
+            
             fahrplan.append({
-                "zeit": zug.get("zeit", ""),
-                "linie": zug.get("linie", ""),
-                "ziel": zug.get("ziel", ""),
-                "gleis": zug.get("gleis", ""),
-                "status": zug.get("status", "") # Hier kommt die Verspätung rein
+                "zeit": zeit,
+                "linie": linie,
+                "ziel": ziel,
+                "gleis": gleis,
+                "status": status
             })
             
         with open('daten.json', 'w', encoding='utf-8') as f:
             json.dump(fahrplan, f, ensure_ascii=False, indent=2)
-        print("Daten für Zerbst aktualisiert!")
+        print(f"Erfolg! {len(fahrplan)} Züge für Zerbst gefunden.")
+        
     except Exception as e:
-        print(f"Fehler: {e}")
+        print(f"Fehler beim Abrufen: {e}")
 
 if __name__ == "__main__":
-    fetch_and_save()
+    fetch()
