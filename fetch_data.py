@@ -8,18 +8,19 @@ SECRET = os.getenv("DB_CLIENT_SECRET")
 EVA = "8010386" # Zerbst
 
 def fetch():
-    # 1. Wir holen die aktuelle Zeit direkt vom Server
-    now = datetime.now()
+    # 1. Server-Zeit auf deutsche Zeit (UTC+1) korrigieren
+    # GitHub läuft auf UTC, daher addieren wir 1 Stunde für den Winter
+    now_de = datetime.utcnow() + timedelta(hours=1)
     
-    # Wir probieren die aktuelle Stunde UND die nächste Stunde
-    # Das fängt Lücken am Stundenübergang ab.
-    hours_to_check = [now, now + timedelta(hours=1)]
-    
+    # Wir prüfen die aktuelle und die nächsten zwei Stunden
+    # So finden wir garantiert die nächsten 5 Abfahrten
     all_results = []
     
-    print(f"--- DYNAMISCHE ABFRAGE START ---")
+    print(f"--- DEUTSCHE ZEIT ABFRAGE START ---")
+    print(f"Aktuelle Zeit (DE): {now_de.strftime('%H:%M')} Uhr")
     
-    for check_time in hours_to_check:
+    for i in range(3):
+        check_time = now_de + timedelta(hours=i)
         d = check_time.strftime("%y%m%d")
         h = check_time.strftime("%H")
         
@@ -30,7 +31,7 @@ def fetch():
             "accept": "application/json"
         }
         
-        print(f"Prüfe Zeitfenster: {h}:00 Uhr...")
+        print(f"Prüfe Fenster: {h}:00 Uhr...")
         r = requests.get(url, headers=headers)
         
         if r.status_code == 200:
@@ -41,8 +42,8 @@ def fetch():
                 if dp:
                     raw_t = dp.get('pt', "")
                     zeit = f"{raw_t[8:10]}:{raw_t[10:12]}"
-                    # Nur Züge nehmen, die nicht in der Vergangenheit liegen
-                    if zeit >= now.strftime("%H:%M"):
+                    # Nur Züge nehmen, die noch nicht abgefahren sind
+                    if zeit >= now_de.strftime("%H:%M"):
                         ziel = dp.get('ppth', "Ziel").split('|')[-1]
                         all_results.append({
                             "zeit": zeit,
@@ -50,17 +51,29 @@ def fetch():
                             "ziel": ziel,
                             "gleis": dp.get('pp', "-")
                         })
-    
+        else:
+            print(f"Status {r.status_code} für {h}:00 Uhr")
+
     if all_results:
-        # Sortieren nach Uhrzeit und Top 5 speichern
-        all_results = sorted(all_results, key=lambda x: x['zeit'])[:5]
+        # Sortieren und Duplikate/Top 5 filtern
+        all_results = sorted(all_results, key=lambda x: x['zeit'])
+        # Filtern, um nur einzigartige Zeiten/Ziele zu behalten
+        unique_results = []
+        seen = set()
+        for res in all_results:
+            if res['zeit'] not in seen:
+                unique_results.append(res)
+                seen.add(res['zeit'])
+        
+        final_data = unique_results[:5]
         with open('daten.json', 'w', encoding='utf-8') as f:
-            json.dump(all_results, f, ensure_ascii=False, indent=2)
-        print(f"ERFOLG: {len(all_results)} aktuelle Verbindungen gefunden.")
+            json.dump(final_data, f, ensure_ascii=False, indent=2)
+        print(f"ERFOLG: {len(final_data)} aktuelle Verbindungen gespeichert.")
     else:
-        print("KEINE DATEN: Auch für die nächste Stunde gab es keine Treffer.")
+        print("KEINE DATEN gefunden. Bitte API-Abonnement prüfen!")
     
     print(f"--- ABFRAGE ENDE ---")
 
 if __name__ == "__main__":
     fetch()
+    
