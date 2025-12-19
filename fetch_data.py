@@ -3,73 +3,53 @@ import json
 import os
 from datetime import datetime
 
-# Daten aus den GitHub Secrets laden
-CLIENT_ID = os.getenv("DB_CLIENT_ID")
-CLIENT_SECRET = os.getenv("DB_CLIENT_SECRET")
-EVA_ZERBST = "8010386" # Bahnhof Zerbst/Anhalt
+# Hole Keys aus den Secrets
+ID = os.getenv("DB_CLIENT_ID")
+KEY = os.getenv("DB_CLIENT_SECRET")
+STATION = "8010386" # Zerbst
 
-def fetch():
-    # Aktuelles Datum und Stunde für die DB-API vorbereiten
+def start():
     now = datetime.now()
-    date_str = now.strftime("%y%m%d") # Format: YYMMDD
-    hour_str = now.strftime("%H")     # Format: HH
+    d = now.strftime("%y%m%d")
+    h = now.strftime("%H")
     
-    # URL für die Plan-Daten (offizielle Marketplace API)
-    url = f"https://apis.deutschebahn.com/db-api-marketplace/v1/timetables/plan/{EVA_ZERBST}/{date_str}/{hour_str}"
+    # Offizielle Marketplace API
+    url = f"https://apis.deutschebahn.com/db-api-marketplace/v1/timetables/plan/{STATION}/{d}/{h}"
     
     headers = {
-        "DB-Client-Id": CLIENT_ID,
-        "DB-Api-Key": CLIENT_SECRET,
-        "accept": "application/json" # Zwingt die API, JSON statt XML zu senden
+        "DB-Client-Id": ID,
+        "DB-Api-Key": KEY,
+        "accept": "application/json"
     }
 
-    print(f"Abfrage für Zerbst ({date_str}, {hour_str} Uhr)...")
-
+    print(f"Versuche Abfrage: {d} um {h} Uhr")
+    
     try:
-        response = requests.get(url, headers=headers)
-        print(f"Status-Code: {response.status_code}")
-
-        if response.status_code == 200:
-            data = response.json()
-            fahrplan = []
-            
-            # Wir gehen durch alle Stops ('s')
+        r = requests.get(url, headers=headers)
+        print(f"API-Status: {r.status_code}") # Wenn hier nicht 200 steht, liegt es an den Keys!
+        
+        if r.status_code == 200:
+            data = r.json()
+            results = []
             for s in data.get('s', []):
-                dp = s.get('dp', {}) # Abfahrts-Informationen
+                dp = s.get('dp', {})
                 if dp:
-                    # Zeit formatieren (letzte 4 Ziffern von YYMMDDHHMM)
-                    raw_time = dp.get('pt', "")
-                    zeit = f"{raw_time[8:10]}:{raw_time[10:12]}" if len(raw_time) >= 12 else "--:--"
-                    
-                    # Ziel: Wir nehmen das letzte Wort im Pfad (ppth)
-                    path = dp.get('ppth', "Ziel unbekannt")
-                    ziel = path.split('|')[-1]
-                    
-                    # Linie (z.B. RE13 oder RB)
-                    linie = dp.get('l', "---")
-                    
-                    fahrplan.append({
-                        "zeit": zeit,
-                        "linie": linie,
-                        "ziel": ziel,
-                        "gleis": dp.get('pp', "-"),
-                        "status": "pünktl."
-                    })
+                    t = dp.get('pt', "")
+                    zeit = f"{t[8:10]}:{t[10:12]}" if len(t) >= 12 else "--:--"
+                    ziel = dp.get('ppth', "Ziel").split('|')[-1]
+                    results.append({"zeit": zeit, "linie": dp.get('l', "RB"), "ziel": ziel, "gleis": dp.get('pp', "-")})
             
-            # Sortieren nach Uhrzeit
-            fahrplan = sorted(fahrplan, key=lambda x: x['zeit'])
-            
-            # Datei schreiben
+            # SORTIEREN UND SPEICHERN
+            results = sorted(results, key=lambda x: x['zeit'])[:5]
             with open('daten.json', 'w', encoding='utf-8') as f:
-                json.dump(fahrplan[:5], f, ensure_ascii=False, indent=2)
-            
-            print(f"Erfolg! {len(fahrplan)} Abfahrten gespeichert.")
+                json.dump(results, f, ensure_ascii=False, indent=2)
+            print(f"DATEI GESCHRIEBEN: {len(results)} Züge.")
         else:
-            print(f"Fehler von der API: {response.text}")
-
+            print(f"API FEHLER TEXT: {r.text}")
+            
     except Exception as e:
-        print(f"Script-Absturz: {e}")
+        print(f"ABSTURZ: {str(e)}")
 
 if __name__ == "__main__":
-    fetch()
+    start()
     
