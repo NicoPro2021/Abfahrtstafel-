@@ -1,20 +1,19 @@
 import requests
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 
-# Hole Keys aus den Secrets
 ID = os.getenv("DB_CLIENT_ID")
 SECRET = os.getenv("DB_CLIENT_SECRET")
-EVA = "8010386" # Zerbst/Anhalt
+EVA = "8010386" # Zerbst
 
 def fetch():
-    # Wir nehmen die aktuelle Zeit (UTC/GMT ist oft sicherer bei APIs)
+    # Wir nehmen die aktuelle Stunde
     now = datetime.now()
     d = now.strftime("%y%m%d")
     h = now.strftime("%H")
     
-    # Offizielle URL fuer Fahrplandaten
+    # TEST: Wir versuchen es mit der offiziellen Timetable-API
     url = f"https://apis.deutschebahn.com/db-api-marketplace/v1/timetables/plan/{EVA}/{d}/{h}"
     
     headers = {
@@ -24,7 +23,7 @@ def fetch():
     }
 
     print(f"--- DEBUG START ---")
-    print(f"Anfrage fuer: {d} um {h}:00 Uhr")
+    print(f"Versuche Zerbst: {d} um {h}:00 Uhr")
     
     try:
         r = requests.get(url, headers=headers)
@@ -32,8 +31,8 @@ def fetch():
         
         if r.status_code == 200:
             data = r.json()
-            # Wir holen die Liste der Halte ('s')
-            stops = data.get('timetable', {}).get('s', []) if 'timetable' in data else data.get('s', [])
+            # Die Struktur der Antwort kann je nach API-Version variieren
+            stops = data.get('s', [])
             
             abfahrten = []
             for s in stops:
@@ -41,29 +40,33 @@ def fetch():
                 if dp:
                     raw_t = dp.get('pt', "")
                     zeit = f"{raw_t[8:10]}:{raw_t[10:12]}" if len(raw_t) >= 12 else "--:--"
-                    # Den Zielbahnhof aus dem Pfad extrahieren
-                    ziel = dp.get('ppth', "Endstation").split('|')[-1]
+                    
+                    # Extrahiere die Linie (z.B. RB13)
+                    tl = s.get('tl', {})
+                    linie = tl.get('n', "RB")
+                    
+                    # Ziel extrahieren
+                    path = dp.get('ppth', "Ziel")
+                    ziel = path.split('|')[-1]
                     
                     abfahrten.append({
                         "zeit": zeit,
-                        "linie": dp.get('l', "RB"),
+                        "linie": linie,
                         "ziel": ziel,
                         "gleis": dp.get('pp', "-")
                     })
             
-            # Nur speichern, wenn wir wirklich Zuege gefunden haben
             if abfahrten:
                 abfahrten = sorted(abfahrten, key=lambda x: x['zeit'])[:5]
                 with open('daten.json', 'w', encoding='utf-8') as f:
                     json.dump(abfahrten, f, ensure_ascii=False, indent=2)
-                print(f"ERFOLG: {len(abfahrten)} Zuege gespeichert.")
+                print(f"ERFOLG: {len(abfahrten)} Zuege gespeichert!")
             else:
-                print("HINWEIS: Keine Zuege in dieser Stunde gefunden.")
-                
+                print("KEINE DATEN: API lieferte leere Liste.")
         else:
-            print(f"FEHLER: API antwortet mit {r.status_code}")
-            print(f"Antwort: {r.text}")
-
+            print(f"FEHLER: API sagt {r.status_code}")
+            # Falls 404 kommt, probieren wir in 15 Min die nächste Stunde
+            
     except Exception as e:
         print(f"ABSTURZ: {str(e)}")
     print(f"--- DEBUG ENDE ---")
