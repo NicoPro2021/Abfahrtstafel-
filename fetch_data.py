@@ -3,47 +3,45 @@ import json
 import os
 from datetime import datetime, timedelta
 
+# Nutze die neuen Keys aus deinem Screenshot
 ID = os.getenv("DB_CLIENT_ID")
 SECRET = os.getenv("DB_CLIENT_SECRET")
 
 def fetch():
-    # Wir nutzen die stabilste Basis-URL der Timetables API
-    base_url = "https://apis.deutschebahn.com/db-api-marketplace/v1/timetables"
-    
-    # Zeit berechnen (UTC+1)
+    # Aktuelle deutsche Zeit (UTC+1)
     now = datetime.utcnow() + timedelta(hours=1)
-    datum = now.strftime("%y%m%d")
-    stunde = now.strftime("%H")
+    d = now.strftime("%y%m%d")
+    h = now.strftime("%H")
     
-    # Test-Bahnhöfe: Zerbst und Berlin
-    stations = [("8010386", "Zerbst"), ("8011160", "Berlin Hbf")]
+    # Wir testen Zerbst
+    eva = "8010386"
+    url = f"https://apis.deutschebahn.com/db-api-marketplace/v1/timetables/plan/{eva}/{d}/{h}"
     
+    # Manche DB-APIs verlangen das Secret als 'DB-Api-Key' 
+    # und andere als 'X-DB-Api-Key'. Wir senden sicherheitshalber beide.
     headers = {
         "DB-Client-Id": ID,
         "DB-Api-Key": SECRET,
-        "Accept": "application/xml" # Wir probieren XML, da die API das nativ liefert
+        "X-DB-Client-Id": ID,
+        "X-DB-Api-Key": SECRET,
+        "Accept": "application/xml"
     }
 
-    print(f"--- FINALE DIAGNOSE ---")
+    print(f"--- FINALE PRÜFUNG ---")
+    print(f"URL: {url}")
     
-    for eva, name in stations:
-        url = f"{base_url}/plan/{eva}/{datum}/{stunde}"
-        print(f"Abfrage {name}: {url}")
-        
-        try:
-            r = requests.get(url, headers=headers)
-            print(f"Status: {r.status_code}")
-            
-            if r.status_code == 200:
-                print(f"!!! ERFOLG BEI {name} !!!")
-                # Da die API XML liefert, speichern wir es erst mal roh
-                with open('daten.json', 'w', encoding='utf-8') as f:
-                    f.write(r.text) 
-                return # Beenden bei Erfolg
-            else:
-                print(f"Antwort: {r.text[:100]}") # Zeige den Anfang der Fehlermeldung
-        except Exception as e:
-            print(f"Fehler: {str(e)}")
+    r = requests.get(url, headers=headers)
+    print(f"Status-Code: {r.status_code}")
+    
+    if r.status_code == 200:
+        print("ERFOLG! Daten empfangen.")
+        with open('daten.json', 'w', encoding='utf-8') as f:
+            # Wir speichern erst mal das XML, um zu sehen was drin ist
+            f.write(r.text)
+    else:
+        print(f"Fehlermeldung: {r.text[:200]}")
+        print("Hinweis: Wenn das immer noch 404 liefert, ist das Abo im Portal")
+        print("zwar optisch aktiv, aber technisch nicht auf die Keys geroutet.")
 
 if __name__ == "__main__":
     fetch()
