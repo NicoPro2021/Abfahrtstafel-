@@ -1,45 +1,30 @@
-name: DB-Fahrplan-Bot
-
+name: DB-Bot
 on:
-  workflow_dispatch: # Ermöglicht den manuellen Start über den "Run workflow" Button
+  workflow_dispatch:
   schedule:
-    - cron: '*/15 * * * *' # Der Bot läuft alle 15 Minuten automatisch
+    - cron: '*/15 * * * *'
 
 jobs:
   run-bot:
     runs-on: ubuntu-latest
-    
-    # WICHTIG: Erlaubt dem Bot das Schreiben in dein Repository
     permissions:
-      contents: write
-
+      contents: write #
     steps:
-      - name: Code auschecken
-        uses: actions/checkout@v4
-
-      - name: Python Setup
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-
-      - name: Install Libs
-        run: pip install requests
-
-      - name: Script ausfuehren
-        # Hier werden deine Secrets als Umgebungsvariablen geladen
+      - run: pip install requests
+      - name: Script
         env:
-          DB_CLIENT_ID: ${{ secrets.DB_CLIENT_ID }}
+          DB_CLIENT_ID: ${{ secrets.DB_CLIENT_ID }} #
           DB_CLIENT_SECRET: ${{ secrets.DB_CLIENT_SECRET }}
         run: python fetch_data.py
-
-      - name: Änderungen speichern
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Push
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "bot"
+          git config --global user.email "bot@github.com"
           git add daten.json
-          # Commit nur, wenn sich die Daten wirklich geändert haben
-          git commit -m "Fahrplan Update Zerbst" || echo "Keine Änderungen zu committen"
+          git commit -m "Update" || exit 0
           git push
           
