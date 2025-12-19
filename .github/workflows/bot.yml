@@ -1,4 +1,5 @@
-name: DB-Bot
+name: DB-Fahrplan-Bot
+
 on:
   workflow_dispatch:
   schedule:
@@ -7,24 +8,35 @@ on:
 jobs:
   run-bot:
     runs-on: ubuntu-latest
+    
+    # Das hier ist die wichtigste Zeile für den Schreibzugriff
     permissions:
-      contents: write #
+      contents: write
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Code auschecken
+        uses: actions/checkout@v4
+
+      - name: Python Setup
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-      - run: pip install requests
-      - name: Script
+
+      - name: Install Libs
+        run: pip install requests
+
+      - name: Script ausfuehren
         env:
-          DB_CLIENT_ID: ${{ secrets.DB_CLIENT_ID }} #
+          DB_CLIENT_ID: ${{ secrets.DB_CLIENT_ID }}
           DB_CLIENT_SECRET: ${{ secrets.DB_CLIENT_SECRET }}
         run: python fetch_data.py
-      - name: Push
+
+      - name: Änderungen speichern
         run: |
-          git config --global user.name "bot"
-          git config --global user.email "bot@github.com"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add daten.json
-          git commit -m "Update" || exit 0
+          # Falls keine Züge gefunden wurden, bricht git commit hier nicht ab
+          git commit -m "Automatisches Update Zerbst" || echo "Nichts zu speichern"
           git push
           
