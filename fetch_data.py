@@ -1,65 +1,68 @@
 import requests
 import json
 import os
-from datetime import datetime, timedelta
+import xml.etree.ElementTree as ET
+from datetime import datetime
 
 ID = os.getenv("DB_CLIENT_ID")
 SECRET = os.getenv("DB_CLIENT_SECRET")
 EVA = "8010386" # Zerbst
 
-def get_timetable(date_str, hour_str):
-    url = f"https://apis.deutschebahn.com/db-api-marketplace/v1/timetables/plan/{EVA}/{date_str}/{hour_str}"
+def fetch():
+    now = datetime.now()
+    d = now.strftime("%y%m%d")
+    h = now.strftime("%H")
+    
+    # Wir lassen 'accept' weg oder setzen es auf XML, das ist stabiler fuer kleine Bahnhoefe
+    url = f"https://apis.deutschebahn.com/db-api-marketplace/v1/timetables/plan/{EVA}/{d}/{h}"
+    
     headers = {
         "DB-Client-Id": ID,
         "DB-Api-Key": SECRET,
-        "accept": "application/json"
+        "accept": "application/xml" 
     }
-    return requests.get(url, headers=headers)
 
-def fetch():
-    now = datetime.now()
-    # Wir versuchen es zuerst mit der aktuellen Stunde
-    d1, h1 = now.strftime("%y%m%d"), now.strftime("%H")
-    # Und als Backup die nächste Stunde
-    next_hour = now + timedelta(hours=1)
-    d2, h2 = next_hour.strftime("%y%m%d"), next_hour.strftime("%H")
+    print(f"--- XML-CHECK START ---")
+    print(f"Anfrage Zerbst: {d}/{h}")
 
-    print(f"--- DEBUG START ---")
-    
-    # Versuch 1
-    print(f"Versuch 1: {d1} um {h1}:00 Uhr")
-    res = get_timetable(d1, h1)
-    
-    # Falls 404, probiere Versuch 2
-    if res.status_code != 200:
-        print(f"Status {res.status_code}. Probiere Backup: {d2} um {h2}:00 Uhr")
-        res = get_timetable(d2, h2)
+    try:
+        r = requests.get(url, headers=headers)
+        print(f"DB-Antwort: {r.status_code}")
 
-    print(f"Finale Antwort: {res.status_code}")
-
-    if res.status_code == 200:
-        data = res.json()
-        stops = data.get('s', [])
-        fahrplan = []
-        
-        for s in stops:
-            dp = s.get('dp', {})
-            if dp:
-                t = dp.get('pt', "")
-                zeit = f"{t[8:10]}:{t[10:12]}" if len(t) >= 12 else "--:--"
-                ziel = dp.get('ppth', "Ziel").split('|')[-1]
-                fahrplan.append({"zeit": zeit, "linie": dp.get('l', "RB"), "ziel": ziel, "gleis": dp.get('pp', "-")})
-        
-        if fahrplan:
-            fahrplan = sorted(fahrplan, key=lambda x: x['zeit'])[:5]
-            with open('daten.json', 'w', encoding='utf-8') as f:
-                json.dump(fahrplan, f, ensure_ascii=False, indent=2)
-            print(f"ERFOLG: {len(fahrplan)} Züge gespeichert.")
+        if r.status_code == 200:
+            # Wir parsen das XML der Bahn
+            root = ET.fromstring(r.text)
+            fahrplan = []
+            
+            for s in root.findall('s'):
+                dp = s.find('dp')
+                tl = s.find('tl')
+                if dp is not None and tl is not None:
+                    t = dp.get('pt', "")
+                    zeit = f"{t[8:10]}:{t[10:12]}" if len(t) >= 12 else "--:--"
+                    # Ziel aus dem Pfad (ppth)
+                    path = dp.get('ppth', "Ziel")
+                    ziel = path.split('|')[-1]
+                    
+                    fahrplan.append({
+                        "zeit": zeit,
+                        "linie": tl.get('n', "RB"),
+                        "ziel": ziel,
+                        "gleis": dp.get('pp', "-")
+                    })
+            
+            if fahrplan:
+                fahrplan = sorted(fahrplan, key=lambda x: x['zeit'])[:5]
+                with open('daten.json', 'w', encoding='utf-8') as f:
+                    json.dump(fahrplan, f, ensure_ascii=False, indent=2)
+                print(f"ERFOLG: {len(fahrplan)} Zuege gefunden!")
+            else:
+                print("HINWEIS: XML erhalten, aber keine Zuege drin.")
         else:
-            print("KEINE DATEN in der Antwort gefunden.")
-    else:
-        print(f"FEHLER: DB API liefert immer noch {res.status_code}")
-    
+            print(f"FEHLER: {r.status_code} - {r.text[:100]}")
+
+    except Exception as e:
+        print(f"FEHLER: {str(e)}")
     print(f"--- DEBUG ENDE ---")
 
 if __name__ == "__main__":
