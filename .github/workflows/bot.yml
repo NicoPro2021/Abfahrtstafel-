@@ -9,13 +9,14 @@ jobs:
   run-bot:
     runs-on: ubuntu-latest
     
-    # Das hier ist die wichtigste Zeile für den Schreibzugriff
     permissions:
       contents: write
 
     steps:
       - name: Code auschecken
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Wichtig, damit git pull funktioniert
 
       - name: Python Setup
         uses: actions/setup-python@v5
@@ -35,8 +36,17 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # 1. Änderungen vom Server holen (löst den Fehler aus deinem Screenshot)
+          git pull origin main --rebase
+          
           git add daten.json
-          # Falls keine Züge gefunden wurden, bricht git commit hier nicht ab
-          git commit -m "Automatisches Update Zerbst" || echo "Nichts zu speichern"
-          git push
+          
+          # 2. Nur speichern, wenn sich der Inhalt von daten.json wirklich geaendert hat
+          if ! git diff --staged --quiet; then
+            git commit -m "Automatisches Update Zerbst"
+            git push origin main
+          else
+            echo "Nichts zu speichern, da daten.json identisch geblieben ist."
+          fi
           
