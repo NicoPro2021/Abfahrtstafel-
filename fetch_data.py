@@ -6,50 +6,44 @@ from datetime import datetime, timedelta
 ID = os.getenv("DB_CLIENT_ID")
 SECRET = os.getenv("DB_CLIENT_SECRET")
 
-def get_timetable(eva, name):
-    # Deutsche Zeit berechnen (UTC+1)
-    now_de = datetime.utcnow() + timedelta(hours=1)
-    d, h = now_de.strftime("%y%m%d"), now_de.strftime("%H")
+def fetch():
+    # Wir nutzen die stabilste Basis-URL der Timetables API
+    base_url = "https://apis.deutschebahn.com/db-api-marketplace/v1/timetables"
     
-    url = f"https://apis.deutschebahn.com/db-api-marketplace/v1/timetables/plan/{eva}/{d}/{h}"
+    # Zeit berechnen (UTC+1)
+    now = datetime.utcnow() + timedelta(hours=1)
+    datum = now.strftime("%y%m%d")
+    stunde = now.strftime("%H")
+    
+    # Test-Bahnhöfe: Zerbst und Berlin
+    stations = [("8010386", "Zerbst"), ("8011160", "Berlin Hbf")]
+    
     headers = {
         "DB-Client-Id": ID,
         "DB-Api-Key": SECRET,
-        "Accept": "application/json"
+        "Accept": "application/xml" # Wir probieren XML, da die API das nativ liefert
     }
-    
-    print(f"Versuche {name} ({eva}) für {h}:00 Uhr...")
-    return requests.get(url, headers=headers)
 
-def fetch():
-    print("--- NEUE KEYS TEST-LAUF ---")
+    print(f"--- FINALE DIAGNOSE ---")
     
-    # 1. Test Zerbst
-    res = get_timetable("8010386", "Zerbst")
-    
-    # 2. Falls Zerbst 404 liefert, Test Berlin zur Diagnose
-    if res.status_code != 200:
-        print(f"Zerbst Status: {res.status_code}. Teste Referenz Berlin...")
-        res = get_timetable("8011160", "Berlin Hbf")
-
-    if res.status_code == 200:
-        data = res.json()
-        stops = []
-        for s in data.get('s', []):
-            dp = s.get('dp', {})
-            if dp:
-                t = dp.get('pt', "")
-                stops.append({
-                    "zeit": f"{t[8:10]}:{t[10:12]}",
-                    "linie": dp.get('l', "RB"),
-                    "ziel": dp.get('ppth', "Ziel").split('|')[-1],
-                    "gleis": dp.get('pp', "-")
-                })
-        with open('daten.json', 'w', encoding='utf-8') as f:
-            json.dump(stops[:5], f, ensure_ascii=False, indent=2)
-        print(f"ERFOLG: Daten wurden mit Status 200 empfangen!")
-    else:
-        print(f"FEHLER: Auch mit neuen Keys Status {res.status_code}. Bitte API-Abo im Portal prüfen!")
+    for eva, name in stations:
+        url = f"{base_url}/plan/{eva}/{datum}/{stunde}"
+        print(f"Abfrage {name}: {url}")
+        
+        try:
+            r = requests.get(url, headers=headers)
+            print(f"Status: {r.status_code}")
+            
+            if r.status_code == 200:
+                print(f"!!! ERFOLG BEI {name} !!!")
+                # Da die API XML liefert, speichern wir es erst mal roh
+                with open('daten.json', 'w', encoding='utf-8') as f:
+                    f.write(r.text) 
+                return # Beenden bei Erfolg
+            else:
+                print(f"Antwort: {r.text[:100]}") # Zeige den Anfang der Fehlermeldung
+        except Exception as e:
+            print(f"Fehler: {str(e)}")
 
 if __name__ == "__main__":
     fetch()
