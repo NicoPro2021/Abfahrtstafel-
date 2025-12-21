@@ -3,13 +3,14 @@ import json
 from datetime import datetime, timedelta, timezone
 
 def hole_daten():
+    # Zeitstempel für das Display
     u_zeit = (datetime.now(timezone.utc) + timedelta(hours=1)).strftime("%H:%M")
     
-    # Zerbst/Anhalt: 8010405 | Wannsee: 8010358
+    # STATION ID FÜR ZERBST/ANHALT
     station_id = "8010405" 
     
-    # Wir fragen 20 Ergebnisse ab, um nach dem Filtern genug Züge übrig zu haben
-    url = f"https://v6.db.transport.rest/stops/{station_id}/departures?results=25&duration=120&remarks=true"
+    # Abfrage der nächsten 120 Minuten
+    url = f"https://v6.db.transport.rest/stops/{station_id}/departures?results=20&duration=120&remarks=true"
 
     try:
         headers = {'User-Agent': 'Mozilla/5.0'}
@@ -23,8 +24,7 @@ def hole_daten():
         for dep in departures:
             linie = dep.get('line', {}).get('name', '???').replace(" ", "")
             
-            # --- LÖSUNG 1: BUSSE RAUS ---
-            # Wenn "Bus" im Namen vorkommt, überspringen wir diesen Eintrag
+            # Busse filtern (in Zerbst oft wichtig, damit nur Züge bleiben)
             if "Bus" in linie:
                 continue
 
@@ -36,25 +36,26 @@ def hole_daten():
             ziel = dep.get('direction', 'Ziel')[:20]
             gleis = str(dep.get('platform') or "-")
             
-            # --- LÖSUNG 2: GRÜNDE FINDEN ---
+            # --- VERSPÄTUNGS-LOGIK ---
             delay = dep.get('delay')
             info_text = ""
             
             if dep.get('cancelled'):
                 info_text = "FÄLLT AUS!"
             else:
-                # Wir suchen in den 'remarks' nach dem Grund (z.B. Bauarbeiten)
+                # Suche nach dem Grund in den 'remarks'
                 rems = dep.get('remarks', [])
                 grund = ""
                 for rm in rems:
                     if rm.get('type') == 'warning':
-                        # Wir nehmen die Zusammenfassung des Grundes
+                        # Kurze Zusammenfassung des Grundes holen
                         grund = rm.get('summary', "")
                         break
                 
                 if delay and delay >= 60:
                     minuten = int(delay/60)
-                    info_text = f"+{minuten} Min {grund}".strip()
+                    # Kombiniere Verspätung und Grund
+                    info_text = f"+{minuten} {grund}".strip()
                 else:
                     info_text = grund
 
@@ -68,7 +69,9 @@ def hole_daten():
                 "update": u_zeit
             })
 
-        # Nur die nächsten 10 Züge anzeigen, damit das Display nicht überquillt
+        # Sortieren nach der Zeit, wann der Zug WIRKLICH kommt
+        fahrplan.sort(key=lambda x: x['echte_zeit'])
+        
         return fahrplan[:10]
 
     except Exception as e:
