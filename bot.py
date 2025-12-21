@@ -8,13 +8,15 @@ def hole_daten():
     jetzt = datetime.now(timezone.utc) + timedelta(hours=1)
     u_zeit = jetzt.strftime("%H:%M")
     
-    # Zerbst/Anhalt ID (8010404 ist oft stabiler als 8006654)
-    eva = "8010404" 
+    # Zerbst/Anhalt offizielle EVA-Nummer
+    eva = "8006654" 
     fahrplan = []
+    
+    # Zerbst-Relevante Linien (RE13 nach Magdeburg/Leipzig, RB42 nach Dessau/Magdeburg)
+    erlaubte_linien = ["RE13", "RB42"]
 
     try:
-        # Wir scannen die nächsten 4 Stunden
-        for i in range(4):
+        for i in range(4): # 4 Stunden scannen
             t = jetzt + timedelta(hours=i)
             url = f"https://iris.noncd.db.de/iris-tts/timetable/plan/{eva}/{t.strftime('%y%m%d')}/{t.strftime('%H')}"
             
@@ -26,16 +28,19 @@ def hole_daten():
                 dp = s.find('dp')
                 tl = s.find('tl')
                 if dp is not None and tl is not None:
-                    zug_name = (tl.get('c', '') + (tl.get('n', '') or tl.get('l', '')))
+                    # Typ (RE/RB) + Nummer (13/42)
+                    typ = tl.get('c', '')
+                    nr = tl.get('n', '') or tl.get('l', '')
+                    zug_name = f"{typ}{nr}"
                     
-                    # SICHERHEITS-CHECK: Wir wollen keine ICEs oder Berliner RegioTrams
-                    # Zerbst hat RE13, RB42 und selten IC
-                    if "ICE" in zug_name or "OE" in zug_name: continue
+                    # FILTER: Nur RE13 und RB42 durchlassen!
+                    # Das verhindert, dass Berlin- oder Kassel-Züge in die Liste rutschen
+                    if not any(x in zug_name for x in erlaubte_linien):
+                        continue
                     
                     raw_zeit = dp.get('pt')[-4:]
                     zeit_formatiert = f"{raw_zeit[:2]}:{raw_zeit[2:]}"
                     
-                    # Zeitfilter
                     if i == 0 and zeit_formatiert < u_zeit: continue
 
                     pfad = dp.get('ppth', '').split('|')
@@ -51,17 +56,11 @@ def hole_daten():
     except:
         pass
 
-    # Falls Zerbst (8010404) leer ist, probieren wir die Alternativ-ID 8006654
-    if not fahrplan:
-        # (Wiederholung des Codes mit eva = "8006654")
-        # Hier gekürzt, damit es übersichtlich bleibt
-        pass
-
+    # Sortieren nach Uhrzeit
     fahrplan.sort(key=lambda x: x['zeit'])
     return fahrplan[:10]
 
 if __name__ == "__main__":
     daten = hole_daten()
-    # ensure_ascii=False fixit die Umlaute (\u00fcnktlich -> pünktlich)
     with open('daten.json', 'w', encoding='utf-8') as f:
         json.dump(daten, f, ensure_ascii=False, indent=4)
