@@ -3,62 +3,57 @@ import json
 from datetime import datetime, timedelta, timezone
 
 def hole_daten():
-    # Aktuelle Zeit für den Filter
     jetzt = datetime.now(timezone.utc)
-    # Zeitstempel für das Display (Deutsche Zeit)
+    # Deutsche Zeit für den Update-Stempel
     u_zeit = (jetzt + timedelta(hours=1)).strftime("%H:%M")
     
     try:
-        # 1. ID für Zerbst/Anhalt sicherstellen
-        suche_url = "https://v6.db.transport.rest/locations?query=Zerbst&results=1"
-        suche_res = requests.get(suche_url, timeout=10)
-        echte_id = suche_res.json()[0]['id']
+        # Zerbst/Anhalt ID
+        station_id = "8010405" 
         
-        # 2. Abfahrten laden - WICHTIG: remarks=true für die Verspätungsgründe!
-        url = f"https://v6.db.transport.rest/stops/{echte_id}/departures?duration=480&results=20&remarks=true"
+        # URL mit remarks=true (WICHTIG!)
+        url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=120&results=10&remarks=true&language=de"
+        
         r = requests.get(url, timeout=15)
         data = r.json()
         departures = data.get('departures', [])
         
         fahrplan = []
         for dep in departures:
+            # Basis-Daten
             ist_w = dep.get('when')
             if not ist_w: continue
             
-            # Vergangene Züge ignorieren
-            zug_zeit_obj = datetime.fromisoformat(ist_w.replace('Z', '+00:00'))
-            if zug_zeit_obj < (jetzt - timedelta(minutes=5)):
-                continue
-
-            # Basis-Infos
             linie = dep.get('line', {}).get('name', '???').replace(" ", "")
             soll_w = dep.get('plannedWhen')
             soll_zeit = soll_w.split('T')[1][:5] if soll_w else "--:--"
             ist_zeit = ist_w.split('T')[1][:5]
             
-            # --- TEXTGRÜNDE (REMARKS) AUSLESEN ---
+            # --- INFO-LOGIK FÜR GRÜNDE ---
+            hinweise = []
             remarks = dep.get('remarks', [])
-            texte = []
+            
             for rm in remarks:
-                # Wir filtern nur echte Text-Hinweise
+                # Wir suchen nur Texte vom Typ 'hint' (das sind die Verspätungsgründe)
                 if rm.get('type') == 'hint':
-                    t = rm.get('text', '').strip()
-                    if t and t not in texte: # Doppelte Texte vermeiden
-                        texte.append(t)
+                    txt = rm.get('text', '').strip()
+                    if txt and txt not in hinweise:
+                        hinweise.append(txt)
             
-            grund = " | ".join(texte)
+            grund = " | ".join(hinweise)
             
-            # Info-Feld zusammenbauen
-            cancelled = dep.get('cancelled', False)
             delay = dep.get('delay') # Verspätung in Sekunden
+            cancelled = dep.get('cancelled', False)
             
+            # Text zusammenbauen
             if cancelled:
-                info_text = f"FÄLLT AUS: {grund}" if grund else "FÄLLT AUS"
+                info_text = f"FÄLLT AUS! {grund}".strip()
             elif delay and delay >= 60:
                 minuten = int(delay / 60)
+                # Hier wird die Verspätung mit dem Grund verknüpft
                 info_text = f"+{minuten} Min: {grund}" if grund else f"+{minuten} Min"
             else:
-                info_text = grund # Falls pünktlich, aber Bauinfos da sind
+                info_text = grund # Auch bei 0 Min Verspätung Gründe zeigen (z.B. Bauarbeiten)
 
             fahrplan.append({
                 "zeit": soll_zeit,
@@ -70,9 +65,9 @@ def hole_daten():
                 "update": u_zeit
             })
 
-        # Sortieren nach tatsächlicher Abfahrt
+        # Sortieren nach der echten Zeit
         fahrplan.sort(key=lambda x: x['echte_zeit'])
-        return fahrplan[:10]
+        return fahrplan
 
     except Exception as e:
         return [{"zeit": "Err", "linie": "Bot", "ziel": str(e)[:15], "gleis": "-", "info": "Fehler"}]
