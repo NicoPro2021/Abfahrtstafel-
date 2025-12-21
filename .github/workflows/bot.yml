@@ -1,52 +1,33 @@
 name: DB-Fahrplan-Bot
 
 on:
-  workflow_dispatch:
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '*/5 * * * *'  # Läuft automatisch alle 5 Minuten
+  workflow_dispatch:       # Ermöglicht den manuellen Start per Button
 
 jobs:
-  run-bot:
+  build:
     runs-on: ubuntu-latest
-    
-    permissions:
-      contents: write
 
     steps:
       - name: Code auschecken
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Wichtig, damit git pull funktioniert
+        uses: actions/checkout@v3
 
-      - name: Python Setup
-        uses: actions/setup-python@v5
+      - name: Python installieren
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.9'
 
-      - name: Install Libs
+      - name: Installiere Abhängigkeiten
         run: pip install requests
 
-      - name: Script ausfuehren
-        env:
-          DB_CLIENT_ID: ${{ secrets.DB_CLIENT_ID }}
-          DB_CLIENT_SECRET: ${{ secrets.DB_CLIENT_SECRET }}
-        run: python fetch_data.py
+      - name: Starte den Scraper
+        run: python bot.py
 
-      - name: Änderungen speichern
+      - name: Commit und Push der Daten
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          
-          # 1. Änderungen vom Server holen (löst den Fehler aus deinem Screenshot)
-          git pull origin main --rebase
-          
+          git config --global user.name 'GitHub Bot'
+          git config --global user.email 'bot@github.com'
           git add daten.json
-          
-          # 2. Nur speichern, wenn sich der Inhalt von daten.json wirklich geaendert hat
-          if ! git diff --staged --quiet; then
-            git commit -m "Automatisches Update Zerbst"
-            git push origin main
-          else
-            echo "Nichts zu speichern, da daten.json identisch geblieben ist."
-          fi
-          
+          git commit -m "Fahrplan Update" || exit 0
+          git push
