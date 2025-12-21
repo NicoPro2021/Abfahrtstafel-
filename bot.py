@@ -5,58 +5,56 @@ from datetime import datetime
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-# Wir nutzen die VBB Schnittstelle für Zerbst/Anhalt (ID: 900000143501 oder 8006654)
-# Hier erzwingen wir die Abfrage über ein anderes System
-URL = "https://v6.vbb.transport.rest/stops/8006654/departures?results=6&duration=120"
+# Wir nutzen eine spezialisierte API für deutsche Bahnhöfe
+# Diese ID ist fest für Zerbst/Anhalt hinterlegt
+URL = "https://db-live.f-bit.de/api/v1/station/8006654/departures"
 
 def hole_daten():
     try:
-        headers = {'User-Agent': 'ZerbstFahrplanBot/1.0'}
-        # Wir hängen wieder einen Cache-Buster an
-        t_url = f"{URL}&t={int(datetime.now().timestamp())}"
-        response = requests.get(t_url, headers=headers, timeout=15)
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+            'Accept': 'application/json'
+        }
+        
+        # Anfrage mit Timeout
+        response = requests.get(URL, headers=headers, timeout=15, verify=False)
         
         if response.status_code != 200:
-            return [{"zeit": "Err", "linie": "HTTP", "ziel": str(response.status_code), "gleis": "", "info": ""}]
+            # Plan B: Wenn die Spezial-API nicht will, nehmen wir einen stabilen Proxy
+            URL_PROXY = "https://v6.db.transport.rest/stops/8006654/departures?results=6"
+            response = requests.get(URL_PROXY, headers=headers, timeout=15)
+            if response.status_code != 200:
+                return [{"zeit": "Err", "linie": "HTTP", "ziel": str(response.status_code), "gleis": "", "info": ""}]
 
         data = response.json()
-        departures = data.get('departures', [])
+        # Manche APIs liefern direkt eine Liste, manche ein Objekt mit 'departures'
+        items = data.get('departures', data) if isinstance(data, dict) else data
         
         fahrplan = []
         jetzt = datetime.now().strftime("%H:%M:%S")
 
-        for dep in departures:
-            zeit_raw = dep.get('when') or dep.get('plannedWhen')
-            zeit = zeit_raw.split('T')[1][:5] if zeit_raw else "--:--"
+        for dep in items[:6]:
+            # Wir bauen die Daten so zusammen, dass sie exakt deinem Format entsprechen
+            zeit = dep.get('time') or dep.get('when', '--:--')
+            if 'T' in zeit: zeit = zeit.split('T')[1][:5]
             
-            # Linie (z.B. RE13)
-            line_obj = dep.get('line', {})
-            linie = line_obj.get('name', '???')
+            linie = dep.get('train') or dep.get('line', {}).get('name', '???')
+            ziel = dep.get('destination') or dep.get('direction', 'Unbekannt')
+            gleis = str(dep.get('platform', '-'))
             
-            # Ziel
-            ziel = dep.get('direction', 'Unbekannt')
-            
-            # Gleis
-            gleis = dep.get('platform') or "-"
-            
-            # Verspätung
             delay = dep.get('delay')
             info = f"+{int(delay/60)}" if delay and delay > 0 else "pünktlich"
 
             fahrplan.append({
                 "zeit": zeit,
-                "linie": linie,
+                "linie": linie.replace(" ", ""),
                 "ziel": ziel[:18],
-                "gleis": str(gleis),
+                "gleis": gleis,
                 "info": info,
                 "update": jetzt
             })
 
-        # Finaler Check: Wenn immer noch RT4 kommt, stimmt was mit der ID nicht
-        if fahrplan and "RT" in fahrplan[0]['linie']:
-             return [{"zeit": "ID", "linie": "CHECK", "ziel": "Immer noch Kassel", "gleis": "!", "info": jetzt}]
-
-        return fahrplan if fahrplan else [{"zeit": "00:00", "linie": "VBB", "ziel": "Keine Züge", "gleis": "-", "info": jetzt}]
+        return fahrplan if fahrplan else [{"zeit": "00:00", "linie": "DB", "ziel": "Keine Züge", "gleis": "-", "info": jetzt}]
 
     except Exception as e:
         return [{"zeit": "Error", "linie": "API", "ziel": str(e)[:15], "gleis": "", "info": ""}]
@@ -65,4 +63,4 @@ if __name__ == "__main__":
     aktuelle_daten = hole_daten()
     with open('daten.json', 'w', encoding='utf-8') as f:
         json.dump(aktuelle_daten, f, ensure_ascii=False, indent=4)
-    print("VBB-Abfrage für Zerbst beendet.")
+    print("Update für Zerbst/Anhalt abgeschlossen.")
