@@ -5,78 +5,101 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Abfahrtstafel Zerbst/Anhalt</title>
     <style>
-        body { background-color: black; color: white; font-family: Arial, sans-serif; margin: 0; padding: 0; }
-        .header { background-color: #0099ff; padding: 10px; display: flex; justify-content: space-between; align-items: center; }
-        .header h1 { margin: 0; font-size: 24px; }
-        .uhrzeit { color: #ffcc00; font-size: 24px; font-weight: bold; }
+        body { background-color: black; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
         
-        .tafel { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        .zug-zeile { border-bottom: 1px solid #333; height: 60px; }
+        /* Blauer Header wie bei der DB */
+        .header { background-color: #0099ff; padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #003399; }
+        .header h1 { margin: 0; font-size: 28px; letter-spacing: 1px; }
+        .uhrzeit { color: #ffcc00; font-size: 28px; font-weight: bold; font-family: monospace; }
+        
+        .tafel { width: 100%; border-collapse: collapse; }
+        .zug-zeile { border-bottom: 1px solid #333; height: 80px; transition: background 0.3s; }
+        
+        /* Spezial-Style für Ausfälle */
         .ausfall { background-color: white !important; color: black !important; }
+        .ausfall .zeit, .ausfall .gleis, .ausfall .ziel { color: black !important; }
+        .ausfall .ziel { text-decoration: line-through; }
+        .ausfall .linie { background-color: #003399 !important; color: white !important; }
+
+        .zeit { color: #ffcc00; font-size: 26px; font-weight: bold; padding-left: 20px; width: 100px; }
         
-        .zeit { color: #ffcc00; font-size: 22px; padding-left: 10px; width: 80px; }
-        .linie { background-color: white; color: #003399; padding: 2px 5px; font-weight: bold; border-radius: 3px; margin-right: 10px; }
-        .ausfall .linie { background-color: #003399; color: white; }
+        .linie { background-color: white; color: #003399; padding: 3px 8px; font-weight: bold; border-radius: 4px; margin-right: 15px; font-size: 18px; }
         
-        .ziel { font-size: 22px; font-weight: bold; }
-        .gleis { color: #ffcc00; font-size: 22px; text-align: right; padding-right: 15px; }
-        .ausfall .zeit, .ausfall .gleis { color: black; }
+        .ziel { font-size: 26px; font-weight: bold; }
         
-        .info-scroll { color: red; font-size: 16px; white-space: nowrap; overflow: hidden; width: 200px; }
-        .scroll-text { display: inline-block; padding-left: 100%; animation: scroll 10s linear infinite; }
-        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+        .gleis { color: #ffcc00; font-size: 26px; font-weight: bold; text-align: right; padding-right: 25px; width: 60px; }
+
+        /* Roter Lauftext für Verspätungen/Infos */
+        .info-container { overflow: hidden; width: 100%; height: 25px; margin-top: 5px; }
+        .info-text { color: #ff3333; font-size: 18px; font-weight: bold; white-space: nowrap; display: inline-block; animation: scroll-left 15s linear infinite; }
+        
+        @keyframes scroll-left {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <h1>Zerbst/Anhalt</h1>
+    <h1 id="station">Zerbst/Anhalt</h1>
     <div id="uhr" class="uhrzeit">00:00:00</div>
 </div>
 
-<table class="tafel" id="abfahrten">
+<table class="tafel" id="abfahrten-tabelle">
     </table>
 
 <script>
-    // Uhrzeit-Funktion
+    // 1. Die Uhrzeit oben rechts aktualisieren
     function updateUhr() {
         const jetzt = new Date();
-        document.getElementById('uhr').innerText = jetzt.toLocaleTimeString('de-DE');
+        const zeitString = jetzt.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        document.getElementById('uhr').innerText = zeitString;
     }
     setInterval(updateUhr, 1000);
+    updateUhr();
 
-    // Daten von daten.json laden
-    async function ladeDaten() {
+    // 2. Die Daten aus der daten.json laden
+    async function ladeFahrplan() {
         try {
-            // Wir hängen einen Zeitstempel an, um Cache-Probleme zu vermeiden
-            const response = await fetch('daten.json?t=' + Date.now());
-            const daten = await response.json();
-            const tafel = document.getElementById('abfahrten');
-            tafel.innerHTML = '';
+            // Cache-Vermeidung durch Zeitstempel
+            const response = await fetch('daten.json?nocache=' + new Date().getTime());
+            const zuege = await response.json();
+            
+            const tabelle = document.getElementById('abfahrten-tabelle');
+            tabelle.innerHTML = ''; // Vorherige Daten löschen
 
-            daten.forEach(zug => {
-                const istAusfall = zug.info.includes("Ausfall") || zug.info.includes("fällt aus");
+            zuege.forEach(zug => {
+                const istAusfall = zug.info.toLowerCase().includes("ausfall") || zug.info.toLowerCase().includes("fällt aus");
                 const zeile = document.createElement('tr');
                 zeile.className = 'zug-zeile' + (istAusfall ? ' ausfall' : '');
 
                 zeile.innerHTML = `
                     <td class="zeit">${zug.zeit}</td>
-                    <td class="ziel">
-                        <span class="linie">${zug.linie}</span> ${zug.ziel}
-                        ${zug.info ? `<div class="info-scroll"><span class="scroll-text">${zug.info}</span></div>` : ''}
+                    <td class="inhalt">
+                        <div style="display: flex; align-items: center;">
+                            <span class="linie">${zug.linie}</span>
+                            <span class="ziel">${zug.ziel}</span>
+                        </div>
+                        ${zug.info ? `
+                            <div class="info-container">
+                                <div class="info-text">${zug.info}</div>
+                            </div>
+                        ` : ''}
                     </td>
                     <td class="gleis">${istAusfall ? '--' : zug.gleis}</td>
                 `;
-                tafel.appendChild(zeile);
+                tabelle.appendChild(zeile);
             });
-        } catch (e) {
-            console.error("Fehler beim Laden der daten.json:", e);
+        } catch (error) {
+            console.error("Fehler beim Laden der Fahrplandaten:", error);
+            document.getElementById('abfahrten-tabelle').innerHTML = '<tr><td colspan="3" style="text-align:center; padding:20px;">Daten konnten nicht geladen werden. Bitte Bot prüfen!</td></tr>';
         }
     }
 
-    // Alle 30 Sekunden aktualisieren
-    ladeDaten();
-    setInterval(ladeDaten, 30000);
+    // Alle 30 Sekunden die Daten neu laden
+    ladeFahrplan();
+    setInterval(ladeFahrplan, 30000);
 </script>
 
 </body>
