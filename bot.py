@@ -1,94 +1,58 @@
 import requests
-from bs4 import BeautifulSoup
 import json
-import urllib3
-import re
 
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
-# Wir nehmen die einfache Abfahrts-Suche
-URL = "https://reiseauskunft.bahn.de/bin/bhftafel.exe/dn?input=Zerbst&boardType=dep&start=yes"
+# Zerbst/Anhalt hat die Stations-ID 8006654
+STATION_ID = "8006654"
+# Eine öffentliche HAFAS-Schnittstelle (vbb ist sehr stabil)
+URL = f"https://v5.vbb.transport.rest/stops/{STATION_ID}/departures?duration=60&results=10"
 
 def hole_daten():
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Accept-Language': 'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7'
-    }
-    
     try:
-        response = requests.get(URL, headers=headers, timeout=15, verify=False)
+        response = requests.get(URL, timeout=15)
         if response.status_code != 200:
             return [{"zeit": "Err", "linie": "HTTP", "ziel": str(response.status_code), "gleis": "", "info": ""}]
 
-        soup = BeautifulSoup(response.text, 'html.parser')
+        data = response.json()
         fahrplan = []
 
-        # Wir suchen nach JEDER Tabellenzeile
-        rows = soup.find_all('tr')
-
-        for row in rows:
-            text = row.get_text(" ", strip=True)
-            # Regex: Sucht nach Uhrzeiten wie 14:05 oder 09:12
-            zeit_match = re.search(r'(\d{1,2}:\d{2})', text)
+        for dep in data:
+            # Zeit formatieren (kommt als 2024-05-24T14:30:00)
+            zeit_voll = dep.get('when', dep.get('plannedWhen', ''))
+            zeit = zeit_voll.split('T')[1][:5] if 'T' in zeit_voll else "--:--"
             
-            if zeit_match:
-                cols = row.find_all('td')
-                if len(cols) >= 3:
-                    zeit = zeit_match.group(1)
-                    
-                    # Zugname (z.B. RE 13 oder RB 42)
-                    zug = ""
-                    train_td = row.find('td', class_='train')
-                    if train_td:
-                        zug = train_td.get_text(strip=True).replace(" ", "")
-                    else:
-                        zug = cols[1].get_text(strip=True).replace(" ", "")
+            # Linie (z.B. RE13)
+            linie = dep.get('line', {}).get('name', '???')
+            
+            # Ziel
+            ziel = dep.get('direction', 'Unbekannt')
+            
+            # Gleis
+            gleis = dep.get('platform', '-')
+            
+            # Verspätung berechnen
+            info = ""
+            delay = dep.get('delay')
+            if delay is not None:
+                if delay > 0:
+                    info = f"+{int(delay/60)}"
+                elif delay == 0:
+                    info = "pünktlich"
 
-                    # Ziel
-                    ziel = ""
-                    route_td = row.find('td', class_='route')
-                    if route_td:
-                        ziel = route_td.get_text(" ", strip=True).split("  ")[-1].strip()
-                    else:
-                        ziel = cols[2].get_text(strip=True).split("  ")[-1].strip()
+            fahrplan.append({
+                "zeit": zeit,
+                "linie": linie,
+                "ziel": ziel[:20],
+                "gleis": gleis,
+                "info": info
+            })
 
-                    # Infos (Verspätung)
-                    info = ""
-                    ris_tag = row.find('td', class_='ris')
-                    if ris_tag:
-                        info = ris_tag.get_text(strip=True)
-
-                    # Gleis
-                    gleis = ""
-                    platform_td = row.find('td', class_='platform')
-                    if platform_td:
-                        gleis = platform_td.get_text(strip=True)
-
-                    # Nur hinzufügen, wenn es kein Kopfzeilen-Müll ist
-                    if len(zug) > 1 and "Ankunft" not in ziel:
-                        fahrplan.append({
-                            "zeit": zeit,
-                            "linie": zug,
-                            "ziel": ziel[:20], # Kürzen für das Display
-                            "gleis": gleis,
-                            "info": info
-                        })
-
-        # Duplikate entfernen (manchmal listet die Bahn Züge doppelt)
-        seen = set()
-        unique_fahrplan = []
-        for f in fahrplan:
-            identifier = f"{f['zeit']}{f['linie']}"
-            if identifier not in seen:
-                unique_fahrplan.append(f)
-                seen.add(identifier)
-
-        return unique_fahrplan[:6] if unique_fahrplan else [{"zeit": "Kein", "linie": "ZUG", "ziel": "Gefunden", "gleis": "", "info": ""}]
+        return fahrplan[:6] if fahrplan else [{"zeit": "Kein", "linie": "ZUG", "ziel": "Gefunden", "gleis": "", "info": ""}]
 
     except Exception as e:
-        return [{"zeit": "Error", "linie": "Py", "ziel": str(e)[:15], "gleis": "", "info": ""}]
+        return [{"zeit": "Error", "linie": "API", "ziel": str(e)[:15], "gleis": "", "info": ""}]
 
 if __name__ == "__main__":
     aktuelle_daten = hole_daten()
     with open('daten.json', 'w', encoding='utf-8') as f:
         json.dump(aktuelle_daten, f, ensure_ascii=False, indent=4)
+    print("HAFAS-Update erfolgreich!")
