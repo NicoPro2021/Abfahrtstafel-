@@ -7,43 +7,31 @@ def hole_daten():
         # Station ID (Wannsee: 8010358 | Zerbst: 8010405)
         station_id = "8010358" 
         
-        # Wir fragen nach einem großen Zeitraum (240 Min), um Lücken zu vermeiden
-        url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=240&remarks=true&language=de"
+        # Wir fragen die API nach Abfahrten (results=15 holt die nächsten 15)
+        url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=120&results=15&remarks=true&language=de"
         r = requests.get(url, timeout=15)
         data = r.json()
         departures = data.get('departures', [])
         
-        # Wir nehmen die Zeit direkt vom API-Server als Referenz ("jetzt")
-        # Falls die API keine Zeit liefert, nehmen wir UTC
-        jetzt_str = r.headers.get('Date')
-        if jetzt_str:
-            jetzt_ref = datetime.strptime(jetzt_str, '%a, %d %b %Y %H:%M:%S %Z').replace(tzinfo=timezone.utc)
-        else:
-            jetzt_ref = datetime.now(timezone.utc)
-
-        # Deutsche Anzeigezeit für das Display
-        u_zeit = (jetzt_ref + timedelta(hours=1)).strftime("%H:%M")
+        # Zeitstempel für das Display-Update
+        u_zeit = datetime.now(timezone(timedelta(hours=1))).strftime("%H:%M")
         
         fahrplan = []
-        # Wir zeigen Züge, die ab JETZT fahren (minus 2 Min Puffer)
-        puffer = jetzt_ref - timedelta(minutes=2)
 
         for dep in departures:
             zeit_str = dep.get('when')
             if not zeit_str: continue
             
-            abfahrt_obj = datetime.fromisoformat(zeit_str.replace('Z', '+00:00'))
-            
-            # STRENGER FILTER: Abgelaufene Züge sofort raus
-            if abfahrt_obj < puffer:
-                continue
-
-            linie = dep.get('line', {}).get('name', '???').replace(" ", "")
-            soll_w = dep.get('plannedWhen')
-            soll_zeit = soll_w.split('T')[1][:5] if soll_w else "--:--"
+            # Wir extrahieren die Zeit einfach als Text, ohne strengen Filter
+            # Das verhindert, dass die Liste durch Zeitzonen-Fehler leer wird
             ist_zeit = zeit_str.split('T')[1][:5]
             
-            # Remarks sammeln
+            soll_w = dep.get('plannedWhen')
+            soll_zeit = soll_w.split('T')[1][:5] if soll_w else ist_zeit
+            
+            linie = dep.get('line', {}).get('name', '???').replace(" ", "")
+            
+            # Remarks / Gründe sammeln
             hinweise = []
             for rm in dep.get('remarks', []):
                 if rm.get('type') in ['hint', 'status']:
@@ -71,17 +59,14 @@ def hole_daten():
                 "update": u_zeit
             })
 
-        # Nach ECHTER Zeit sortieren
-        fahrplan.sort(key=lambda x: x['echte_zeit'])
-        
-        # Falls die Liste leer ist (z.B. nachts), zeigen wir eine Info an
+        # Wenn trotzdem leer, dann liegt es an der API
         if not fahrplan:
-             return [{"zeit": "--:--", "linie": "DB", "ziel": "Keine Zuege", "gleis": "-", "info": "Betriebspause", "update": u_zeit}]
+             return [{"zeit": "--:--", "linie": "DB", "ziel": "Keine Daten", "gleis": "-", "info": "API leer", "update": u_zeit}]
 
-        return fahrplan[:15]
+        return fahrplan
 
     except Exception as e:
-        return [{"zeit": "Err", "linie": "Bot", "ziel": "Fehler", "gleis": "-", "info": str(e)[:20]}]
+        return [{"zeit": "Err", "linie": "Bot", "ziel": "Fehler", "gleis": "-", "info": str(e)[:20], "update": "--:--"}]
 
 if __name__ == "__main__":
     daten = hole_daten()
