@@ -1,12 +1,17 @@
 name: Bahn Update Loop
 on:
-  workflow_dispatch: # Erlaubt manuellen Start
-  watch:             # Startet, wenn du das Repository "sternst" (Star)
-  push:              # Startet bei jeder Code-Änderung
+  workflow_dispatch:
+  schedule:
+    - cron: '*/30 * * * *' # Backup-Start alle 30 Min
 
 jobs:
   update:
     runs-on: ubuntu-latest
+    # Erlaubt dem Bot, sich selbst neu zu triggern
+    permissions:
+      contents: write
+      actions: write
+      
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -19,27 +24,32 @@ jobs:
       - name: Install Dependencies
         run: pip install requests
 
-      - name: Run 20 Minute Loop
+      - name: Run 30 Minute Loop
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
           
-          # Die Schleife läuft 20 Mal (20 Minuten lang jede Minute)
-          for i in {1..20}
+          for i in {1..30}
           do
+            echo "Durchlauf $i von 30..."
             python bot.py
+            
+            # Nur pushen, wenn sich wirklich was geändert hat
             if [[ -n $(git status -s daten.json) ]]; then
               git add daten.json
-              git commit -m "Update Zerbst $i"
-              git push
+              git commit -m "Zerbst Update $i"
+              git push || echo "Push fehlgeschlagen, versuche es gleich wieder"
+            else
+              echo "Keine Änderung in Zerbst."
             fi
+            
+            # Warte 60 Sekunden bis zum nächsten Check
             sleep 60
           done
 
-      - name: Restart Workflow
-        # Dieser Befehl triggert den Workflow nach Ende sofort wieder neu
+      - name: Trigger Next Run
+        if: always() # Startet auch neu, wenn oben mal ein Fehler war
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-          -H "Accept: application/vnd.github.v3+json" \
-          https://api.github.com/repos/${{ github.repository }}/actions/workflows/bahn.yml/dispatches \
-          -d '{"ref":"main"}'
+          gh workflow run bot.yml
