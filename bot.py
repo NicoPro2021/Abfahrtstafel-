@@ -7,11 +7,11 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def hole_daten():
     jetzt_zeit = datetime.now().strftime("%H:%M")
+    # Wir laden Abfahrten inkl. Bemerkungen (remarks)
+    url = "https://v6.db.transport.rest/stops/8006654/departures?results=10&duration=120&remarks=true"
+    
     try:
-        # Wir suchen Zerbst und laden Abfahrten inkl. Bemerkungen (remarks)
-        url = "https://v6.db.transport.rest/stops/8006654/departures?results=6&duration=120&remarks=true"
-        response = requests.get(url, timeout=15, verify=False)
-        
+        response = requests.get(url, timeout=20, verify=False)
         if response.status_code != 200:
             return [{"zeit": "Err", "linie": "HTTP", "ziel": "Fehler", "gleis": "-", "info": jetzt_zeit}]
 
@@ -21,38 +21,43 @@ def hole_daten():
         fahrplan = []
         for dep in departures:
             linie = dep.get('line', {}).get('name', '???').replace(" ", "")
-            if "RT" in linie: continue
+            if "RT" in linie: continue # Kassel-Filter
 
             w = dep.get('when') or dep.get('plannedWhen', '')
             zeit = w.split('T')[1][:5] if 'T' in w else "--:--"
             ziel = dep.get('direction', 'Unbekannt')[:18]
             gleis = str(dep.get('platform') or "-")
             
-            # --- NEU: Verspätungsgrund suchen ---
-            grund = ""
-            remarks = dep.get('remarks', [])
-            for r in remarks:
-                if r.get('type') == 'hint' or r.get('type') == 'warning':
-                    grund = r.get('text', '')
-                    break # Wir nehmen den ersten wichtigen Grund
-
+            # --- Verspätungsgrund extrahieren ---
+            info_text = "pünktlich"
             delay = dep.get('delay')
+            
+            # Suche nach wichtigen Bemerkungen
+            remarks = dep.get('remarks', [])
+            wichtige_info = ""
+            for r in remarks:
+                # Wir filtern nach echten Störungen (Typ 'warning')
+                if r.get('type') == 'warning' or r.get('summary'):
+                    wichtige_info = r.get('summary') or r.get('text', '')
+                    break
+
             if delay and delay > 0:
-                # Wenn ein Grund da ist, nimm den, sonst die Minuten
-                info = grund if grund else f"+{int(delay/60)} Min"
-            else:
-                info = "pünktlich"
+                minuten = f"+{int(delay/60)}"
+                # Wenn wir eine Text-Info haben, hängen wir sie an oder ersetzen sie
+                info_text = f"{minuten} {wichtige_info}".strip()
+            elif wichtige_info:
+                info_text = wichtige_info
 
             fahrplan.append({
                 "zeit": zeit,
                 "linie": linie,
                 "ziel": ziel,
                 "gleis": gleis,
-                "info": info,
+                "info": info_text[:30], # Auf 30 Zeichen begrenzt fürs Display
                 "update": jetzt_zeit
             })
 
-        return fahrplan if fahrplan else [{"zeit": "00:00", "linie": "DB", "ziel": "Keine Züge", "gleis": "-", "info": jetzt_zeit}]
+        return fahrplan[:6] if fahrplan else [{"zeit": "Warte", "linie": "DB", "ziel": "Suche Züge...", "gleis": "-", "info": jetzt_zeit}]
 
     except Exception as e:
         return [{"zeit": "Error", "linie": "API", "ziel": str(e)[:15], "gleis": "", "info": jetzt_zeit}]
