@@ -3,7 +3,7 @@ import xml.etree.ElementTree as ET
 import json
 from datetime import datetime, timedelta
 
-# Wichtige DB-Codes für Zerbst
+# Deutsche Bahn Störungscodes
 DB_CODES = {
     "2": "Polizeieinsatz", "3": "Feuerwehreinsatz", "5": "Ärztliche Versorgung",
     "8": "Oberleitungsschaden", "11": "Störung am Zug", "16": "Weichenstörung",
@@ -12,15 +12,17 @@ DB_CODES = {
 }
 
 def hole_daten():
-    jetzt = datetime.now()
-    u_zeit = jetzt.strftime("%H:%M")
+    # Zeitkorrektur für Deutschland (+1 Std im Winter)
+    jetzt_utc = datetime.utcnow()
+    jetzt_lokal = jetzt_utc + timedelta(hours=1) 
+    u_zeit = jetzt_lokal.strftime("%H:%M")
     
-    # Wir laden die aktuelle Stunde UND die nächste Stunde
-    stunden = [jetzt, jetzt + timedelta(hours=1)]
+    # Wir laden die aktuelle und die nächste Stunde
+    stunden = [jetzt_lokal, jetzt_lokal + timedelta(hours=1)]
     station_id = "8006654" # Zerbst/Anhalt
     
     try:
-        # 1. Echtzeit-Änderungen (für alle Züge gleich)
+        # 1. Echtzeit-Daten (fchg) laden
         r_f = requests.get(f"https://iris.noncd.db.de/iris-tts/timetable/fchg/{station_id}", timeout=10)
         root_f = ET.fromstring(r_f.content)
         changes = {}
@@ -31,11 +33,11 @@ def hole_daten():
                 ct = ar.get('ct') # Korrigierte Zeit
                 msg = ""
                 for m in ar.findall('m'):
-                    if m.get('cat') == 'f':
-                        msg = DB_CODES.get(m.get('c'), f"Störung")
+                    if m.get('cat') in ['f', 'd']:
+                        msg = DB_CODES.get(m.get('c'), "Störung")
                 changes[s_id] = {'ct': ct, 'msg': msg}
 
-        # 2. Pläne für beide Stunden laden
+        # 2. Pläne (plan) laden
         fahrplan = []
         for zeit_obj in stunden:
             datum = zeit_obj.strftime("%y%m%d")
@@ -47,18 +49,19 @@ def hole_daten():
             
             for s in root_p.findall('s'):
                 s_id = s.get('id')
-                dp = s.find('dp')
-                tl = s.find('tl')
+                dp = s.find('dp') # Departure
+                tl = s.find('tl') # Train Line
                 
                 if dp is not None and tl is not None:
                     zugtyp = tl.get('c', '')
+                    # Wir lassen RE und RB zu (RE13 / RB42)
                     if zugtyp not in ['RE', 'RB']: continue
                     
-                    p_zeit = dp.get('pt')[-4:]
+                    p_zeit = dp.get('pt')[-4:] # Geplante Zeit HHMM
                     zeit_str = f"{p_zeit[:2]}:{p_zeit[2:]}"
                     
-                    # Nur Züge anzeigen, die noch nicht abgefahren sind
-                    if zeit_obj == stunden[0] and zeit_str < jetzt.strftime("%H:%M"):
+                    # Nur Züge anzeigen, die noch kommen
+                    if zeit_obj.strftime("%H") == jetzt_lokal.strftime("%H") and zeit_str < u_zeit:
                         continue
 
                     ziel = dp.get('ppth', '').split('|')[-1][:18]
@@ -68,13 +71,15 @@ def hole_daten():
                     if s_id in changes:
                         c = changes[s_id]
                         if c['ct']:
-                            # Verspätung in Minuten berechnen
-                            diff = (datetime.strptime(c['ct'][-4:], "%H%M") - 
-                                    datetime.strptime(p_zeit, "%H%M")).seconds // 60
-                            if diff > 1400: diff = 0 # Tageswechsel-Bug abfangen
-                            info = f"+{diff} {c['msg']}".strip() if diff > 0 else c['msg']
-                    
-                    if not info: info = "pünktlich"
+                            # Verspätung berechnen
+                            p_min = int(p_zeit[:2]) * 60 + int(p_zeit[2:])
+                            c_zeit = c['ct'][-4:]
+                            c_min = int(c_zeit[:2]) * 60 + int(c_zeit[2:])
+                            diff = c_min - p_min
+                            if 0 < diff < 500: # Plausible Verspätung
+                                info = f"+{diff} {c['msg']}".strip()
+                            elif c['msg']:
+                                info = c['msg']
 
                     fahrplan.append({
                         "zeit": zeit_str,
@@ -89,7 +94,7 @@ def hole_daten():
         return fahrplan[:6] if fahrplan else [{"zeit": "INFO", "linie": "DB", "ziel": "Keine Züge", "gleis": "-", "info": u_zeit}]
 
     except Exception as e:
-        return [{"zeit": "Error", "linie": "IRIS", "ziel": str(e)[:15], "gleis": "-", "info": u_zeit}]
+        return [{"zeit": "Error", "linie": "IRIS", "ziel": "Verbindung..", "gleis": "-", "info": u_zeit}]
 
 if __name__ == "__main__":
     daten = hole_daten()
