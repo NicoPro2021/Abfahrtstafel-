@@ -3,65 +3,65 @@ import json
 import urllib3
 from datetime import datetime
 
+# Deaktiviert die Warnmeldungen für unsichere Verbindungen
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def hole_daten():
-    # Wir nutzen die DB-HAFAS Schnittstelle über einen stabilen Endpoint
+    # Zerbst/Anhalt ID
     STATION_ID = "8006654"
-    url = f"https://db.transport.rest/stops/{STATION_ID}/departures?results=6&duration=120"
+    # Wir nutzen einen stabilen HTTPS-Endpunkt
+    url = f"https://v6.db.transport.rest/stops/{STATION_ID}/departures?results=10&duration=120"
     
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X)',
-        'Accept': 'application/json'
-    }
-
+    jetzt_zeit = datetime.now().strftime("%H:%M")
+    
     try:
-        # Wir fügen einen Cache-Buster hinzu, um keine alten Daten zu laden
-        response = requests.get(f"{url}&t={int(datetime.now().timestamp())}", headers=headers, timeout=15)
+        # Wir versuchen die Anfrage ohne SSL-Verifizierung (verify=False)
+        # Das löst den HTTPSConnection/SSL Fehler auf GitHub
+        response = requests.get(
+            url, 
+            timeout=25, 
+            verify=False, 
+            headers={'User-Agent': 'Mozilla/5.0'}
+        )
         
         if response.status_code != 200:
-            return [{"zeit": "Err", "linie": "HTTP", "ziel": str(response.status_code), "gleis": "", "info": ""}]
+            return [{"zeit": "Err", "linie": "HTTP", "ziel": str(response.status_code), "gleis": "", "info": jetzt_zeit}]
 
         data = response.json()
-        # Manche Server liefern die Liste direkt, manche im Feld 'departures'
-        items = data.get('departures', data) if isinstance(data, dict) else data
+        departures = data.get('departures', [])
         
         fahrplan = []
-        jetzt_zeit = datetime.now().strftime("%H:%M")
 
-        for dep in items:
-            # Zeit extrahieren
+        for dep in departures:
+            linie = dep.get('line', {}).get('name', '???').replace(" ", "")
+            # Schutz gegen die Kassel-Daten
+            if "RT4" in linie: continue
+
             w = dep.get('when') or dep.get('plannedWhen', '')
             zeit = w.split('T')[1][:5] if 'T' in w else "--:--"
-            
-            # Linie und Ziel
-            linie = dep.get('line', {}).get('name', '???').replace(" ", "")
-            ziel = dep.get('direction', 'Unbekannt')
-            
-            # Filter gegen Kassel-Testdaten
-            if "RT" in linie or "Wolfhagen" in ziel:
-                continue
-
+            ziel = dep.get('direction', 'Unbekannt')[:18]
             gleis = str(dep.get('platform') or "-")
+            
             delay = dep.get('delay')
             info = f"+{int(delay/60)}" if delay and delay > 0 else "pünktlich"
 
             fahrplan.append({
                 "zeit": zeit,
                 "linie": linie,
-                "ziel": ziel[:18],
+                "ziel": ziel,
                 "gleis": gleis,
                 "info": info,
                 "update": jetzt_zeit
             })
 
         if not fahrplan:
-            return [{"zeit": "00:00", "linie": "DB", "ziel": "Nächste Züge...", "gleis": "-", "info": jetzt_zeit}]
+            return [{"zeit": "INFO", "linie": "DB", "ziel": "Keine Züge", "gleis": "-", "info": jetzt_zeit}]
 
         return fahrplan[:6]
 
     except Exception as e:
-        return [{"zeit": "Error", "linie": "API", "ziel": str(e)[:15], "gleis": "", "info": ""}]
+        # Zeigt uns den genauen Fehler an, falls es immer noch kracht
+        return [{"zeit": "Error", "linie": "Final", "ziel": str(e)[:20], "gleis": "", "info": jetzt_zeit}]
 
 if __name__ == "__main__":
     daten = hole_daten()
