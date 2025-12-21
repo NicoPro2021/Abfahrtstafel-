@@ -5,10 +5,12 @@ from datetime import datetime, timedelta, timezone
 def hole_daten():
     u_zeit = (datetime.now(timezone.utc) + timedelta(hours=1)).strftime("%H:%M")
     
-    # JETZT FEST AUF ZERBST GEÄNDERT
+    # --- HIER IST DIE ÄNDERUNG ---
+    # Zerbst/Anhalt ID: 8010405
     station_id = "8010405" 
     
-    url = f"https://v6.db.transport.rest/stops/{station_id}/departures?results=20&duration=180&remarks=true"
+    # Erhöhte Dauer auf 180 Min, falls in Zerbst gerade wenig fährt
+    url = f"https://v6.db.transport.rest/stops/{station_id}/departures?results=15&duration=180&remarks=true"
 
     try:
         headers = {'User-Agent': 'Mozilla/5.0'}
@@ -21,10 +23,7 @@ def hole_daten():
 
         for dep in departures:
             linie = dep.get('line', {}).get('name', '???').replace(" ", "")
-            
-            # Filter: Alles was kein Zug ist, fliegt raus
-            if "Bus" in linie or "Tram" in linie:
-                continue
+            if "Bus" in linie: continue
 
             zeit_roh = dep.get('when') or dep.get('plannedWhen')
             if not zeit_roh: continue
@@ -36,18 +35,10 @@ def hole_daten():
             
             delay = dep.get('delay')
             info_text = ""
-            
             if dep.get('cancelled'):
                 info_text = "FÄLLT AUS!"
             elif delay and delay >= 60:
                 info_text = f"+{int(delay/60)}"
-            
-            # Suche nach Bauarbeiten oder Störungen
-            rems = dep.get('remarks', [])
-            for rm in rems:
-                if rm.get('type') == 'warning':
-                    info_text += f" {rm.get('summary', '')}"
-                    break
 
             fahrplan.append({
                 "zeit": soll_zeit,
@@ -59,12 +50,11 @@ def hole_daten():
                 "update": u_zeit
             })
 
-        # Sortieren nach echter Abfahrt
         fahrplan.sort(key=lambda x: x['echte_zeit'])
         return fahrplan[:10]
 
     except Exception as e:
-        return [{"zeit": "Err", "linie": "API", "ziel": "Zerbst", "gleis": "-", "info": str(e)[:15], "update": u_zeit}]
+        return [{"zeit": "Err", "linie": "API", "ziel": "Error", "gleis": "-", "info": str(e)[:10], "update": u_zeit}]
 
 if __name__ == "__main__":
     daten = hole_daten()
