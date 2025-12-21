@@ -3,7 +3,7 @@ name: DB-Fahrplan-Bot
 on:
   schedule:
     - cron: '*/5 * * * *'  # Startet alle 5 Minuten
-  workflow_dispatch:       # Ermöglicht manuellen Start
+  workflow_dispatch:       # Erlaubt manuellen Start
 
 jobs:
   build:
@@ -18,7 +18,7 @@ jobs:
           python-version: '3.9'
 
       - name: Installiere Abhängigkeiten
-        run: pip install requests
+        run: pip install requests beautifulsoup4
 
       - name: Starte den Scraper
         run: python bot.py
@@ -28,5 +28,5 @@ jobs:
           git config --global user.name 'GitHub Bot'
           git config --global user.email 'bot@github.com'
           git add daten.json
-          git commit -m "Fahrplan Update" || exit 0
+          git commit -m "Fahrplan Update von bahnhof.de" || exit 0
           git push
