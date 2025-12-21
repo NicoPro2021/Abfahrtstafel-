@@ -2,13 +2,12 @@ name: DB-Fahrplan-Bot
 
 on:
   schedule:
-    - cron: '*/5 * * * *'  # Läuft automatisch alle 5 Minuten
-  workflow_dispatch:       # Ermöglicht den manuellen Start per Button
+    - cron: '*/5 * * * *'  # Startet alle 5 Minuten
+  workflow_dispatch:       # Ermöglicht manuellen Start
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Code auschecken
         uses: actions/checkout@v3
