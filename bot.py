@@ -1,85 +1,58 @@
 import requests
 from bs4 import BeautifulSoup
 import json
-import os
-from datetime import datetime
 
-# Die URL für die Abfahrtstafel Zerbst/Anhalt
-# boardType=dep steht für Abfahrten (Departures)
-URL = "https://reiseauskunft.bahn.de/bin/bhftafel.exe/dn?input=Zerbst&boardType=dep&start=yes"
+# Die mobile Version der Abfahrtstafel (stabiler für Scraper)
+URL = "https://reiseauskunft.bahn.de/bin/bhftafel.exe/dn?L=vs_java3&start=yes&input=Zerbst"
 
-def scrape_bahn_data():
+def hole_daten():
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
     }
     
     try:
-        # 1. Webseite laden
-        print(f"Lade Daten von: {URL}")
         response = requests.get(URL, headers=headers, timeout=15)
-        response.raise_for_status()
-        
+        if response.status_code != 200:
+            return [{"zeit": "Error", "linie": "HTTP", "ziel": str(response.status_code), "gleis": "", "info": ""}]
+
         soup = BeautifulSoup(response.text, 'html.parser')
         fahrplan = []
-        
-        # 2. Suche die Tabellenzeilen für die Abfahrten
-        # Die Bahn nutzt IDs wie 'tr_res_0', 'tr_res_1' usw.
-        rows = soup.find_all('tr', id=lambda x: x and x.startswith('tr_res_'))
 
-        for row in rows[:6]: # Die nächsten 6 Abfahrten verarbeiten
-            # Zeit extrahieren
-            zeit_tag = row.find('td', class_='time')
-            zeit = zeit_tag.get_text(strip=True) if zeit_tag else "--:--"
+        # Bei der Java3-Ansicht liegen die Züge meist in <tr> Zeilen mit der Klasse 'list' oder direkt in der Tabelle
+        rows = soup.find_all('tr')
 
-            # Linie extrahieren (z.B. "RE 13")
-            linie_tag = row.find('td', class_='train')
-            linie = linie_tag.get_text(strip=True).replace(" ", "") if linie_tag else "???"
+        for row in rows:
+            cols = row.find_all('td')
+            # Eine gültige Zeile hat in dieser Ansicht meist Zeit, Zug, Ziel
+            if len(cols) >= 3:
+                zeit = cols[0].get_text(strip=True)
+                # Prüfen, ob im ersten Feld wirklich eine Uhrzeit steht (z.B. 14:05)
+                if ":" in zeit and len(zeit) <= 5:
+                    zug_linie = cols[1].get_text(strip=True).replace(" ", "")
+                    
+                    # Das Ziel und eventuelle Infos stehen oft zusammen im dritten Feld
+                    ziel_bereich = cols[2]
+                    # Eventuelle Verspätungen stehen oft in einem <span class="ris"> oder rot markiert
+                    info = ""
+                    ris_tag = ziel_bereich.find('span', class_='ris')
+                    if ris_tag:
+                        info = ris_tag.get_text(strip=True)
+                    
+                    # Das reine Ziel extrahieren (Text vor dem ersten Zeilenumbruch oder Link)
+                    ziel = ziel_bereich.find('a').get_text(strip=True) if ziel_bereich.find('a') else ziel_bereich.get_text(strip=True)
+                    
+                    # Gleis steht oft in der 4. Spalte, falls vorhanden
+                    gleis = ""
+                    if len(cols) >= 4:
+                        gleis = cols[3].get_text(strip=True)
 
-            # Ziel extrahieren (Der letzte Ort in der Route)
-            ziel_tag = row.find('td', class_='route')
-            if ziel_tag:
-                # Die Route enthält oft Zwischenhalte, wir nehmen den letzten
-                ziel_text = ziel_tag.get_text(" ", strip=True)
-                ziel = ziel_text.split("  ")[-1].strip()
-            else:
-                ziel = "Unbekannt"
+                    fahrplan.append({
+                        "zeit": zeit,
+                        "linie": zug_linie,
+                        "ziel": ziel,
+                        "gleis": gleis,
+                        "info": info
+                    })
 
-            # Gleis extrahieren
-            gleis_tag = row.find('td', class_='platform')
-            gleis = gleis_tag.get_text(strip=True) if gleis_tag else "-"
-
-            # Information (Verspätung / Ausfall)
-            info_tag = row.find('td', class_='ris')
-            info = ""
-            if info_tag:
-                info = info_tag.get_text(" ", strip=True)
-                # Kürzen für das Display, falls es zu lang wird
-                info = info.replace("pünktlich", "").strip()
-
-            fahrplan.append({
-                "zeit": zeit,
-                "linie": linie,
-                "ziel": ziel,
-                "gleis": gleis,
-                "info": info
-            })
-            
-        return fahrplan
-
-    except Exception as e:
-        print(f"Fehler aufgetreten: {e}")
-        return None
-
-# 3. Hauptprogramm
-if __name__ == "__main__":
-    zug_daten = scrape_bahn_data()
-    
-    if zug_daten:
-        # In daten.json speichern
-        with open('daten.json', 'w', encoding='utf-8') as f:
-            json.dump(zug_daten, f, ensure_ascii=False, indent=4)
-        
-        print(f"Erfolgreich aktualisiert am {datetime.now().strftime('%H:%M:%S')}")
-        print(f"Anzahl der Züge: {len(zug_daten)}")
-    else:
-        print("Konnte keine Daten extrahieren.")
+        # Falls der Scraper gar nichts findet, geben wir eine Info aus
+        if not fahrplan:
