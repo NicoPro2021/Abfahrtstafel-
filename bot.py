@@ -1,52 +1,66 @@
 import requests
 import json
 import urllib3
-import time
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-# Wir nutzen jetzt die stabile HAFAS-Schnittstelle von Jurebus (sehr zuverlässig für DB)
-URL = "https://db.jurebus.de/api/v1/station/8006654/departures"
+# Zerbst/Anhalt ID
+STATION_ID = "8006654"
+# Die stabilste öffentliche Schnittstelle
+URL = f"https://v6.db.transport.rest/stops/{STATION_ID}/departures?duration=120&results=6"
 
 def hole_daten():
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-    }
-    
-    # Maximal 3 Versuche bei einem 503 Fehler
-    for i in range(3):
-        try:
-            response = requests.get(URL, headers=headers, timeout=20, verify=False)
-            
-            if response.status_code == 200:
-                data = response.json()
-                fahrplan = []
-
-                # Die Struktur dieser API ist sehr einfach (Liste von Zügen)
-                for dep in data[:6]:
-                    fahrplan.append({
-                        "zeit": dep.get('time', '--:--'),
-                        "linie": dep.get('train', '???').replace(" ", ""),
-                        "ziel": dep.get('destination', 'Unbekannt')[:18],
-                        "gleis": str(dep.get('platform', '-')),
-                        "info": dep.get('delay', '')
-                    })
-                return fahrplan
-
-            if response.status_code == 503:
-                print(f"Server überlastet (503), Versuch {i+1} von 3...")
-                time.sleep(5) # Kurz warten vor Neustart
-                continue
-
+    try:
+        # Wir fragen die API ab
+        response = requests.get(URL, timeout=15)
+        
+        if response.status_code != 200:
             return [{"zeit": "Err", "linie": "HTTP", "ziel": str(response.status_code), "gleis": "", "info": ""}]
 
-        except Exception as e:
-            return [{"zeit": "Error", "linie": "API", "ziel": str(e)[:15], "gleis": "", "info": ""}]
+        data = response.json()
+        # Die Daten liegen bei dieser API im Feld 'departures'
+        departures = data.get('departures', [])
+        
+        fahrplan = []
+
+        for dep in departures:
+            # Zeit extrahieren (Format: 2023-12-21T16:30:00+01:00)
+            zeit_raw = dep.get('when') or dep.get('plannedWhen')
+            zeit = zeit_raw.split('T')[1][:5] if zeit_raw else "--:--"
             
-    return [{"zeit": "Err", "linie": "DB", "ziel": "503-Timeout", "gleis": "", "info": ""}]
+            # Linie (z.B. RE13)
+            linie = dep.get('line', {}).get('name', '???')
+            
+            # Ziel
+            ziel = dep.get('direction', 'Unbekannt')
+            
+            # Gleis
+            gleis = dep.get('platform') or "-"
+            
+            # Verspätung in Minuten
+            delay = dep.get('delay')
+            info = ""
+            if delay is not None:
+                info = f"+{int(delay/60)}" if delay > 0 else "pünktlich"
+
+            fahrplan.append({
+                "zeit": zeit,
+                "linie": linie,
+                "ziel": ziel[:18],
+                "gleis": str(gleis),
+                "info": info
+            })
+
+        if not fahrplan:
+            return [{"zeit": "00:00", "linie": "DB", "ziel": "Keine Züge", "gleis": "-", "info": ""}]
+            
+        return fahrplan
+
+    except Exception as e:
+        return [{"zeit": "Error", "linie": "API", "ziel": str(e)[:15], "gleis": "", "info": ""}]
 
 if __name__ == "__main__":
     aktuelle_daten = hole_daten()
     with open('daten.json', 'w', encoding='utf-8') as f:
         json.dump(aktuelle_daten, f, ensure_ascii=False, indent=4)
-    print("Update beendet.")
+    print("Fertig!")
