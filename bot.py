@@ -7,25 +7,13 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def hole_daten():
     jetzt_zeit = datetime.now().strftime("%H:%M")
-    
     try:
-        # SCHRITT 1: Wir suchen die aktuell gültige ID für Zerbst
-        search_url = "https://v6.db.transport.rest/locations?query=Zerbst&results=1"
-        s_res = requests.get(search_url, timeout=15, verify=False)
-        
-        if s_res.status_code == 200 and len(s_res.json()) > 0:
-            station_id = s_res.json()[0].get('id')
-        else:
-            station_id = "8006654" # Fallback auf Standard-ID
-
-        # SCHRITT 2: Abfahrten laden
-        url = f"https://v6.db.transport.rest/stops/{station_id}/departures?results=10&duration=120"
-        t_url = f"{url}&t={int(datetime.now().timestamp())}"
-        
-        response = requests.get(t_url, timeout=15, verify=False)
+        # Wir suchen Zerbst und laden Abfahrten inkl. Bemerkungen (remarks)
+        url = "https://v6.db.transport.rest/stops/8006654/departures?results=6&duration=120&remarks=true"
+        response = requests.get(url, timeout=15, verify=False)
         
         if response.status_code != 200:
-            return [{"zeit": "Err", "linie": "HTTP", "ziel": str(response.status_code), "gleis": "-", "info": jetzt_zeit}]
+            return [{"zeit": "Err", "linie": "HTTP", "ziel": "Fehler", "gleis": "-", "info": jetzt_zeit}]
 
         data = response.json()
         departures = data.get('departures', [])
@@ -33,7 +21,6 @@ def hole_daten():
         fahrplan = []
         for dep in departures:
             linie = dep.get('line', {}).get('name', '???').replace(" ", "")
-            # Kassel-Daten (RT4) hart ignorieren
             if "RT" in linie: continue
 
             w = dep.get('when') or dep.get('plannedWhen', '')
@@ -41,8 +28,20 @@ def hole_daten():
             ziel = dep.get('direction', 'Unbekannt')[:18]
             gleis = str(dep.get('platform') or "-")
             
+            # --- NEU: Verspätungsgrund suchen ---
+            grund = ""
+            remarks = dep.get('remarks', [])
+            for r in remarks:
+                if r.get('type') == 'hint' or r.get('type') == 'warning':
+                    grund = r.get('text', '')
+                    break # Wir nehmen den ersten wichtigen Grund
+
             delay = dep.get('delay')
-            info = f"+{int(delay/60)}" if delay and delay > 0 else "pünktlich"
+            if delay and delay > 0:
+                # Wenn ein Grund da ist, nimm den, sonst die Minuten
+                info = grund if grund else f"+{int(delay/60)} Min"
+            else:
+                info = "pünktlich"
 
             fahrplan.append({
                 "zeit": zeit,
@@ -53,10 +52,7 @@ def hole_daten():
                 "update": jetzt_zeit
             })
 
-        if not fahrplan:
-            return [{"zeit": "Noch", "linie": "Keine", "ziel": "Züge gefunden", "gleis": "-", "info": jetzt_zeit}]
-
-        return fahrplan[:6]
+        return fahrplan if fahrplan else [{"zeit": "00:00", "linie": "DB", "ziel": "Keine Züge", "gleis": "-", "info": jetzt_zeit}]
 
     except Exception as e:
         return [{"zeit": "Error", "linie": "API", "ziel": str(e)[:15], "gleis": "", "info": jetzt_zeit}]
