@@ -3,27 +3,30 @@ import json
 from datetime import datetime, timedelta, timezone
 
 def hole_daten():
-    # 1. Aktuelle Zeit in UTC holen
-    jetzt_utc = datetime.now(timezone.utc)
-    # Zeitstempel für das Display (Berlin Zeit)
-    update_zeit = (jetzt_utc + timedelta(hours=1)).strftime("%H:%M")
-    
     try:
-        # Deine Station (Wannsee: 8010358 | Zerbst: 8010405)
+        # Station ID (Wannsee: 8010358 | Zerbst: 8010405)
         station_id = "8010358" 
         
-        # API Abfrage
-        url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=120&remarks=true&language=de"
+        # Wir fragen nach einem großen Zeitraum (240 Min), um Lücken zu vermeiden
+        url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=240&remarks=true&language=de"
         r = requests.get(url, timeout=15)
         data = r.json()
         departures = data.get('departures', [])
         
-        fahrplan = []
+        # Wir nehmen die Zeit direkt vom API-Server als Referenz ("jetzt")
+        # Falls die API keine Zeit liefert, nehmen wir UTC
+        jetzt_str = r.headers.get('Date')
+        if jetzt_str:
+            jetzt_ref = datetime.strptime(jetzt_str, '%a, %d %b %Y %H:%M:%S %Z').replace(tzinfo=timezone.utc)
+        else:
+            jetzt_ref = datetime.now(timezone.utc)
+
+        # Deutsche Anzeigezeit für das Display
+        u_zeit = (jetzt_ref + timedelta(hours=1)).strftime("%H:%M")
         
-        # --- DER FILTER ---
-        # Wir lassen nur Züge zu, die JETZT oder in der ZUKUNFT abfahren.
-        # Ein Puffer von 1 Minute ist okay, falls man gerade am Bahnsteig steht.
-        puffer = jetzt_utc - timedelta(minutes=1)
+        fahrplan = []
+        # Wir zeigen Züge, die ab JETZT fahren (minus 2 Min Puffer)
+        puffer = jetzt_ref - timedelta(minutes=2)
 
         for dep in departures:
             zeit_str = dep.get('when')
@@ -31,17 +34,16 @@ def hole_daten():
             
             abfahrt_obj = datetime.fromisoformat(zeit_str.replace('Z', '+00:00'))
             
-            # Wenn der Zug schon abgefahren ist -> Überspringen
+            # STRENGER FILTER: Abgelaufene Züge sofort raus
             if abfahrt_obj < puffer:
                 continue
 
-            # Daten extrahieren
             linie = dep.get('line', {}).get('name', '???').replace(" ", "")
             soll_w = dep.get('plannedWhen')
             soll_zeit = soll_w.split('T')[1][:5] if soll_w else "--:--"
             ist_zeit = zeit_str.split('T')[1][:5]
             
-            # Infos/Gründe sammeln
+            # Remarks sammeln
             hinweise = []
             for rm in dep.get('remarks', []):
                 if rm.get('type') in ['hint', 'status']:
@@ -52,7 +54,6 @@ def hole_daten():
             grund = " | ".join(hinweise)
             delay = dep.get('delay')
             
-            # Info-Text bauen
             if dep.get('cancelled'):
                 info_text = f"FÄLLT AUS! {grund}".strip()
             elif delay and delay >= 60:
@@ -67,14 +68,17 @@ def hole_daten():
                 "ziel": dep.get('direction', 'Ziel unbekannt')[:20],
                 "gleis": str(dep.get('platform') or dep.get('plannedPlatform') or "-"),
                 "info": info_text,
-                "update": update_zeit
+                "update": u_zeit
             })
 
-        # --- SORTIERUNG ---
-        # Wichtig: Wir sortieren nach der ECHTEN Zeit (inkl. Verspätung)
+        # Nach ECHTER Zeit sortieren
         fahrplan.sort(key=lambda x: x['echte_zeit'])
         
-        return fahrplan[:15] # Nur die nächsten 15 Züge
+        # Falls die Liste leer ist (z.B. nachts), zeigen wir eine Info an
+        if not fahrplan:
+             return [{"zeit": "--:--", "linie": "DB", "ziel": "Keine Zuege", "gleis": "-", "info": "Betriebspause", "update": u_zeit}]
+
+        return fahrplan[:15]
 
     except Exception as e:
         return [{"zeit": "Err", "linie": "Bot", "ziel": "Fehler", "gleis": "-", "info": str(e)[:20]}]
