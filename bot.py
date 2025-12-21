@@ -1,61 +1,60 @@
 import requests
 from bs4 import BeautifulSoup
 import json
-import time
 
-URL = "https://www.bahnhof.de/zerbst-anhalt/abfahrt"
+# Die echte Webseite für Zerbst/Anhalt
+URL = "https://reiseauskunft.bahn.de/bin/bhftafel.exe/dn?input=Zerbst&boardType=dep&start=yes"
 
-def hole_daten():
+def scrape_bahn():
     try:
-        # Wir tarnen den Bot als echten Browser
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36'
-        }
-        response = requests.get(URL, headers=headers, timeout=15)
-        response.raise_for_status()
-        
+        # Website aufrufen
+        response = requests.get(URL, timeout=15)
         soup = BeautifulSoup(response.text, 'html.parser')
-        ergebnis = []
         
-        # Auf bahnhof.de liegen die Züge in 'arrival-departure-card' Elementen
-        eintraege = soup.find_all('div', class_='arrival-departure-card')
+        fahrplan = []
+        # Suche alle Zeilen der Abfahrtstabelle
+        rows = soup.find_all('tr', id=lambda x: x and x.startswith('tr_res_'))
 
-        for eintrag in eintraege[:8]:
-            try:
-                # Zeit extrahieren
-                zeit = eintrag.find('span', class_='arrival-departure-card__time').text.strip()
-                # Linie/Zugnummer (z.B. RE 13)
-                linie = eintrag.find('span', class_='arrival-departure-card__train-number').text.strip()
-                # Zielbahnhof
-                ziel = eintrag.find('span', class_='arrival-departure-card__direction').text.strip()
-                # Gleis (falls vorhanden)
-                gleis_el = eintrag.find('span', class_='arrival-departure-card__platform')
-                gleis = gleis_el.text.replace('Gl.', '').strip() if gleis_el else "--"
-                # Verspätungsinfo (z.B. "+ 5 min")
-                info_el = eintrag.find('span', class_='arrival-departure-card__delay')
-                info = info_el.text.strip() if info_el else ""
+        for row in rows[:5]: # Die nächsten 5 Abfahrten
+            # Zeit extrahieren
+            zeit_raw = row.find('td', class_='time')
+            zeit = zeit_raw.get_text(strip=True) if zeit_raw else "--:--"
 
-                ergebnis.append({
-                    "zeit": zeit,
-                    "linie": linie,
-                    "ziel": ziel,
-                    "gleis": gleis,
-                    "info": info
-                })
-            except Exception:
-                continue 
+            # Linie extrahieren (z.B. RE 13)
+            linie_raw = row.find('td', class_='train')
+            linie = linie_raw.get_text(strip=True).replace(" ", "") if linie_raw else "???"
 
-        if ergebnis:
-            with open('daten.json', 'w', encoding='utf-8') as f:
-                json.dump(ergebnis, f, ensure_ascii=False, indent=4)
-            print("Erfolgreich von bahnhof.de gelesen.")
-            return True
+            # Ziel extrahieren
+            ziel_raw = row.find('td', class_='route')
+            # Nur das letzte Wort/Ziel nehmen
+            ziel = ziel_raw.get_text(" ", strip=True).split("  ")[-1].strip() if ziel_raw else "Unbekannt"
+
+            # Gleis extrahieren
+            gleis_raw = row.find('td', class_='platform')
+            gleis = gleis_raw.get_text(strip=True) if gleis_raw else "-"
+
+            # Info / Verspätung / Ausfall
+            info_raw = row.find('td', class_='ris')
+            info = info_raw.get_text(" ", strip=True) if info_raw else ""
+
+            fahrplan.append({
+                "zeit": zeit,
+                "linie": linie,
+                "ziel": ziel,
+                "gleis": gleis,
+                "info": info
+            })
+            
+        return fahrplan
     except Exception as e:
-        print(f"Fehler: {e}")
-        return False
+        print(f"Fehler beim Scraping: {e}")
+        return []
 
-# 4-Minuten-Schleife für Live-Gefühl
-start_zeit = time.time()
-while time.time() - start_zeit < 240:
-    hole_daten()
-    time.sleep(30)
+# Daten holen und als daten.json speichern
+data = scrape_bahn()
+if data:
+    with open('daten.json', 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
+    print("Daten erfolgreich von DB-Webseite geholt!")
+else:
+    print("Keine Daten gefunden. Überprüfe die URL oder Struktur.")
