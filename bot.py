@@ -4,44 +4,49 @@ from datetime import datetime, timedelta, timezone
 
 def hole_daten():
     try:
-        # Station ID (Wannsee: 8010358 | Zerbst: 8010405)
+        # 1. Station ID (8010358 ist Berlin-Wannsee, 8010405 ist Zerbst)
+        # Überprüfe bitte, ob diese ID für deinen Teststandort korrekt ist!
         station_id = "8010358" 
         
-        # Wir fragen die API nach Abfahrten (results=15 holt die nächsten 15)
-        url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=120&results=15&remarks=true&language=de"
+        # 2. Die Anfrage: Wir nehmen einfach die nächsten 15 Ergebnisse
+        # Ohne Zeitfilter, ohne Duration-Tricks
+        url = f"https://v6.db.transport.rest/stops/{station_id}/departures?results=15&remarks=true&language=de"
+        
         r = requests.get(url, timeout=15)
+        r.raise_for_status() # Fehler werfen, falls API nicht erreichbar
         data = r.json()
         departures = data.get('departures', [])
         
-        # Zeitstempel für das Display-Update
-        u_zeit = datetime.now(timezone(timedelta(hours=1))).strftime("%H:%M")
+        # Update-Zeit für dein Display (Berlin Zeit)
+        u_zeit = (datetime.now(timezone.utc) + timedelta(hours=1)).strftime("%H:%M")
         
         fahrplan = []
 
         for dep in departures:
-            zeit_str = dep.get('when')
-            if not zeit_str: continue
+            # Zeit einfach als Text ausschneiden (Format: 2024-05-20T18:45:00...)
+            # Wir nehmen nur die Zeichen von Stelle 11 bis 16 für die Uhrzeit
+            zeit_roh = dep.get('when') or dep.get('plannedWhen')
+            if not zeit_roh: continue
+            ist_zeit = zeit_roh.split('T')[1][:5]
             
-            # Wir extrahieren die Zeit einfach als Text, ohne strengen Filter
-            # Das verhindert, dass die Liste durch Zeitzonen-Fehler leer wird
-            ist_zeit = zeit_str.split('T')[1][:5]
-            
-            soll_w = dep.get('plannedWhen')
-            soll_zeit = soll_w.split('T')[1][:5] if soll_w else ist_zeit
+            soll_roh = dep.get('plannedWhen')
+            soll_zeit = soll_roh.split('T')[1][:5] if soll_roh else ist_zeit
             
             linie = dep.get('line', {}).get('name', '???').replace(" ", "")
             
-            # Remarks / Gründe sammeln
+            # --- Gründe/Remarks sammeln ---
             hinweise = []
             for rm in dep.get('remarks', []):
                 if rm.get('type') in ['hint', 'status']:
                     t = rm.get('text', '').strip()
+                    # Nur wichtige Texte, keine Fahrrad-Infos
                     if t and "Fahrrad" not in t and t not in hinweise:
                         hinweise.append(t)
             
             grund = " | ".join(hinweise)
             delay = dep.get('delay')
             
+            # Info-Text zusammenbauen
             if dep.get('cancelled'):
                 info_text = f"FÄLLT AUS! {grund}".strip()
             elif delay and delay >= 60:
@@ -59,9 +64,9 @@ def hole_daten():
                 "update": u_zeit
             })
 
-        # Wenn trotzdem leer, dann liegt es an der API
+        # Falls die Liste immer noch leer ist, liegt es an der ID
         if not fahrplan:
-             return [{"zeit": "--:--", "linie": "DB", "ziel": "Keine Daten", "gleis": "-", "info": "API leer", "update": u_zeit}]
+             return [{"zeit": "Err", "linie": "ID?", "ziel": "Keine Daten", "gleis": "-", "info": f"ID {station_id} prüfen", "update": u_zeit}]
 
         return fahrplan
 
