@@ -3,7 +3,7 @@ import json
 import time
 
 # URL für Zerbst/Anhalt
-URL = "https://db-live-abfahrt.herokuapp.com/api/v1/station/Zerbst(Anhalt)"
+URL = "https://www.bahnhof.de/zerbst-anhalt/abfahrt"
 
 def hole_daten():
     try:
