@@ -3,12 +3,11 @@ import json
 from datetime import datetime, timedelta, timezone
 
 def hole_daten():
-    # Deutsche Zeit erzwingen
     u_zeit = (datetime.now(timezone.utc) + timedelta(hours=1)).strftime("%H:%M")
     
-    # STATION ID FÜR ZERBST/ANHALT: 8010405
-    # (Wannsee wäre 8010358 - wir nutzen hier 8010405!)
-    url = "https://v6.db.transport.rest/stops/8010405/departures?results=15&duration=240&remarks=true"
+    # STATION ID FÜR ZERBST: 8010405
+    # Wir benutzen hier KEINE Variable mehr, sondern schreiben die ID direkt in den Link!
+    url = "https://v6.db.transport.rest/stops/8010405/departures?results=15&duration=240"
 
     try:
         r = requests.get(url, timeout=15)
@@ -20,7 +19,7 @@ def hole_daten():
 
         for dep in departures:
             linie = dep.get('line', {}).get('name', '???').replace(" ", "")
-            if "Bus" in linie: continue # Keine Busse
+            if "Bus" in linie: continue 
 
             zeit_roh = dep.get('when') or dep.get('plannedWhen')
             soll_zeit = zeit_roh.split('T')[1][:5]
@@ -38,9 +37,14 @@ def hole_daten():
                 "info": info,
                 "update": u_zeit
             })
+        
+        # Falls die Liste leer ist (Nacht), zeige das an:
+        if not fahrplan:
+            return [{"zeit": u_zeit, "linie": "INFO", "ziel": "Kein Zug", "gleis": "-", "info": ""}]
+            
         return fahrplan[:10]
     except:
-        return [{"zeit": "Err", "linie": "Bot", "ziel": "Zerbst-Error", "gleis": "-", "info": "", "update": u_zeit}]
+        return [{"zeit": "Err", "linie": "Bot", "ziel": "Zerbst-Error", "gleis": "-", "info": ""}]
 
 if __name__ == "__main__":
     with open('daten.json', 'w', encoding='utf-8') as f:
