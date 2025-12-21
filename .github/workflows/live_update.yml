@@ -1,9 +1,8 @@
 name: Bahn Update Loop
-
 on:
-  schedule:
-    - cron: '*/5 * * * *' # Startet alle 5 Minuten neu
   workflow_dispatch: # Erlaubt manuellen Start
+  watch:             # Startet, wenn du das Repository "sternst" (Star)
+  push:              # Startet bei jeder Code-Änderung
 
 jobs:
   update:
@@ -20,29 +19,27 @@ jobs:
       - name: Install Dependencies
         run: pip install requests
 
-      - name: Run Update Loop
+      - name: Run 20 Minute Loop
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
           
-          # Die Schleife läuft 5 Mal (ca. alle 60 Sek für 5 Min)
-          for i in {1..5}
+          # Die Schleife läuft 20 Mal (20 Minuten lang jede Minute)
+          for i in {1..20}
           do
-            echo "Durchlauf $i: Hole Daten..."
             python bot.py
-            
-            # Prüfen ob sich die daten.json geändert hat
             if [[ -n $(git status -s daten.json) ]]; then
               git add daten.json
               git commit -m "Update Zerbst $i"
               git push
-              echo "Daten aktualisiert und gepusht."
-            else
-              echo "Keine Änderungen in den Daten."
             fi
-            
-            if [ $i -lt 5 ]; then
-              echo "Warte 60 Sekunden..."
-              sleep 60
-            fi
+            sleep 60
           done
+
+      - name: Restart Workflow
+        # Dieser Befehl triggert den Workflow nach Ende sofort wieder neu
+        run: |
+          curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          https://api.github.com/repos/${{ github.repository }}/actions/workflows/bahn.yml/dispatches \
+          -d '{"ref":"main"}'
