@@ -1,32 +1,32 @@
-name: DB Live Update
+name: Bahn Update
 
 on:
   schedule:
-    - cron: '*/5 * * * *' # Alle 5 Minuten
-  workflow_dispatch: # Erlaubt manuelles Starten
+    - cron: '*/5 * * * *'  # Alle 5 Minuten automatisch
+  workflow_dispatch:       # Knopf zum manuellen Starten
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Setup Python
+      - name: Python Setup
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
 
-      - name: Install dependencies
-        run: pip install requests
+      - name: Werkzeuge installieren
+        run: |
+          pip install requests pyhafas
 
-      - name: Run Update Script
-        run: python update_data.py
+      - name: Bot ausführen
+        run: python bot.py
 
-      - name: Commit and Push
+      - name: Daten speichern
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
           git add daten.json
-          git commit -m "Automatisches Live-Update der Abfahrten" || exit 0
+          git commit -m "Update" || exit 0
           git push
