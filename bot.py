@@ -6,78 +6,66 @@ from datetime import datetime
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def hole_daten():
-    jetzt = datetime.now()
-    update_zeit = jetzt.strftime("%H:%M")
-    
-    # Exakte Koordinaten Bahnhof Zerbst/Anhalt
-    LAT = "51.960"
-    LON = "12.083"
+    jetzt = datetime.now().strftime("%H:%M")
+    # Wir nutzen den stabilsten Endpunkt der DB direkt
+    # duration=120 (2 Stunden), remarks=true (Gründe)
+    url = "https://db.transport.rest/stops/8006654/departures?duration=120&remarks=true"
     
     try:
-        # Schritt 1: Finde die Abfahrten direkt über GPS-Koordinaten
-        url = f"https://v5.db.transport.rest/stops/nearby?latitude={LAT}&longitude={LON}&results=1&distance=500"
-        stations = requests.get(url, verify=False, timeout=15).json()
+        # Wir fügen einen Zeitstempel hinzu, um den Cache zu zwingen
+        res = requests.get(f"{url}&t={int(datetime.now().timestamp())}", timeout=15, verify=False)
         
-        if not stations:
-            return [{"zeit": "Err", "linie": "GPS", "ziel": "Ort nicht gef.", "gleis": "-", "info": update_zeit}]
-        
-        # Die erste gefundene Station nehmen (sollte Zerbst sein)
-        station_id = stations[0]['id']
-        
-        # Schritt 2: Abfahrten mit Verspätungsgründen (remarks) laden
-        dep_url = f"https://v5.db.transport.rest/stops/{station_id}/departures?duration=120&remarks=true&results=10"
-        response = requests.get(f"{dep_url}&t={int(jetzt.timestamp())}", verify=False, timeout=15)
-        
-        data = response.json()
-        departures = data if isinstance(data, list) else data.get('departures', [])
+        # Falls die API leer antwortet oder spinnt
+        if res.status_code != 200:
+            return [{"zeit": "Err", "linie": "DB", "ziel": "Server Busy", "gleis": "-", "info": jetzt}]
+
+        data = res.json()
+        # Falls die API uns wieder nach Kassel schickt (RT4), filtern wir das hier hart weg
+        departures = [d for d in data.get('departures', []) if "RT" not in d.get('line', {}).get('name', '')]
         
         fahrplan = []
         for dep in departures:
-            # Linie (z.B. RE13)
-            linie = dep.get('line', {}).get('name', '???').replace(" ", "")
+            # Zeit & Verspätung
+            p_time = dep.get('plannedWhen', '')
+            zeit = p_time.split('T')[1][:5] if 'T' in p_time else "--:--"
             
-            # WICHTIG: Erneuter Filter gegen Kassel-Fehlleitungen
-            if "RT" in linie or "Kassel" in dep.get('direction', ''):
-                continue
-
-            w = dep.get('when') or dep.get('plannedWhen', '')
-            zeit = w.split('T')[1][:5] if 'T' in w else "--:--"
+            linie = dep.get('line', {}).get('name', '???').replace(" ", "")
             ziel = dep.get('direction', 'Unbekannt')[:18]
             gleis = str(dep.get('platform') or "-")
             
-            # --- Verspätungsgründe (Remarks) ---
+            # --- Verspätungsgründe ---
             delay = dep.get('delay')
             remarks = dep.get('remarks', [])
             
-            wichtige_info = ""
+            # Wir suchen den Text für den Grund
+            grund = ""
             for r in remarks:
                 if r.get('type') == 'warning':
-                    wichtige_info = r.get('summary') or r.get('text', '')
+                    grund = r.get('summary') or r.get('text', '')
                     break
             
             info_text = "pünktlich"
             if delay and delay > 0:
-                minuten = f"+{int(delay/60)}"
-                info_text = f"{minuten} {wichtige_info}".strip()
-            elif wichtige_info:
-                info_text = wichtige_info
+                info_text = f"+{int(delay/60)} {grund}".strip()
+            elif grund:
+                info_text = grund
 
             fahrplan.append({
                 "zeit": zeit,
                 "linie": linie,
                 "ziel": ziel,
                 "gleis": gleis,
-                "info": info_text[:40],
-                "update": update_zeit
+                "info": info_text[:35], # Begrenzt für das Display
+                "update": jetzt
             })
 
         if not fahrplan:
-            return [{"zeit": "Check", "linie": "DB", "ziel": "Suche RE13...", "gleis": "-", "info": update_zeit}]
+            return [{"zeit": "Check", "linie": "DB", "ziel": "Kein Zug gef.", "gleis": "-", "info": jetzt}]
 
         return fahrplan[:6]
 
     except Exception as e:
-        return [{"zeit": "Error", "linie": "API", "ziel": str(e)[:15], "gleis": "-", "info": update_zeit}]
+        return [{"zeit": "Error", "linie": "API", "ziel": "Retry...", "gleis": "-", "info": jetzt}]
 
 if __name__ == "__main__":
     daten = hole_daten()
