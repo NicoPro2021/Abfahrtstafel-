@@ -1,34 +1,48 @@
-name: Bahn Update
+name: Bahn Update Loop
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
-  workflow_dispatch:
+    - cron: '*/5 * * * *' # Startet alle 5 Minuten neu
+  workflow_dispatch: # Erlaubt manuellen Start
 
 jobs:
-  build:
+  update:
     runs-on: ubuntu-latest
     steps:
-      - name: Code laden
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Python vorbereiten
+      - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'
+          python-version: '3.x'
 
-      - name: Werkzeuge installieren
-        run: |
-          python -m pip install --upgrade pip
-          pip install requests pyhafas
+      - name: Install Dependencies
+        run: pip install requests
 
-      - name: Bot ausführen
-        run: python bot.py
-
-      - name: Daten speichern
+      - name: Run Update Loop
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
-          git add daten.json
-          git commit -m "Update" || exit 0
-          git push
+          
+          # Die Schleife läuft 5 Mal (ca. alle 60 Sek für 5 Min)
+          for i in {1..5}
+          do
+            echo "Durchlauf $i: Hole Daten..."
+            python bot.py
+            
+            # Prüfen ob sich die daten.json geändert hat
+            if [[ -n $(git status -s daten.json) ]]; then
+              git add daten.json
+              git commit -m "Update Zerbst $i"
+              git push
+              echo "Daten aktualisiert und gepusht."
+            else
+              echo "Keine Änderungen in den Daten."
+            fi
+            
+            if [ $i -lt 5 ]; then
+              echo "Warte 60 Sekunden..."
+              sleep 60
+            fi
+          done
