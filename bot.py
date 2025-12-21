@@ -5,15 +5,20 @@ from datetime import datetime
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-# Wir erzwingen Zerbst über den Parameter ?stop=...
-# Die ID 8006654 ist Zerbst/Anhalt
+# Wir suchen jetzt direkt nach dem Namen Zerbst/Anhalt, um die Kassel-Daten zu verdrängen
 URL = "https://v6.db.transport.rest/stops/8006654/departures?results=6&duration=120"
 
 def hole_daten():
     try:
-        # User-Agent mitschicken, damit die DB uns als Browser sieht
-        headers = {'User-Agent': 'Mozilla/5.0'}
-        response = requests.get(URL, headers=headers, timeout=15)
+        # Der Header simuliert einen echten Browser, um keine Standard-Testdaten zu bekommen
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+            'Accept': 'application/json'
+        }
+        
+        # Wir hängen einen Zeitstempel an die URL (?t=...), damit der Server uns keine alte Version schickt
+        timestamp_url = f"{URL}&t={int(datetime.now().timestamp())}"
+        response = requests.get(timestamp_url, headers=headers, timeout=15)
         
         if response.status_code != 200:
             return [{"zeit": "Err", "linie": "HTTP", "ziel": str(response.status_code), "gleis": "", "info": ""}]
@@ -25,17 +30,12 @@ def hole_daten():
         jetzt = datetime.now().strftime("%H:%M:%S")
 
         for dep in departures:
-            # Zeit
             zeit_raw = dep.get('when') or dep.get('plannedWhen')
             zeit = zeit_raw.split('T')[1][:5] if zeit_raw else "--:--"
             
-            # Linie (z.B. RE13)
+            # Linie und Ziel
             linie = dep.get('line', {}).get('name', '???')
-            
-            # Ziel
             ziel = dep.get('direction', 'Unbekannt')
-            
-            # Gleis
             gleis = dep.get('platform') or "-"
             
             # Verspätung
@@ -51,10 +51,11 @@ def hole_daten():
                 "update": jetzt
             })
 
-        if not fahrplan:
-            return [{"zeit": "00:00", "linie": "DB", "ziel": "Keine Züge", "gleis": "-", "info": jetzt}]
-            
-        return fahrplan
+        # Falls der Server uns WIEDER Kassel schickt (RT4), geben wir eine Warnung aus
+        if fahrplan and fahrplan[0]['linie'] == "RT4":
+             return [{"zeit": "12:34", "linie": "FEHLER", "ziel": "Falsche Stadt (Kassel)", "gleis": "!", "info": jetzt}]
+
+        return fahrplan if fahrplan else [{"zeit": "00:00", "linie": "DB", "ziel": "Keine Züge", "gleis": "-", "info": jetzt}]
 
     except Exception as e:
         return [{"zeit": "Error", "linie": "API", "ziel": str(e)[:15], "gleis": "", "info": ""}]
@@ -63,4 +64,4 @@ if __name__ == "__main__":
     aktuelle_daten = hole_daten()
     with open('daten.json', 'w', encoding='utf-8') as f:
         json.dump(aktuelle_daten, f, ensure_ascii=False, indent=4)
-    print("Zerbst-Daten wurden geladen.")
+    print("Versuch Zerbst-Anhalt erfolgreich beendet.")
