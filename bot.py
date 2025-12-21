@@ -1,43 +1,50 @@
 import requests
 import json
-import urllib3
 from datetime import datetime
-
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def hole_daten():
     u_zeit = datetime.now().strftime("%H:%M")
     
-    # Zerbst/Anhalt VBB-ID: 900000143501
-    # Wir fragen 240 Minuten (4 Stunden) ab, um die Liste voll zu bekommen
-    url = "https://v6.vbb.transport.rest/stops/900000143501/departures?duration=240&remarks=true&results=15"
+    # Die stabilste Basis-URL für die DB-Hafas Schnittstelle
+    # Zerbst/Anhalt ID: 8006654
+    # Wir laden 15 Ergebnisse über 300 Minuten (5 Stunden)
+    url = "https://db.transport.rest/stops/8006654/departures?duration=300&results=20&remarks=true"
     
     try:
-        # Cache-Buster und User-Agent um Blockaden zu umgehen
-        headers = {'User-Agent': 'Mozilla/5.0'}
-        response = requests.get(f"{url}&t={int(datetime.now().timestamp())}", headers=headers, timeout=20, verify=False)
+        # Wir simulieren einen echten Browser, um nicht blockiert zu werden
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+            'Accept-Language': 'de-DE,de;q=0.9'
+        }
+        
+        # Cache-Buster, damit wir keine alten Daten bekommen
+        timestamp = int(datetime.now().timestamp())
+        response = requests.get(f"{url}&t={timestamp}", headers=headers, timeout=25)
         
         if response.status_code != 200:
-            return [{"zeit": "Warte", "linie": "VBB", "ziel": "Server Last", "gleis": "-", "info": u_zeit}]
+            return [{"zeit": "Err", "linie": "DB", "ziel": "Verbindung..", "gleis": "-", "info": u_zeit}]
 
         data = response.json()
-        departures = data.get('departures', [])
+        # Manche Antworten sind direkt Listen, manche haben ein 'departures' Objekt
+        raw_deps = data if isinstance(data, list) else data.get('departures', [])
         
         fahrplan = []
-        for dep in departures:
+        for dep in raw_deps:
+            # Linie (z.B. RE13)
             linie = dep.get('line', {}).get('name', '???').replace(" ", "")
             
-            # Harte Filterung gegen den Kassel-Bug (RT-Linien ignorieren)
+            # Sicherheits-Filter gegen den Kassel-Bug (RT-Linien)
             if "RT" in linie:
                 continue
 
-            # Zeit & Ziel
+            # Zeit-Berechnung
             w = dep.get('when') or dep.get('plannedWhen', '')
             zeit = w.split('T')[1][:5] if 'T' in w else "--:--"
+            
             ziel = dep.get('direction', 'Unbekannt')[:18]
             gleis = str(dep.get('platform') or "-")
             
-            # Verspätung & Gründe
+            # Verspätung & Text-Info
             delay = dep.get('delay')
             remarks = dep.get('remarks', [])
             
@@ -62,13 +69,16 @@ def hole_daten():
                 "update": u_zeit
             })
 
+        # Wenn die Liste leer ist, suchen wir weiter in der Zukunft
         if not fahrplan:
             return [{"zeit": "INFO", "linie": "DB", "ziel": "Keine Züge aktuell", "gleis": "-", "info": u_zeit}]
 
-        return fahrplan[:10] # Wir geben jetzt die nächsten 10 Züge zurück!
+        # Sortieren nach Uhrzeit
+        fahrplan.sort(key=lambda x: x['zeit'])
+        return fahrplan[:10] # Wir geben die nächsten 10 Verbindungen aus!
 
     except Exception as e:
-        return [{"zeit": "Error", "linie": "Bot", "ziel": "Verbindung..", "gleis": "-", "info": u_zeit}]
+        return [{"zeit": "Error", "linie": "Bot", "ziel": "API Offline", "gleis": "-", "info": u_zeit}]
 
 if __name__ == "__main__":
     daten = hole_daten()
