@@ -7,14 +7,12 @@ def hole_daten():
     u_zeit = jetzt.strftime("%H:%M")
     
     try:
-        # 1. Zerbst ID holen
+        # 1. Zerbst ID holen (8010405)
         suche_url = "https://v6.db.transport.rest/locations?query=Zerbst&results=1"
         suche_res = requests.get(suche_url, timeout=10)
         echte_id = suche_res.json()[0]['id']
         
-        # 2. MEHR DATEN ABFRAGEN: 
-        # duration=480 (8 Stunden vorraus)
-        # results=40 (genügend Puffer für alle Regionalbahnen)
+        # 2. Abfahrten mit 'remarks=true' abrufen, um Gründe zu erhalten
         url = f"https://v6.db.transport.rest/stops/{echte_id}/departures?duration=480&results=40&remarks=true"
         r = requests.get(url, timeout=15)
         data = r.json()
@@ -25,27 +23,33 @@ def hole_daten():
             ist_w = dep.get('when')
             if not ist_w: continue
             
-            # Zeit-Objekt für den Filter
             zug_zeit_obj = datetime.fromisoformat(ist_w.replace('Z', '+00:00'))
-            
-            # Nur Züge nehmen, die noch nicht weg sind
             if zug_zeit_obj < (jetzt - timedelta(minutes=1)):
                 continue
 
-            # Linie filtern (Regionalverkehr Zerbst)
             linie = dep.get('line', {}).get('name', '???').replace(" ", "")
-            
             soll_w = dep.get('plannedWhen')
             soll_zeit = soll_w.split('T')[1][:5] if soll_w else "--:--"
             ist_zeit = ist_w.split('T')[1][:5]
             
-            # Info-Logik (Verspätung oder Ausfall)
+            # --- NEU: GRÜNDE (REMARKS) EXTRAHIEREN ---
+            remarks = dep.get('remarks', [])
+            # Wir filtern nur wichtige 'hints' (Hinweise), die Text enthalten
+            relevante_infos = [r.get('text') for r in remarks if r.get('type') == 'hint' and r.get('text')]
+            grund_text = " | ".join(relevante_infos)
+            
+            # Info-Logik zusammenbauen
             cancelled = dep.get('cancelled', False)
+            delay = dep.get('delay')
+            
             if cancelled:
-                info_text = "fällt aus"
+                info_text = f"FÄLLT AUS: {grund_text}" if grund_text else "FÄLLT AUS"
+            elif delay and delay >= 300: # Ab 5 Min Verspätung
+                minuten = int(delay / 60)
+                info_text = f"+{minuten} Min: {grund_text}" if grund_text else f"+{minuten} Min"
             else:
-                delay = dep.get('delay')
-                info_text = f"+{int(delay / 60)}" if delay and delay > 0 else ""
+                # Auch wenn pünktlich, gibt es manchmal wichtige Infos (Bauarbeiten etc.)
+                info_text = grund_text 
 
             fahrplan.append({
                 "zeit": soll_zeit,
@@ -57,10 +61,7 @@ def hole_daten():
                 "update": u_zeit
             })
 
-        # Sortieren nach echter Ankunftszeit
         fahrplan.sort(key=lambda x: x['echte_zeit'])
-        
-        # JETZT: Die nächsten 10 Züge zurückgeben (statt nur 2!)
         return fahrplan[:10]
 
     except Exception as e:
