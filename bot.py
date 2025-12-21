@@ -1,55 +1,70 @@
 import requests
+import xml.etree.ElementTree as ET
 import json
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 
 def hole_daten():
-    u_zeit = datetime.now().strftime("%H:%M")
+    # Deutsche Zeit erzwingen (UTC + 1)
+    jetzt = datetime.now(timezone.utc) + timedelta(hours=1)
+    u_zeit = jetzt.strftime("%H:%M")
     
-    # Jetzt mit 5 Stunden Vorschau (duration=300)
-    url = "https://v6.db.transport.rest/stops/8006654/departures?duration=300&results=20"
-    
+    # Offizielle ID für Zerbst/Anhalt
+    eva = "8006654" 
+    fahrplan = []
+
     try:
-        response = requests.get(url, timeout=15)
-        data = response.json()
-        departures = data.get('departures', [])
-        
-        fahrplan = []
-        # Zerbst-relevante Ziele
-        zerbst_ziele = ["Magdeburg", "Dessau", "Leipzig", "Bitterfeld", "Güterglück", "Lutherstadt"]
-        
-        for dep in departures:
-            linie = dep.get('line', {}).get('name', '???').replace(" ", "")
-            ziel = dep.get('direction', 'Unbekannt')
+        # Wir scannen 4 Stunden-Slots
+        for i in range(4):
+            t = jetzt + timedelta(hours=i)
+            url = f"https://iris.noncd.db.de/iris-tts/timetable/plan/{eva}/{t.strftime('%y%m%d')}/{t.strftime('%H')}"
             
-            # Filter: Nur echte Zerbster Richtungen
-            if not any(z in ziel for z in zerbst_ziele):
-                continue
-
-            w = dep.get('when') or dep.get('plannedWhen', '')
-            zeit = w.split('T')[1][:5] if 'T' in w else "--:--"
-            gleis = str(dep.get('platform') or "-")
+            r = requests.get(url, timeout=10)
+            if r.status_code != 200: continue
             
-            delay = dep.get('delay')
-            info_text = "pünktlich"
-            if delay and delay > 0:
-                info_text = f"+{int(delay/60)}"
+            root = ET.fromstring(r.content)
+            for s in root.findall('s'):
+                dp = s.find('dp') # Departure
+                tl = s.find('tl') # Train Line
+                
+                if dp is not None and tl is not None:
+                    # ZUG-FILTER: Wir lassen NUR RE13 und RB42 durch
+                    typ = tl.get('c', '') # RE oder RB
+                    nr = tl.get('n', '') or tl.get('l', '') # 13 oder 42
+                    zug_name = f"{typ}{nr}"
+                    
+                    if not any(x in zug_name for x in ["RE13", "RB42"]):
+                        continue
 
-            fahrplan.append({
-                "zeit": zeit,
-                "linie": linie,
-                "ziel": ziel[:18],
-                "gleis": gleis,
-                "info": info_text,
-                "update": u_zeit
-            })
+                    # Zeit formatieren
+                    p_zeit = dp.get('pt')[-4:]
+                    zeit_formatiert = f"{p_zeit[:2]}:{p_zeit[2:]}"
+                    
+                    # Zeitfilter: Keine Züge aus der Vergangenheit
+                    if i == 0 and zeit_formatiert < u_zeit: continue
 
-        if not fahrplan:
-            return [{"zeit": "Warten", "linie": "DB", "ziel": "Nächster Zug...", "gleis": "-", "info": u_zeit}]
+                    # Ziel und Gleis extrahieren
+                    pfad = dp.get('ppth', '').split('|')
+                    ziel = pfad[-1] if pfad else "Ziel"
+                    gleis = dp.get('pp', '-')
 
-        return fahrplan[:8]
+                    fahrplan.append({
+                        "zeit": zeit_formatiert,
+                        "linie": zug_name,
+                        "ziel": ziel[:18],
+                        "gleis": gleis,
+                        "info": "pünktlich",
+                        "update": u_zeit
+                    })
+    except:
+        pass
 
-    except Exception:
-        return [{"zeit": "Error", "linie": "Bot", "ziel": "Verbindung", "gleis": "-", "info": u_zeit}]
+    # Sortieren nach Uhrzeit
+    fahrplan.sort(key=lambda x: x['zeit'])
+    
+    if not fahrplan:
+        return [{"zeit": u_zeit, "linie": "INFO", "ziel": "Kein RE13/RB42", "gleis": "-", "info": "Check DB"}]
+
+    return fahrplan[:10]
 
 if __name__ == "__main__":
     daten = hole_daten()
