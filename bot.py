@@ -9,31 +9,34 @@ def hole_daten():
     jetzt = datetime.now()
     update_zeit = jetzt.strftime("%H:%M")
     
-    # Wir nutzen die Hafas-Schnittstelle über einen Proxy, der remarks (Gründe) unterstützt
-    # Die ID 8006654 ist Zerbst. Wir hängen 'duration' an, um mehr Züge zu sehen.
-    url = "https://v6.db.transport.rest/stops/8006654/departures?duration=120&remarks=true&results=10"
+    # Exakte Koordinaten Bahnhof Zerbst/Anhalt
+    LAT = "51.960"
+    LON = "12.083"
     
     try:
-        # Der entscheidende Trick: Wir senden einen Header mit, der 'de' (Deutschland) erzwingt
-        headers = {
-            'Accept-Language': 'de',
-            'User-Agent': 'Zerbst-Fahrplan-Monitor-v2'
-        }
+        # Schritt 1: Finde die Abfahrten direkt über GPS-Koordinaten
+        url = f"https://v5.db.transport.rest/stops/nearby?latitude={LAT}&longitude={LON}&results=1&distance=500"
+        stations = requests.get(url, verify=False, timeout=15).json()
         
-        # Cache-Buster, um das "Kassel-Problem" zu umgehen
-        response = requests.get(f"{url}&t={int(jetzt.timestamp())}", headers=headers, timeout=20, verify=False)
+        if not stations:
+            return [{"zeit": "Err", "linie": "GPS", "ziel": "Ort nicht gef.", "gleis": "-", "info": update_zeit}]
         
-        if response.status_code != 200:
-            return [{"zeit": "Err", "linie": "HTTP", "ziel": str(response.status_code), "gleis": "-", "info": update_zeit}]
-
+        # Die erste gefundene Station nehmen (sollte Zerbst sein)
+        station_id = stations[0]['id']
+        
+        # Schritt 2: Abfahrten mit Verspätungsgründen (remarks) laden
+        dep_url = f"https://v5.db.transport.rest/stops/{station_id}/departures?duration=120&remarks=true&results=10"
+        response = requests.get(f"{dep_url}&t={int(jetzt.timestamp())}", verify=False, timeout=15)
+        
         data = response.json()
-        departures = data.get('departures', [])
+        departures = data if isinstance(data, list) else data.get('departures', [])
         
         fahrplan = []
         for dep in departures:
+            # Linie (z.B. RE13)
             linie = dep.get('line', {}).get('name', '???').replace(" ", "")
             
-            # Sicherheits-Check: Wenn es RT4 ist, überspringen (Kassel-Fehler)
+            # WICHTIG: Erneuter Filter gegen Kassel-Fehlleitungen
             if "RT" in linie or "Kassel" in dep.get('direction', ''):
                 continue
 
@@ -42,36 +45,34 @@ def hole_daten():
             ziel = dep.get('direction', 'Unbekannt')[:18]
             gleis = str(dep.get('platform') or "-")
             
-            # Verspätung und Gründe
+            # --- Verspätungsgründe (Remarks) ---
             delay = dep.get('delay')
             remarks = dep.get('remarks', [])
             
-            # Den ersten wichtigen Grund suchen
-            grund = ""
+            wichtige_info = ""
             for r in remarks:
                 if r.get('type') == 'warning':
-                    grund = r.get('summary') or r.get('text', '')
+                    wichtige_info = r.get('summary') or r.get('text', '')
                     break
             
             info_text = "pünktlich"
             if delay and delay > 0:
                 minuten = f"+{int(delay/60)}"
-                info_text = f"{minuten} {grund}".strip()
-            elif grund:
-                info_text = grund
+                info_text = f"{minuten} {wichtige_info}".strip()
+            elif wichtige_info:
+                info_text = wichtige_info
 
             fahrplan.append({
                 "zeit": zeit,
                 "linie": linie,
                 "ziel": ziel,
                 "gleis": gleis,
-                "info": info_text,
+                "info": info_text[:40],
                 "update": update_zeit
             })
 
-        # Falls der Kassel-Filter alles gelöscht hat, geben wir eine Info aus
         if not fahrplan:
-            return [{"zeit": "00:00", "linie": "INFO", "ziel": "Kein Zug in 2h", "gleis": "-", "info": update_zeit}]
+            return [{"zeit": "Check", "linie": "DB", "ziel": "Suche RE13...", "gleis": "-", "info": update_zeit}]
 
         return fahrplan[:6]
 
