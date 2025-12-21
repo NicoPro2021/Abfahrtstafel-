@@ -1,74 +1,83 @@
 import requests
+import xml.etree.ElementTree as ET
 import json
-import urllib3
 from datetime import datetime
 
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
 def hole_daten():
-    jetzt = datetime.now().strftime("%H:%M")
-    # VBB-ID für Zerbst/Anhalt: 900000143501
-    # Wir laden Abfahrten inkl. Remarks (Gründe) für 120 Minuten
-    url = "https://v6.vbb.transport.rest/stops/900000143501/departures?duration=120&remarks=true&results=10"
+    jetzt = datetime.now()
+    datum = jetzt.strftime("%y%m%d")
+    stunde = jetzt.strftime("%H")
+    u_zeit = jetzt.strftime("%H:%M")
+    
+    # ID für Zerbst/Anhalt: 8006654
+    # 1. Geplante Züge (Timetable)
+    plan_url = f"https://iris.noncd.db.de/iris-tts/timetable/plan/8006654/{datum}/{stunde}"
+    # 2. Echtzeit-Änderungen (Verspätungen & Gründe)
+    fchg_url = "https://iris.noncd.db.de/iris-tts/timetable/fchg/8006654"
     
     try:
-        # Wir fügen einen Cache-Buster hinzu
-        response = requests.get(f"{url}&t={int(datetime.now().timestamp())}", timeout=25, verify=False)
+        # Plandaten laden
+        r_p = requests.get(plan_url, timeout=15)
+        root_p = ET.fromstring(r_p.content)
         
-        if response.status_code != 200:
-            return [{"zeit": "Err", "linie": "HTTP", "ziel": "Server Busy", "gleis": "-", "info": jetzt}]
+        # Echtzeitdaten laden
+        r_f = requests.get(fchg_url, timeout=15)
+        root_f = ET.fromstring(r_f.content)
+        
+        # Echtzeit-Infos in ein Dictionary packen
+        changes = {}
+        for s in root_f.findall('s'):
+            s_id = s.get('id')
+            ar = s.find('ar')
+            if ar is not None:
+                ct = ar.get('ct') # neue Zeit
+                # Grund suchen (Nachricht)
+                msg = ""
+                for m in ar.findall('m'):
+                    if m.get('cat') in ['f', 'd']: # 'f' sind oft Störungstexte
+                        msg = m.get('c', '') # Code oder Text
+                changes[s_id] = {'ct': ct, 'msg': msg}
 
-        data = response.json()
-        departures = data.get('departures', [])
-        
         fahrplan = []
-        for dep in departures:
-            # Wir nehmen nur echte Züge (RE, RB)
-            line_obj = dep.get('line', {})
-            linie = line_obj.get('name', '???').replace(" ", "")
-            
-            # Filter gegen den Kassel-Bug (falls er hier auch auftaucht)
-            if "RT" in linie: continue
+        for s in root_p.findall('s'):
+            s_id = s.get('id')
+            dp = s.find('dp') # Departure/Abfahrt
+            if dp is not None:
+                p_zeit = dp.get('pt')[-4:] # HHMM Format
+                zeit_str = f"{p_zeit[:2]}:{p_zeit[2:]}"
+                
+                # Filter: Nur Züge der nächsten Zeit
+                linie = f"{dp.get('tl', '')}{dp.get('l', '')}"
+                ziel = dp.get('ppth', '').split('|')[-1] # Letzter Halt
+                gleis = dp.get('pp', '-')
+                
+                # Echtzeit-Info zuordnen
+                info = "pünktlich"
+                if s_id in changes:
+                    c = changes[s_id]
+                    if c['ct']:
+                        # Verspätung berechnen
+                        diff = (datetime.strptime(c['ct'][-4:], "%H%M") - 
+                                datetime.strptime(p_zeit, "%H%M")).seconds // 60
+                        info = f"+{diff}" if diff > 0 else "pünktlich"
+                    if c['msg']:
+                        # Hier kann man Codes in Text umwandeln, z.B. 80 -> "Bauarbeiten"
+                        info += f" (Code {c['msg']})"
 
-            p_time = dep.get('when') or dep.get('plannedWhen', '')
-            zeit = p_time.split('T')[1][:5] if 'T' in p_time else "--:--"
-            ziel = dep.get('direction', 'Unbekannt')[:18]
-            gleis = str(dep.get('platform') or "-")
-            
-            # --- Verspätungsgründe ---
-            delay = dep.get('delay')
-            remarks = dep.get('remarks', [])
-            grund = ""
-            for r in remarks:
-                if r.get('type') == 'warning':
-                    # Wir nehmen den Text oder die Zusammenfassung
-                    grund = r.get('summary') or r.get('text', '')
-                    break
-            
-            info_text = "pünktlich"
-            if delay and delay > 0:
-                minuten = f"+{int(delay/60)}"
-                info_text = f"{minuten} {grund}".strip()
-            elif grund:
-                info_text = grund
+                fahrplan.append({
+                    "zeit": zeit_str,
+                    "linie": linie,
+                    "ziel": ziel[:18],
+                    "gleis": gleis,
+                    "info": info,
+                    "update": u_zeit
+                })
 
-            fahrplan.append({
-                "zeit": zeit,
-                "linie": linie,
-                "ziel": ziel,
-                "gleis": gleis,
-                "info": info_text[:40],
-                "update": jetzt
-            })
-
-        if not fahrplan:
-            return [{"zeit": "Warte", "linie": "DB", "ziel": "Keine Züge aktuell", "gleis": "-", "info": jetzt}]
-
-        return fahrplan[:6]
+        fahrplan.sort(key=lambda x: x['zeit'])
+        return fahrplan[:6] if fahrplan else [{"zeit": "Noch", "linie": "DB", "ziel": "Keine Züge", "gleis": "-", "info": u_zeit}]
 
     except Exception as e:
-        # Falls es wieder zum Timeout kommt
-        return [{"zeit": "Timeout", "linie": "Bot", "ziel": "Versuche erneut", "gleis": "-", "info": jetzt}]
+        return [{"zeit": "Error", "linie": "IRIS", "ziel": str(e)[:15], "gleis": "-", "info": u_zeit}]
 
 if __name__ == "__main__":
     daten = hole_daten()
