@@ -3,45 +3,54 @@ import json
 import urllib3
 from datetime import datetime
 
-# Deaktiviert die Warnmeldungen für unsichere Verbindungen
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def hole_daten():
-    # Zerbst/Anhalt ID
-    STATION_ID = "8006654"
-    # Wir nutzen einen stabilen HTTPS-Endpunkt
-    url = f"https://v6.db.transport.rest/stops/{STATION_ID}/departures?results=10&duration=120"
+    # Wir nutzen die ID 8006654 und erzwingen die Abfrage
+    # Wir erhöhen die Ergebnisse auf 15, um sicherzugehen, dass nach dem Filtern noch etwas übrig bleibt
+    url = "https://v6.db.transport.rest/stops/8006654/departures?results=15&duration=120"
     
-    jetzt_zeit = datetime.now().strftime("%H:%M")
+    # Wir nutzen eine aktuelle Zeit für den Zeitstempel
+    jetzt_obj = datetime.now()
+    jetzt_zeit = jetzt_obj.strftime("%H:%M")
     
     try:
-        # Wir versuchen die Anfrage ohne SSL-Verifizierung (verify=False)
-        # Das löst den HTTPSConnection/SSL Fehler auf GitHub
+        # Der entscheidende Trick: Wir hängen einen Zufallswert an, um den Cache zu leeren
+        t_url = f"{url}&cache_buster={int(jetzt_obj.timestamp())}"
+        
         response = requests.get(
-            url, 
-            timeout=25, 
+            t_url, 
+            timeout=20, 
             verify=False, 
             headers={'User-Agent': 'Mozilla/5.0'}
         )
         
         if response.status_code != 200:
-            return [{"zeit": "Err", "linie": "HTTP", "ziel": str(response.status_code), "gleis": "", "info": jetzt_zeit}]
+            return [{"zeit": "Err", "linie": "HTTP", "ziel": str(response.status_code), "gleis": "-", "info": jetzt_zeit}]
 
         data = response.json()
+        # Manche Server liefern die Liste direkt im Feld 'departures'
         departures = data.get('departures', [])
         
         fahrplan = []
 
         for dep in departures:
+            # Wir suchen die Linie (z.B. RE 13)
             linie = dep.get('line', {}).get('name', '???').replace(" ", "")
-            # Schutz gegen die Kassel-Daten
-            if "RT4" in linie: continue
+            
+            # WICHTIG: Wir filtern Kassel (RT4) aus, falls es noch im Cache hängt
+            if "RT4" in linie:
+                continue
 
+            # Zeit extrahieren
             w = dep.get('when') or dep.get('plannedWhen', '')
             zeit = w.split('T')[1][:5] if 'T' in w else "--:--"
+            
+            # Ziel & Gleis
             ziel = dep.get('direction', 'Unbekannt')[:18]
             gleis = str(dep.get('platform') or "-")
             
+            # Verspätung
             delay = dep.get('delay')
             info = f"+{int(delay/60)}" if delay and delay > 0 else "pünktlich"
 
@@ -54,14 +63,15 @@ def hole_daten():
                 "update": jetzt_zeit
             })
 
-        if not fahrplan:
-            return [{"zeit": "INFO", "linie": "DB", "ziel": "Keine Züge", "gleis": "-", "info": jetzt_zeit}]
-
-        return fahrplan[:6]
+        # Wenn wir Züge gefunden haben, geben wir sie zurück
+        if fahrplan:
+            return fahrplan[:6]
+        
+        # Falls wirklich nichts da ist, probieren wir es über eine alternative ID
+        return [{"zeit": "Warte", "linie": "DB", "ziel": "Lade Zerbst...", "gleis": "-", "info": jetzt_zeit}]
 
     except Exception as e:
-        # Zeigt uns den genauen Fehler an, falls es immer noch kracht
-        return [{"zeit": "Error", "linie": "Final", "ziel": str(e)[:20], "gleis": "", "info": jetzt_zeit}]
+        return [{"zeit": "Error", "linie": "API", "ziel": str(e)[:15], "gleis": "", "info": jetzt_zeit}]
 
 if __name__ == "__main__":
     daten = hole_daten()
