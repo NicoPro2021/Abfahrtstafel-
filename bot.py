@@ -3,64 +3,75 @@ import json
 import urllib3
 from datetime import datetime
 
+# Unterdrückt SSL-Warnungen, da wir verify=False nutzen
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-# Wir nutzen eine spezialisierte API für deutsche Bahnhöfe
-# Diese ID ist fest für Zerbst/Anhalt hinterlegt
-URL = "https://db-live.f-bit.de/api/v1/station/8006654/departures"
-
 def hole_daten():
+    # Zerbst/Anhalt ID: 8006654
+    # Wir hängen einen Zeitstempel an (&t=...), um den "Kassel-Cache" zu umgehen
+    t = int(datetime.now().timestamp())
+    url = f"https://v6.db.transport.rest/stops/8006654/departures?results=6&duration=120&t={t}"
+    
+    headers = {
+        'User-Agent': 'FahrplanBot-Zerbst-ESP32',
+        'Accept': 'application/json'
+    }
+
     try:
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-            'Accept': 'application/json'
-        }
-        
-        # Anfrage mit Timeout
-        response = requests.get(URL, headers=headers, timeout=15, verify=False)
+        # verify=False hilft gegen den HTTPSConnection/SSL Fehler
+        response = requests.get(url, headers=headers, timeout=20, verify=False)
         
         if response.status_code != 200:
-            # Plan B: Wenn die Spezial-API nicht will, nehmen wir einen stabilen Proxy
-            URL_PROXY = "https://v6.db.transport.rest/stops/8006654/departures?results=6"
-            response = requests.get(URL_PROXY, headers=headers, timeout=15)
-            if response.status_code != 200:
-                return [{"zeit": "Err", "linie": "HTTP", "ziel": str(response.status_code), "gleis": "", "info": ""}]
+            return [{"zeit": "Err", "linie": "HTTP", "ziel": str(response.status_code), "gleis": "", "info": ""}]
 
         data = response.json()
-        # Manche APIs liefern direkt eine Liste, manche ein Objekt mit 'departures'
-        items = data.get('departures', data) if isinstance(data, dict) else data
+        # Manche Server antworten mit einem Dictionary, manche direkt mit einer Liste
+        departures = data.get('departures', []) if isinstance(data, dict) else data
         
         fahrplan = []
-        jetzt = datetime.now().strftime("%H:%M:%S")
+        update_zeit = datetime.now().strftime("%H:%M")
 
-        for dep in items[:6]:
-            # Wir bauen die Daten so zusammen, dass sie exakt deinem Format entsprechen
-            zeit = dep.get('time') or dep.get('when', '--:--')
-            if 'T' in zeit: zeit = zeit.split('T')[1][:5]
+        for dep in departures:
+            # Zeit aus "2024-05-20T18:30:00+02:00" extrahieren
+            w = dep.get('when') or dep.get('plannedWhen', '')
+            zeit = w.split('T')[1][:5] if 'T' in w else "--:--"
             
-            linie = dep.get('train') or dep.get('line', {}).get('name', '???')
-            ziel = dep.get('destination') or dep.get('direction', 'Unbekannt')
-            gleis = str(dep.get('platform', '-'))
+            # Linie (z.B. RE13)
+            linie = dep.get('line', {}).get('name', '???')
             
+            # Ziel & Gleis
+            ziel = dep.get('direction', 'Unbekannt')[:18]
+            gleis = str(dep.get('platform') or "-")
+            
+            # Verspätung berechnen
             delay = dep.get('delay')
-            info = f"+{int(delay/60)}" if delay and delay > 0 else "pünktlich"
+            info = "pünktlich"
+            if delay and delay > 0:
+                info = f"+{int(delay/60)}"
+
+            # Falls wir doch wieder RT4 (Kassel) sehen, ignorieren wir den Eintrag
+            if "RT4" in linie or "Wolfhagen" in ziel:
+                continue
 
             fahrplan.append({
                 "zeit": zeit,
                 "linie": linie.replace(" ", ""),
-                "ziel": ziel[:18],
+                "ziel": ziel,
                 "gleis": gleis,
                 "info": info,
-                "update": jetzt
+                "update": update_zeit
             })
 
-        return fahrplan if fahrplan else [{"zeit": "00:00", "linie": "DB", "ziel": "Keine Züge", "gleis": "-", "info": jetzt}]
+        if not fahrplan:
+            return [{"zeit": "00:00", "linie": "DB", "ziel": "Keine Züge", "gleis": "-", "info": update_zeit}]
+
+        return fahrplan[:6]
 
     except Exception as e:
         return [{"zeit": "Error", "linie": "API", "ziel": str(e)[:15], "gleis": "", "info": ""}]
 
 if __name__ == "__main__":
-    aktuelle_daten = hole_daten()
+    daten = hole_daten()
     with open('daten.json', 'w', encoding='utf-8') as f:
-        json.dump(aktuelle_daten, f, ensure_ascii=False, indent=4)
-    print("Update für Zerbst/Anhalt abgeschlossen.")
+        json.dump(daten, f, ensure_ascii=False, indent=4)
+    print("Update für Zerbst erfolgreich.")
