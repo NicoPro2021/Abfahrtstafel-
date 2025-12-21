@@ -3,103 +3,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abfahrtstafel Zerbst/Anhalt</title>
+    <title>Abfahrt Zerbst/Anhalt</title>
     <style>
-        body { background-color: black; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; overflow-x: hidden; }
-        
-        /* Blauer Header wie bei der DB */
-        .header { background-color: #0099ff; padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #003399; }
-        .header h1 { margin: 0; font-size: 28px; letter-spacing: 1px; }
-        .uhrzeit { color: #ffcc00; font-size: 28px; font-weight: bold; font-family: monospace; }
-        
-        .tafel { width: 100%; border-collapse: collapse; }
-        .zug-zeile { border-bottom: 1px solid #333; height: 80px; transition: background 0.3s; }
-        
-        /* Spezial-Style für Ausfälle */
-        .ausfall { background-color: white !important; color: black !important; }
-        .ausfall .zeit, .ausfall .gleis, .ausfall .ziel { color: black !important; }
+        /* DB Schriftart-Feeling und Farben */
+        body { 
+            background-color: #000000; 
+            color: #ffffff; 
+            font-family: Arial, Helvetica, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+        }
+
+        /* Blauer Header (DB-Blau) */
+        .header { 
+            background-color: #003399; 
+            padding: 15px 20px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 3px solid #002266;
+        }
+
+        .header h1 { 
+            margin: 0; 
+            font-size: 26px; 
+            font-weight: bold; 
+            letter-spacing: 0.5px;
+        }
+
+        .uhrzeit { 
+            color: #ffcc00; 
+            font-size: 26px; 
+            font-weight: bold; 
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        /* Die Tafel */
+        .tafel { 
+            width: 100%; 
+            border-collapse: collapse; 
+        }
+
+        .zug-zeile { 
+            border-bottom: 1px solid #333333; 
+            height: 90px;
+        }
+
+        /* Zeit-Spalte (DB-Gelb) */
+        .zeit { 
+            color: #ffcc00; 
+            font-size: 28px; 
+            font-weight: bold; 
+            padding-left: 20px; 
+            width: 90px;
+        }
+
+        /* Linie (Weiße Box, blaues Logo) */
+        .linie-container {
+            width: 70px;
+            text-align: center;
+        }
+
+        .linie-box { 
+            background-color: #ffffff; 
+            color: #003399; 
+            padding: 4px 8px; 
+            font-weight: 900; 
+            border-radius: 2px; 
+            font-size: 18px;
+            display: inline-block;
+        }
+
+        /* Ziel und Gleis */
+        .ziel { 
+            font-size: 28px; 
+            font-weight: bold; 
+            padding-left: 15px;
+        }
+
+        .gleis { 
+            color: #ffcc00; 
+            font-size: 28px; 
+            font-weight: bold; 
+            text-align: right; 
+            padding-right: 25px; 
+            width: 50px;
+        }
+
+        /* Ausfall-Design (Weißer Hintergrund, schwarzer Text) */
+        .ausfall { 
+            background-color: #ffffff !important; 
+        }
+
+        .ausfall td { color: #000000 !important; }
         .ausfall .ziel { text-decoration: line-through; }
-        .ausfall .linie { background-color: #003399 !important; color: white !important; }
+        .ausfall .linie-box { background-color: #003399; color: #ffffff; }
 
-        .zeit { color: #ffcc00; font-size: 26px; font-weight: bold; padding-left: 20px; width: 100px; }
-        
-        .linie { background-color: white; color: #003399; padding: 3px 8px; font-weight: bold; border-radius: 4px; margin-right: 15px; font-size: 18px; }
-        
-        .ziel { font-size: 26px; font-weight: bold; }
-        
-        .gleis { color: #ffcc00; font-size: 26px; font-weight: bold; text-align: right; padding-right: 25px; width: 60px; }
+        /* Rote Info-Laufschrift */
+        .info-box { 
+            height: 25px; 
+            overflow: hidden; 
+            margin-top: 5px;
+            width: 100%;
+        }
 
-        /* Roter Lauftext für Verspätungen/Infos */
-        .info-container { overflow: hidden; width: 100%; height: 25px; margin-top: 5px; }
-        .info-text { color: #ff3333; font-size: 18px; font-weight: bold; white-space: nowrap; display: inline-block; animation: scroll-left 15s linear infinite; }
-        
-        @keyframes scroll-left {
+        .info-text { 
+            color: #ff0000; 
+            font-size: 19px; 
+            font-weight: bold; 
+            white-space: nowrap; 
+            display: inline-block;
+            animation: db-scroll 12s linear infinite;
+        }
+
+        @keyframes db-scroll {
             0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
+            100% { transform: translateX(-150%); }
         }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <h1 id="station">Zerbst/Anhalt</h1>
+    <h1>Zerbst/Anhalt</h1>
     <div id="uhr" class="uhrzeit">00:00:00</div>
 </div>
 
-<table class="tafel" id="abfahrten-tabelle">
+<table class="tafel" id="fahrplan">
     </table>
 
 <script>
-    // 1. Die Uhrzeit oben rechts aktualisieren
     function updateUhr() {
         const jetzt = new Date();
-        const zeitString = jetzt.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        document.getElementById('uhr').innerText = zeitString;
+        document.getElementById('uhr').innerText = jetzt.toLocaleTimeString('de-DE');
     }
     setInterval(updateUhr, 1000);
     updateUhr();
 
-    // 2. Die Daten aus der daten.json laden
-    async function ladeFahrplan() {
+    async function ladeDaten() {
         try {
-            // Cache-Vermeidung durch Zeitstempel
-            const response = await fetch('daten.json?nocache=' + new Date().getTime());
-            const zuege = await response.json();
-            
-            const tabelle = document.getElementById('abfahrten-tabelle');
-            tabelle.innerHTML = ''; // Vorherige Daten löschen
+            const res = await fetch('daten.json?v=' + Date.now());
+            const zuege = await res.json();
+            const liste = document.getElementById('fahrplan');
+            liste.innerHTML = '';
 
-            zuege.forEach(zug => {
-                const istAusfall = zug.info.toLowerCase().includes("ausfall") || zug.info.toLowerCase().includes("fällt aus");
-                const zeile = document.createElement('tr');
-                zeile.className = 'zug-zeile' + (istAusfall ? ' ausfall' : '');
+            zuege.forEach(z => {
+                const istAusfall = z.info.toLowerCase().includes("ausfall") || z.info.toLowerCase().includes("fällt aus");
+                const tr = document.createElement('tr');
+                tr.className = 'zug-zeile' + (istAusfall ? ' ausfall' : '');
 
-                zeile.innerHTML = `
-                    <td class="zeit">${zug.zeit}</td>
-                    <td class="inhalt">
-                        <div style="display: flex; align-items: center;">
-                            <span class="linie">${zug.linie}</span>
-                            <span class="ziel">${zug.ziel}</span>
-                        </div>
-                        ${zug.info ? `
-                            <div class="info-container">
-                                <div class="info-text">${zug.info}</div>
-                            </div>
-                        ` : ''}
+                tr.innerHTML = `
+                    <td class="zeit">${z.zeit}</td>
+                    <td class="linie-container"><span class="linie-box">${z.linie}</span></td>
+                    <td>
+                        <div class="ziel">${z.ziel}</div>
+                        ${z.info ? `<div class="info-box"><div class="info-text">${z.info}</div></div>` : ''}
                     </td>
-                    <td class="gleis">${istAusfall ? '--' : zug.gleis}</td>
+                    <td class="gleis">${istAusfall ? '--' : z.gleis}</td>
                 `;
-                tabelle.appendChild(zeile);
+                liste.appendChild(tr);
             });
-        } catch (error) {
-            console.error("Fehler beim Laden der Fahrplandaten:", error);
-            document.getElementById('abfahrten-tabelle').innerHTML = '<tr><td colspan="3" style="text-align:center; padding:20px;">Daten konnten nicht geladen werden. Bitte Bot prüfen!</td></tr>';
+        } catch (e) {
+            console.log("Warte auf daten.json...");
         }
     }
 
-    // Alle 30 Sekunden die Daten neu laden
-    ladeFahrplan();
-    setInterval(ladeFahrplan, 30000);
+    ladeDaten();
+    setInterval(ladeDaten, 30000);
 </script>
 
 </body>
