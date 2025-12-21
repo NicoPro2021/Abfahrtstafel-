@@ -1,71 +1,91 @@
 import requests
+import xml.etree.ElementTree as ET
 import json
-import urllib3
-from datetime import datetime
-
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+from datetime import datetime, timedelta
 
 def hole_daten():
-    jetzt_zeit = datetime.now().strftime("%H:%M")
-    # Wir nutzen eine robustere URL-Struktur
-    url = "https://v6.db.transport.rest/stops/8006654/departures?results=10&duration=120&remarks=true"
+    jetzt = datetime.now()
+    stunde = jetzt.strftime("%H")
+    datum = jetzt.strftime("%y%m%d")
+    update_zeit = jetzt.strftime("%H:%M")
+    
+    # ID für Zerbst/Anhalt: 8006654
+    # Schritt 1: Geplante Daten holen
+    plan_url = f"https://iris.noncd.db.de/iris-tts/timetable/plan/8006654/{datum}/{stunde}"
     
     try:
-        # Cache-Buster, um immer frische Daten zu erzwingen
-        response = requests.get(f"{url}&t={int(datetime.now().timestamp())}", timeout=20, verify=False)
+        r_plan = requests.get(plan_url, timeout=15)
+        root_plan = ET.fromstring(r_plan.content)
         
-        if response.status_code != 200:
-            return [{"zeit": "Err", "linie": "HTTP", "ziel": str(response.status_code), "gleis": "-", "info": jetzt_zeit}]
-
-        data = response.json()
-        departures = data.get('departures', [])
+        # Schritt 2: Realzeit-Daten (Verspätungen/Gründe) holen
+        fchg_url = "https://iris.noncd.db.de/iris-tts/timetable/fchg/8006654"
+        r_fchg = requests.get(fchg_url, timeout=15)
+        root_fchg = ET.fromstring(r_fchg.content)
         
-        if not departures:
-            # Plan B: Falls mit Remarks nichts kommt, versuchen wir es ohne (Basis-Daten)
-            url_simple = "https://v6.db.transport.rest/stops/8006654/departures?results=6"
-            departures = requests.get(url_simple, verify=False).json().get('departures', [])
+        # Gründe/Änderungen in Dictionary mappen
+        changes = {}
+        for s in root_fchg.findall('s'):
+            s_id = s.get('id')
+            ar = s.find('ar')
+            if ar is not None:
+                # Zeitänderung (Verspätung)
+                ct = ar.get('ct') # Korrigierte Zeit
+                # Gründe (Messages)
+                msg_text = ""
+                for m in ar.findall('m'):
+                    t = m.get('t')
+                    # Wir filtern nach echten Textmeldungen (Typ 'f' oder 'd')
+                    if m.get('cat') in ['f', 'd']:
+                        msg_text = m.get('c', '') # Hier steht der Grund-Code oder Text
+                changes[s_id] = {"ct": ct, "msg": msg_text}
 
         fahrplan = []
-        for dep in departures:
-            linie = dep.get('line', {}).get('name', '???').replace(" ", "")
-            if "RT" in linie: continue # Kassel-Filter
-
-            w = dep.get('when') or dep.get('plannedWhen', '')
-            zeit = w.split('T')[1][:5] if 'T' in w else "--:--"
-            ziel = dep.get('direction', 'Unbekannt')[:18]
-            gleis = str(dep.get('platform') or "-")
+        # Durch geplante Züge gehen
+        for s in root_plan.findall('s'):
+            s_id = s.get('id')
+            ar = s.find('ar') # Arrival/Ankunft (für Zerbst meist Durchgang)
+            dp = s.find('dp') # Departure/Abfahrt
             
-            # --- Verspätungsgrund / Info ---
-            delay = dep.get('delay')
-            remarks = dep.get('remarks', [])
-            
-            # Wir suchen nach der wichtigsten Meldung (z.B. "Notarzteinsatz", "Signalstörung")
-            grund = ""
-            for r in remarks:
-                if r.get('type') == 'warning':
-                    grund = r.get('summary') or r.get('text', '')
-                    break
-            
-            if delay and delay > 0:
-                minuten = f"+{int(delay/60)}"
-                # Kombiniere Minuten und Grund (z.B. "+5 Signalstörung")
-                info_text = f"{minuten} {grund}".strip() if grund else minuten
-            else:
-                info_text = grund if grund else "pünktlich"
+            if dp is not None:
+                plan_zeit = dp.get('pt')[-4:] # HHMM
+                zeit = f"{plan_zeit[:2]}:{plan_zeit[2:]}"
+                
+                linie = dp.get('l', '???')
+                # Zugtyp (RE, RB) + Linie
+                zug = f"{dp.get('tl', '')}{linie}"
+                
+                # Ziel (Letzte Station in 'ppth')
+                weg = dp.get('ppth', '').split('|')
+                ziel = weg[-1] if weg else "Unbekannt"
+                
+                gleis = dp.get('pp', '-')
+                
+                # Echtzeit-Infos einbauen
+                info = "pünktlich"
+                if s_id in changes:
+                    c = changes[s_id]
+                    if c['ct']:
+                        diff = (datetime.strptime(c['ct'][-4:], "%H%M") - 
+                                datetime.strptime(plan_zeit, "%H%M")).seconds // 60
+                        if diff > 0:
+                            info = f"+{diff}"
+                            if c['msg']: info += f" {c['msg']}" # Grund hinzufügen
 
-            fahrplan.append({
-                "zeit": zeit,
-                "linie": linie,
-                "ziel": ziel,
-                "gleis": gleis,
-                "info": info_text[:40], # Genug Platz für Gründe
-                "update": jetzt_zeit
-            })
+                fahrplan.append({
+                    "zeit": zeit,
+                    "linie": zug,
+                    "ziel": ziel[:18],
+                    "gleis": gleis,
+                    "info": info,
+                    "update": update_zeit
+                })
 
-        return fahrplan[:6] if fahrplan else [{"zeit": "Warte", "linie": "DB", "ziel": "Suche Züge...", "gleis": "-", "info": jetzt_zeit}]
+        # Sortieren nach Zeit
+        fahrplan.sort(key=lambda x: x['zeit'])
+        return fahrplan[:6] if fahrplan else [{"zeit": "Noch", "linie": "Keine", "ziel": "Züge", "gleis": "-", "info": update_zeit}]
 
     except Exception as e:
-        return [{"zeit": "Error", "linie": "API", "ziel": str(e)[:15], "gleis": "", "info": jetzt_zeit}]
+        return [{"zeit": "Error", "linie": "IRIS", "ziel": str(e)[:15], "gleis": "-", "info": update_zeit}]
 
 if __name__ == "__main__":
     daten = hole_daten()
