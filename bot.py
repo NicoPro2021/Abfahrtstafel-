@@ -3,19 +3,19 @@ import json
 from datetime import datetime, timedelta, timezone
 
 def hole_daten():
-    # Aktuelle Zeit in UTC für den API-Vergleich
+    # Aktuelle Zeit für den Filter
     jetzt = datetime.now(timezone.utc)
-    # Anzeige-Zeit für das "Update"-Feld im JSON
-    u_zeit = jetzt.astimezone(timezone(timedelta(hours=1))).strftime("%H:%M")
+    # Zeitstempel für das Display (Deutsche Zeit)
+    u_zeit = (jetzt + timedelta(hours=1)).strftime("%H:%M")
     
     try:
-        # 1. Bahnhofs-ID für Zerbst holen (8010405)
+        # 1. ID für Zerbst/Anhalt sicherstellen
         suche_url = "https://v6.db.transport.rest/locations?query=Zerbst&results=1"
         suche_res = requests.get(suche_url, timeout=10)
         echte_id = suche_res.json()[0]['id']
         
-        # 2. Abfahrten abrufen (remarks=true ist der Schlüssel für die Gründe!)
-        url = f"https://v6.db.transport.rest/stops/{echte_id}/departures?duration=480&results=40&remarks=true"
+        # 2. Abfahrten laden - WICHTIG: remarks=true für die Verspätungsgründe!
+        url = f"https://v6.db.transport.rest/stops/{echte_id}/departures?duration=480&results=20&remarks=true"
         r = requests.get(url, timeout=15)
         data = r.json()
         departures = data.get('departures', [])
@@ -25,43 +25,40 @@ def hole_daten():
             ist_w = dep.get('when')
             if not ist_w: continue
             
-            # Zeit-Objekt für Filterung (keine Züge aus der Vergangenheit)
+            # Vergangene Züge ignorieren
             zug_zeit_obj = datetime.fromisoformat(ist_w.replace('Z', '+00:00'))
             if zug_zeit_obj < (jetzt - timedelta(minutes=5)):
                 continue
 
-            # Daten extrahieren
+            # Basis-Infos
             linie = dep.get('line', {}).get('name', '???').replace(" ", "")
             soll_w = dep.get('plannedWhen')
             soll_zeit = soll_w.split('T')[1][:5] if soll_w else "--:--"
             ist_zeit = ist_w.split('T')[1][:5]
             
-            # --- INFO-LOGIK (GRÜNDE FINDEN) ---
+            # --- TEXTGRÜNDE (REMARKS) AUSLESEN ---
             remarks = dep.get('remarks', [])
-            hinweise = []
+            texte = []
+            for rm in remarks:
+                # Wir filtern nur echte Text-Hinweise
+                if rm.get('type') == 'hint':
+                    t = rm.get('text', '').strip()
+                    if t and t not in texte: # Doppelte Texte vermeiden
+                        texte.append(t)
             
-            for r_item in remarks:
-                # Wir nehmen nur Hinweise (hints), keine Icons oder Betreiber-Infos
-                if r_item.get('type') == 'hint':
-                    text = r_item.get('text', '').strip()
-                    # Dubletten vermeiden (Bahn schickt oft "Bauarbeiten" mehrfach)
-                    if text and text not in hinweise:
-                        hinweise.append(text)
+            grund = " | ".join(texte)
             
-            # Alle gefundenen Gründe mit einem Strich verbinden
-            grund_text = " | ".join(hinweise)
-            
+            # Info-Feld zusammenbauen
             cancelled = dep.get('cancelled', False)
             delay = dep.get('delay') # Verspätung in Sekunden
             
             if cancelled:
-                info_text = f"FÄLLT AUS: {grund_text}" if grund_text else "FÄLLT AUS"
-            elif delay and delay >= 60: # Ab 1 Minute Verspätung anzeigen
+                info_text = f"FÄLLT AUS: {grund}" if grund else "FÄLLT AUS"
+            elif delay and delay >= 60:
                 minuten = int(delay / 60)
-                info_text = f"+{minuten} Min: {grund_text}" if grund_text else f"+{minuten} Min"
+                info_text = f"+{minuten} Min: {grund}" if grund else f"+{minuten} Min"
             else:
-                # Auch bei pünktlichen Zügen wichtige Infos (z.B. Bauarbeiten) mitschicken
-                info_text = grund_text 
+                info_text = grund # Falls pünktlich, aber Bauinfos da sind
 
             fahrplan.append({
                 "zeit": soll_zeit,
@@ -73,14 +70,12 @@ def hole_daten():
                 "update": u_zeit
             })
 
-        # Sortierung nach der tatsächlichen Zeit
+        # Sortieren nach tatsächlicher Abfahrt
         fahrplan.sort(key=lambda x: x['echte_zeit'])
-        
-        # Die nächsten 10 Abfahrten zurückgeben
         return fahrplan[:10]
 
     except Exception as e:
-        return [{"zeit": "Err", "linie": "Bot", "ziel": str(e)[:15], "gleis": "-", "info": "Fehler beim Laden"}]
+        return [{"zeit": "Err", "linie": "Bot", "ziel": str(e)[:15], "gleis": "-", "info": "Fehler"}]
 
 if __name__ == "__main__":
     daten = hole_daten()
