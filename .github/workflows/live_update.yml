@@ -1,0 +1,32 @@
+name: DB Live Update
+
+on:
+  schedule:
+    - cron: '*/5 * * * *' # Alle 5 Minuten
+  workflow_dispatch: # Erlaubt manuelles Starten
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run Update Script
+        run: python update_data.py
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add daten.json
+          git commit -m "Automatisches Live-Update der Abfahrten" || exit 0
+          git push
