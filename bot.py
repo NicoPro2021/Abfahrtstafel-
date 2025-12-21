@@ -1,52 +1,56 @@
-import os
-import sys
+import requests
 import json
 from datetime import datetime, timedelta, timezone
-
-# 1. ERZWINGE INSTALLATION (Damit ModuleNotFoundError nie wieder kommt)
-try:
-    from pyhafas import HafasClient
-    from pyhafas.profile import VBBProfile
-except ImportError:
-    os.system(f"{sys.executable} -m pip install pyhafas")
-    from pyhafas import HafasClient
-    from pyhafas.profile import VBBProfile
 
 def hole_daten():
     u_zeit = (datetime.now(timezone.utc) + timedelta(hours=1)).strftime("%H:%M")
     
-    # 2. NUTZE VBB (Viel stabiler als DB-Server)
-    client = HafasClient(VBBProfile())
-    station_id = "8010405" # Zerbst
+    # Zerbst/Anhalt ID
+    station_id = "8010405" 
+    
+    # Wir nutzen einen anderen API-Endpunkt (Hafas-Rest)
+    # Dieser ist oft weniger streng als der Haupt-DB-Server
+    url = f"https://v6.db.transport.rest/stops/{station_id}/departures?results=15&duration=120&remarks=true"
 
     try:
-        departures = client.departures(
-            station=station_id,
-            date=datetime.now(),
-            duration=120
-        )
+        # Wir setzen einen "User-Agent", damit wir wie ein Browser aussehen
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        }
         
+        r = requests.get(url, headers=headers, timeout=15)
+        r.raise_for_status()
+        data = r.json()
+        
+        departures = data.get('departures', [])
         fahrplan = []
+
         for dep in departures:
-            soll_zeit = dep.dateTime.strftime("%H:%M")
+            # Zeit holen
+            zeit_roh = dep.get('when') or dep.get('plannedWhen')
+            if not zeit_roh: continue
             
-            # Verspätung berechnen
-            delay_min = 0
-            ist_zeit = soll_zeit
-            if dep.delay:
-                delay_min = int(dep.delay.total_seconds() / 60)
-                ist_zeit = (dep.dateTime + dep.delay).strftime("%H:%M")
-
-            linie = dep.name.replace(" ", "")
-            ziel = dep.direction[:20] if dep.direction else "Ziel"
-            gleis = dep.platform if dep.platform else "-"
-
-            # Info-Text Logik
+            soll_zeit = dep.get('plannedWhen', zeit_roh).split('T')[1][:5]
+            ist_zeit = zeit_roh.split('T')[1][:5]
+            
+            linie = dep.get('line', {}).get('name', '???').replace(" ", "")
+            ziel = dep.get('direction', 'Ziel')[:20]
+            gleis = str(dep.get('platform') or "-")
+            
+            # Verspätung und Infos
+            delay = dep.get('delay')
             info_text = ""
-            if dep.cancelled:
+            
+            if dep.get('cancelled'):
                 info_text = "FÄLLT AUS!"
-            elif delay_min > 0:
-                info_text = f"+{delay_min} Min"
+            elif delay and delay >= 60:
+                info_text = f"+{int(delay/60)} Min"
+            
+            # Bemerkungen (nur wichtige)
+            remarks = dep.get('remarks', [])
+            for rm in remarks:
+                if rm.get('type') == 'warning':
+                    info_text += f" ! {rm.get('summary', '')}"
 
             fahrplan.append({
                 "zeit": soll_zeit,
@@ -54,17 +58,14 @@ def hole_daten():
                 "linie": linie,
                 "ziel": ziel,
                 "gleis": gleis,
-                "info": info_text,
+                "info": info_text.strip(),
                 "update": u_zeit
             })
 
-        # Sortieren nach echter Zeit
-        fahrplan.sort(key=lambda x: x['echte_zeit'])
-        return fahrplan[:15]
+        return fahrplan if fahrplan else [{"zeit": "Wait", "linie": "DB", "ziel": "Keine Züge", "gleis": "-", "info": "", "update": u_zeit}]
 
     except Exception as e:
-        # Notfall-Rückgabe falls Server doch blockt
-        return [{"zeit": "Err", "linie": "VBB", "ziel": "Verbindung", "gleis": "-", "info": "Server blockt", "update": u_zeit}]
+        return [{"zeit": "Err", "linie": "API", "ziel": "Fehler", "gleis": "-", "info": str(e)[:15], "update": u_zeit}]
 
 if __name__ == "__main__":
     daten = hole_daten()
