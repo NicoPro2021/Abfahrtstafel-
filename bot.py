@@ -4,63 +4,67 @@ import json
 from datetime import datetime, timedelta, timezone
 
 def hole_daten():
+    # Zeitkorrektur für Deutschland
     jetzt = datetime.now(timezone.utc) + timedelta(hours=1)
     u_zeit = jetzt.strftime("%H:%M")
     
-    # Wir probieren nacheinander diese IDs für Zerbst/Anhalt
-    ids_to_try = ["8006654", "8010404"]
+    # Zerbst/Anhalt ID 8010404 (Sicherer für Zerbst)
+    eva = "8010404" 
     fahrplan = []
 
-    # 1. Versuch über IRIS (XML)
-    for eva in ids_to_try:
-        for i in range(3): # 3 Stunden scannen
+    try:
+        # Wir scannen 3 Stunden, um die Liste voll zu bekommen
+        for i in range(3):
             t = jetzt + timedelta(hours=i)
             url = f"https://iris.noncd.db.de/iris-tts/timetable/plan/{eva}/{t.strftime('%y%m%d')}/{t.strftime('%H')}"
-            try:
-                r = requests.get(url, timeout=10)
-                if r.status_code == 200:
-                    root = ET.fromstring(r.content)
-                    for s in root.findall('s'):
-                        dp = s.find('dp')
-                        tl = s.find('tl')
-                        if dp is not None and tl is not None:
-                            zug = f"{tl.get('c', '')}{tl.get('n', '') or tl.get('l', '')}"
-                            if "RT" in zug: continue # Kassel-Filter
-                            
-                            p_zeit = dp.get('pt')[-4:]
-                            zeit_str = f"{p_zeit[:2]}:{p_zeit[2:]}"
-                            
-                            if i == 0 and zeit_str < u_zeit: continue
-                            
-                            ziel = dp.get('ppth', '').split('|')[-1][:18]
-                            fahrplan.append({"zeit": zeit_str, "linie": zug, "ziel": ziel, "info": "pünktlich"})
-            except: continue
-        if fahrplan: break # Wenn wir Daten haben, stoppen wir hier
+            
+            r = requests.get(url, timeout=12)
+            if r.status_code != 200: continue
+            
+            root = ET.fromstring(r.content)
+            for s in root.findall('s'):
+                dp = s.find('dp') # Departure
+                tl = s.find('tl') # Train Line
+                
+                if dp is not None and tl is not None:
+                    # Filter: Nur RE und RB (Kein ICE/Kassel-Müll)
+                    zugtyp = tl.get('c', '')
+                    if zugtyp not in ['RE', 'RB']: continue
+                    
+                    linie = f"{zugtyp}{tl.get('n', '') or tl.get('l', '')}"
+                    
+                    # Zeit formatieren
+                    p_zeit = dp.get('pt')[-4:]
+                    zeit_formatiert = f"{p_zeit[:2]}:{p_zeit[2:]}"
+                    
+                    # Vergangene Züge ausblenden
+                    if i == 0 and zeit_formatiert < u_zeit: continue
 
-    # 2. Backup-Versuch über HAFAS (falls IRIS leer war)
-    if not fahrplan:
-        try:
-            h_url = "https://v6.db.transport.rest/stops/8006654/departures?duration=120&results=10"
-            r = requests.get(h_url, timeout=10)
-            if r.status_code == 200:
-                for dep in r.json().get('departures', []):
-                    line = dep.get('line', {}).get('name', '').replace(" ", "")
-                    if "RT" in line: continue
-                    w = dep.get('when') or dep.get('plannedWhen', '')
-                    zeit_str = w.split('T')[1][:5]
-                    fahrplan.append({"zeit": zeit_str, "linie": line, "ziel": dep.get('direction', '')[:18], "info": "pünktlich"})
-        except: pass
+                    # Ziel und Gleis
+                    pfad = dp.get('ppth', '').split('|')
+                    ziel = pfad[-1] if pfad else "Ziel"
+                    gleis = dp.get('pp', '-') # 'pp' ist das geplante Gleis
 
+                    fahrplan.append({
+                        "zeit": zeit_formatiert,
+                        "linie": linie,
+                        "ziel": ziel[:18],
+                        "gleis": gleis,
+                        "info": "pünktlich",
+                        "update": u_zeit
+                    })
+    except:
+        pass
+
+    # Sortieren nach Uhrzeit
     fahrplan.sort(key=lambda x: x['zeit'])
-    # Duplikate entfernen
-    seen = set()
-    final = []
-    for f in fahrplan:
-        if f['zeit'] not in seen:
-            final.append(f)
-            seen.add(f['zeit'])
     
-    return final[:10] if final else [{"zeit": u_zeit, "linie": "INFO", "ziel": "Kein Zug gef.", "info": "Check ID"}]
+    # Falls ID 8010404 leer ist, Backup mit 8006654 (aber Filter auf RE13/RB42)
+    if not fahrplan:
+        # (Optionaler Backup-Loop hier möglich)
+        return [{"zeit": u_zeit, "linie": "INFO", "ziel": "Suche...", "gleis": "-", "info": "Keine Daten"}]
+
+    return fahrplan[:10]
 
 if __name__ == "__main__":
     daten = hole_daten()
