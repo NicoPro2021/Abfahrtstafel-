@@ -1,65 +1,72 @@
 import requests
+import xml.etree.ElementTree as ET
 import json
-import urllib3
-from datetime import datetime
-
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+from datetime import datetime, timedelta
 
 def hole_daten():
     u_zeit = datetime.now().strftime("%H:%M")
-    # Wir probieren zwei verschiedene Schnittstellen-Server
-    urls = [
-        "https://v6.db.transport.rest/stops/8006654/departures?duration=300&results=15&remarks=true",
-        "https://v6.vbb.transport.rest/stops/900000143501/departures?duration=300&results=15&remarks=true"
-    ]
+    jetzt = datetime.now()
+    # Deutsche Bahn IRIS Station ID für Zerbst: 8006654
+    eva = "8006654"
     
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
-    raw_deps = []
-    erfolg = False
-
-    for url in urls:
+    fahrplan = []
+    
+    # Wir laden die aktuelle und die nächste Stunde (für mehr Verbindungen)
+    for i in range(2):
+        stunde_obj = jetzt + timedelta(hours=i)
+        datum = stunde_obj.strftime("%y%m%d")
+        stunde = stunde_obj.strftime("%H")
+        
+        url = f"https://iris.noncd.db.de/iris-tts/timetable/plan/{eva}/{datum}/{stunde}"
+        
         try:
-            res = requests.get(f"{url}&t={int(datetime.now().timestamp())}", headers=headers, timeout=15, verify=False)
-            if res.status_code == 200:
-                data = res.json()
-                raw_deps = data if isinstance(data, list) else data.get('departures', [])
-                if len(raw_deps) > 0:
-                    erfolg = True
-                    break # Erste funktionierende Quelle nehmen
+            r = requests.get(url, timeout=10)
+            if r.status_code != 200: continue
+            
+            root = ET.fromstring(r.content)
+            for s in root.findall('s'):
+                tl = s.find('tl') # Train Line
+                dp = s.find('dp') # Departure
+                
+                if tl is not None and dp is not None:
+                    # Filter gegen Kassel-Bug: Nur RE und RB
+                    zugtyp = tl.get('c', '')
+                    if zugtyp not in ['RE', 'RB']: continue
+                    
+                    p_zeit = dp.get('pt')[-4:] # Geplante Zeit HHMM
+                    zeit_str = f"{p_zeit[:2]}:{p_zeit[2:]}"
+                    
+                    # Vergangene Züge ignorieren
+                    if i == 0 and zeit_str < u_zeit: continue
+                    
+                    linie = f"{zugtyp}{tl.get('n', '') or tl.get('l', '')}"
+                    pfad = dp.get('ppth', '').split('|')
+                    ziel = pfad[-1] if pfad else "Ziel unbekannt"
+                    
+                    fahrplan.append({
+                        "zeit": zeit_str,
+                        "linie": linie,
+                        "ziel": ziel[:18],
+                        "gleis": dp.get('pp', '-'),
+                        "info": "pünktlich",
+                        "update": u_zeit
+                    })
         except:
             continue
 
-    if not erfolg:
-        return [{"zeit": "Offline", "linie": "RE13", "ziel": "Pruefe WLAN", "gleis": "-", "info": u_zeit}]
-
-    fahrplan = []
-    for dep in raw_deps:
-        linie = dep.get('line', {}).get('name', '???').replace(" ", "")
-        if "RT" in linie: continue # Kassel-Filter
-
-        w = dep.get('when') or dep.get('plannedWhen', '')
-        zeit = w.split('T')[1][:5] if 'T' in w else "--:--"
-        ziel = dep.get('direction', 'Unbekannt')[:18]
-        gleis = str(dep.get('platform') or "-")
-        
-        # Verspätung & Info
-        delay = dep.get('delay')
-        remarks = dep.get('remarks', [])
-        grund = next((r.get('summary') or r.get('text', '') for r in remarks if r.get('type') == 'warning'), "")
-        
-        info_text = "pünktlich"
-        if delay and delay > 0:
-            info_text = f"+{int(delay/60)} {grund}".strip()
-        elif grund:
-            info_text = grund
-
-        fahrplan.append({
-            "zeit": zeit, "linie": linie, "ziel": ziel, 
-            "gleis": gleis, "info": info_text[:35], "update": u_zeit
-        })
-
+    # Nach Zeit sortieren
     fahrplan.sort(key=lambda x: x['zeit'])
-    return fahrplan[:10] # Top 10 Züge
+    
+    # Duplikate entfernen (IRIS listet Züge manchmal doppelt)
+    gesehen = set()
+    eindeutig = []
+    for f in fahrplan:
+        key = f"{f['zeit']}{f['linie']}"
+        if key not in gesehen:
+            eindeutig.append(f)
+            gesehen.add(key)
+
+    return eindeutig[:10]
 
 if __name__ == "__main__":
     daten = hole_daten()
