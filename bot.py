@@ -7,17 +7,24 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def hole_daten():
     jetzt_zeit = datetime.now().strftime("%H:%M")
-    # Wir laden Abfahrten inkl. Bemerkungen (remarks)
+    # Wir nutzen eine robustere URL-Struktur
     url = "https://v6.db.transport.rest/stops/8006654/departures?results=10&duration=120&remarks=true"
     
     try:
-        response = requests.get(url, timeout=20, verify=False)
+        # Cache-Buster, um immer frische Daten zu erzwingen
+        response = requests.get(f"{url}&t={int(datetime.now().timestamp())}", timeout=20, verify=False)
+        
         if response.status_code != 200:
-            return [{"zeit": "Err", "linie": "HTTP", "ziel": "Fehler", "gleis": "-", "info": jetzt_zeit}]
+            return [{"zeit": "Err", "linie": "HTTP", "ziel": str(response.status_code), "gleis": "-", "info": jetzt_zeit}]
 
         data = response.json()
         departures = data.get('departures', [])
         
+        if not departures:
+            # Plan B: Falls mit Remarks nichts kommt, versuchen wir es ohne (Basis-Daten)
+            url_simple = "https://v6.db.transport.rest/stops/8006654/departures?results=6"
+            departures = requests.get(url_simple, verify=False).json().get('departures', [])
+
         fahrplan = []
         for dep in departures:
             linie = dep.get('line', {}).get('name', '???').replace(" ", "")
@@ -28,32 +35,30 @@ def hole_daten():
             ziel = dep.get('direction', 'Unbekannt')[:18]
             gleis = str(dep.get('platform') or "-")
             
-            # --- Verspätungsgrund extrahieren ---
-            info_text = "pünktlich"
+            # --- Verspätungsgrund / Info ---
             delay = dep.get('delay')
-            
-            # Suche nach wichtigen Bemerkungen
             remarks = dep.get('remarks', [])
-            wichtige_info = ""
+            
+            # Wir suchen nach der wichtigsten Meldung (z.B. "Notarzteinsatz", "Signalstörung")
+            grund = ""
             for r in remarks:
-                # Wir filtern nach echten Störungen (Typ 'warning')
-                if r.get('type') == 'warning' or r.get('summary'):
-                    wichtige_info = r.get('summary') or r.get('text', '')
+                if r.get('type') == 'warning':
+                    grund = r.get('summary') or r.get('text', '')
                     break
-
+            
             if delay and delay > 0:
                 minuten = f"+{int(delay/60)}"
-                # Wenn wir eine Text-Info haben, hängen wir sie an oder ersetzen sie
-                info_text = f"{minuten} {wichtige_info}".strip()
-            elif wichtige_info:
-                info_text = wichtige_info
+                # Kombiniere Minuten und Grund (z.B. "+5 Signalstörung")
+                info_text = f"{minuten} {grund}".strip() if grund else minuten
+            else:
+                info_text = grund if grund else "pünktlich"
 
             fahrplan.append({
                 "zeit": zeit,
                 "linie": linie,
                 "ziel": ziel,
                 "gleis": gleis,
-                "info": info_text[:30], # Auf 30 Zeichen begrenzt fürs Display
+                "info": info_text[:40], # Genug Platz für Gründe
                 "update": jetzt_zeit
             })
 
