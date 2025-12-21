@@ -5,176 +5,134 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Abfahrtstafel Zerbst/Anhalt</title>
     <style>
-        body { 
-            background: #000b1a; 
-            color: #ffffff; 
-            font-family: 'Segoe UI', Roboto, sans-serif; 
+        :root {
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --delay-bg: #ffffff;
+            --delay-text: #000000;
+            --accent-red: #ff0000;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        h1 { 
+        h1 {
+            font-size: 1.5rem;
+            border-bottom: 2px solid #333;
             width: 100%;
-            max-width: 1000px;
-            background: #003399; 
-            padding: 20px;
-            margin: 0 0 10px 0;
-            font-size: 1.8rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            border-bottom: 5px solid #ffcc00;
-            box-sizing: border-box;
-        }
-
-        .uhrzeit {
-            float: right;
-            font-family: monospace;
-            color: #ffcc00;
-        }
-
-        table { 
-            width: 100%; 
-            max-width: 1000px;
-            border-collapse: separate; 
-            border-spacing: 0 6px; 
-        }
-
-        th { 
-            text-align: left; 
-            color: #8899aa; 
-            font-size: 0.8rem; 
-            padding: 10px;
-            text-transform: uppercase;
-        }
-
-        tr { background: #001a33; transition: all 0.3s; }
-
-        /* NEU: Markierung für Ausfälle - Weißer Hintergrund, schwarze Schrift */
-        tr.ausfall { 
-            background: #ffffff !important; 
-        }
-
-        tr.ausfall td {
-            color: #000000 !important;
-            font-weight: bold;
-        }
-
-        td { 
-            padding: 15px 10px; 
-            font-size: 1.4rem; 
-            font-weight: 500;
-        }
-
-        .linie { 
-            background: #ffffff; 
-            color: #003399; 
-            padding: 4px 10px; 
-            font-weight: 900; 
-            border-radius: 3px;
-            display: inline-block;
-            min-width: 70px;
             text-align: center;
-            border: 1px solid #003399;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
         }
 
-        /* Wenn die Zeile weiß ist, muss der Linien-Button blau werden */
-        tr.ausfall .linie {
-            background: #003399;
-            color: #ffffff;
+        #fahrplan {
+            width: 100%;
+            max-width: 600px;
         }
 
-        .status { 
-            color: #00ff00; 
+        .zug-zeile {
+            display: grid;
+            grid-template-columns: 15% 15% 40% 10% 20%;
+            align-items: center;
+            padding: 15px 10px;
+            margin-bottom: 8px;
+            background-color: #1a1a1a;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        /* VERSÄTUNG: Weißes Feld, schwarze Schrift */
+        .verspaetung-aktiv {
+            background-color: var(--delay-bg) !important;
+            color: var(--delay-text) !important;
             font-weight: bold;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
         }
 
-        /* Status-Text bei Ausfall */
-        tr.ausfall .status {
-            color: #cc0000 !important;
-        }
-
-        .gleis {
-            color: #ffcc00;
+        .zeit { font-weight: bold; }
+        .linie { color: #00ff00; }
+        .verspaetung-aktiv .linie { color: #008000; }
+        
+        .ziel { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        
+        .gleis { text-align: center; opacity: 0.8; }
+        
+        .info {
+            text-align: right;
             font-weight: bold;
-            text-align: center;
-            font-size: 1.6rem;
+            color: #ffaa00; /* Standard Warnfarbe */
         }
 
-        tr.ausfall .gleis {
-            color: #000000;
+        .verspaetung-aktiv .info {
+            color: var(--accent-red);
         }
 
-        .fade-in {
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .footer {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #555;
         }
     </style>
 </head>
 <body>
 
-    <h1>
-        Zerbst/Anhalt 
-        <span class="uhrzeit" id="clock">00:00:00</span>
-    </h1>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Zeit</th>
-                <th>Linie</th>
-                <th>Ziel</th>
-                <th style="text-align:center">Gleis</th>
-                <th>Information</th>
-            </tr>
-        </thead>
-        <tbody id="board">
-        </tbody>
-    </table>
+    <h1>Zerbst/Anhalt</h1>
+    <div id="fahrplan">Lade Abfahrten...</div>
+    <div class="footer" id="update-info">Letztes Update: --:--</div>
 
     <script>
-        function updateClock() {
-            const now = new Date();
-            document.getElementById('clock').innerText = now.toLocaleTimeString('de-DE');
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
-
-        async function loadBoard() {
+        async function ladeDaten() {
             try {
-                const response = await fetch('daten.json?t=' + Date.now());
-                const data = await response.json();
-                const board = document.getElementById('board');
+                // Cache-Buster hinzugefügt, damit GitHub-Daten immer frisch geladen werden
+                const response = await fetch('daten.json?t=' + list_id = new Date().getTime());
+                const zuege = await response.json();
                 
-                board.innerHTML = data.map(f => {
-                    const info = f.info || "";
-                    const istAusfall = info.toLowerCase().includes("ausfall") || info.toLowerCase().includes("fällt aus");
-                    
-                    const rowClass = istAusfall ? 'class="ausfall fade-in"' : 'class="fade-in"';
-                    const gleisAnzeige = istAusfall ? "--" : f.gleis;
+                const container = document.getElementById('fahrplan');
+                container.innerHTML = '';
 
-                    return `
-                        <tr ${rowClass}>
-                            <td style="${!istAusfall ? 'color: #ffcc00;' : ''}">${f.zeit}</td>
-                            <td><span class="linie">${f.linie}</span></td>
-                            <td style="width: 40%; ${istAusfall ? 'text-decoration: line-through;' : ''}">${f.ziel}</td>
-                            <td class="gleis">${gleisAnzeige}</td>
-                            <td class="status">${istAusfall ? "NICHT EINSTEIGEN - " + info : info}</td>
-                        </tr>
+                zuege.forEach(zug => {
+                    const div = document.createElement('div');
+                    div.className = 'zug-zeile';
+
+                    // Prüfung auf Verspätung (+ im Text)
+                    const hatVerspaetung = zug.info.includes('+');
+                    if (hatVerspaetung) {
+                        div.classList.add('verspaetung-aktiv');
+                    }
+
+                    div.innerHTML = `
+                        <div class="zeit">${zug.zeit}</div>
+                        <div class="linie">${zug.linie}</div>
+                        <div class="ziel">${zug.ziel}</div>
+                        <div class="gleis">${zug.gleis}</div>
+                        <div class="info">${zug.info}</div>
                     `;
-                }).join('');
+                    container.appendChild(div);
+                });
 
-            } catch(e) { console.error("Fehler beim Laden."); }
+                if(zuege.length > 0 && zuege[0].update) {
+                    document.getElementById('update-info').innerText = 'Letztes Update: ' + zuege[0].update;
+                }
+
+            } catch (error) {
+                console.error('Fehler beim Laden:', error);
+                document.getElementById('update-info').innerText = 'Fehler beim Laden der Daten.';
+            }
         }
 
-        setInterval(loadBoard, 10000);
-        loadBoard();
+        // Alle 30 Sekunden aktualisieren
+        setInterval(ladeDaten, 30000);
+        // Sofort beim Start laden
+        ladeDaten();
     </script>
 </body>
 </html>
