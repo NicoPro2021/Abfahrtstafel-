@@ -3,123 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abfahrt Zerbst/Anhalt</title>
+    <title>DB Abfahrt Zerbst</title>
     <style>
-        /* DB Schriftart-Feeling und Farben */
-        body { 
-            background-color: #000000; 
-            color: #ffffff; 
-            font-family: Arial, Helvetica, sans-serif; 
-            margin: 0; 
-            padding: 0; 
-        }
-
-        /* Blauer Header (DB-Blau) */
-        .header { 
-            background-color: #003399; 
-            padding: 15px 20px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            border-bottom: 3px solid #002266;
-        }
-
-        .header h1 { 
-            margin: 0; 
-            font-size: 26px; 
-            font-weight: bold; 
-            letter-spacing: 0.5px;
-        }
-
-        .uhrzeit { 
-            color: #ffcc00; 
-            font-size: 26px; 
-            font-weight: bold; 
-            font-family: 'Courier New', Courier, monospace;
-        }
-
-        /* Die Tafel */
-        .tafel { 
-            width: 100%; 
-            border-collapse: collapse; 
-        }
-
-        .zug-zeile { 
-            border-bottom: 1px solid #333333; 
-            height: 90px;
-        }
-
-        /* Zeit-Spalte (DB-Gelb) */
-        .zeit { 
-            color: #ffcc00; 
-            font-size: 28px; 
-            font-weight: bold; 
-            padding-left: 20px; 
-            width: 90px;
-        }
-
-        /* Linie (Weiße Box, blaues Logo) */
-        .linie-container {
-            width: 70px;
-            text-align: center;
-        }
-
-        .linie-box { 
-            background-color: #ffffff; 
-            color: #003399; 
-            padding: 4px 8px; 
-            font-weight: 900; 
-            border-radius: 2px; 
-            font-size: 18px;
-            display: inline-block;
-        }
-
-        /* Ziel und Gleis */
-        .ziel { 
-            font-size: 28px; 
-            font-weight: bold; 
-            padding-left: 15px;
-        }
-
-        .gleis { 
-            color: #ffcc00; 
-            font-size: 28px; 
-            font-weight: bold; 
-            text-align: right; 
-            padding-right: 25px; 
-            width: 50px;
-        }
-
-        /* Ausfall-Design (Weißer Hintergrund, schwarzer Text) */
-        .ausfall { 
-            background-color: #ffffff !important; 
-        }
-
-        .ausfall td { color: #000000 !important; }
-        .ausfall .ziel { text-decoration: line-through; }
-        .ausfall .linie-box { background-color: #003399; color: #ffffff; }
-
-        /* Rote Info-Laufschrift */
-        .info-box { 
-            height: 25px; 
-            overflow: hidden; 
-            margin-top: 5px;
-            width: 100%;
-        }
-
-        .info-text { 
-            color: #ff0000; 
-            font-size: 19px; 
-            font-weight: bold; 
-            white-space: nowrap; 
-            display: inline-block;
-            animation: db-scroll 12s linear infinite;
-        }
-
-        @keyframes db-scroll {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-150%); }
-        }
+        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; margin: 0; }
+        .header { background-color: #003399; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .uhrzeit { color: #ffcc00; font-size: 24px; font-weight: bold; }
+        .tafel { width: 100%; border-collapse: collapse; }
+        .zug-zeile { border-bottom: 1px solid #333; height: 80px; }
+        .zeit { color: #ffcc00; font-size: 26px; font-weight: bold; padding-left: 15px; width: 80px; }
+        .linie-box { background-color: #fff; color: #003399; padding: 3px 6px; font-weight: bold; border-radius: 2px; }
+        .ziel { font-size: 24px; font-weight: bold; padding-left: 10px; }
+        .gleis { color: #ffcc00; font-size: 26px; font-weight: bold; text-align: right; padding-right: 20px; }
+        .info-text { color: #ff0000; font-size: 18px; font-weight: bold; }
+        .puenktlich { color: #00ff00; font-size: 14px; }
     </style>
 </head>
 <body>
@@ -129,48 +25,47 @@
     <div id="uhr" class="uhrzeit">00:00:00</div>
 </div>
 
-<table class="tafel" id="fahrplan">
-    </table>
+<table class="tafel" id="fahrplan"></table>
 
 <script>
     function updateUhr() {
-        const jetzt = new Date();
-        document.getElementById('uhr').innerText = jetzt.toLocaleTimeString('de-DE');
+        document.getElementById('uhr').innerText = new Date().toLocaleTimeString('de-DE');
     }
     setInterval(updateUhr, 1000);
-    updateUhr();
 
     async function ladeDaten() {
         try {
             const res = await fetch('daten.json?v=' + Date.now());
             const zuege = await res.json();
             const liste = document.getElementById('fahrplan');
+            const jetzt = new Date();
+            const jetztZeitString = jetzt.getHours().toString().padStart(2, '0') + ":" + jetzt.getMinutes().toString().padStart(2, '0');
+
             liste.innerHTML = '';
 
             zuege.forEach(z => {
-                const istAusfall = z.info.toLowerCase().includes("ausfall") || z.info.toLowerCase().includes("fällt aus");
-                const tr = document.createElement('tr');
-                tr.className = 'zug-zeile' + (istAusfall ? ' ausfall' : '');
+                // RÜCKSTAU-FILTER: Wenn die echte_zeit älter als jetzt ist, Zeile überspringen
+                if (z.echte_zeit < jetztZeitString) return;
 
+                const tr = document.createElement('tr');
+                tr.className = 'zug-zeile';
                 tr.innerHTML = `
                     <td class="zeit">${z.zeit}</td>
-                    <td class="linie-container"><span class="linie-box">${z.linie}</span></td>
                     <td>
-                        <div class="ziel">${z.ziel}</div>
-                        ${z.info ? `<div class="info-box"><div class="info-text">${z.info}</div></div>` : ''}
+                        <span class="linie-box">${z.linie}</span>
+                        <span class="ziel">${z.ziel}</span>
+                        <br>
+                        <span class="info-text">${z.info ? 'Heute ca. ' + z.echte_zeit + ' (' + z.info + ')' : ''}</span>
                     </td>
-                    <td class="gleis">${istAusfall ? '--' : z.gleis}</td>
+                    <td class="gleis">${z.gleis}</td>
                 `;
                 liste.appendChild(tr);
             });
-        } catch (e) {
-            console.log("Warte auf daten.json...");
-        }
+        } catch (e) { console.log("Lade..."); }
     }
 
     ladeDaten();
-    setInterval(ladeDaten, 30000);
+    setInterval(ladeDaten, 30000); // Alle 30 Sek. checken
 </script>
-
 </body>
 </html>
