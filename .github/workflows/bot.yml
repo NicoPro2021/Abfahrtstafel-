@@ -2,14 +2,15 @@ name: DB-Fahrplan-Bot
 
 on:
   schedule:
-    - cron: '*/5 * * * *'  # Startet alle 5 Minuten
-  workflow_dispatch:       # Erlaubt manuellen Start
+    - cron: '*/5 * * * *' # Läuft alle 5 Minuten automatisch
+  workflow_dispatch:      # Ermöglicht es dir, den Bot jederzeit manuell zu starten
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Code auschecken
+      - name: Repository auschecken
         uses: actions/checkout@v3
 
       - name: Python installieren
@@ -17,16 +18,17 @@ jobs:
         with:
           python-version: '3.9'
 
-      - name: Installiere Abhängigkeiten
-        run: pip install requests beautifulsoup4
+      - name: Bibliotheken installieren
+        run: |
+          pip install requests beautifulsoup4
 
-      - name: Starte den Scraper
+      - name: Scraper ausführen
         run: python bot.py
 
-      - name: Commit und Push der Daten
+      - name: Änderungen speichern (Push)
         run: |
-          git config --global user.name 'GitHub Bot'
-          git config --global user.email 'bot@github.com'
+          git config --global user.name 'GitHub Action Bot'
+          git config --global user.email 'action@github.com'
           git add daten.json
-          git commit -m "Fahrplan Update von bahnhof.de" || exit 0
-          git push
+          # Commit nur ausführen, wenn sich die Daten wirklich geändert haben
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Fahrplan aktualisiert (Zerbst/Anhalt)" && git push)
