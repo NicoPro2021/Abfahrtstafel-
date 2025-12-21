@@ -6,17 +6,12 @@ def hole_daten():
     u_zeit = datetime.now().strftime("%H:%M")
     
     try:
-        # Schritt 1: Suche die ID für "Zerbst/Anhalt" live
+        # Schritt 1: ID für Zerbst finden
         suche_url = "https://v6.db.transport.rest/locations?query=Zerbst&results=1"
         suche_res = requests.get(suche_url, timeout=10)
-        location_data = suche_res.json()
+        echte_id = suche_res.json()[0]['id']
         
-        if not location_data:
-            return [{"zeit": "Err", "linie": "ID", "ziel": "Nicht gef.", "gleis": "-", "info": u_zeit}]
-        
-        echte_id = location_data[0]['id']
-        
-        # Schritt 2: Abfahrten für diese ID laden (300 Min = 5 Std Fenster)
+        # Schritt 2: Abfahrten laden
         url = f"https://v6.db.transport.rest/stops/{echte_id}/departures?duration=300&results=20"
         r = requests.get(url, timeout=15)
         data = r.json()
@@ -25,39 +20,41 @@ def hole_daten():
         fahrplan = []
         for dep in departures:
             linie = dep.get('line', {}).get('name', '???').replace(" ", "")
+            if any(x in linie for x in ["ICE", "IC", "RT"]): continue
             
-            # Wir nehmen ALLES außer Fernverkehr (ICE/IC) und die Kassel-RT
-            if any(x in linie for x in ["ICE", "IC", "RT"]):
-                continue
-                
-            w = dep.get('when') or dep.get('plannedWhen', '')
-            zeit = w.split('T')[1][:5] if 'T' in w else "--:--"
-            gleis = str(dep.get('platform') or dep.get('plannedPlatform') or "-")
+            # Geplante Zeit (Soll)
+            soll_w = dep.get('plannedWhen')
+            soll_zeit = soll_w.split('T')[1][:5] if soll_w else "--:--"
+            
+            # Tatsächliche Zeit (Ist)
+            ist_w = dep.get('when')
+            ist_zeit = ist_w.split('T')[1][:5] if ist_w else soll_zeit
+            
+            # Verspätung berechnen
+            delay = dep.get('delay') # Delay in Sekunden
+            if delay is not None and delay > 0:
+                minuten = int(delay / 60)
+                info_text = f"+{minuten}"
+            else:
+                info_text = "pünktlich"
+
             ziel = dep.get('direction', 'Ziel unbekannt')
+            gleis = str(dep.get('platform') or dep.get('plannedPlatform') or "-")
             
             fahrplan.append({
-                "zeit": zeit,
+                "zeit": soll_zeit,      # Die Zeit, die im Fahrplan steht
+                "echte_zeit": ist_zeit, # Die Zeit, wann er wirklich kommt
                 "linie": linie,
                 "ziel": ziel[:18],
                 "gleis": gleis,
-                "info": "pünktlich"
+                "info": info_text,      # Hier steht jetzt z.B. "+5"
+                "update": u_zeit
             })
-
-        if not fahrplan:
-            # Wenn immer noch leer, zeigen wir die ersten 3 Treffer egal was es ist
-            for dep in departures[:3]:
-                fahrplan.append({
-                    "zeit": "DEBUG",
-                    "linie": dep.get('line', {}).get('name', '??'),
-                    "ziel": dep.get('direction', '')[:15],
-                    "gleis": "-",
-                    "info": "Check"
-                })
 
         return fahrplan[:10]
 
     except Exception as e:
-        return [{"zeit": "Err", "linie": "Bot", "ziel": str(e)[:15], "gleis": "-", "info": u_zeit}]
+        return [{"zeit": "Err", "linie": "Bot", "ziel": str(e)[:15], "gleis": "-", "info": "Error"}]
 
 if __name__ == "__main__":
     daten = hole_daten()
