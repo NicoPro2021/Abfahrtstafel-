@@ -4,44 +4,46 @@ import json
 from datetime import datetime, timedelta, timezone
 
 def hole_daten():
-    # Zeitkorrektur Deutschland
+    # Deutsche Zeit berechnen
     jetzt = datetime.now(timezone.utc) + timedelta(hours=1)
     u_zeit = jetzt.strftime("%H:%M")
     
-    # Zerbst/Anhalt offizielle EVA-Nummer
+    # Zerbst/Anhalt ID
     eva = "8006654" 
     fahrplan = []
-    
-    # Zerbst-Relevante Linien (RE13 nach Magdeburg/Leipzig, RB42 nach Dessau/Magdeburg)
-    erlaubte_linien = ["RE13", "RB42"]
 
     try:
-        for i in range(4): # 4 Stunden scannen
+        # Wir scannen 5 Stunden, um eine volle Liste zu bekommen
+        for i in range(5):
             t = jetzt + timedelta(hours=i)
             url = f"https://iris.noncd.db.de/iris-tts/timetable/plan/{eva}/{t.strftime('%y%m%d')}/{t.strftime('%H')}"
             
-            r = requests.get(url, timeout=10)
+            r = requests.get(url, timeout=12)
             if r.status_code != 200: continue
             
             root = ET.fromstring(r.content)
             for s in root.findall('s'):
                 dp = s.find('dp')
                 tl = s.find('tl')
+                
                 if dp is not None and tl is not None:
-                    # Typ (RE/RB) + Nummer (13/42)
-                    typ = tl.get('c', '')
+                    # Wir bauen den Liniennamen dynamisch
+                    typ = tl.get('c', '') # RE, RB, etc.
                     nr = tl.get('n', '') or tl.get('l', '')
                     zug_name = f"{typ}{nr}"
                     
-                    # FILTER: Nur RE13 und RB42 durchlassen!
-                    # Das verhindert, dass Berlin- oder Kassel-Züge in die Liste rutschen
-                    if not any(x in zug_name for x in erlaubte_linien):
+                    # FILTER: 
+                    # 1. Keine RegioTrams aus Kassel (RT)
+                    # 2. Keine ICE/IC (da diese selten direkt in Zerbst halten)
+                    if "RT" in zug_name or "ICE" in zug_name:
                         continue
-                    
+                        
                     raw_zeit = dp.get('pt')[-4:]
                     zeit_formatiert = f"{raw_zeit[:2]}:{raw_zeit[2:]}"
                     
-                    if i == 0 and zeit_formatiert < u_zeit: continue
+                    # Nur zukünftige Züge anzeigen
+                    if i == 0 and zeit_formatiert < u_zeit:
+                        continue
 
                     pfad = dp.get('ppth', '').split('|')
                     ziel = pfad[-1] if pfad else "Ziel"
@@ -53,12 +55,21 @@ def hole_daten():
                         "info": "pünktlich",
                         "update": u_zeit
                     })
-    except:
-        pass
+    except Exception as e:
+        print(f"Fehler: {e}")
 
     # Sortieren nach Uhrzeit
     fahrplan.sort(key=lambda x: x['zeit'])
-    return fahrplan[:10]
+    
+    # Duplikate entfernen
+    final = []
+    check = set()
+    for f in fahrplan:
+        if f['zeit'] not in check:
+            final.append(f)
+            check.add(f['zeit'])
+
+    return final[:10]
 
 if __name__ == "__main__":
     daten = hole_daten()
