@@ -1,83 +1,62 @@
 import requests
 import json
+import time
 from datetime import datetime, timedelta, timezone
 
 def hole_daten():
-    # Aktuelle Zeit für den Filter
-    jetzt = datetime.now(timezone.utc)
-    # Zeitstempel für das Display (Deutsche Zeit)
-    u_zeit = (jetzt + timedelta(hours=1)).strftime("%H:%M")
+    u_zeit = (datetime.now(timezone.utc) + timedelta(hours=1)).strftime("%H:%M")
+    station_id = "8010405" 
+    url = f"https://v6.db.transport.rest/stops/{station_id}/departures?results=15&duration=180&remarks=true"
+
+    # 3 Versuche, falls die Verbindung hakt
+    for versuch in range(3):
+        try:
+            headers = {'User-Agent': 'Bahn-Monitor-Zerbst'}
+            r = requests.get(url, headers=headers, timeout=20)
+            r.raise_for_status()
+            data = r.json()
+            
+            departures = data.get('departures', [])
+            if not departures:
+                return [{"zeit": u_zeit, "linie": "INFO", "ziel": "Keine Züge", "gleis": "-", "info": ""}]
+
+            fahrplan = []
+            for dep in departures:
+                linie = dep.get('line', {}).get('name', '???').replace(" ", "")
+                if "Bus" in linie: continue
+
+                zeit_roh = dep.get('when') or dep.get('plannedWhen')
+                if not zeit_roh: continue
+                
+                soll_zeit = zeit_roh.split('T')[1][:5]
+                ziel = dep.get('direction', 'Ziel')[:15]
+                gleis = str(dep.get('platform') or "-")
+                
+                delay = dep.get('delay')
+                info_text = f"+{int(delay/60)}" if delay and delay >= 60 else ""
+
+                fahrplan.append({
+                    "zeit": soll_zeit,
+                    "linie": linie,
+                    "ziel": ziel,
+                    "gleis": gleis,
+                    "info": info_text,
+                    "update": u_zeit
+                })
+
+            fahrplan.sort(key=lambda x: x['zeit'])
+            return fahrplan[:10]
+
+        except Exception as e:
+            print(f"Versuch {versuch + 1} fehlgeschlagen: {e}")
+            time.sleep(5) # 5 Sekunden warten vor Neustart
+            continue
     
-    try:
-        # 1. ID für Zerbst/Anhalt sicherstellen
-        suche_url = "https://v6.db.transport.rest/locations?query=Zerbst&results=1"
-        suche_res = requests.get(suche_url, timeout=10)
-        echte_id = suche_res.json()[0]['id']
-        
-        # 2. Abfahrten laden - WICHTIG: remarks=true für die Verspätungsgründe!
-        url = f"https://v6.db.transport.rest/stops/{echte_id}/departures?duration=480&results=20&remarks=true"
-        r = requests.get(url, timeout=15)
-        data = r.json()
-        departures = data.get('departures', [])
-        
-        fahrplan = []
-        for dep in departures:
-            ist_w = dep.get('when')
-            if not ist_w: continue
-            
-            # Vergangene Züge ignorieren
-            zug_zeit_obj = datetime.fromisoformat(ist_w.replace('Z', '+00:00'))
-            if zug_zeit_obj < (jetzt - timedelta(minutes=5)):
-                continue
-
-            # Basis-Infos
-            linie = dep.get('line', {}).get('name', '???').replace(" ", "")
-            soll_w = dep.get('plannedWhen')
-            soll_zeit = soll_w.split('T')[1][:5] if soll_w else "--:--"
-            ist_zeit = ist_w.split('T')[1][:5]
-            
-            # --- TEXTGRÜNDE (REMARKS) AUSLESEN ---
-            remarks = dep.get('remarks', [])
-            texte = []
-            for rm in remarks:
-                # Wir filtern nur echte Text-Hinweise
-                if rm.get('type') == 'hint':
-                    t = rm.get('text', '').strip()
-                    if t and t not in texte: # Doppelte Texte vermeiden
-                        texte.append(t)
-            
-            grund = " | ".join(texte)
-            
-            # Info-Feld zusammenbauen
-            cancelled = dep.get('cancelled', False)
-            delay = dep.get('delay') # Verspätung in Sekunden
-            
-            if cancelled:
-                info_text = f"FÄLLT AUS: {grund}" if grund else "FÄLLT AUS"
-            elif delay and delay >= 60:
-                minuten = int(delay / 60)
-                info_text = f"+{minuten} Min: {grund}" if grund else f"+{minuten} Min"
-            else:
-                info_text = grund # Falls pünktlich, aber Bauinfos da sind
-
-            fahrplan.append({
-                "zeit": soll_zeit,
-                "echte_zeit": ist_zeit,
-                "linie": linie,
-                "ziel": dep.get('direction', 'Ziel unbekannt')[:20],
-                "gleis": str(dep.get('platform') or dep.get('plannedPlatform') or "-"),
-                "info": info_text,
-                "update": u_zeit
-            })
-
-        # Sortieren nach tatsächlicher Abfahrt
-        fahrplan.sort(key=lambda x: x['echte_zeit'])
-        return fahrplan[:10]
-
-    except Exception as e:
-        return [{"zeit": "Err", "linie": "Bot", "ziel": str(e)[:15], "gleis": "-", "info": "Fehler"}]
+    # Wenn alle 3 Versuche scheitern, gib keinen Fehler aus, sondern behalte das alte Format
+    return [{"zeit": "Err", "linie": "Bot", "ziel": "Netz-Fehler", "gleis": "-", "info": "Retry..."}]
 
 if __name__ == "__main__":
     daten = hole_daten()
+    # Nur speichern, wenn es kein Fehler-Objekt ist (optional)
     with open('daten.json', 'w', encoding='utf-8') as f:
         json.dump(daten, f, ensure_ascii=False, indent=4)
