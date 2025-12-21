@@ -1,16 +1,9 @@
 [
- {
-    "zeit": "13:45",
-    "linie": "RE13",
-    "ziel": "Leipzig Hbf",
-    "gleis": "2",
-    "info": "***Heute ohne halt in Delitsch unt Bf, Lipzig Messe und Leipzig Essener Straße***"
-  },
-  {
-    "zeit": "14:16",
-    "linie": "RE13",
-    "ziel": "Magdeburg",
-    "gleis": "1",
-    "info": "Fällt aus"
-  }
+    {
+        "zeit": "Error",
+        "linie": "Python",
+        "ziel": "HTTPSConnectionPool(host='reiseauskunft.bahn.de', port=443): Max retries exceeded with url: /bin/bhftafel.exe/dn?L=vs_java3&start=yes&input=Zerbst (Caused by SSLError(SSLCertVerificationError(1, \"[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'reiseauskunft.bahn.de'. (_ssl.c:1147)\")))",
+        "gleis": "",
+        "info": ""
+    }
 ]
