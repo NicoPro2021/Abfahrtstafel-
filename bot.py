@@ -1,19 +1,17 @@
 import requests
 import json
+import time
 
-# URL zur stabilen Datenquelle für Zerbst
 URL = "https://db-live-abfahrt.herokuapp.com/api/v1/station/Zerbst(Anhalt)"
 
-def hole_daten():
+def hole_und_speichere():
     try:
         response = requests.get(URL, timeout=15)
         response.raise_for_status()
         daten = response.json()
         
         ergebnis = []
-        # Wir nehmen die nächsten 8 Abfahrten
         for zug in daten['departures'][:8]:
-            # Das Format, das dein ESP32 und HTML brauchen
             ergebnis.append({
                 "zeit": zug['time'],
                 "linie": zug['train'],
@@ -21,14 +19,17 @@ def hole_daten():
                 "gleis": zug['platform'] if zug['platform'] else "--",
                 "info": zug['delayText'] if zug['delayText'] else (zug['status'] if zug['status'] else "")
             })
-        return ergebnis
+        
+        with open('daten.json', 'w', encoding='utf-8') as f:
+            json.dump(ergebnis, f, ensure_ascii=False, indent=4)
+        print("Daten aktualisiert...")
+        return True
     except Exception as e:
         print(f"Fehler: {e}")
-        return None
+        return False
 
-# Speichern
-neue_daten = hole_daten()
-if neue_daten:
-    with open('daten.json', 'w', encoding='utf-8') as f:
-        json.dump(neue_daten, f, ensure_ascii=False, indent=4)
-    print("Update erfolgreich!")
+# Der Bot läuft 4 Minuten lang und aktualisiert alle 30 Sekunden
+start_zeit = time.time()
+while time.time() - start_zeit < 240: # 240 Sekunden = 4 Minuten
+    hole_und_speichere()
+    time.sleep(30) # 30 Sekunden warten
