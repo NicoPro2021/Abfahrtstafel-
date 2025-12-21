@@ -7,46 +7,48 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def hole_daten():
     jetzt = datetime.now().strftime("%H:%M")
-    # Wir nutzen den stabilsten Endpunkt der DB direkt
-    # duration=120 (2 Stunden), remarks=true (Gründe)
-    url = "https://db.transport.rest/stops/8006654/departures?duration=120&remarks=true"
+    # VBB-ID für Zerbst/Anhalt: 900000143501
+    # Wir laden Abfahrten inkl. Remarks (Gründe) für 120 Minuten
+    url = "https://v6.vbb.transport.rest/stops/900000143501/departures?duration=120&remarks=true&results=10"
     
     try:
-        # Wir fügen einen Zeitstempel hinzu, um den Cache zu zwingen
-        res = requests.get(f"{url}&t={int(datetime.now().timestamp())}", timeout=15, verify=False)
+        # Wir fügen einen Cache-Buster hinzu
+        response = requests.get(f"{url}&t={int(datetime.now().timestamp())}", timeout=25, verify=False)
         
-        # Falls die API leer antwortet oder spinnt
-        if res.status_code != 200:
-            return [{"zeit": "Err", "linie": "DB", "ziel": "Server Busy", "gleis": "-", "info": jetzt}]
+        if response.status_code != 200:
+            return [{"zeit": "Err", "linie": "HTTP", "ziel": "Server Busy", "gleis": "-", "info": jetzt}]
 
-        data = res.json()
-        # Falls die API uns wieder nach Kassel schickt (RT4), filtern wir das hier hart weg
-        departures = [d for d in data.get('departures', []) if "RT" not in d.get('line', {}).get('name', '')]
+        data = response.json()
+        departures = data.get('departures', [])
         
         fahrplan = []
         for dep in departures:
-            # Zeit & Verspätung
-            p_time = dep.get('plannedWhen', '')
-            zeit = p_time.split('T')[1][:5] if 'T' in p_time else "--:--"
+            # Wir nehmen nur echte Züge (RE, RB)
+            line_obj = dep.get('line', {})
+            linie = line_obj.get('name', '???').replace(" ", "")
             
-            linie = dep.get('line', {}).get('name', '???').replace(" ", "")
+            # Filter gegen den Kassel-Bug (falls er hier auch auftaucht)
+            if "RT" in linie: continue
+
+            p_time = dep.get('when') or dep.get('plannedWhen', '')
+            zeit = p_time.split('T')[1][:5] if 'T' in p_time else "--:--"
             ziel = dep.get('direction', 'Unbekannt')[:18]
             gleis = str(dep.get('platform') or "-")
             
             # --- Verspätungsgründe ---
             delay = dep.get('delay')
             remarks = dep.get('remarks', [])
-            
-            # Wir suchen den Text für den Grund
             grund = ""
             for r in remarks:
                 if r.get('type') == 'warning':
+                    # Wir nehmen den Text oder die Zusammenfassung
                     grund = r.get('summary') or r.get('text', '')
                     break
             
             info_text = "pünktlich"
             if delay and delay > 0:
-                info_text = f"+{int(delay/60)} {grund}".strip()
+                minuten = f"+{int(delay/60)}"
+                info_text = f"{minuten} {grund}".strip()
             elif grund:
                 info_text = grund
 
@@ -55,17 +57,18 @@ def hole_daten():
                 "linie": linie,
                 "ziel": ziel,
                 "gleis": gleis,
-                "info": info_text[:35], # Begrenzt für das Display
+                "info": info_text[:40],
                 "update": jetzt
             })
 
         if not fahrplan:
-            return [{"zeit": "Check", "linie": "DB", "ziel": "Kein Zug gef.", "gleis": "-", "info": jetzt}]
+            return [{"zeit": "Warte", "linie": "DB", "ziel": "Keine Züge aktuell", "gleis": "-", "info": jetzt}]
 
         return fahrplan[:6]
 
     except Exception as e:
-        return [{"zeit": "Error", "linie": "API", "ziel": "Retry...", "gleis": "-", "info": jetzt}]
+        # Falls es wieder zum Timeout kommt
+        return [{"zeit": "Timeout", "linie": "Bot", "ziel": "Versuche erneut", "gleis": "-", "info": jetzt}]
 
 if __name__ == "__main__":
     daten = hole_daten()
