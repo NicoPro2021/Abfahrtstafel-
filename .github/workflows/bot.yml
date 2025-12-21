@@ -1,34 +1,16 @@
-name: DB-Fahrplan-Bot
-
-on:
-  schedule:
-    - cron: '*/5 * * * *' # Läuft alle 5 Minuten automatisch
-  workflow_dispatch:      # Ermöglicht es dir, den Bot jederzeit manuell zu starten
-
+name: Schreibtest
+on: workflow_dispatch
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Repository auschecken
-        uses: actions/checkout@v3
-
-      - name: Python installieren
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
-
-      - name: Bibliotheken installieren
+      - uses: actions/checkout@v3
+      - name: Datei erstellen
+        run: date > test.txt
+      - name: Push
         run: |
-          pip install requests beautifulsoup4
-
-      - name: Scraper ausführen
-        run: python bot.py
-
-      - name: Änderungen speichern (Push)
-        run: |
-          git config --global user.name 'GitHub Action Bot'
-          git config --global user.email 'action@github.com'
-          git add daten.json
-          # Commit nur ausführen, wenn sich die Daten wirklich geändert haben
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Fahrplan aktualisiert (Zerbst/Anhalt)" && git push)
+          git config --global user.name 'Github Bot'
+          git config --global user.email 'bot@github.com'
+          git add test.txt
+          git commit -m "Test-Schreiben"
+          git push
