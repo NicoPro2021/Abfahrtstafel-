@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abfahrtstafel Live - Zerbst/Anhalt</title>
+    <title>Abfahrtstafel Zerbst/Anhalt</title>
     <style>
-        /* Dunkles Bahn-Blau und moderne Schrift */
         body { 
             background: #000b1a; 
             color: #ffffff; 
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            font-family: 'Segoe UI', Roboto, sans-serif; 
             margin: 0;
             padding: 20px;
             display: flex;
@@ -19,125 +18,163 @@
 
         h1 { 
             width: 100%;
-            max-width: 900px;
-            background: #003399; /* DB Blau */
-            padding: 15px;
+            max-width: 1000px;
+            background: #003399; 
+            padding: 20px;
             margin: 0 0 10px 0;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            border-bottom: 4px solid #ffcc00; /* Gelber Akzent */
+            border-bottom: 5px solid #ffcc00;
+            box-sizing: border-box;
+        }
+
+        .uhrzeit {
+            float: right;
+            font-family: monospace;
+            color: #ffcc00;
         }
 
         table { 
             width: 100%; 
-            max-width: 900px;
+            max-width: 1000px;
             border-collapse: separate; 
-            border-spacing: 0 5px; 
+            border-spacing: 0 6px; 
         }
 
         th { 
             text-align: left; 
-            color: #aaa; 
-            font-size: 0.7rem; 
-            padding: 5px 10px;
+            color: #8899aa; 
+            font-size: 0.8rem; 
+            padding: 10px;
             text-transform: uppercase;
         }
 
-        /* Zeilen-Design */
-        tr { background: #001a33; }
+        tr { background: #001a33; transition: all 0.3s; }
+
+        /* NEU: Markierung für Ausfälle - Weißer Hintergrund, schwarze Schrift */
+        tr.ausfall { 
+            background: #ffffff !important; 
+        }
+
+        tr.ausfall td {
+            color: #000000 !important;
+            font-weight: bold;
+        }
 
         td { 
             padding: 15px 10px; 
-            font-size: 1.3rem; 
+            font-size: 1.4rem; 
             font-weight: 500;
         }
 
-        /* Linien-Badge */
         .linie { 
             background: #ffffff; 
             color: #003399; 
-            padding: 3px 8px; 
+            padding: 4px 10px; 
             font-weight: 900; 
-            border-radius: 2px;
+            border-radius: 3px;
             display: inline-block;
-            min-width: 60px;
+            min-width: 70px;
             text-align: center;
+            border: 1px solid #003399;
         }
 
-        /* Info/Status - blinkt dezent wenn Verspätung */
+        /* Wenn die Zeile weiß ist, muss der Linien-Button blau werden */
+        tr.ausfall .linie {
+            background: #003399;
+            color: #ffffff;
+        }
+
         .status { 
-            color: #ff3333; /* Rot für Infos */
+            color: #00ff00; 
             font-weight: bold;
-            font-size: 1rem;
         }
 
-        /* Gleis-Anzeige */
+        /* Status-Text bei Ausfall */
+        tr.ausfall .status {
+            color: #cc0000 !important;
+        }
+
         .gleis {
             color: #ffcc00;
             font-weight: bold;
             text-align: center;
+            font-size: 1.6rem;
         }
 
-        /* Animation für neue Daten */
+        tr.ausfall .gleis {
+            color: #000000;
+        }
+
         .fade-in {
-            animation: fadeIn 0.5s ease-in;
+            animation: fadeIn 0.6s ease-out;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-5px); }
+            from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
-    <h1>Zerbst/Anhalt <span style="float:right; font-size: 0.8rem; margin-top: 10px;" id="clock"></span></h1>
+
+    <h1>
+        Zerbst/Anhalt 
+        <span class="uhrzeit" id="clock">00:00:00</span>
+    </h1>
+
     <table>
         <thead>
             <tr>
                 <th>Zeit</th>
                 <th>Linie</th>
                 <th>Ziel</th>
-                <th style="text-align:center">Gl.</th>
-                <th>Aktuelles</th>
+                <th style="text-align:center">Gleis</th>
+                <th>Information</th>
             </tr>
         </thead>
         <tbody id="board">
-            </tbody>
+        </tbody>
     </table>
 
     <script>
-        // Uhrzeit oben rechts
         function updateClock() {
             const now = new Date();
-            document.getElementById('clock').innerText = now.toLocaleTimeString('de-DE', {hour: '2-digit', minute:'2-digit'});
+            document.getElementById('clock').innerText = now.toLocaleTimeString('de-DE');
         }
         setInterval(updateClock, 1000);
         updateClock();
 
-        async function load() {
+        async function loadBoard() {
             try {
-                // Fetch mit Cache-Buster
-                const r = await fetch('daten.json?t=' + Date.now());
-                const data = await r.json();
-                
+                const response = await fetch('daten.json?t=' + Date.now());
+                const data = await response.json();
                 const board = document.getElementById('board');
-                board.innerHTML = data.map(f => `
-                    <tr class="fade-in">
-                        <td style="color: #ffcc00;">${f.zeit}</td>
-                        <td><span class="linie">${f.linie}</span></td>
-                        <td style="width: 40%;">${f.ziel}</td>
-                        <td class="gleis">${f.gleis}</td>
-                        <td class="status">${f.info || ''}</td>
-                    </tr>`).join('');
-            } catch(e) { 
-                console.error("Update fehlgeschlagen"); 
-            }
+                
+                board.innerHTML = data.map(f => {
+                    const info = f.info || "";
+                    const istAusfall = info.toLowerCase().includes("ausfall") || info.toLowerCase().includes("fällt aus");
+                    
+                    const rowClass = istAusfall ? 'class="ausfall fade-in"' : 'class="fade-in"';
+                    const gleisAnzeige = istAusfall ? "--" : f.gleis;
+
+                    return `
+                        <tr ${rowClass}>
+                            <td style="${!istAusfall ? 'color: #ffcc00;' : ''}">${f.zeit}</td>
+                            <td><span class="linie">${f.linie}</span></td>
+                            <td style="width: 40%; ${istAusfall ? 'text-decoration: line-through;' : ''}">${f.ziel}</td>
+                            <td class="gleis">${gleisAnzeige}</td>
+                            <td class="status">${istAusfall ? "NICHT EINSTEIGEN - " + info : info}</td>
+                        </tr>
+                    `;
+                }).join('');
+
+            } catch(e) { console.error("Fehler beim Laden."); }
         }
 
-        // Alle 15 Sekunden aktualisieren
-        setInterval(load, 15000);
-        load();
+        setInterval(loadBoard, 10000);
+        loadBoard();
     </script>
 </body>
 </html>
