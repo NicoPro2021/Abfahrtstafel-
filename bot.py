@@ -1,71 +1,68 @@
 import requests
-import xml.etree.ElementTree as ET
 import json
-from datetime import datetime, timedelta
+from datetime import datetime
 
 def hole_daten():
-    # Zeitkorrektur (Winterzeit Deutschland)
-    jetzt = datetime.now() + timedelta(hours=1)
-    u_zeit = jetzt.strftime("%H:%M")
+    u_zeit = datetime.now().strftime("%H:%M")
     
-    eva = "8006654" # Zerbst/Anhalt
-    fahrplan = []
+    # HAFAS Zerbst/Anhalt ID: 8006654 oder direkt über den Namen
+    # Wir nutzen hier den dedizierten Zerbst-Endpunkt
+    url = "https://db.transport.rest/stops/8006654/departures?duration=180&remarks=true&results=15"
     
     try:
-        # Wir scannen die nächsten 4 Stunden, um sicher zu gehen
-        for i in range(4):
-            scan_zeit = jetzt + timedelta(hours=i)
-            datum = scan_zeit.strftime("%y%m%d")
-            stunde = scan_zeit.strftime("%H")
-            
-            url = f"https://iris.noncd.db.de/iris-tts/timetable/plan/{eva}/{datum}/{stunde}"
-            r = requests.get(url, timeout=15)
-            
-            if r.status_code == 200:
-                root = ET.fromstring(r.content)
-                for s in root.findall('s'):
-                    dp = s.find('dp') # Departure
-                    tl = s.find('tl') # Train Line
-                    
-                    if dp is not None:
-                        # Zeit auslesen
-                        p_zeit = dp.get('pt')[-4:] # HHMM
-                        zeit_str = f"{p_zeit[:2]}:{p_zeit[2:]}"
-                        
-                        # Züge in der Vergangenheit ignorieren
-                        if i == 0 and zeit_str < u_zeit: continue
-                        
-                        # Linie zusammenbauen (z.B. RE13 oder RB42)
-                        linie = ""
-                        if tl is not None:
-                            linie = (tl.get('c', '') + (tl.get('n', '') or tl.get('l', ''))).replace(" ", "")
-                        
-                        # Ziel (Letzter Halt im Pfad)
-                        pfad = dp.get('ppth', '').split('|')
-                        ziel = pfad[-1] if pfad else "Unbekannt"
-                        
-                        fahrplan.append({
-                            "zeit": zeit_str,
-                            "linie": linie if linie else "Zug",
-                            "ziel": ziel[:18],
-                            "gleis": dp.get('pp', '-'),
-                            "info": "pünktlich",
-                            "update": u_zeit
-                        })
+        response = requests.get(url, timeout=20)
+        if response.status_code != 200:
+            return [{"zeit": "Err", "linie": "HTTP", "ziel": "Server Busy", "gleis": "-", "info": u_zeit}]
 
-        # Sortieren nach Uhrzeit
-        fahrplan.sort(key=lambda x: x['zeit'])
+        data = response.json()
+        departures = data.get('departures', [])
         
-        # Duplikate entfernen
-        final = []
-        for f in fahrplan:
-            if not any(r['zeit'] == f['zeit'] and r['linie'] == f['linie'] for r in final):
-                final.append(f)
+        fahrplan = []
+        for dep in departures:
+            linie = dep.get('line', {}).get('name', '???').replace(" ", "")
+            
+            # WICHTIG: Filter gegen den Kassel-Fehler
+            if "RT" in linie or "Kassel" in dep.get('direction', ''):
+                continue
 
-        return final[:8] # Bis zu 8 Verbindungen
+            # Zeit & Ziel
+            w = dep.get('when') or dep.get('plannedWhen', '')
+            zeit = w.split('T')[1][:5] if 'T' in w else "--:--"
+            ziel = dep.get('direction', 'Unbekannt')[:18]
+            gleis = str(dep.get('platform') or "-")
+            
+            # Verspätung & Gründe
+            delay = dep.get('delay')
+            remarks = dep.get('remarks', [])
+            
+            grund = ""
+            for r in remarks:
+                if r.get('type') == 'warning':
+                    grund = r.get('summary') or r.get('text', '')
+                    break
+            
+            info_text = "pünktlich"
+            if delay and delay > 0:
+                info_text = f"+{int(delay/60)} {grund}".strip()
+            elif grund:
+                info_text = grund
+
+            fahrplan.append({
+                "zeit": zeit,
+                "linie": linie,
+                "ziel": ziel,
+                "gleis": gleis,
+                "info": info_text[:35],
+                "update": u_zeit
+            })
+
+        if not fahrplan:
+            return [{"zeit": "Check", "linie": "DB", "ziel": "Kein Zug gef.", "gleis": "-", "info": u_zeit}]
+
+        return fahrplan[:8] # Die nächsten 8 echten Zerbster Züge
 
     except Exception as e:
-        return [{"zeit": "Err", "linie": "Bot", "ziel": "Verbindung..", "gleis": "-", "info": u_zeit}]
+        return [{"zeit": "Error", "linie": "Bot", "ziel": "Retry...", "gleis": "-", "info": u_zeit}]
 
 if __name__ == "__main__":
     daten = hole_daten()
