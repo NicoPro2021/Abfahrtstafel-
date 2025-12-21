@@ -3,17 +3,17 @@ import json
 from datetime import datetime, timedelta, timezone
 
 def hole_daten():
+    # WICHTIG: Wir nutzen die aktuelle UTC-Zeit für den Vergleich
     jetzt = datetime.now(timezone.utc)
-    # Deutsche Zeit für den Stempel
+    # Deutsche Zeit für den Update-Stempel (+1h oder +2h je nach Sommerzeit)
     u_zeit = (jetzt + timedelta(hours=1)).strftime("%H:%M")
     
     try:
-        # 1. Deine Station (Wannsee oder Zerbst)
-        # Für Zerbst: 8010405 | Für Wannsee: 8010358
+        # Bahnhofs-ID (Beispiel Wannsee: 8010358 / Zerbst: 8010405)
         station_id = "8010358" 
         
-        # URL mit allen Parametern für maximale Infos
-        url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=120&results=15&remarks=true&language=de"
+        # Wir holen Daten für die nächsten 120 Minuten
+        url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=120&remarks=true&language=de"
         
         r = requests.get(url, timeout=15)
         data = r.json()
@@ -24,38 +24,38 @@ def hole_daten():
             ist_w = dep.get('when')
             if not ist_w: continue
             
+            # Umwandlung der Abfahrtszeit in ein Python-Zeitobjekt
+            abfahrt_obj = datetime.fromisoformat(ist_w.replace('Z', '+00:00'))
+            
+            # --- DER FILTER: Nur Züge, die JETZT oder in der Zukunft fahren ---
+            # Wir erlauben 0 Minuten Puffer. Sobald die Zeit um ist, fliegt der Zug raus.
+            if abfahrt_obj < jetzt:
+                continue
+
             linie = dep.get('line', {}).get('name', '???').replace(" ", "")
             soll_w = dep.get('plannedWhen')
             soll_zeit = soll_w.split('T')[1][:5] if soll_w else "--:--"
             ist_zeit = ist_w.split('T')[1][:5]
             
-            # --- VERBESSERTE REMARKS-LOGIK ---
+            # Remarks/Gründe sammeln
             hinweise = []
             remarks = dep.get('remarks', [])
-            
             for rm in remarks:
-                # Wir nehmen jetzt 'hint' UND 'status' Nachrichten auf
                 if rm.get('type') in ['hint', 'status']:
                     txt = rm.get('text', '').strip()
-                    # Ignoriere Standard-Sätze wie "Fahrradmitnahme begrenzt" 
-                    # um Platz für echte Gründe zu lassen
                     if txt and "Fahrrad" not in txt and txt not in hinweise:
                         hinweise.append(txt)
             
             grund = " | ".join(hinweise)
-            
             delay = dep.get('delay')
             cancelled = dep.get('cancelled', False)
             
-            # Textbau
             if cancelled:
                 info_text = f"FÄLLT AUS! {grund}".strip()
             elif delay and delay >= 60:
-                minuten = int(delay / 60)
-                # Falls ein Textgrund da ist, hänge ihn an die Minuten an
-                info_text = f"+{minuten} Min: {grund}" if grund else f"+{minuten} Min"
+                info_text = f"+{int(delay/60)} Min: {grund}" if grund else f"+{int(delay/60)} Min"
             else:
-                info_text = grund # Bauarbeiten etc. auch ohne Verspätung zeigen
+                info_text = grund
 
             fahrplan.append({
                 "zeit": soll_zeit,
@@ -67,8 +67,11 @@ def hole_daten():
                 "update": u_zeit
             })
 
+        # Nach der tatsächlichen Zeit sortieren (wichtig bei Verspätungen!)
         fahrplan.sort(key=lambda x: x['echte_zeit'])
-        return fahrplan[:12]
+        
+        # Nur die nächsten 10-15 Züge speichern
+        return fahrplan[:15]
 
     except Exception as e:
         return [{"zeit": "Err", "linie": "Bot", "ziel": "Fehler", "gleis": "-", "info": str(e)[:20]}]
