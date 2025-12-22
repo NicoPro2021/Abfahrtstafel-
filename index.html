@@ -3,123 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abfahrtstafel Live</title>
+    <title>Abfahrtstafel Zerbst/Anhalt</title>
     <style>
         body { 
             font-family: 'Segoe UI', Arial, sans-serif; 
-            background: #0a0a0a; 
+            background: #050505; 
             color: #ffffff; 
             margin: 0; 
             padding: 20px;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
         }
 
         .monitor { 
             width: 100%; 
-            max-width: 850px; 
-            background: #151515; 
-            border: 1px solid #333;
-            border-radius: 8px; 
-            padding: 20px; 
-            box-shadow: 0 0 40px rgba(0,0,0,0.8);
+            max-width: 950px; 
+            background: #111; 
+            border: 2px solid #333;
+            border-radius: 10px; 
+            padding: 25px; 
+            box-shadow: 0 0 50px rgba(0,0,0,0.9);
         }
 
-        /* Header */
         .header { 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
-            border-bottom: 3px solid #005b8c; /* Bahn-Blau */
-            padding-bottom: 10px; 
-            margin-bottom: 15px;
+            border-bottom: 4px solid #005b8c;
+            padding-bottom: 15px; 
+            margin-bottom: 20px;
+        }
+
+        .station-name {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #eee;
         }
 
         #current-time { 
-            font-size: 2.5rem; 
+            font-size: 3rem; 
             font-weight: bold; 
             color: #00ff00; 
-            font-family: monospace;
+            font-family: 'Courier New', monospace;
         }
 
-        /* Tabelle */
+        /* Spalten-Layout */
         .row { 
             display: grid;
-            grid-template-columns: 80px 1fr 60px 140px 120px;
+            grid-template-columns: 100px 1fr 80px 160px 140px;
             align-items: center;
-            padding: 12px 0;
+            padding: 15px 0;
             border-bottom: 1px solid #222;
         }
 
         .line { 
-            background: #fff; 
+            background: #ffffff; 
             color: #000; 
-            padding: 4px 8px; 
-            border-radius: 3px; 
-            font-weight: bold; 
+            padding: 5px 10px; 
+            border-radius: 4px; 
+            font-weight: 900; 
             text-align: center;
-            width: fit-content;
+            width: 70px;
+            font-size: 1.1rem;
         }
 
-        .destination { font-size: 1.3rem; font-weight: 500; }
-        .platform { text-align: center; font-size: 1.3rem; font-weight: bold; color: #ffcc00; }
+        .destination { font-size: 1.6rem; font-weight: 500; padding-left: 10px; }
+        .platform { text-align: center; font-size: 1.6rem; font-weight: bold; color: #ffcc00; }
 
-        /* Zeit-Visualisierung */
-        .time-box { text-align: right; padding-right: 15px; }
+        .time-box { text-align: right; padding-right: 25px; }
         .scheduled { 
             display: block; 
-            font-size: 0.85rem; 
-            color: #777; 
+            font-size: 1rem; 
+            color: #666; 
             text-decoration: line-through; 
         }
         .actual { 
             display: block; 
-            font-size: 1.4rem; 
+            font-size: 1.8rem; 
             font-weight: bold; 
         }
 
-        /* Info & Verspätung */
         .info-text { 
-            font-size: 0.9rem; 
+            font-size: 1rem; 
             font-weight: bold; 
-            color: #ff4444; 
             text-align: center;
+            border-radius: 5px;
+            padding: 8px;
+            background: rgba(255, 68, 68, 0.1);
+            color: #ff4444; 
             border: 1px solid #ff4444;
-            border-radius: 4px;
-            padding: 4px;
         }
 
         .ontime-text {
+            background: rgba(0, 255, 0, 0.05);
             color: #00ff00;
             border: 1px solid #00ff00;
         }
 
-        .delayed { color: #ff4444; }
-        .on-time { color: #00ff00; }
+        .delayed { color: #ff4d4d; }
+        .on-time { color: #44ff44; }
 
+        #last-update {
+            margin-top: 15px;
+            font-size: 0.8rem;
+            color: #444;
+            width: 100%;
+            max-width: 950px;
+            text-align: right;
+        }
     </style>
 </head>
 <body>
 
 <div class="monitor">
     <div class="header">
-        <span style="font-weight: bold; letter-spacing: 1px;">ABFAHRTEN</span>
+        <div class="station-name">Zerbst/Anhalt</div>
         <div id="current-time">00:00:00</div>
     </div>
     
-    <div class="row" style="border-bottom: 2px solid #333; color: #888; font-size: 0.8rem; padding-bottom: 5px;">
+    <div class="row" style="border-bottom: 2px solid #444; color: #666; font-size: 0.9rem; font-weight: bold; letter-spacing: 1px;">
         <div>LINIE</div>
         <div>ZIEL</div>
         <div style="text-align: center;">GLEIS</div>
-        <div style="text-align: right; padding-right: 15px;">ABFAHRT</div>
+        <div style="text-align: right; padding-right: 25px;">ABFAHRT</div>
         <div style="text-align: center;">INFO</div>
     </div>
 
-    <div id="board">Lade...</div>
+    <div id="board">Daten werden geladen...</div>
 </div>
+<div id="last-update">Letzte Prüfung: -</div>
 
 <script>
-    const URL = 'https://raw.githubusercontent.com/nicopro2021/Abfahrtstafel-/main/daten.json';
+    const JSON_URL = 'https://raw.githubusercontent.com/nicopro2021/Abfahrtstafel-/main/daten.json';
 
     function updateClock() {
         document.getElementById('current-time').innerText = new Date().toLocaleTimeString('de-DE');
@@ -129,13 +145,19 @@
 
     async function loadData() {
         try {
-            const response = await fetch(`${URL}?t=${new Date().getTime()}`);
+            // Cache-Buster, damit jede 10 Sek wirklich neu geladen wird
+            const response = await fetch(`${JSON_URL}?t=${new Date().getTime()}`, {
+                cache: "no-store"
+            });
+            
+            if (!response.ok) throw new Error("Fehler beim Abruf");
+            
             const data = await response.json();
             const board = document.getElementById('board');
             board.innerHTML = '';
 
             data.forEach(zug => {
-                // Prüfen, ob eine Verspätung vorliegt (Vergleich von zeit und echte_zeit)
+                // Wir nutzen deine JSON Felder: zeit, echte_zeit, linie, ziel, gleis, info
                 const isDelayed = zug.zeit !== zug.echte_zeit;
 
                 board.innerHTML += `
@@ -153,11 +175,15 @@
                     </div>
                 `;
             });
+
+            document.getElementById('last-update').innerText = "Letzte Aktualisierung: " + new Date().toLocaleTimeString('de-DE');
+
         } catch (e) {
-            console.error("Fehler beim Laden:", e);
+            console.error("Update-Fehler:", e);
         }
     }
 
+    // Intervall auf 10 Sekunden (10000 ms)
     setInterval(loadData, 10000);
     loadData();
 </script>
