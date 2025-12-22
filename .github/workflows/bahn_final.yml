@@ -2,7 +2,12 @@ name: Zerbst Live Update
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/40 * * * *'
+    - cron: '*/45 * * * *'
+
+# Verhindert das Chaos: Nur ein einziger Bot darf zur Zeit laufen
+concurrency:
+  group: bahn-update
+  cancel-in-progress: true
 
 jobs:
   update:
@@ -22,26 +27,28 @@ jobs:
           git config --global user.name "Zerbst Bot"
           git config --global user.email "bot@zerbst.de"
           
-          for i in {1..40}
+          # Wir machen 30 Durchläufe alle 80 Sekunden (entspannter für GitHub)
+          for i in {1..30}
           do
-            echo "Durchlauf $i: Python Bot wird gestartet..."
+            echo "Update Durchlauf $i..."
             python bot.py
             
-            # Prüfen, ob bot.py ein gültiges JSON erstellt hat (fängt mit [ an)
+            # Prüfen ob Datei existiert und echtes JSON ist
             if grep -q "^\[" daten.json; then
               git add daten.json
-              git commit -m "Live Update $i" || echo "Keine Änderung"
-              git push || echo "Warte auf nächsten Lauf"
-            else
-              echo "Fehler: daten.json ist kein gültiges JSON!"
+              # Nur committen, wenn sich der Inhalt wirklich geändert hat
+              git diff --quiet && git diff --staged --quiet || (git commit -m "Live Update $i" && git push)
             fi
             
-            echo "Warte 60 Sekunden..."
-            sleep 60
+            echo "Warte 80 Sekunden..."
+            sleep 80
           done
 
-      - name: Sofort-Neustart
+      - name: Neustart-Trigger
         if: always()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh workflow run bahn_final.yml
+        run: |
+          echo "Bot-Runde beendet. Starte neue Instanz..."
+          sleep 10
+          gh workflow run bahn_final.yml
