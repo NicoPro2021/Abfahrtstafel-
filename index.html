@@ -2,106 +2,98 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fahrplan Monitor</title>
+    <title>Live-Abfahrtstafel</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #f4f4f9; padding: 20px; }
+        body { font-family: 'Segoe UI', Roboto, sans-serif; background: #121212; color: #eee; display: flex; justify-content: center; padding: 20px; }
+        .monitor { width: 100%; max-width: 650px; background: #1e1e1e; border-radius: 15px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         
-        .station-board {
-            max-width: 500px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-
-        .row {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .line {
-            background: #00305d;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-weight: bold;
-            min-width: 40px;
-            text-align: center;
-            margin-right: 15px;
-        }
-
-        .destination { flex-grow: 1; font-weight: 500; }
-
-        .time-box { text-align: right; margin-right: 15px; }
-
-        .scheduled {
-            display: block;
-            font-size: 0.85em;
-            color: #777;
-            text-decoration: line-through;
-        }
-
-        .actual {
-            display: block;
-            font-size: 1.1em;
-            font-weight: bold;
-        }
-
-        /* Status-Farben */
-        .status-delayed { color: #d32f2f; }
-        .status-ontime { color: #2e7d32; }
+        .header { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px solid #333; margin-bottom: 20px; padding-bottom: 10px; }
+        #current-time { font-size: 2.5rem; font-weight: bold; color: #00ffcc; font-family: monospace; }
         
-        .badge {
-            font-size: 0.8em;
-            padding: 3px 6px;
-            border-radius: 4px;
-            color: white;
-            font-weight: bold;
-        }
-        .bg-delayed { background: #d32f2f; }
-        .bg-ontime { background: #2e7d32; }
+        .row { display: flex; align-items: center; padding: 15px 0; border-bottom: 1px solid #2a2a2a; animation: fadeIn 0.5s ease-in; }
+        .line-box { background: #333; color: #fff; padding: 5px 10px; border-radius: 5px; font-weight: bold; min-width: 50px; text-align: center; margin-right: 15px; border: 1px solid #444; }
+        .destination { flex-grow: 1; font-size: 1.2rem; font-weight: 500; }
+        
+        .time-group { text-align: right; margin-right: 20px; min-width: 80px; }
+        .scheduled { display: block; font-size: 0.85rem; color: #777; text-decoration: line-through; }
+        .actual { display: block; font-size: 1.3rem; font-weight: bold; }
+        
+        .delayed { color: #ff4d4d; }
+        .on-time { color: #44ff44; }
+        
+        .badge { padding: 4px 10px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; min-width: 55px; text-align: center; }
+        .bg-delayed { background: rgba(255, 77, 77, 0.2); color: #ff4d4d; border: 1px solid #ff4d4d; }
+        .bg-ontime { background: rgba(68, 255, 68, 0.2); color: #44ff44; border: 1px solid #44ff44; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-<div class="station-board" id="board">
+<div class="monitor">
+    <div class="header">
+        <span style="font-size: 1.2rem; color: #888; font-weight: bold;">ABFAHRTEN</span>
+        <div id="current-time">00:00:00</div>
     </div>
+    <div id="board">Lade Fahrplan...</div>
+</div>
 
 <script>
-    const departures = [
-        { line: "S1", to: "München Hbf", scheduled: "14:30", actual: "14:35" },
-        { line: "S8", to: "Flughafen", scheduled: "14:42", actual: "14:42" },
-        { line: "RE5", to: "Nürnberg", scheduled: "14:55", actual: "15:10" }
-    ];
+    const dataUrl = 'https://raw.githubusercontent.com/nicopro2021/Abfahrtstafel-/main/daten.json';
 
-    function renderBoard() {
+    function updateClock() {
+        const now = new Date();
+        document.getElementById('current-time').innerText = now.toLocaleTimeString('de-DE');
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    async function fetchData() {
+        try {
+            const response = await fetch(dataUrl);
+            const data = await response.json();
+            renderBoard(data);
+        } catch (error) {
+            document.getElementById('board').innerText = "Fehler beim Laden der Daten.";
+            console.error(error);
+        }
+    }
+
+    function addMinutes(timeStr, minutes) {
+        let [h, m] = timeStr.split(':').map(Number);
+        let date = new Date();
+        date.setHours(h, m + minutes, 0);
+        return date.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function renderBoard(fahrten) {
         const board = document.getElementById('board');
         board.innerHTML = '';
 
-        departures.forEach(dep => {
-            const isDelayed = dep.scheduled !== dep.actual;
-            const delayMin = (new Date(`1970-01-01T${dep.actual}`) - new Date(`1970-01-01T${dep.scheduled}`)) / 60000;
+        fahrten.forEach(fart => {
+            const delay = parseInt(fart.delay) || 0;
+            const isDelayed = delay > 0;
+            const actualTime = addMinutes(fart.time, delay);
 
-            const row = document.createElement('div');
-            row.className = 'row';
-
-            row.innerHTML = `
-                <div class="line">${dep.line}</div>
-                <div class="destination">${dep.to}</div>
-                <div class="time-box">
-                    ${isDelayed ? `<span class="scheduled">${dep.scheduled}</span>` : ''}
-                    <span class="actual ${isDelayed ? 'status-delayed' : 'status-ontime'}">${dep.actual}</span>
+            board.innerHTML += `
+                <div class="row">
+                    <div class="line-box">${fart.line}</div>
+                    <div class="destination">${fart.destination}</div>
+                    <div class="time-group">
+                        ${isDelayed ? `<span class="scheduled">${fart.time}</span>` : ''}
+                        <span class="actual ${isDelayed ? 'delayed' : 'on-time'}">${actualTime}</span>
+                    </div>
+                    <div class="badge ${isDelayed ? 'bg-delayed' : 'bg-ontime'}">
+                        ${isDelayed ? '+' + delay + ' min' : 'pünktlich'}
+                    </div>
                 </div>
-                ${isDelayed ? `<span class="badge bg-delayed">+${delayMin}'</span>` : '<span class="badge bg-ontime">Pünktlich</span>'}
             `;
-            board.appendChild(row);
         });
     }
 
-    renderBoard();
+    // Alle 10 Sekunden prüfen, ob es neue Daten gibt
+    setInterval(fetchData, 10000);
+    fetchData();
 </script>
 
 </body>
