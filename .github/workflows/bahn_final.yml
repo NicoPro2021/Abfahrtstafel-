@@ -1,12 +1,11 @@
 name: Zerbst Live Update
 on:
-  workflow_dispatch:
-  schedule:
-    - cron: '*/45 * * * *'
+  workflow_dispatch: # Ermöglicht den manuellen Start
 
-# Verhindert das Chaos: Nur ein einziger Bot darf zur Zeit laufen
+# SCHUTZ: Verhindert, dass mehr als ein Bot gleichzeitig läuft.
+# Wenn ein neuer startet, wird der alte sofort beendet.
 concurrency:
-  group: bahn-update
+  group: zerbst-v6
   cancel-in-progress: true
 
 jobs:
@@ -16,39 +15,49 @@ jobs:
       contents: write
       actions: write
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
-      - run: pip install requests
+          python-version: '3.10'
+
+      - name: Install Libs
+        run: pip install requests
 
       - name: 40 Minuten Dauer-Loop
         run: |
           git config --global user.name "Zerbst Bot"
           git config --global user.email "bot@zerbst.de"
           
-          # Wir machen 30 Durchläufe alle 80 Sekunden (entspannter für GitHub)
+          # 30 Durchläufe à 80 Sekunden = ca. 40 Minuten
           for i in {1..30}
           do
-            echo "Update Durchlauf $i..."
+            echo "Durchlauf $i startet..."
             python bot.py
             
-            # Prüfen ob Datei existiert und echtes JSON ist
-            if grep -q "^\[" daten.json; then
+            # Prüfen ob Datei existiert und nicht leer ist
+            if [ -s daten.json ]; then
               git add daten.json
-              # Nur committen, wenn sich der Inhalt wirklich geändert hat
-              git diff --quiet && git diff --staged --quiet || (git commit -m "Live Update $i" && git push)
+              # Nur pushen wenn sich der Inhalt wirklich geändert hat
+              if ! git diff --staged --quiet; then
+                git commit -m "Live Update $i"
+                git push --force
+                echo "Daten hochgeladen."
+              else
+                echo "Keine Änderung in den Zugdaten."
+              fi
             fi
             
-            echo "Warte 80 Sekunden..."
+            echo "Warte 80 Sekunden bis zum nächsten Check..."
             sleep 80
           done
 
-      - name: Neustart-Trigger
+      - name: Sauberer Neustart
         if: always()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "Bot-Runde beendet. Starte neue Instanz..."
+          echo "40 Min um. Starte Bot neu..."
           sleep 10
           gh workflow run bahn_final.yml
