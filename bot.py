@@ -3,81 +3,54 @@ import json
 from datetime import datetime, timedelta, timezone
 
 def hole_daten():
-    # Aktuelle Zeit für den Filter
-    jetzt = datetime.now(timezone.utc)
-    # Zeitstempel für das Display (Deutsche Zeit)
-    u_zeit = (jetzt + timedelta(hours=1)).strftime("%H:%M")
+    # Zeitstempel für das Update (Zerbst Zeit)
+    u_zeit = (datetime.now(timezone.utc) + timedelta(hours=1)).strftime("%H:%M")
+    url = "https://v6.db.transport.rest/stops/8010405/departures?results=15&duration=240"
     
     try:
-        # 1. ID für Zerbst/Anhalt sicherstellen
-        suche_url = "https://v6.db.transport.rest/locations?query=Zerbst&results=1"
-        suche_res = requests.get(suche_url, timeout=10)
-        echte_id = suche_res.json()[0]['id']
-        
-        # 2. Abfahrten laden - WICHTIG: remarks=true für die Verspätungsgründe!
-        url = f"https://v6.db.transport.rest/stops/{echte_id}/departures?duration=480&results=20&remarks=true"
-        r = requests.get(url, timeout=15)
+        # User-Agent hilft, damit die Bahn-API uns nicht blockiert
+        headers = {'User-Agent': 'Zerbst-Monitor-v2'}
+        r = requests.get(url, headers=headers, timeout=15)
+        r.raise_for_status()
         data = r.json()
-        departures = data.get('departures', [])
         
+        departures = data.get('departures', [])
         fahrplan = []
-        for dep in departures:
-            ist_w = dep.get('when')
-            if not ist_w: continue
-            
-            # Vergangene Züge ignorieren
-            zug_zeit_obj = datetime.fromisoformat(ist_w.replace('Z', '+00:00'))
-            if zug_zeit_obj < (jetzt - timedelta(minutes=5)):
-                continue
 
-            # Basis-Infos
+        for dep in departures:
             linie = dep.get('line', {}).get('name', '???').replace(" ", "")
-            soll_w = dep.get('plannedWhen')
-            soll_zeit = soll_w.split('T')[1][:5] if soll_w else "--:--"
-            ist_zeit = ist_w.split('T')[1][:5]
+            # Filtert Busse aus (wie RUF452), damit nur Züge erscheinen
+            if "Bus" in linie or "RUF" in linie: 
+                continue 
+
+            zeit_roh = dep.get('when') or dep.get('plannedWhen')
+            soll_zeit = zeit_roh.split('T')[1][:5]
+            ziel = dep.get('direction', 'Ziel')[:18]
+            gleis = str(dep.get('platform') or "-")
             
-            # --- TEXTGRÜNDE (REMARKS) AUSLESEN ---
-            remarks = dep.get('remarks', [])
-            texte = []
-            for rm in remarks:
-                # Wir filtern nur echte Text-Hinweise
-                if rm.get('type') == 'hint':
-                    t = rm.get('text', '').strip()
-                    if t and t not in texte: # Doppelte Texte vermeiden
-                        texte.append(t)
-            
-            grund = " | ".join(texte)
-            
-            # Info-Feld zusammenbauen
-            cancelled = dep.get('cancelled', False)
-            delay = dep.get('delay') # Verspätung in Sekunden
-            
-            if cancelled:
-                info_text = f"FÄLLT AUS: {grund}" if grund else "FÄLLT AUS"
-            elif delay and delay >= 60:
-                minuten = int(delay / 60)
-                info_text = f"+{minuten} Min: {grund}" if grund else f"+{minuten} Min"
-            else:
-                info_text = grund # Falls pünktlich, aber Bauinfos da sind
+            delay = dep.get('delay')
+            info = f"+{int(delay/60)}" if delay and delay >= 60 else ""
 
             fahrplan.append({
-                "zeit": soll_zeit,
-                "echte_zeit": ist_zeit,
-                "linie": linie,
-                "ziel": dep.get('direction', 'Ziel unbekannt')[:20],
-                "gleis": str(dep.get('platform') or dep.get('plannedPlatform') or "-"),
-                "info": info_text,
+                "zeit": soll_zeit, 
+                "linie": linie, 
+                "ziel": ziel, 
+                "gleis": gleis, 
+                "info": info, 
                 "update": u_zeit
             })
-
-        # Sortieren nach tatsächlicher Abfahrt
-        fahrplan.sort(key=lambda x: x['echte_zeit'])
         return fahrplan[:10]
-
     except Exception as e:
-        return [{"zeit": "Err", "linie": "Bot", "ziel": str(e)[:15], "gleis": "-", "info": "Fehler"}]
+        print(f"Fehler beim Abruf: {e}")
+        return None # Gibt bei Fehler gar nichts zurück
 
 if __name__ == "__main__":
-    daten = hole_daten()
-    with open('daten.json', 'w', encoding='utf-8') as f:
-        json.dump(daten, f, ensure_ascii=False, indent=4)
+    neue_daten = hole_daten()
+    
+    # WICHTIG: Nur speichern, wenn wir ECHTE Daten bekommen haben!
+    if neue_daten is not None and len(neue_daten) > 0:
+        with open('daten.json', 'w', encoding='utf-8') as f:
+            json.dump(neue_daten, f, ensure_ascii=False, indent=4)
+        print("Daten erfolgreich aktualisiert.")
+    else:
+        print("Abbruch: Keine gültigen Daten empfangen. daten.json bleibt unverändert.")
