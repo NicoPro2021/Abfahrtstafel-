@@ -3,69 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DB Abfahrt Zerbst</title>
+    <title>Abfahrtstafel Zerbst/Anhalt</title>
     <style>
-        body { background-color: #000; color: #fff; font-family: Arial, sans-serif; margin: 0; }
-        .header { background-color: #003399; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
-        .uhrzeit { color: #ffcc00; font-size: 24px; font-weight: bold; }
-        .tafel { width: 100%; border-collapse: collapse; }
-        .zug-zeile { border-bottom: 1px solid #333; height: 80px; }
-        .zeit { color: #ffcc00; font-size: 26px; font-weight: bold; padding-left: 15px; width: 80px; }
-        .linie-box { background-color: #fff; color: #003399; padding: 3px 6px; font-weight: bold; border-radius: 2px; }
-        .ziel { font-size: 24px; font-weight: bold; padding-left: 10px; }
-        .gleis { color: #ffcc00; font-size: 26px; font-weight: bold; text-align: right; padding-right: 20px; }
-        .info-text { color: #ff0000; font-size: 18px; font-weight: bold; }
-        .puenktlich { color: #00ff00; font-size: 14px; }
+        body {
+            background-color: #000;
+            color: #ffcc00;
+            font-family: "Segoe UI", Arial, sans-serif;
+            margin: 0;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            width: 100%;
+            max-width: 600px;
+            background-color: #003399;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 5px 5px 0 0;
+            box-sizing: border-box;
+        }
+
+        .header h1 { margin: 0; font-size: 24px; }
+        #uhrzeit { font-size: 20px; font-weight: bold; color: #ffcc00; }
+
+        table {
+            width: 100%;
+            max-width: 600px;
+            border-collapse: collapse;
+            background-color: #111;
+        }
+
+        th {
+            background-color: #222;
+            color: #aaa;
+            text-align: left;
+            padding: 10px;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #333;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .linie { color: #ffffff; background-color: #444; padding: 2px 5px; border-radius: 3px; font-size: 14px; }
+        .zeit { color: #ffcc00; }
+        .ziel { color: #ffffff; }
+        .gleis { color: #ffffff; text-align: center; }
+        .info { color: #ff3333; font-size: 14px; margin-left: 5px; }
+
+        .footer {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #666;
+        }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <h1>Zerbst/Anhalt</h1>
-    <div id="uhr" class="uhrzeit">00:00:00</div>
-</div>
+    <div class="header">
+        <h1>Zerbst/Anhalt</h1>
+        <div id="uhrzeit">00:00:00</div>
+    </div>
 
-<table class="tafel" id="fahrplan"></table>
+    <table id="abfahrtstabelle">
+        <thead>
+            <tr>
+                <th>Zeit</th>
+                <th>Linie</th>
+                <th>Ziel</th>
+                <th style="text-align:center">Gl.</th>
+            </tr>
+        </thead>
+        <tbody id="tabellen-body">
+            </tbody>
+    </table>
 
-<script>
-    function updateUhr() {
-        document.getElementById('uhr').innerText = new Date().toLocaleTimeString('de-DE');
-    }
-    setInterval(updateUhr, 1000);
+    <div class="footer">
+        Letztes Update: <span id="update-zeit">--:--</span>
+    </div>
 
-    async function ladeDaten() {
-        try {
-            const res = await fetch('daten.json?v=' + Date.now());
-            const zuege = await res.json();
-            const liste = document.getElementById('fahrplan');
+    <script>
+        // Echtzeituhr oben rechts
+        function updateUhr() {
             const jetzt = new Date();
-            const jetztZeitString = jetzt.getHours().toString().padStart(2, '0') + ":" + jetzt.getMinutes().toString().padStart(2, '0');
+            document.getElementById('uhrzeit').innerText = jetzt.toLocaleTimeString('de-DE');
+        }
+        setInterval(updateUhr, 1000);
 
-            liste.innerHTML = '';
+        function ladeDaten() {
+            // Cache-Killer: Verhindert, dass der Browser alte Fehler-Dateien lädt
+            const url = 'daten.json?v=' + Math.floor(Date.now() / 1000);
 
-            zuege.forEach(z => {
-                // RÜCKSTAU-FILTER: Wenn die echte_zeit älter als jetzt ist, Zeile überspringen
-                if (z.echte_zeit < jetztZeitString) return;
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) throw new Error("Datei nicht gefunden");
+                    return response.json();
+                })
+                .then(data => {
+                    // FEHLER-FILTER: Wenn der Bot "Err" meldet, Anzeige nicht zerstören
+                    if (data.length > 0 && data[0].zeit === "Err") {
+                        console.warn("Bot meldet Fehler (API-Hänger). Behalte alte Anzeige.");
+                        return;
+                    }
 
-                const tr = document.createElement('tr');
-                tr.className = 'zug-zeile';
-                tr.innerHTML = `
-                    <td class="zeit">${z.zeit}</td>
-                    <td>
-                        <span class="linie-box">${z.linie}</span>
-                        <span class="ziel">${z.ziel}</span>
-                        <br>
-                        <span class="info-text">${z.info ? 'Heute ca. ' + z.echte_zeit + ' (' + z.info + ')' : ''}</span>
-                    </td>
-                    <td class="gleis">${z.gleis}</td>
-                `;
-                liste.appendChild(tr);
-            });
-        } catch (e) { console.log("Lade..."); }
-    }
+                    const body = document.getElementById('tabellen-body');
+                    body.innerHTML = ''; // Tabelle leeren
 
-    ladeDaten();
-    setInterval(ladeDaten, 30000); // Alle 30 Sek. checken
-</script>
+                    data.forEach(zug => {
+                        const row = `<tr>
+                            <td class="zeit">${zug.zeit}<span class="info">${zug.info}</span></td>
+                            <td><span class="linie">${zug.linie}</span></td>
+                            <td class="ziel">${zug.ziel}</td>
+                            <td class="gleis">${zug.gleis}</td>
+                        </tr>`;
+                        body.innerHTML += row;
+                    });
+
+                    if(data.length > 0) {
+                        document.getElementById('update-zeit').innerText = data[0].update;
+                    }
+                })
+                .catch(error => {
+                    console.error("Fehler beim Laden der Daten:", error);
+                });
+        }
+
+        // Alle 30 Sekunden aktualisieren
+        setInterval(ladeDaten, 30000);
+        ladeDaten(); // Sofortiger Start
+        updateUhr();
+    </script>
 </body>
 </html>
