@@ -3,145 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abfahrtstafel Zerbst/Anhalt</title>
+    <title>Fahrplan Monitor</title>
     <style>
-        body {
-            background-color: #000;
-            color: #ffcc00;
-            font-family: "Segoe UI", Arial, sans-serif;
-            margin: 0;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        body { font-family: 'Segoe UI', sans-serif; background: #f4f4f9; padding: 20px; }
+        
+        .station-board {
+            max-width: 500px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
         }
 
-        .header {
-            width: 100%;
-            max-width: 600px;
-            background-color: #003399;
-            color: white;
+        .row {
+            display: flex;
+            align-items: center;
             padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-radius: 5px 5px 0 0;
-            box-sizing: border-box;
+            border-bottom: 1px solid #eee;
         }
 
-        .header h1 { margin: 0; font-size: 24px; }
-        #uhrzeit { font-size: 20px; font-weight: bold; color: #ffcc00; }
-
-        table {
-            width: 100%;
-            max-width: 600px;
-            border-collapse: collapse;
-            background-color: #111;
+        .line {
+            background: #00305d;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            min-width: 40px;
+            text-align: center;
+            margin-right: 15px;
         }
 
-        th {
-            background-color: #222;
-            color: #aaa;
-            text-align: left;
-            padding: 10px;
-            font-size: 14px;
-            text-transform: uppercase;
+        .destination { flex-grow: 1; font-weight: 500; }
+
+        .time-box { text-align: right; margin-right: 15px; }
+
+        .scheduled {
+            display: block;
+            font-size: 0.85em;
+            color: #777;
+            text-decoration: line-through;
         }
 
-        td {
-            padding: 12px 10px;
-            border-bottom: 1px solid #333;
-            font-size: 18px;
+        .actual {
+            display: block;
+            font-size: 1.1em;
             font-weight: bold;
         }
 
-        .linie { color: #ffffff; background-color: #444; padding: 2px 5px; border-radius: 3px; font-size: 14px; }
-        .zeit { color: #ffcc00; }
-        .ziel { color: #ffffff; }
-        .gleis { color: #ffffff; text-align: center; }
-        .info { color: #ff3333; font-size: 14px; margin-left: 5px; }
-
-        .footer {
-            margin-top: 10px;
-            font-size: 12px;
-            color: #666;
+        /* Status-Farben */
+        .status-delayed { color: #d32f2f; }
+        .status-ontime { color: #2e7d32; }
+        
+        .badge {
+            font-size: 0.8em;
+            padding: 3px 6px;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
         }
+        .bg-delayed { background: #d32f2f; }
+        .bg-ontime { background: #2e7d32; }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>Zerbst/Anhalt</h1>
-        <div id="uhrzeit">00:00:00</div>
+<div class="station-board" id="board">
     </div>
 
-    <table id="abfahrtstabelle">
-        <thead>
-            <tr>
-                <th>Zeit</th>
-                <th>Linie</th>
-                <th>Ziel</th>
-                <th style="text-align:center">Gl.</th>
-            </tr>
-        </thead>
-        <tbody id="tabellen-body">
-            </tbody>
-    </table>
+<script>
+    const departures = [
+        { line: "S1", to: "München Hbf", scheduled: "14:30", actual: "14:35" },
+        { line: "S8", to: "Flughafen", scheduled: "14:42", actual: "14:42" },
+        { line: "RE5", to: "Nürnberg", scheduled: "14:55", actual: "15:10" }
+    ];
 
-    <div class="footer">
-        Letztes Update: <span id="update-zeit">--:--</span>
-    </div>
+    function renderBoard() {
+        const board = document.getElementById('board');
+        board.innerHTML = '';
 
-    <script>
-        // Echtzeituhr oben rechts
-        function updateUhr() {
-            const jetzt = new Date();
-            document.getElementById('uhrzeit').innerText = jetzt.toLocaleTimeString('de-DE');
-        }
-        setInterval(updateUhr, 1000);
+        departures.forEach(dep => {
+            const isDelayed = dep.scheduled !== dep.actual;
+            const delayMin = (new Date(`1970-01-01T${dep.actual}`) - new Date(`1970-01-01T${dep.scheduled}`)) / 60000;
 
-        function ladeDaten() {
-            // Cache-Killer: Verhindert, dass der Browser alte Fehler-Dateien lädt
-            const url = 'daten.json?v=' + Math.floor(Date.now() / 1000);
+            const row = document.createElement('div');
+            row.className = 'row';
 
-            fetch(url)
-                .then(response => {
-                    if (!response.ok) throw new Error("Datei nicht gefunden");
-                    return response.json();
-                })
-                .then(data => {
-                    // FEHLER-FILTER: Wenn der Bot "Err" meldet, Anzeige nicht zerstören
-                    if (data.length > 0 && data[0].zeit === "Err") {
-                        console.warn("Bot meldet Fehler (API-Hänger). Behalte alte Anzeige.");
-                        return;
-                    }
+            row.innerHTML = `
+                <div class="line">${dep.line}</div>
+                <div class="destination">${dep.to}</div>
+                <div class="time-box">
+                    ${isDelayed ? `<span class="scheduled">${dep.scheduled}</span>` : ''}
+                    <span class="actual ${isDelayed ? 'status-delayed' : 'status-ontime'}">${dep.actual}</span>
+                </div>
+                ${isDelayed ? `<span class="badge bg-delayed">+${delayMin}'</span>` : '<span class="badge bg-ontime">Pünktlich</span>'}
+            `;
+            board.appendChild(row);
+        });
+    }
 
-                    const body = document.getElementById('tabellen-body');
-                    body.innerHTML = ''; // Tabelle leeren
+    renderBoard();
+</script>
 
-                    data.forEach(zug => {
-                        const row = `<tr>
-                            <td class="zeit">${zug.zeit}<span class="info">${zug.info}</span></td>
-                            <td><span class="linie">${zug.linie}</span></td>
-                            <td class="ziel">${zug.ziel}</td>
-                            <td class="gleis">${zug.gleis}</td>
-                        </tr>`;
-                        body.innerHTML += row;
-                    });
-
-                    if(data.length > 0) {
-                        document.getElementById('update-zeit').innerText = data[0].update;
-                    }
-                })
-                .catch(error => {
-                    console.error("Fehler beim Laden der Daten:", error);
-                });
-        }
-
-        // Alle 30 Sekunden aktualisieren
-        setInterval(ladeDaten, 30000);
-        ladeDaten(); // Sofortiger Start
-        updateUhr();
-    </script>
 </body>
 </html>
