@@ -1,54 +1,36 @@
 name: Zerbst Live Update
 on:
-  workflow_dispatch:
-  schedule:
-    - cron: '*/45 * * * *'
-
-# Verhindert das Chaos: Nur ein einziger Bot darf zur Zeit laufen
-concurrency:
-  group: bahn-update
-  cancel-in-progress: true
+  workflow_dispatch: # Startet nur bei manuellem Klick auf den Button
 
 jobs:
   update:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      actions: write
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
         with:
           python-version: '3.x'
-      - run: pip install requests
 
-      - name: 40 Minuten Dauer-Loop
+      - name: Install Dependencies
+        run: pip install requests
+
+      - name: Einmaliges Update
         run: |
+          # Git konfigurieren
           git config --global user.name "Zerbst Bot"
           git config --global user.email "bot@zerbst.de"
           
-          # Wir machen 30 Durchläufe alle 80 Sekunden (entspannter für GitHub)
-          for i in {1..30}
-          do
-            echo "Update Durchlauf $i..."
-            python bot.py
-            
-            # Prüfen ob Datei existiert und echtes JSON ist
-            if grep -q "^\[" daten.json; then
-              git add daten.json
-              # Nur committen, wenn sich der Inhalt wirklich geändert hat
-              git diff --quiet && git diff --staged --quiet || (git commit -m "Live Update $i" && git push)
-            fi
-            
-            echo "Warte 80 Sekunden..."
-            sleep 80
-          done
-
-      - name: Neustart-Trigger
-        if: always()
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo "Bot-Runde beendet. Starte neue Instanz..."
-          sleep 10
-          gh workflow run bahn_final.yml
+          # Das Python-Skript genau einmal ausführen
+          python bot.py
+          
+          # Prüfen, ob sich die daten.json geändert hat und hochladen
+          if [ -f daten.json ]; then
+            git add daten.json
+            # Nur committen, wenn es echte Änderungen gibt
+            git diff --quiet && git diff --staged --quiet || (git commit -m "Manuelles Update Zerbst" && git push)
+          fi
