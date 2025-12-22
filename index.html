@@ -150,7 +150,7 @@
 </footer>
 
 <script>
-    const JSON_URL = 'https://raw.githubusercontent.com/nicopro2021/Abfahrtstafel-/main/daten.json';
+    const JSON_URL = 'https://raw.githubusercontent.com/nicopro2021/Abfahrtstafel-/main/daten.json?v=' + Date.now()';
 
     function updateClock() {
         document.getElementById('current-time').innerText = new Date().toLocaleTimeString('de-DE');
