@@ -19,7 +19,7 @@
             background: var(--bg-color); 
             color: var(--text-main); 
             margin: 0; 
-            padding: 5px; /* Weniger Padding auf Handy */
+            padding: 5px; 
             display: flex;
             flex-direction: column;
             height: 100vh;
@@ -52,20 +52,16 @@
         .station-name { font-size: 1.2rem; font-weight: bold; color: #fff; }
         #current-time { font-size: 1.8rem; font-weight: bold; color: var(--ontime-green); font-family: monospace; }
 
-        /* FLEXIBLES RASTER: Verhindert Überschneidungen */
         .table-header, .row {
             display: grid;
-            /* 1fr sorgt dafür, dass das Ziel den Restplatz nimmt, ohne andere zu quetschen */
             grid-template-columns: 55px 1fr 40px 85px 90px; 
             align-items: center;
             padding: 10px 10px;
             gap: 5px;
         }
 
-        /* SPEZIELL FÜR HANDYS (SCHMALER ALS 600px) */
         @media (max-width: 600px) {
             .table-header, .row {
-                /* Info-Spalte wird auf Handy ausgeblendet, um Platz für Ziel/Zeit zu schaffen */
                 grid-template-columns: 50px 1fr 35px 80px; 
             }
             .info-col-header, .info-box-cell { display: none; }
@@ -107,7 +103,7 @@
             padding-left: 5px; 
             white-space: nowrap; 
             overflow: hidden; 
-            text-overflow: ellipsis; /* Erzeugt "..." wenn Text zu lang ist */
+            text-overflow: ellipsis;
         }
 
         .platform { text-align: center; font-size: 1.2rem; font-weight: bold; color: var(--platform-yellow); }
@@ -125,7 +121,6 @@
             border: 1px solid transparent;
         }
 
-        /* "Pünktlich" wird hier unsichtbar gemacht */
         .is-delayed {
             background: rgba(255, 68, 68, 0.1);
             color: var(--delay-red); 
@@ -181,13 +176,22 @@
             const board = document.getElementById('board');
             board.innerHTML = '';
 
+            const jetzt = new Date();
+
             data.forEach(zug => {
-                const infoTxt = zug.info ? zug.info.trim() : "";
-                // Nur anzeigen wenn Verspätung (+) drin steht und nicht "pünktlich" ist
-                const isDelayed = infoTxt.includes('+') || (infoTxt !== "" && infoTxt.toLowerCase() !== "pünktlich");
-                
-                // Falls echte_zeit fehlt, nimm zeit
+                // Zeit-Filter Logik
                 const abfahrtEcht = zug.echte_zeit || zug.zeit;
+                const [stunden, minuten] = abfahrtEcht.split(':');
+                const zugZeit = new Date();
+                zugZeit.setHours(parseInt(stunden), parseInt(minuten), 0, 0);
+
+                // Wenn der Zug mehr als 1 Minute (60000ms) in der Vergangenheit liegt -> weg damit
+                if (jetzt.getTime() - zugZeit.getTime() > 60000) {
+                    return; 
+                }
+
+                const infoTxt = zug.info ? zug.info.trim() : "";
+                const isDelayed = infoTxt.includes('+') || (infoTxt !== "" && infoTxt.toLowerCase() !== "pünktlich");
                 const abfahrtPlan = zug.zeit;
 
                 board.innerHTML += `
