@@ -12,6 +12,7 @@
             --delay-red: #ff4d4d;
             --ontime-green: #44ff44;
             --platform-yellow: #ffcc00;
+            --db-red: #e2001a;
         }
 
         body { 
@@ -27,30 +28,75 @@
             overflow: hidden;
         }
 
-        .station-nav {
+        /* BURGER MENU STYLES */
+        .top-bar {
             display: flex;
-            gap: 10px;
-            margin-bottom: 5px;
-            justify-content: center;
+            align-items: center;
+            padding: 5px 10px;
+            gap: 15px;
         }
 
-        .nav-btn {
+        .burger-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.98);
+            z-index: 1000;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .menu-overlay.open { left: 0; }
+
+        .search-input {
+            width: 100%;
+            padding: 12px;
             background: #222;
             border: 1px solid #444;
-            color: #aaa;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-
-        .nav-btn.active {
-            background: var(--db-blue);
             color: white;
-            border-color: #fff;
+            border-radius: 8px;
+            font-size: 18px;
+            margin-bottom: 20px;
+            outline: none;
         }
 
+        .station-list {
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .station-item {
+            padding: 15px;
+            background: #1a1a1a;
+            border-radius: 8px;
+            cursor: pointer;
+            border-left: 4px solid var(--db-blue);
+            font-size: 18px;
+            transition: 0.2s;
+        }
+
+        .station-item:hover { background: #333; }
+        .station-item.active { border-left-color: var(--db-red); background: #222; }
+
+        /* MONITOR STYLES (Dein Original) */
         .monitor { 
             width: 100%; 
             max-width: 1100px; 
@@ -76,7 +122,6 @@
         .station-name { font-size: 1.2rem; font-weight: bold; color: #fff; }
         #current-time { font-size: 1.8rem; font-weight: bold; color: var(--ontime-green); font-family: monospace; }
 
-        /* OPTIMIERTES GRID: Gleis-Spalte von 40px auf 80px erhöht */
         .table-header, .row {
             display: grid;
             grid-template-columns: 55px 1fr 80px 85px 90px; 
@@ -86,100 +131,48 @@
         }
 
         @media (max-width: 600px) {
-            .table-header, .row {
-                grid-template-columns: 50px 1fr 65px 80px; 
-            }
+            .table-header, .row { grid-template-columns: 50px 1fr 65px 80px; }
             .info-col-header, .info-box-cell { display: none; }
         }
 
-        .table-header {
-            background: #222;
-            color: #888;
-            font-size: 0.7rem;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        #board {
-            overflow-y: auto;
-            flex-grow: 1;
-        }
-
+        .table-header { background: #222; color: #888; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; }
+        #board { overflow-y: auto; flex-grow: 1; }
         .row { border-bottom: 1px solid #222; }
         .row:nth-child(even) { background: #161616; }
 
-        .line { 
-            background: #fff; 
-            color: #000; 
-            padding: 2px 4px; 
-            border-radius: 3px; 
-            font-weight: bold; 
-            text-align: center;
-            font-size: 0.8rem;
-        }
-
-        .destination { 
-            font-size: 1.2rem; 
-            font-weight: 500; 
-            padding-left: 5px; 
-            white-space: nowrap; 
-            overflow: hidden; 
-            text-overflow: ellipsis;
-        }
-
-        /* GLEIS OPTIMIERUNG */
-        .platform { 
-            text-align: center; 
-            font-size: 1.2rem; 
-            font-weight: bold; 
-            color: var(--platform-yellow); 
-            white-space: nowrap;
-        }
-        
-        .long-platform {
-            font-size: 0.9rem !important; /* Kleiner für Abschnitte wie D-G */
-        }
-
+        .line { background: #fff; color: #000; padding: 2px 4px; border-radius: 3px; font-weight: bold; text-align: center; font-size: 0.8rem; }
+        .destination { font-size: 1.2rem; font-weight: 500; padding-left: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .platform { text-align: center; font-size: 1.2rem; font-weight: bold; color: var(--platform-yellow); }
         .time-box { text-align: right; }
         .scheduled { display: block; font-size: 0.7rem; color: #666; text-decoration: line-through; }
         .actual { display: block; font-size: 1.2rem; font-weight: bold; }
-
-        .info-text { 
-            font-size: 0.75rem; 
-            font-weight: bold; 
-            text-align: center;
-            border-radius: 4px;
-            padding: 3px;
-            border: 1px solid transparent;
-        }
-
-        .is-delayed {
-            background: rgba(255, 68, 68, 0.1);
-            color: var(--delay-red); 
-            border: 1px solid var(--delay-red);
-        }
-
+        .info-text { font-size: 0.75rem; font-weight: bold; text-align: center; border-radius: 4px; padding: 3px; border: 1px solid transparent; }
+        .is-delayed { background: rgba(255, 68, 68, 0.1); color: var(--delay-red); border: 1px solid var(--delay-red); }
         .delayed { color: var(--delay-red); }
         .on-time { color: var(--ontime-green); }
-
-        footer {
-            padding: 5px 15px;
-            font-size: 0.6rem;
-            color: #444;
-            text-align: right;
-        }
+        footer { padding: 5px 15px; font-size: 0.6rem; color: #444; text-align: right; }
     </style>
 </head>
 <body>
 
-<div class="station-nav">
-    <button class="nav-btn active" onclick="switchStation('zerbst.json', 'Zerbst/Anhalt', this)">Zerbst</button>
-    <button class="nav-btn" onclick="switchStation('Magdeburg_Hbf.json', 'Magdeburg Hbf', this)">Magdeburg</button>
+<div class="top-bar">
+    <button class="burger-btn" onclick="toggleMenu()">&#9776;</button>
+    <div style="color: var(--db-red); font-weight: bold;">DB LIVE</div>
+</div>
+
+<div class="menu-overlay" id="menu">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2 style="margin: 0;">Stationen</h2>
+        <button class="burger-btn" onclick="toggleMenu()">&times;</button>
+    </div>
+    <input type="text" class="search-input" id="search" placeholder="Bahnhof suchen..." oninput="filterStations()">
+    <div class="station-list" id="station-list">
+        </div>
 </div>
 
 <div class="monitor">
     <div class="header">
-        <div class="station-name" id="display-station">Zerbst/Anhalt</div>
+        <div class="station-name" id="display-station">Lade...</div>
         <div id="current-time">00:00:00</div>
     </div>
     
@@ -194,25 +187,59 @@
     <div id="board"></div>
 </div>
 
-<footer>
-    <span id="last-update">-</span>
-</footer>
+<footer><span id="last-update">-</span></footer>
 
 <script>
     const BASE_REPO_URL = 'https://raw.githubusercontent.com/nicopro2021/Abfahrtstafel-/main/';
-    let currentFile = 'zerbst.json';
+    
+    // ALLE DEINE STATIONEN HIER EINTRAGEN
+    const stations = [
+        { name: "Zerbst/Anhalt", file: "zerbst.json" },
+        { name: "Rodleben", file: "rodleben.json" },
+        { name: "Roßlau (Elbe)", file: "rosslau.json" },
+        { name: "Dessau Hbf", file: "dessau_hbf.json" },
+        { name: "Dessau Süd", file: "dessau_sued.json" },
+        { name: "Magdeburg Hbf", file: "Magdeburg_Hbf.json" },
+        { name: "Magdeburg Neustadt", file: "magdeburg_neustadt.json" },
+        { name: "Magdeburg Herrenkrug", file: "magdeburg_herrenkrug.json" },
+        { name: "Leipzig Hbf", file: "leipzig_hbf.json" }
+    ];
+
+    let currentFile = stations[0].file;
+
+    function toggleMenu() {
+        document.getElementById('menu').classList.toggle('open');
+    }
+
+    function renderStationList() {
+        const list = document.getElementById('station-list');
+        list.innerHTML = stations.map(s => `
+            <div class="station-item ${s.file === currentFile ? 'active' : ''}" 
+                 onclick="selectStation('${s.file}', '${s.name}')">
+                ${s.name}
+            </div>
+        `).join('');
+    }
+
+    function filterStations() {
+        const query = document.getElementById('search').value.toLowerCase();
+        const items = document.getElementsByClassName('station-item');
+        Array.from(items).forEach(item => {
+            const name = item.innerText.toLowerCase();
+            item.style.display = name.includes(query) ? 'block' : 'none';
+        });
+    }
+
+    function selectStation(file, name) {
+        currentFile = file;
+        document.getElementById('display-station').innerText = name;
+        toggleMenu();
+        renderStationList();
+        loadData();
+    }
 
     function updateClock() {
         document.getElementById('current-time').innerText = new Date().toLocaleTimeString('de-DE');
-    }
-    setInterval(updateClock, 1000);
-
-    function switchStation(file, name, btn) {
-        currentFile = file;
-        document.getElementById('display-station').innerText = name;
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        loadData();
     }
 
     async function loadData() {
@@ -221,7 +248,6 @@
             const data = await response.json();
             const board = document.getElementById('board');
             board.innerHTML = '';
-
             const jetzt = new Date();
 
             data.forEach(zug => {
@@ -234,36 +260,30 @@
 
                 const infoTxt = zug.info ? zug.info.trim() : "";
                 const isDelayed = infoTxt.includes('+') || (infoTxt !== "" && infoTxt.toLowerCase() !== "pünktlich");
-                const abfahrtPlan = zug.zeit;
-
-                // Dynamische CSS Klasse für lange Gleisbezeichnungen
-                const gleisStr = zug.gleis || "-";
-                const platformClass = gleisStr.length > 3 ? "platform long-platform" : "platform";
-
+                
                 board.innerHTML += `
                     <div class="row">
                         <div><div class="line">${zug.linie}</div></div>
                         <div class="destination">${zug.ziel}</div>
-                        <div class="${platformClass}">${gleisStr}</div>
+                        <div class="platform">${zug.gleis || "-"}</div>
                         <div class="time-box">
-                            ${isDelayed ? `<span class="scheduled">${abfahrtPlan}</span>` : ''}
+                            ${isDelayed ? `<span class="scheduled">${zug.zeit}</span>` : ''}
                             <span class="actual ${isDelayed ? 'delayed' : 'on-time'}">${abfahrtEcht}</span>
                         </div>
                         <div class="info-box-cell">
-                             <div class="info-text ${isDelayed ? 'is-delayed' : ''}">
-                                 ${isDelayed ? infoTxt : ''}
-                             </div>
+                             <div class="info-text ${isDelayed ? 'is-delayed' : ''}">${isDelayed ? infoTxt : ''}</div>
                         </div>
                     </div>
                 `;
             });
-
             document.getElementById('last-update').innerText = "Update: " + new Date().toLocaleTimeString('de-DE');
-        } catch (e) {
-            console.error("Fehler:", e);
-        }
+        } catch (e) { console.error("Fehler:", e); }
     }
 
+    // Initialisierung
+    renderStationList();
+    document.getElementById('display-station').innerText = stations[0].name;
+    setInterval(updateClock, 1000);
     setInterval(loadData, 15000);
     loadData();
     updateClock();
