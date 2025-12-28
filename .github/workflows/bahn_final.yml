@@ -1,9 +1,8 @@
-name: Zerbst Live Update
+name: Zerbst & Magdeburg Live Update
 on:
   workflow_dispatch: # Ermöglicht den manuellen Start
 
-# SCHUTZ: Verhindert, dass mehr als ein Bot gleichzeitig läuft.
-# Wenn ein neuer startet, wird der alte sofort beendet.
+# Verhindert Doppel-Ausführung
 concurrency:
   group: zerbst-v6
   cancel-in-progress: true
@@ -27,25 +26,30 @@ jobs:
 
       - name: 40 Minuten Dauer-Loop
         run: |
-          git config --global user.name "Zerbst Bot"
+          git config --global user.name "Multi-Station Bot"
           git config --global user.email "bot@zerbst.de"
           
           # 30 Durchläufe à 80 Sekunden = ca. 40 Minuten
           for i in {1..30}
           do
             echo "Durchlauf $i startet..."
-            python bot.py
             
-            # Prüfen ob Datei existiert und nicht leer ist
-            if [ -s daten.json ]; then
-              git add daten.json
-              # Nur pushen wenn sich der Inhalt wirklich geändert hat
+            # Startet beide Skripte nacheinander
+            python bot_zerbst.py
+            python bot_magdeburg.py
+            
+            # Prüfen, ob die neuen Dateien erstellt wurden und Inhalt haben
+            if [ -s zerbst.json ] || [ -s Magdeburg_Hbf.json ]; then
+              # Fügt beide spezifischen Dateien zum Git-Index hinzu
+              git add zerbst.json Magdeburg_Hbf.json
+              
+              # Nur committen und pushen, wenn es wirklich Änderungen gibt
               if ! git diff --staged --quiet; then
-                git commit -m "Live Update $i"
+                git commit -m "Live Update $i: Zerbst & MD Hbf"
                 git push --force
-                echo "Daten hochgeladen."
+                echo "Daten für beide Bahnhöfe aktualisiert."
               else
-                echo "Keine Änderung in den Zugdaten."
+                echo "Keine Änderungen in den Zugdaten beider Stationen."
               fi
             fi
             
@@ -58,6 +62,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "40 Min um. Starte Bot neu..."
+          echo "40 Min um. Starte Workflow neu..."
           sleep 10
+          # WICHTIG: Der Dateiname muss hier exakt bahn_final.yml sein
           gh workflow run bahn_final.yml
