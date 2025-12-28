@@ -152,6 +152,15 @@
         .on-time { color: var(--ontime-green); }
         
         footer { padding: 5px 15px; font-size: 0.7rem; color: #555; text-align: right; }
+
+        /* MELDUNG FÜR LEERE STATION */
+        .empty-msg {
+            text-align: center;
+            padding: 50px 20px;
+            font-size: 1.4rem;
+            color: #888;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -195,7 +204,7 @@
         { name: "Roßlau (Elbe)", file: "rosslau.json" },
         { name: "Dessau Hbf", file: "dessau_hbf.json" },
         { name: "Dessau Süd", file: "dessau_sued.json" },
-        { name: "Magdeburg Hbf", file: "Magdeburg_Hbf.json" },
+        { name: "Magdeburg Hbf", file: "magdeburg_hbf.json" },
         { name: "Magdeburg Neustadt", file: "magdeburg_neustadt.json" },
         { name: "Magdeburg Herrenkrug", file: "magdeburg_herrenkrug.json" },
         { name: "Leipzig Hbf", file: "leipzig_hbf.json" }
@@ -233,6 +242,13 @@
             const data = await res.json();
             const board = document.getElementById('board');
             board.innerHTML = '';
+
+            // --- HIER NEU: Wenn Liste leer ist [] ---
+            if (!data || data.length === 0) {
+                board.innerHTML = `<div class="empty-msg">Station gerade nicht bedient</div>`;
+                return;
+            }
+
             const jetzt = new Date();
 
             data.forEach(zug => {
@@ -262,7 +278,10 @@
                     </div>`;
             });
             document.getElementById('last-update').innerText = "Update: " + jetzt.toLocaleTimeString('de-DE');
-        } catch (e) { console.error(e); }
+        } catch (e) { 
+            console.error(e); 
+            document.getElementById('board').innerHTML = `<div class="empty-msg" style="color:red">Fehler beim Laden</div>`;
+        }
     }
 
     renderStations();
