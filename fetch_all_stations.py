@@ -1,9 +1,8 @@
 import requests
 import json
-import os
 from datetime import datetime, timedelta, timezone
 
-# --- STATIONSLISTE (Konsequent Kleinschreibung & 'sued') ---
+# --- STATIONSLISTE (Konsequent Kleinschreibung) ---
 stationen = [
     {"name": "zerbst", "id": "8013313"},
     {"name": "rodleben", "id": "8012808"},
@@ -18,26 +17,29 @@ stationen = [
 
 def hole_daten(station_id, station_name):
     jetzt = datetime.now(timezone.utc)
-    # Dauer auf 800 Minuten erhöht, falls mal wenig fährt
-    url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=800&results=20&remarks=true"
+    # Dauer auf 1200 Minuten fuer Magdeburg, damit immer etwas gefunden wird
+    url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=1200&results=30&remarks=true"
     
     try:
-        r = requests.get(url, timeout=20) # Timeout auf 20 Sek erhöht
+        r = requests.get(url, timeout=25)
         r.raise_for_status()
         data = r.json()
+        
+        # Falls die API 'departures' nicht liefert, suchen wir in 'departures' (manchmal unterschiedliche Formate)
         departures = data.get('departures', [])
         
         fahrplan = []
         for dep in departures:
-            ist_w = dep.get('when')
+            ist_w = dep.get('when') or dep.get('plannedWhen')
             if not ist_w: continue
             
             zug_zeit_obj = datetime.fromisoformat(ist_w.replace('Z', '+00:00'))
-            if zug_zeit_obj < (jetzt - timedelta(minutes=2)): continue
+            # Zeige Züge ab 5 Minuten vor jetzt
+            if zug_zeit_obj < (jetzt - timedelta(minutes=5)): continue
 
             linie = dep.get('line', {}).get('name', '???').replace(" ", "")
             soll_w = dep.get('plannedWhen')
-            soll_zeit = soll_w.split('T')[1][:5] if soll_w else "--:--"
+            soll_zeit = soll_w.split('T')[1][:5] if soll_w else ist_w.split('T')[1][:5]
             ist_zeit = ist_w.split('T')[1][:5]
             
             cancelled = dep.get('cancelled', False)
@@ -59,21 +61,16 @@ def hole_daten(station_id, station_name):
             })
 
         fahrplan.sort(key=lambda x: x['zeit'])
-        return fahrplan[:12]
+        return fahrplan[:15]
 
     except Exception as e:
-        # Wenn eine Station einen Fehler wirft, geben wir eine leere Liste zurück
-        # So wird die Datei wenigstens mit [] erstellt und die App stürzt nicht ab
-        print(f"FEHLER bei {station_name} (ID {station_id}): {e}")
+        print(f"Fehler bei {station_name}: {e}")
         return []
 
 if __name__ == "__main__":
     for st in stationen:
-        print(f"Verarbeite: {st['name']}...")
         daten = hole_daten(st['id'], st['name'])
-        
-        # Wir schreiben die Datei in jedem Fall (auch wenn leer), damit sie 'berührt' wird
         filename = f"{st['name']}.json"
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(daten, f, ensure_ascii=False, indent=4)
-        print(f"Datei {filename} wurde aktualisiert.")
+        print(f"Datei {filename} aktualisiert: {len(daten)} Züge gefunden.")
