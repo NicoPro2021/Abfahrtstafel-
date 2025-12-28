@@ -1,10 +1,9 @@
-name: Zerbst & Magdeburg Live Update
+name: Multi-Station Live Update
 on:
-  workflow_dispatch: # Ermöglicht den manuellen Start
+  workflow_dispatch: # Manueller Start
 
-# Verhindert Doppel-Ausführung
 concurrency:
-  group: zerbst-v6
+  group: bahn-multi-v1
   cancel-in-progress: true
 
 jobs:
@@ -24,45 +23,40 @@ jobs:
       - name: Install Libs
         run: pip install requests
 
-      - name: 40 Minuten Dauer-Loop
+      - name: 40 Minuten Dauer-Loop für alle Stationen
         run: |
           git config --global user.name "Multi-Station Bot"
-          git config --global user.email "bot@zerbst.de"
+          git config --global user.email "bot@bahn-anzeige.de"
           
-          # 30 Durchläufe à 80 Sekunden = ca. 40 Minuten
           for i in {1..30}
           do
-            echo "Durchlauf $i startet..."
+            echo "Durchlauf $i startet für alle Stationen..."
             
-            # Startet beide Skripte nacheinander
-            python bot_zerbst.py
-            python bot_magdeburg.py
+            # Startet das Sammel-Skript für alle Bahnhöfe
+            python fetch_all_stations.py
             
-            # Prüfen, ob die neuen Dateien erstellt wurden und Inhalt haben
-            if [ -s zerbst.json ] || [ -s Magdeburg_Hbf.json ]; then
-              # Fügt beide spezifischen Dateien zum Git-Index hinzu
-              git add zerbst.json Magdeburg_Hbf.json
-              
-              # Nur committen und pushen, wenn es wirklich Änderungen gibt
-              if ! git diff --staged --quiet; then
-                git commit -m "Live Update $i: Zerbst & MD Hbf"
-                git push --force
-                echo "Daten für beide Bahnhöfe aktualisiert."
-              else
-                echo "Keine Änderungen in den Zugdaten beider Stationen."
-              fi
+            # Fügt alle generierten JSON-Dateien zum Git-Index hinzu
+            git add *.json
+            
+            # Nur committen und pushen, wenn es wirklich Änderungen gibt
+            if ! git diff --staged --quiet; then
+              git commit -m "Live Update $i: Alle Stationen aktualisiert"
+              git push --force
+              echo "Daten wurden hochgeladen."
+            else
+              echo "Keine neuen Zugdaten gefunden."
             fi
             
-            echo "Warte 80 Sekunden bis zum nächsten Check..."
+            echo "Warte 80 Sekunden..."
             sleep 80
           done
 
-      - name: Sauberer Neustart
+      - name: Automatischer Neustart
         if: always()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "40 Min um. Starte Workflow neu..."
           sleep 10
-          # WICHTIG: Der Dateiname muss hier exakt bahn_final.yml sein
+          # Stellt sicher, dass die Datei wirklich bahn_final.yml heißt!
           gh workflow run bahn_final.yml
