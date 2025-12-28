@@ -3,7 +3,7 @@ import json
 import os
 from datetime import datetime, timedelta, timezone
 
-# --- ALLE STATIONEN IN KLEINSCHREIBUNG ---
+# --- STATIONSLISTE (Einheitlich Kleingeschrieben) ---
 stationen = [
     {"name": "zerbst", "id": "8013313"},
     {"name": "rodleben", "id": "8012808"},
@@ -18,7 +18,6 @@ stationen = [
 
 def hole_daten(station_id, station_name):
     jetzt = datetime.now(timezone.utc)
-    # 10 Stunden Zeitfenster abfragen
     url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=600&results=20&remarks=true"
     
     try:
@@ -33,8 +32,6 @@ def hole_daten(station_id, station_name):
             if not ist_w: continue
             
             zug_zeit_obj = datetime.fromisoformat(ist_w.replace('Z', '+00:00'))
-            
-            # Nur Züge zeigen, die noch nicht weg sind (2 Min Puffer)
             if zug_zeit_obj < (jetzt - timedelta(minutes=2)): continue
 
             linie = dep.get('line', {}).get('name', '???').replace(" ", "")
@@ -69,11 +66,7 @@ def hole_daten(station_id, station_name):
 
 if __name__ == "__main__":
     for st in stationen:
-        print(f"Lade {st['name']}...")
         daten = hole_daten(st['id'], st['name'])
-        
-        # WICHTIG: Er schreibt die Datei IMMER. 
-        # Wenn daten eine leere Liste [] sind, wird die Station als "nicht bedient" erkannt.
         if daten is not None:
             filename = f"{st['name']}.json"
             with open(filename, 'w', encoding='utf-8') as f:
