@@ -3,7 +3,7 @@ import json
 import os
 from datetime import datetime, timedelta, timezone
 
-# --- STATIONSLISTE (Einheitlich Kleingeschrieben) ---
+# --- STATIONSLISTE (Konsequent Kleinschreibung & 'sued') ---
 stationen = [
     {"name": "zerbst", "id": "8013313"},
     {"name": "rodleben", "id": "8012808"},
@@ -18,10 +18,11 @@ stationen = [
 
 def hole_daten(station_id, station_name):
     jetzt = datetime.now(timezone.utc)
-    url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=600&results=20&remarks=true"
+    # Dauer auf 800 Minuten erhöht, falls mal wenig fährt
+    url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=800&results=20&remarks=true"
     
     try:
-        r = requests.get(url, timeout=15)
+        r = requests.get(url, timeout=20) # Timeout auf 20 Sek erhöht
         r.raise_for_status()
         data = r.json()
         departures = data.get('departures', [])
@@ -61,14 +62,18 @@ def hole_daten(station_id, station_name):
         return fahrplan[:12]
 
     except Exception as e:
-        print(f"Fehler bei {station_name}: {e}")
-        return None
+        # Wenn eine Station einen Fehler wirft, geben wir eine leere Liste zurück
+        # So wird die Datei wenigstens mit [] erstellt und die App stürzt nicht ab
+        print(f"FEHLER bei {station_name} (ID {station_id}): {e}")
+        return []
 
 if __name__ == "__main__":
     for st in stationen:
+        print(f"Verarbeite: {st['name']}...")
         daten = hole_daten(st['id'], st['name'])
-        if daten is not None:
-            filename = f"{st['name']}.json"
-            with open(filename, 'w', encoding='utf-8') as f:
-                json.dump(daten, f, ensure_ascii=False, indent=4)
-            print(f"Gespeichert: {filename} ({len(daten)} Zuege)")
+        
+        # Wir schreiben die Datei in jedem Fall (auch wenn leer), damit sie 'berührt' wird
+        filename = f"{st['name']}.json"
+        with open(filename, 'w', encoding='utf-8') as f:
+            json.dump(daten, f, ensure_ascii=False, indent=4)
+        print(f"Datei {filename} wurde aktualisiert.")
