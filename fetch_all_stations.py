@@ -3,9 +3,9 @@ import json
 import time
 from datetime import datetime, timedelta, timezone
 
-# --- STATIONSLISTE MIT KORREKTEN IDs (STAND DEZEMBER 2025) ---
+# --- STATIONSLISTE MIT DEFINITIV KORREKTEN IDs (STAND 29.12.2025) ---
 stationen = [
-    {"name": "zerbst", "id": "8010390"},           # Zerbst/Anhalt
+    {"name": "zerbst", "id": "8010390"},           # Zerbst/Anhalt (Magdeburg-Leipzig)
     {"name": "rodleben", "id": "8012808"},         # Rodleben
     {"name": "rosslau", "id": "8010298"},          # Roßlau (Elbe)
     {"name": "dessau_hbf", "id": "8010077"},       # Dessau Hbf
@@ -18,8 +18,8 @@ stationen = [
 
 def hole_daten(station_id, station_name):
     jetzt = datetime.now(timezone.utc)
-    # Wir fragen 10 Stunden ab, um sicherzugehen
-    url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=600&results=20&remarks=true"
+    # 12 Stunden Zeitraum (720 Min), damit wir immer Züge finden
+    url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=720&results=20&remarks=true"
     
     try:
         r = requests.get(url, timeout=20)
@@ -37,7 +37,7 @@ def hole_daten(station_id, station_name):
             if not ist_w: continue
             
             zug_zeit_obj = datetime.fromisoformat(ist_w.replace('Z', '+00:00'))
-            # Züge die weg sind ignorieren
+            # Züge die bereits weg sind ignorieren
             if zug_zeit_obj < (jetzt - timedelta(minutes=2)): continue
 
             linie = dep.get('line', {}).get('name', '???').replace(" ", "")
@@ -63,6 +63,7 @@ def hole_daten(station_id, station_name):
                 "info": info_text
             })
 
+        # Nach Zeit sortieren
         fahrplan.sort(key=lambda x: x['zeit'])
         return fahrplan[:12]
 
@@ -75,7 +76,7 @@ if __name__ == "__main__":
         print(f"Lade {st['name']}...")
         daten = hole_daten(st['id'], st['name'])
         
-        # WICHTIG: Die Datei wird IMMER geschrieben, auch wenn daten [] ist!
+        # WICHTIG: Die Datei wird IMMER kleingeschrieben gespeichert!
         filename = f"{st['name']}.json"
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(daten, f, ensure_ascii=False, indent=4)
