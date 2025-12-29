@@ -2,22 +2,22 @@ import requests, json
 from datetime import datetime, timezone
 
 def run():
-    # ID 8010405 ist der Knotenpunkt Zerbst/Anhalt
-    url = "https://v6.db.transport.rest/stops/8010405/departures?duration=480&results=20&remarks=true"
+    # ID 8010404 ist Zerbst/Anhalt (Regio-Knoten)
+    url = "https://v6.db.transport.rest/stops/8010404/departures?duration=600&results=20&remarks=true"
     
     try:
-        r = requests.get(url, timeout=20)
+        r = requests.get(url, timeout=25)
         r.raise_for_status()
         data = r.json()
         departures = data.get('departures', [])
         
         res = []
         for d in departures:
-            linie = d.get('line', {}).get('name', '').replace(" ", "")
-            
-            # WICHTIG: Nur RE13 und RE14 (und RB51 als Backup, falls Linie umbenannt)
-            if not any(x in linie for x in ["RE13", "RE14", "RB51"]):
+            # Wir nehmen alle Züge außer Busse
+            if d.get('line', {}).get('product') == 'bus': 
                 continue
+            
+            linie = d.get('line', {}).get('name', '').replace(" ", "")
             
             soll = d.get('plannedWhen') or d.get('when')
             ist = d.get('when') or soll
@@ -26,7 +26,7 @@ def run():
             soll_z = soll.split('T')[1][:5]
             ist_z = ist.split('T')[1][:5]
             
-            # Grund finden (Verspätungen etc.)
+            # Grund finden
             remarks = d.get('remarks', [])
             grund = " | ".join([rm.get('text', '') for rm in remarks if rm.get('type') == 'hint'][:1])
 
@@ -40,13 +40,12 @@ def run():
                 "grund": grund
             })
         
-        # Falls leer, schreiben wir eine Info-Zeile zur Diagnose
+        # Falls die Liste immer noch leer ist, liegt es an der API
         if not res:
-            res = [{"zeit": "---", "linie": "RE13/14", "ziel": "Keine Züge im Plan", "gleis": "-", "info": "Check"}]
+            res = [{"zeit": "--:--", "linie": "INFO", "ziel": "Warten auf DB Daten", "gleis": "-", "info": "Kein Zug"}]
 
         with open('zerbst.json', 'w', encoding='utf-8') as f:
             json.dump(res, f, ensure_ascii=False, indent=4)
-        print(f"Zerbst Bot: {len(res)} RE13/RE14 Züge gefunden.")
             
     except Exception as e:
         with open('zerbst.json', 'w', encoding='utf-8') as f:
