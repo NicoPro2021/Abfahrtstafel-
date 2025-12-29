@@ -5,8 +5,8 @@ def hole_daten():
     jetzt = datetime.now(timezone.utc)
     u_zeit = (jetzt + timedelta(hours=1)).strftime("%H:%M")
     
-    # Wir nutzen eine alternative, extrem stabile API-Route für Zerbst (IBNR 8010405)
-    url = "https://v6.db.transport.rest/stops/8010405/departures?duration=600&results=20&linesOfStops=true&remarks=true"
+    # Wir nutzen die ID 8010405, aber mit einer eingebauten "Berlin-Sperre"
+    url = "https://v6.db.transport.rest/stops/8010405/departures?duration=480&results=50&remarks=true"
     
     try:
         r = requests.get(url, timeout=20)
@@ -19,15 +19,23 @@ def hole_daten():
             try:
                 line = d.get('line', {})
                 name = line.get('name', '').replace(" ", "")
-                
-                # Wir filtern nur Busse aus. Alles andere (RE13, RE14, RB51) lassen wir zu.
-                if line.get('product') == 'bus': continue
+                ziel = d.get('direction', '')
 
+                # --- DER BERLIN-BLOCKER ---
+                # Wenn diese Begriffe auftauchen, sind wir im falschen Bundesland:
+                falsche_ziele = ["Ahrensfelde", "Potsdam", "Wannsee", "Frankfurt(Oder)", "Oranienburg", "Rudow", "Cottbus"]
+                if any(stadt in ziel for stadt in falsche_ziele):
+                    continue
+                
+                # In Zerbst fahren nur RE13, RE14 oder RB51
+                if not any(x in name for x in ["RE13", "RE14", "RB51"]):
+                    continue
+
+                # Zeitberechnung für deine Minuten-Anzeige
                 soll_raw = d.get('plannedWhen')
                 ist_raw = d.get('when') or soll_raw
                 if not soll_raw: continue
 
-                # Zeitberechnung
                 soll_dt = datetime.fromisoformat(soll_raw.replace('Z', '+00:00'))
                 ist_dt = datetime.fromisoformat(ist_raw.replace('Z', '+00:00'))
                 diff = int((ist_dt - soll_dt).total_seconds() / 60)
@@ -43,7 +51,7 @@ def hole_daten():
                     "zeit": soll_dt.strftime("%H:%M"), 
                     "echte_zeit": ist_dt.strftime("%H:%M"), 
                     "linie": name, 
-                    "ziel": d.get('direction', 'Ziel')[:18], 
+                    "ziel": ziel[:18], 
                     "gleis": str(d.get('platform') or d.get('plannedPlatform') or "-"), 
                     "info": info_feld, 
                     "grund": " | ".join([rm.get('text','') for rm in d.get('remarks',[]) if rm.get('type')=='hint'][:1]),
@@ -51,13 +59,9 @@ def hole_daten():
                 })
             except: continue
             
-        # Wenn immer noch leer, schreiben wir einen Test-Eintrag zur Diagnose
-        if not res:
-            res = [{"zeit": "---", "linie": "RE13/14", "ziel": "Keine Züge aktuell", "gleis": "-", "info": "", "update": u_zeit}]
-
         return res[:10]
-    except Exception as e:
-        return [{"zeit": "ERR", "linie": "Bot", "ziel": "Fehler", "info": str(e)[:15], "update": u_zeit}]
+    except:
+        return []
 
 if __name__ == "__main__":
     daten = hole_daten()
