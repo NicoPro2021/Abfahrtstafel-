@@ -1,36 +1,48 @@
 import requests, json
-# Ändere hier die ID je nach Station (z.B. Zerbst: 8010390)
-STATION_ID = "8010390" 
-DATEI_NAME = "zerbst.json"
+from datetime import datetime, timezone
 
 def run():
-    url = f"https://v6.db.transport.rest/stops/{STATION_ID}/departures?duration=480&results=15&remarks=true"
+    # Wir nutzen die ID 8010391 für Zerbst/Anhalt
+    url = "https://v6.db.transport.rest/stops/8010391/departures?duration=480&results=15&remarks=true"
+    
     try:
         r = requests.get(url, timeout=20)
+        r.raise_for_status()
         data = r.json()
+        departures = data.get('departures', [])
+        
         res = []
-        for d in data.get('departures', []):
-            if d.get('line', {}).get('product') == 'bus': continue
+        for d in departures:
+            # Filter für Züge (RE13, RB51) - keine Busse
+            product = d.get('line', {}).get('product', '')
+            if product == 'bus': continue
+            
             soll = d.get('plannedWhen') or d.get('when')
             ist = d.get('when') or soll
             if not soll: continue
             
-            # Grund finden
+            # Grund finden (Verspätungsgrund)
             grund = " | ".join([rm.get('text','') for rm in d.get('remarks',[]) if rm.get('type')=='hint'][:2])
             
+            soll_z = soll.split('T')[1][:5]
+            ist_z = ist.split('T')[1][:5]
+
             res.append({
-                "zeit": soll.split('T')[1][:5],
-                "echte_zeit": ist.split('T')[1][:5],
+                "zeit": soll_z,
+                "echte_zeit": ist_z,
                 "linie": d.get('line',{}).get('name','').replace(" ",""),
                 "ziel": d.get('direction','')[:18],
-                "gleis": str(d.get('platform') or "-"),
-                "info": "FÄLLT AUS" if d.get('cancelled') else (f"ca. {ist.split('T')[1][:5]}" if ist != soll else ""),
+                "gleis": str(d.get('platform') or d.get('plannedPlatform') or "-"),
+                "info": "FÄLLT AUS" if d.get('cancelled') else (f"ca. {ist_z}" if ist_z != soll_z else ""),
                 "grund": grund
             })
-        with open(DATEI_NAME, 'w', encoding='utf-8') as f:
+        
+        with open('zerbst.json', 'w', encoding='utf-8') as f:
             json.dump(res, f, ensure_ascii=False, indent=4)
-    except:
-        with open(DATEI_NAME, 'w') as f: json.dump([], f)
+        print(f"Zerbst (Anhalt) erfolgreich geladen: {len(res)} Züge.")
+            
+    except Exception as e:
+        print(f"Fehler bei Zerbst: {e}")
 
 if __name__ == "__main__":
     run()
