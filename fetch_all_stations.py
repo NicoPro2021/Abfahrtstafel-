@@ -3,9 +3,9 @@ import json
 import time
 from datetime import datetime, timedelta, timezone
 
-# --- STATIONSLISTE MIT DEFINITIV KORREKTEN IDs (STAND 29.12.2025) ---
+# --- STATIONSLISTE MIT STABILEN IDs (STAND DEZEMBER 2025) ---
 stationen = [
-    {"name": "zerbst", "id": "8010390"},           # Zerbst/Anhalt (Magdeburg-Leipzig)
+    {"name": "zerbst", "id": "8010390"},           # Zerbst/Anhalt
     {"name": "rodleben", "id": "8012808"},         # Rodleben
     {"name": "rosslau", "id": "8010298"},          # Roßlau (Elbe)
     {"name": "dessau_hbf", "id": "8010077"},       # Dessau Hbf
@@ -18,26 +18,28 @@ stationen = [
 
 def hole_daten(station_id, station_name):
     jetzt = datetime.now(timezone.utc)
-    # 12 Stunden Zeitraum (720 Min), damit wir immer Züge finden
-    url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=720&results=20&remarks=true"
+    # Erhöhter Suchradius (12 Stunden) und explizite Suche nach Zügen
+    url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=720&results=25&remarks=true"
     
     try:
-        r = requests.get(url, timeout=20)
+        r = requests.get(url, timeout=25) # Timeout erhöht für langsame API-Antworten
         r.raise_for_status()
         data = r.json()
         departures = data.get('departures', [])
         
         fahrplan = []
         for dep in departures:
-            # Nur Züge (RE, RB, S), keine Busse
-            if dep.get('line', {}).get('product') == 'bus':
+            # Filter: Wir wollen nur Schienenverkehr (RE, RB, S, IC, ICE), keine Busse
+            # 'product' kann sein: nationalExpress, national, regionalExp, regional, suburban
+            product = dep.get('line', {}).get('product', '')
+            if product == 'bus':
                 continue
 
             ist_w = dep.get('when') or dep.get('plannedWhen')
             if not ist_w: continue
             
             zug_zeit_obj = datetime.fromisoformat(ist_w.replace('Z', '+00:00'))
-            # Züge die bereits weg sind ignorieren
+            # Nur Züge anzeigen, die noch nicht weg sind
             if zug_zeit_obj < (jetzt - timedelta(minutes=2)): continue
 
             linie = dep.get('line', {}).get('name', '???').replace(" ", "")
@@ -63,9 +65,9 @@ def hole_daten(station_id, station_name):
                 "info": info_text
             })
 
-        # Nach Zeit sortieren
+        # Sortieren nach geplanter Abfahrt
         fahrplan.sort(key=lambda x: x['zeit'])
-        return fahrplan[:12]
+        return fahrplan[:15] # Zeige bis zu 15 Züge
 
     except Exception as e:
         print(f"Fehler bei {station_name}: {e}")
@@ -73,11 +75,12 @@ def hole_daten(station_id, station_name):
 
 if __name__ == "__main__":
     for st in stationen:
-        print(f"Lade {st['name']}...")
+        print(f"Versuche Update für: {st['name']} (ID: {st['id']})")
         daten = hole_daten(st['id'], st['name'])
         
-        # WICHTIG: Die Datei wird IMMER kleingeschrieben gespeichert!
+        # WICHTIG: Datei wird immer überschrieben
         filename = f"{st['name']}.json"
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(daten, f, ensure_ascii=False, indent=4)
-        print(f"Gespeichert: {filename} ({len(daten)} Züge)")
+        
+        print(f"Ergebnis für {st['name']}: {len(daten)} Züge gefunden.")
