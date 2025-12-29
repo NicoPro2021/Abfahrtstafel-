@@ -5,48 +5,34 @@ def hole_daten():
     jetzt = datetime.now(timezone.utc)
     u_zeit = (jetzt + timedelta(hours=1)).strftime("%H:%M")
     
-    # Geografische Koordinaten von Zerbst/Anhalt Bahnhof
-    lat = "51.9599"
-    lon = "12.0837"
+    # Wir nutzen eine alternative, extrem stabile API-Route für Zerbst (IBNR 8010405)
+    url = "https://v6.db.transport.rest/stops/8010405/departures?duration=600&results=20&linesOfStops=true&remarks=true"
     
     try:
-        # Erst suchen wir die Station per Koordinaten, um die aktuelle Tages-ID zu finden
-        suche_url = f"https://v6.db.transport.rest/locations/nearby?latitude={lat}&longitude={lon}&results=1"
-        suche_res = requests.get(suche_url, timeout=10).json()
-        
-        if not suche_res: return []
-        echte_id = suche_res[0]['id']
-        
-        # Jetzt die Abfahrten mit der gefundenen ID
-        url = f"https://v6.db.transport.rest/stops/{echte_id}/departures?duration=480&results=15&remarks=true"
-        r_raw = requests.get(url, timeout=15)
-        r_raw.raise_for_status()
-        data = r_raw.json()
-        
+        r = requests.get(url, timeout=20)
+        r.raise_for_status()
+        data = r.json()
         departures = data.get('departures', [])
-        res = []
         
+        res = []
         for d in departures:
             try:
                 line = d.get('line', {})
-                if not line or line.get('product') == 'bus': continue
-                
                 name = line.get('name', '').replace(" ", "")
                 
-                # Sicherheitscheck gegen Berlin/Thüringen:
-                ziel = d.get('direction', '')
-                if any(x in ziel for x in ["Berlin", "Würzburg", "Erfurt"]): continue
+                # Wir filtern nur Busse aus. Alles andere (RE13, RE14, RB51) lassen wir zu.
+                if line.get('product') == 'bus': continue
 
                 soll_raw = d.get('plannedWhen')
                 ist_raw = d.get('when') or soll_raw
                 if not soll_raw: continue
 
-                # Zeitberechnung für Minuten
+                # Zeitberechnung
                 soll_dt = datetime.fromisoformat(soll_raw.replace('Z', '+00:00'))
                 ist_dt = datetime.fromisoformat(ist_raw.replace('Z', '+00:00'))
                 diff = int((ist_dt - soll_dt).total_seconds() / 60)
                 
-                # DEINE LOGIK: +Minuten oder Leer
+                # Deine Logik: +Minuten oder leer
                 info_feld = ""
                 if d.get('cancelled'):
                     info_feld = "FÄLLT AUS"
@@ -57,7 +43,7 @@ def hole_daten():
                     "zeit": soll_dt.strftime("%H:%M"), 
                     "echte_zeit": ist_dt.strftime("%H:%M"), 
                     "linie": name, 
-                    "ziel": ziel[:18], 
+                    "ziel": d.get('direction', 'Ziel')[:18], 
                     "gleis": str(d.get('platform') or d.get('plannedPlatform') or "-"), 
                     "info": info_feld, 
                     "grund": " | ".join([rm.get('text','') for rm in d.get('remarks',[]) if rm.get('type')=='hint'][:1]),
@@ -65,8 +51,13 @@ def hole_daten():
                 })
             except: continue
             
+        # Wenn immer noch leer, schreiben wir einen Test-Eintrag zur Diagnose
+        if not res:
+            res = [{"zeit": "---", "linie": "RE13/14", "ziel": "Keine Züge aktuell", "gleis": "-", "info": "", "update": u_zeit}]
+
         return res[:10]
-    except: return []
+    except Exception as e:
+        return [{"zeit": "ERR", "linie": "Bot", "ziel": "Fehler", "info": str(e)[:15], "update": u_zeit}]
 
 if __name__ == "__main__":
     daten = hole_daten()
