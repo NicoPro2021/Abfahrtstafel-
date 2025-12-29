@@ -14,66 +14,56 @@ def hole_daten():
         r_raw.raise_for_status()
         data = r_raw.json()
         
-        departures = data.get('departures')
-        if not isinstance(departures, list):
-            return []
-
+        departures = data.get('departures', [])
         res = []
+        
         for d in departures:
             try:
-                # 1. Check: Ist das d-Objekt gültig?
-                if not d or not isinstance(d, dict): continue
-                
-                # 2. Check: Linien-Daten vorhanden?
                 line = d.get('line')
-                if not line: continue
-                if line.get('product') == 'bus': continue
+                if not line or line.get('product') == 'bus': continue
                 
-                # 3. Check: Zeit-Daten vorhanden?
+                # Nur RE13, RE14, RB51 (Zerbst-typisch)
+                name = line.get('name', '').replace(" ", "")
+                if not any(x in name for x in ["RE13", "RE14", "RB51"]): continue
+
                 soll_raw = d.get('plannedWhen')
                 ist_raw = d.get('when') or soll_raw
                 if not soll_raw: continue
 
-                # Zeit sicher formatieren
-                soll_zeit = soll_raw.split('T')[1][:5]
-                ist_zeit = ist_raw.split('T')[1][:5]
+                # Zeit-Objekte erstellen für die Berechnung der Minuten
+                soll_dt = datetime.fromisoformat(soll_raw.replace('Z', '+00:00'))
+                ist_dt = datetime.fromisoformat(ist_raw.replace('Z', '+00:00'))
                 
-                # 4. Check: Linie und Ziel vorhanden?
-                name = line.get('name', '???').replace(" ", "")
-                ziel = d.get('direction', 'Unbekannt')[:18]
-                gleis = str(d.get('platform') or d.get('plannedPlatform') or "-")
-
-                # Grund/Hinweise sicher sammeln
-                remarks = d.get('remarks', [])
-                grund = ""
-                if isinstance(remarks, list):
-                    for rm in remarks:
-                        if rm.get('type') == 'hint':
-                            t = rm.get('text', '').strip()
-                            if t and "Fahrrad" not in t and "WLAN" not in t:
-                                grund = t
-                                break
-
-                info = "FÄLLT AUS" if d.get('cancelled') else (f"ca. {ist_zeit}" if ist_zeit != soll_zeit else "")
+                diff = int((ist_dt - soll_dt).total_seconds() / 60)
                 
+                soll_zeit = soll_dt.strftime("%H:%M")
+                ist_zeit = ist_dt.strftime("%H:%M")
+
+                # Logik für das Info-Feld (Verspätung in Minuten oder Leer)
+                if d.get('cancelled'):
+                    info = "FÄLLT AUS"
+                elif diff > 0:
+                    info = f"+{diff}" # Schreibt die Verspätungsminuten rein
+                else:
+                    info = "" # Bleibt leer bei Pünktlichkeit
+
                 res.append({
                     "zeit": soll_zeit, 
                     "echte_zeit": ist_zeit, 
                     "linie": name, 
-                    "ziel": ziel, 
-                    "gleis": gleis, 
+                    "ziel": d.get('direction', 'Unbekannt')[:18], 
+                    "gleis": str(d.get('platform') or d.get('plannedPlatform') or "-"), 
                     "info": info, 
-                    "grund": grund,
+                    "grund": " | ".join([rm.get('text','') for rm in d.get('remarks',[]) if rm.get('type')=='hint'][:1]),
                     "update": u_zeit
                 })
-            except (AttributeError, IndexError, TypeError):
-                # Wenn ein einzelner Zug Schrott-Daten hat, einfach ignorieren
+            except:
                 continue
             
         return res[:10]
 
     except Exception as e:
-        return [{"zeit": "ERR", "linie": "Bot", "ziel": "Fehler", "info": str(e)[:15], "grund": "API Problem"}]
+        return []
 
 if __name__ == "__main__":
     daten = hole_daten()
