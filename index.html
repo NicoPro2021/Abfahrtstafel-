@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Abfahrtstafel Live</title>
+    <title>Abfahrtstafel Live - Nur echte Züge</title>
     <style>
         :root {
             --db-blue: #005b8c;
@@ -28,7 +28,6 @@
             overflow: hidden;
         }
 
-        /* NAVIGATION & MENÜ */
         .top-bar {
             display: flex;
             align-items: center;
@@ -44,8 +43,6 @@
             color: white;
             font-size: 28px;
             cursor: pointer;
-            display: flex;
-            align-items: center;
         }
 
         .menu-overlay {
@@ -77,25 +74,10 @@
             outline: none;
         }
 
-        .station-list {
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .station-item {
-            padding: 15px;
-            background: #1a1a1a;
-            border-radius: 8px;
-            cursor: pointer;
-            border-left: 5px solid var(--db-blue);
-            font-size: 18px;
-        }
-
+        .station-list { overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .station-item { padding: 15px; background: #1a1a1a; border-radius: 8px; cursor: pointer; border-left: 5px solid var(--db-blue); font-size: 18px; }
         .station-item.active { border-left-color: var(--db-red); background: #222; }
 
-        /* FILTER LEISTE */
         .filter-bar {
             display: flex;
             gap: 8px;
@@ -104,7 +86,6 @@
             overflow-x: auto;
             white-space: nowrap;
         }
-
         .filter-bar::-webkit-scrollbar { display: none; }
 
         .filter-btn {
@@ -117,14 +98,8 @@
             cursor: pointer;
             transition: 0.2s;
         }
+        .filter-btn.active { background: var(--db-red); color: white; border-color: var(--db-red); }
 
-        .filter-btn.active {
-            background: var(--db-red);
-            color: white;
-            border-color: var(--db-red);
-        }
-
-        /* MONITOR DESIGN */
         .monitor { 
             width: 100%; 
             max-width: 1100px; 
@@ -170,24 +145,16 @@
         .line { background: #fff; color: #000; padding: 2px 5px; border-radius: 3px; font-weight: bold; text-align: center; font-size: 0.85rem; }
         .destination { font-size: 1.1rem; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .platform { text-align: center; font-size: 1.2rem; font-weight: bold; color: var(--platform-yellow); }
-        .actual { font-size: 1.2rem; font-weight: bold; display: block; }
+        .actual { font-size: 1.2rem; font-weight: bold; }
         .scheduled { display: block; font-size: 0.75rem; color: #777; text-decoration: line-through; }
         
         .info-text { font-size: 0.8rem; font-weight: bold; text-align: center; padding: 4px; border-radius: 4px; }
         .is-delayed { background: rgba(255, 77, 77, 0.15); color: var(--delay-red); border: 1px solid var(--delay-red); }
-        
         .delayed { color: var(--delay-red); }
         .on-time { color: var(--ontime-green); }
         
         footer { padding: 5px 15px; font-size: 0.7rem; color: #555; text-align: right; }
-
-        .empty-msg {
-            text-align: center;
-            padding: 50px 20px;
-            font-size: 1.4rem;
-            color: #888;
-            font-weight: bold;
-        }
+        .empty-msg { text-align: center; padding: 50px 20px; font-size: 1.4rem; color: #888; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -215,9 +182,9 @@
     <div class="filter-bar">
         <button class="filter-btn active" onclick="setFilter('ALL', this)">Alle</button>
         <button class="filter-btn" onclick="setFilter('TRAIN_ONLY', this)">Nur Zug</button>
-        <button class="filter-btn" onclick="setFilter('FERN', this)">Fernverkehr</button>
-        <button class="filter-btn" onclick="setFilter('REGIO', this)">RE/RB/S-Bahn</button>
-        <button class="filter-btn" onclick="setFilter('STADT', this)">Bus/Tram</button>
+        <button class="filter-btn" onclick="setFilter('FERN', this)">Fernverkehr (ICE/IC)</button>
+        <button class="filter-btn" onclick="setFilter('REGIO', this)">Regio (RE/RB/S)</button>
+        <button class="filter-btn" onclick="setFilter('STADT', this)">Tram/Bus</button>
     </div>
 
     <div class="table-header">
@@ -300,20 +267,30 @@
                 let cat = '';
                 let isTrain = false;
 
-                // --- STRIKTE KATEGORISIERUNG ---
+                // --- STRENGE KATEGORISIERUNG NACH DEINEM WUNSCH ---
+                
+                // 1. Fernverkehr (Echter Zug)
                 if (l.includes('ICE') || l.includes('IC') || l.includes('EC')) {
-                    cat = 'FERN'; isTrain = true;
+                    cat = 'FERN'; 
+                    isTrain = true;
                 } 
-                else if (l.includes('RE') || l.includes('RB') || l.includes('HBX') || l.startsWith('S')) {
-                    cat = 'REGIO'; isTrain = true;
+                // 2. Regionalverkehr & S-Bahn (Echter Zug)
+                // Wichtig: !l.startsWith('STR') verhindert, dass Straßenbahnen als S-Bahn durchgehen
+                else if (l.includes('RE') || l.includes('RB') || l.includes('HBX') || (l.startsWith('S') && !l.startsWith('STR'))) {
+                    cat = 'REGIO'; 
+                    isTrain = true;
                 } 
-                else if (l.includes('TRAM') || l.includes('BUS') || l.includes('STR') || l.startsWith('B ')) {
-                    cat = 'STADT'; isTrain = false;
+                // 3. Alles andere ist Stadtverkehr (Tram/Bus/STR)
+                else {
+                    cat = 'STADT'; 
+                    isTrain = false;
                 }
 
-                // Filter anwenden
+                // --- FILTER LOGIK ---
                 if (activeFilter === 'TRAIN_ONLY' && !isTrain) return;
-                if (activeFilter !== 'ALL' && activeFilter !== 'TRAIN_ONLY' && activeFilter !== cat) return;
+                if (activeFilter === 'FERN' && cat !== 'FERN') return;
+                if (activeFilter === 'REGIO' && cat !== 'REGIO') return;
+                if (activeFilter === 'STADT' && cat !== 'STADT') return;
 
                 const hatEchtzeit = zug.echte_zeit && zug.echte_zeit !== "" && zug.echte_zeit !== "null";
                 const abfahrtAnzeige = hatEchtzeit ? zug.echte_zeit : zug.zeit;
@@ -343,7 +320,7 @@
             document.getElementById('last-update').innerText = "Update: " + jetzt.toLocaleTimeString('de-DE');
         } catch (e) { 
             console.error(e); 
-            document.getElementById('board').innerHTML = `<div class="empty-msg" style="color:red">Fehler beim Laden</div>`;
+            document.getElementById('board').innerHTML = `<div class="empty-msg" style="color:red">Verbindungsfehler</div>`;
         }
     }
 
