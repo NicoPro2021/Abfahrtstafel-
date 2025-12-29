@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Abfahrtstafel Live - Nur echte Züge</title>
+    <title>Abfahrtstafel Live - Mit Zeitfilter</title>
     <style>
         :root {
             --db-blue: #005b8c;
@@ -19,118 +19,73 @@
             font-family: 'Segoe UI', Helvetica, sans-serif; 
             background: var(--bg-color); 
             color: var(--text-main); 
-            margin: 0; 
-            padding: 5px; 
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            box-sizing: border-box;
-            overflow: hidden;
+            margin: 0; padding: 5px; 
+            display: flex; flex-direction: column;
+            height: 100vh; box-sizing: border-box; overflow: hidden;
         }
 
         .top-bar {
-            display: flex;
-            align-items: center;
-            padding: 5px 10px;
-            gap: 15px;
-            background: #111;
-            border-radius: 8px 8px 0 0;
+            display: flex; align-items: center; padding: 5px 10px; gap: 15px;
+            background: #111; border-radius: 8px 8px 0 0;
         }
 
-        .burger-btn {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 28px;
-            cursor: pointer;
-        }
+        .burger-btn { background: none; border: none; color: white; font-size: 28px; cursor: pointer; }
 
+        /* MENÜ */
         .menu-overlay {
-            position: fixed;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: rgba(10, 10, 10, 0.98);
-            z-index: 1000;
+            position: fixed; top: 0; left: -100%; width: 100%; height: 100%;
+            background: rgba(10, 10, 10, 0.98); z-index: 1000;
             transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            box-sizing: border-box;
+            display: flex; flex-direction: column; padding: 20px; box-sizing: border-box;
         }
-
         .menu-overlay.open { left: 0; }
 
         .search-input {
-            width: 100%;
-            padding: 15px;
-            background: #222;
-            border: 1px solid #444;
-            color: white;
-            border-radius: 10px;
-            font-size: 18px;
-            margin-bottom: 20px;
-            outline: none;
+            width: 100%; padding: 15px; background: #222; border: 1px solid #444;
+            color: white; border-radius: 10px; font-size: 18px; margin-bottom: 20px; outline: none;
         }
 
         .station-list { overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        .station-item { padding: 15px; background: #1a1a1a; border-radius: 8px; cursor: pointer; border-left: 5px solid var(--db-blue); font-size: 18px; }
+        .station-item { padding: 15px; background: #1a1a1a; border-radius: 8px; cursor: pointer; border-left: 5px solid var(--db-blue); }
         .station-item.active { border-left-color: var(--db-red); background: #222; }
 
+        /* FILTER LEISTE */
+        .controls-row {
+            display: flex; flex-direction: column; background: #111; padding: 5px; gap: 5px;
+        }
+        
         .filter-bar {
-            display: flex;
-            gap: 8px;
-            padding: 10px;
-            background: #111;
-            overflow-x: auto;
-            white-space: nowrap;
+            display: flex; gap: 8px; overflow-x: auto; white-space: nowrap; padding: 5px 0;
         }
         .filter-bar::-webkit-scrollbar { display: none; }
 
-        .filter-btn {
-            padding: 6px 14px;
-            background: #222;
-            border: 1px solid #444;
-            color: #aaa;
-            border-radius: 15px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: 0.2s;
+        .time-filter-row {
+            display: flex; align-items: center; gap: 10px; padding: 5px; border-top: 1px solid #222;
+        }
+
+        .filter-btn, .time-select {
+            padding: 6px 14px; background: #222; border: 1px solid #444;
+            color: #aaa; border-radius: 15px; font-size: 0.85rem; cursor: pointer;
         }
         .filter-btn.active { background: var(--db-red); color: white; border-color: var(--db-red); }
+        
+        .time-select { background: #333; color: white; border-radius: 8px; }
 
+        /* MONITOR */
         .monitor { 
-            width: 100%; 
-            max-width: 1100px; 
-            background: #111; 
-            border: 1px solid #333;
-            border-radius: 0 0 8px 8px; 
-            display: flex;
-            flex-direction: column;
-            margin: 0 auto;
-            flex-grow: 1;
-            overflow: hidden;
+            width: 100%; max-width: 1100px; background: #111; border: 1px solid #333;
+            border-radius: 0; display: flex; flex-direction: column;
+            margin: 0 auto; flex-grow: 1; overflow: hidden;
         }
 
         .header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            background: #1a1a1a;
-            padding: 10px 15px;
-            border-bottom: 4px solid var(--db-blue);
+            display: flex; justify-content: space-between; align-items: center; 
+            background: #1a1a1a; padding: 10px 15px; border-bottom: 4px solid var(--db-blue);
         }
 
-        .station-name { font-size: 1.2rem; font-weight: bold; color: #fff; }
-        #current-time { font-size: 1.8rem; font-weight: bold; color: var(--ontime-green); font-family: monospace; }
-
         .table-header, .row {
-            display: grid;
-            grid-template-columns: 65px 1fr 70px 90px 100px; 
-            align-items: center;
-            padding: 10px;
-            gap: 10px;
+            display: grid; grid-template-columns: 65px 1fr 70px 90px 100px; 
+            align-items: center; padding: 10px; gap: 10px;
         }
 
         @media (max-width: 600px) {
@@ -154,7 +109,7 @@
         .on-time { color: var(--ontime-green); }
         
         footer { padding: 5px 15px; font-size: 0.7rem; color: #555; text-align: right; }
-        .empty-msg { text-align: center; padding: 50px 20px; font-size: 1.4rem; color: #888; font-weight: bold; }
+        .empty-msg { text-align: center; padding: 50px 20px; font-size: 1.2rem; color: #666; }
     </style>
 </head>
 <body>
@@ -179,20 +134,28 @@
         <div id="current-time">00:00:00</div>
     </div>
 
-    <div class="filter-bar">
-        <button class="filter-btn active" onclick="setFilter('ALL', this)">Alle</button>
-        <button class="filter-btn" onclick="setFilter('TRAIN_ONLY', this)">Nur Zug</button>
-        <button class="filter-btn" onclick="setFilter('FERN', this)">Fernverkehr (ICE/IC)</button>
-        <button class="filter-btn" onclick="setFilter('REGIO', this)">Regio (RE/RB/S)</button>
-        <button class="filter-btn" onclick="setFilter('STADT', this)">Tram/Bus</button>
+    <div class="controls-row">
+        <div class="filter-bar">
+            <button class="filter-btn active" onclick="setFilter('ALL', this)">Alle</button>
+            <button class="filter-btn" onclick="setFilter('TRAIN_ONLY', this)">Nur Zug</button>
+            <button class="filter-btn" onclick="setFilter('FERN', this)">ICE/IC</button>
+            <button class="filter-btn" onclick="setFilter('REGIO', this)">RE/RB/S</button>
+            <button class="filter-btn" onclick="setFilter('STADT', this)">Tram/Bus</button>
+        </div>
+        <div class="time-filter-row">
+            <span style="font-size: 0.8rem; color: #888;">Zeitraum:</span>
+            <select class="time-select" id="time-limit" onchange="loadData()">
+                <option value="30">Nächste 30 Min</option>
+                <option value="60" selected>Nächste 1 Std</option>
+                <option value="120">Nächste 2 Std</option>
+                <option value="240">Nächste 4 Std</option>
+                <option value="9999">Alle heute</option>
+            </select>
+        </div>
     </div>
 
     <div class="table-header">
-        <div>Linie</div>
-        <div>Ziel</div>
-        <div style="text-align: center;">Gl.</div>
-        <div style="text-align: right;">Abfahrt</div>
-        <div class="info-box-cell" style="text-align: center;">Info</div>
+        <div>Linie</div><div>Ziel</div><div style="text-align: center;">Gl.</div><div style="text-align: right;">Abfahrt</div><div class="info-box-cell">Info</div>
     </div>
     <div id="board"></div>
 </div>
@@ -253,52 +216,40 @@
             const res = await fetch(`${BASE_URL}${currentFile}?t=${Date.now()}`);
             const data = await res.json();
             const board = document.getElementById('board');
+            const timeLimitMin = parseInt(document.getElementById('time-limit').value);
             board.innerHTML = '';
 
-            if (!data || data.length === 0) {
-                board.innerHTML = `<div class="empty-msg">Station gerade nicht bedient</div>`;
-                return;
-            }
-
             const jetzt = new Date();
+            let count = 0;
 
             data.forEach(zug => {
                 const l = zug.linie.toUpperCase();
                 let cat = '';
                 let isTrain = false;
 
-                // --- STRENGE KATEGORISIERUNG NACH DEINEM WUNSCH ---
-                
-                // 1. Fernverkehr (Echter Zug)
-                if (l.includes('ICE') || l.includes('IC') || l.includes('EC')) {
-                    cat = 'FERN'; 
-                    isTrain = true;
-                } 
-                // 2. Regionalverkehr & S-Bahn (Echter Zug)
-                // Wichtig: !l.startsWith('STR') verhindert, dass Straßenbahnen als S-Bahn durchgehen
-                else if (l.includes('RE') || l.includes('RB') || l.includes('HBX') || (l.startsWith('S') && !l.startsWith('STR'))) {
-                    cat = 'REGIO'; 
-                    isTrain = true;
-                } 
-                // 3. Alles andere ist Stadtverkehr (Tram/Bus/STR)
-                else {
-                    cat = 'STADT'; 
-                    isTrain = false;
-                }
+                // Kategorisierung
+                if (l.includes('ICE') || l.includes('IC') || l.includes('EC')) { cat = 'FERN'; isTrain = true; } 
+                else if (l.includes('RE') || l.includes('RB') || l.includes('HBX') || (l.startsWith('S') && !l.startsWith('STR'))) { cat = 'REGIO'; isTrain = true; } 
+                else { cat = 'STADT'; isTrain = false; }
 
-                // --- FILTER LOGIK ---
+                // Filter 1: Typ
                 if (activeFilter === 'TRAIN_ONLY' && !isTrain) return;
-                if (activeFilter === 'FERN' && cat !== 'FERN') return;
-                if (activeFilter === 'REGIO' && cat !== 'REGIO') return;
-                if (activeFilter === 'STADT' && cat !== 'STADT') return;
+                if (activeFilter !== 'ALL' && activeFilter !== 'TRAIN_ONLY' && activeFilter !== cat) return;
 
+                // Filter 2: Zeit
                 const hatEchtzeit = zug.echte_zeit && zug.echte_zeit !== "" && zug.echte_zeit !== "null";
                 const abfahrtAnzeige = hatEchtzeit ? zug.echte_zeit : zug.zeit;
-                
                 const [h, m] = abfahrtAnzeige.split(':');
-                const zugZeit = new Date(); zugZeit.setHours(h, m, 0, 0);
-                if (jetzt.getTime() - zugZeit.getTime() > 60000) return;
+                
+                const zugZeit = new Date(); 
+                zugZeit.setHours(h, m, 0, 0);
 
+                const diffMin = (zugZeit - jetzt) / 1000 / 60;
+                
+                // Nur Züge anzeigen, die nicht älter als 1 Min sind UND innerhalb des Zeitlimits liegen
+                if (diffMin < -1 || diffMin > timeLimitMin) return;
+
+                count++;
                 const infoTxt = zug.info || "";
                 const istVerspaetet = hatEchtzeit && zug.echte_zeit !== zug.zeit;
                 const isDelayed = istVerspaetet || infoTxt.includes('+') || infoTxt.toLowerCase().includes("fällt");
@@ -312,22 +263,19 @@
                             ${istVerspaetet ? `<span class="scheduled">${zug.zeit}</span>` : ''}
                             <span class="actual ${isDelayed ? 'delayed' : 'on-time'}">${abfahrtAnzeige}</span>
                         </div>
-                        <div class="info-box-cell">
-                             <div class="info-text ${isDelayed ? 'is-delayed' : ''}">${infoTxt}</div>
-                        </div>
+                        <div class="info-box-cell"><div class="info-text ${isDelayed ? 'is-delayed' : ''}">${infoTxt}</div></div>
                     </div>`;
             });
+            
+            if(count === 0) board.innerHTML = `<div class="empty-msg">Keine Abfahrten im gewählten Zeitraum</div>`;
             document.getElementById('last-update').innerText = "Update: " + jetzt.toLocaleTimeString('de-DE');
-        } catch (e) { 
-            console.error(e); 
-            document.getElementById('board').innerHTML = `<div class="empty-msg" style="color:red">Verbindungsfehler</div>`;
-        }
+        } catch (e) { console.error(e); }
     }
 
     renderStations();
     document.getElementById('display-station').innerText = stations[0].name;
     setInterval(() => document.getElementById('current-time').innerText = new Date().toLocaleTimeString('de-DE'), 1000);
-    setInterval(loadData, 20000);
+    setInterval(loadData, 30000);
     loadData();
 </script>
 </body>
