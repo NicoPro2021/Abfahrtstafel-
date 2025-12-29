@@ -8,11 +8,10 @@ def hole_daten():
         suche_url = "https://v6.db.transport.rest/locations?query=Zerbst/Anhalt&results=1"
         suche_data = requests.get(suche_url, timeout=10).json()
         station_id = suche_data[0]['id']
-        url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=480&results=20&remarks=true"
+        url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=60&results=100&remarks=true"
         r = requests.get(url, timeout=15).json()
-        departures = r.get('departures', [])
         res = []
-        for d in departures:
+        for d in r.get('departures', []):
             try:
                 line = d.get('line', {})
                 name = line.get('name', '').replace(" ", "")
@@ -33,7 +32,7 @@ def hole_daten():
                     "update": u_zeit
                 })
             except: continue
-        return res[:12]
+        return res
     except: return []
 
 if __name__ == "__main__":
