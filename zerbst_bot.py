@@ -1,71 +1,60 @@
 import requests, json
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
-def run():
-    # ID 8010404 ist Zerbst/Anhalt
-    url = "https://v6.db.transport.rest/stops/8010404/departures?duration=600&results=20&remarks=true"
-    
+def hole_daten():
+    jetzt = datetime.now(timezone.utc)
+    u_zeit = (jetzt + timedelta(hours=1)).strftime("%H:%M")
     try:
-        r = requests.get(url, timeout=25)
-        r.raise_for_status()
-        data = r.json()
-        departures = data.get('departures', [])
+        # Wir nutzen die feste ID fuer Zerbst/Anhalt, um Irrläufer zu verhindern
+        echte_id = "8010404" 
+        
+        r_raw = requests.get(f"https://v6.db.transport.rest/stops/{echte_id}/departures?duration=480&results=15&remarks=true", timeout=15)
+        r = r_raw.json()
         
         res = []
-        for d in departures:
-            # Sicherheits-Check: Hat der Zug überhaupt Zeitdaten?
-            soll_iso = d.get('plannedWhen') or d.get('when')
-            if not soll_iso:
-                continue # Überspringe Züge ohne Zeitangabe
+        for d in r.get('departures', []):
+            # Filter: Nur Züge, keine Busse
+            if d.get('line', {}).get('product') == 'bus': continue
             
-            # Busse ausfiltern
-            if d.get('line', {}).get('product') == 'bus':
-                continue
+            # SICHERHEITS-CHECK: Existieren die Zeit-Daten?
+            ist_w = d.get('when') or d.get('plannedWhen')
+            soll_w = d.get('plannedWhen') or ist_w
             
-            # Zeiten sicher extrahieren
-            try:
-                soll_z = soll_iso.split('T')[1][:5]
-                ist_iso = d.get('when') or soll_iso
-                ist_z = ist_iso.split('T')[1][:5]
-            except (AttributeError, IndexError):
-                continue
+            if not ist_w or not soll_w: continue # Springe zum nächsten, wenn Zeit fehlt
 
-            # Grund/Remarks sicher sammeln
+            # Zeiten sicher schneiden
+            soll_zeit = soll_w.split('T')[1][:5]
+            ist_zeit = ist_w.split('T')[1][:5]
+            
+            # Verspätungsgrund finden
             remarks = d.get('remarks', [])
-            grund_liste = []
-            if isinstance(remarks, list):
-                for rm in remarks:
-                    if rm.get('type') == 'hint':
-                        t = rm.get('text', '').strip()
-                        if t and "Fahrrad" not in t:
-                            grund_liste.append(t)
-            
-            grund = " | ".join(grund_liste[:1])
+            grund = ""
+            for rm in remarks:
+                if rm.get('type') == 'hint':
+                    t = rm.get('text', '').strip()
+                    if t and "Fahrrad" not in t:
+                        grund = t
+                        break
 
+            info = "FÄLLT AUS" if d.get('cancelled') else (f"ca. {ist_zeit}" if ist_zeit != soll_zeit else "")
+            
             res.append({
-                "zeit": soll_z,
-                "echte_zeit": ist_z,
-                "linie": d.get('line', {}).get('name', '').replace(" ", ""),
-                "ziel": d.get('direction', 'Ziel')[:18],
-                "gleis": str(d.get('platform') or d.get('plannedPlatform') or "-"),
-                "info": "FÄLLT AUS" if d.get('cancelled') else (f"ca. {ist_z}" if ist_z != soll_z else ""),
-                "grund": grund
+                "zeit": soll_zeit, 
+                "echte_zeit": ist_zeit, 
+                "linie": d.get('line', {}).get('name', '???').replace(" ", ""), 
+                "ziel": d.get('direction', 'Unbekannt')[:18], 
+                "gleis": str(d.get('platform') or d.get('plannedPlatform') or "-"), 
+                "info": info, 
+                "grund": grund,
+                "update": u_zeit
             })
-        
-        # Falls die Liste immer noch leer ist
-        if not res:
-            res = [{"zeit": "--:--", "linie": "INFO", "ziel": "Keine Züge aktuell", "gleis": "-", "info": "Fahrplan leer"}]
-
-        with open('zerbst.json', 'w', encoding='utf-8') as f:
-            json.dump(res, f, ensure_ascii=False, indent=4)
-        print("Zerbst Bot: Datei erfolgreich geschrieben.")
             
+        return res[:10]
     except Exception as e:
-        # Fehlermeldung als Liste speichern, damit die Website nicht abstürzt
-        error_res = [{"zeit": "ERR", "linie": "Bot", "ziel": "Fehler", "info": str(e)[:20]}]
-        with open('zerbst.json', 'w', encoding='utf-8') as f:
-            json.dump(error_res, f, ensure_ascii=False, indent=4)
-        print(f"Fehler bei Zerbst: {e}")
+        # Falls gar nichts geht: Fehler-Info fuer die JSON
+        return [{"zeit": "ERR", "linie": "Bot", "ziel": "Fehler", "info": str(e)[:15]}]
 
 if __name__ == "__main__":
-    run()
+    daten = hole_daten()
+    with open('zerbst.json', 'w', encoding='utf-8') as f:
+        json.dump(daten, f, ensure_ascii=False, indent=4)
