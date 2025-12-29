@@ -1,13 +1,9 @@
-name: DB Daten Einzel-Update
+name: Alle Stationen Einzel-Update
 
 on:
   schedule:
-    - cron: '*/5 * * * *'  # Läuft jetzt alle 5 Minuten automatisch
-  workflow_dispatch:      # Ermöglicht dir den manuellen Start per Button
-
-concurrency:
-  group: bahn-multi-v1
-  cancel-in-progress: true
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
 
 jobs:
   update:
@@ -15,34 +11,28 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Code auschecken
-        uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
+      - run: pip install requests
 
-      - name: Install Libs
-        run: pip install requests
-
-      - name: Einmaliges Update aller Stationen
+      - name: Bots ausführen
         run: |
-          # Git konfigurieren
+          python zerbst_bot.py
+          python rodleben_bot.py
+          python rosslau_bot.py
+          python dessau_hbf_bot.py
+          python dessau_sued_bot.py
+          python magdeburg_hbf_bot.py
+          python magdeburg_neustadt_bot.py
+          python magdeburg_herrenkrug_bot.py
+          python leipzig_hbf_bot.py
+
+      - name: Änderungen hochladen
+        run: |
           git config --global user.name "Multi-Station Bot"
           git config --global user.email "bot@bahn-anzeige.de"
-          
-          # Das Python-Skript genau einmal ausführen
-          python fetch_all_stations.py
-          
-          # Alle JSON-Dateien hinzufügen
           git add *.json
-          
-          # Nur wenn Änderungen da sind: Committen und Hochladen
-          if ! git diff --staged --quiet; then
-            git commit -m "Automatisches Update: $(date +'%Y-%m-%d %H:%M:%S')"
-            git push
-            echo "Daten erfolgreich aktualisiert."
-          else
-            echo "Keine Änderungen in den Zugdaten gefunden."
-          fi
+          git commit -m "Automatisches Live-Update (Erfolgs-Schema)" || exit 0
+          git push
