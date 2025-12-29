@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Abfahrtstafel Live</title>
+    <title>Abfahrtstafel Live Pro</title>
     <style>
         :root {
             --db-blue: #005b8c;
@@ -13,56 +13,56 @@
             --ontime-green: #44ff44;
             --platform-yellow: #ffcc00;
             --db-red: #e2001a;
+            --card-bg: #1a1a1a;
         }
 
         body { 
-            font-family: 'Segoe UI', Helvetica, sans-serif; 
+            font-family: 'Segoe UI', Roboto, Helvetica, sans-serif; 
             background: var(--bg-color); 
             color: var(--text-main); 
             margin: 0; padding: 0; 
+            height: 100vh;
             display: flex; flex-direction: column;
-            height: 100vh; box-sizing: border-box; overflow: hidden;
+            overflow: hidden; /* Verhindert Wackeln des gesamten Bodys */
         }
 
-        /* SCHLANKE TOP-BAR */
+        /* TOP BAR */
         .top-bar {
-            display: flex; align-items: center; padding: 10px 15px; gap: 15px;
-            background: #111; border-bottom: 1px solid #333;
+            display: flex; align-items: center; padding: 12px 20px; gap: 15px;
+            background: #111; border-bottom: 2px solid var(--db-blue);
+            z-index: 100;
         }
 
-        .burger-btn { background: none; border: none; color: white; font-size: 24px; cursor: pointer; }
+        .burger-btn { background: none; border: none; color: white; font-size: 26px; cursor: pointer; }
 
-        /* MENÜ-OVERLAY (Hier ist jetzt alles versteckt) */
+        /* MENÜ-OVERLAY */
         .menu-overlay {
             position: fixed; top: 0; left: -100%; width: 100%; height: 100%;
-            background: rgba(10, 10, 10, 0.98); z-index: 1000;
-            transition: 0.3s ease;
-            display: flex; flex-direction: column; padding: 25px; box-sizing: border-box;
-            overflow-y: auto;
+            background: rgba(5, 5, 5, 0.98); z-index: 2000;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; flex-direction: column; padding: 20px; box-sizing: border-box;
         }
         .menu-overlay.open { left: 0; }
 
-        .menu-section { margin-bottom: 30px; border-bottom: 1px solid #333; padding-bottom: 20px; }
-        .menu-section h3 { color: var(--db-red); margin-bottom: 15px; font-size: 1.1rem; text-transform: uppercase; }
+        .menu-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .menu-scroll-area { overflow-y: auto; flex-grow: 1; padding-right: 5px; }
 
-        .search-input {
-            width: 100%; padding: 12px; background: #222; border: 1px solid #444;
-            color: white; border-radius: 8px; font-size: 16px; outline: none;
+        /* SCHICKERE BAHNHOF-ITEMS */
+        .station-grid { display: flex; flex-direction: column; gap: 8px; }
+        .station-item { 
+            padding: 16px; background: var(--card-bg); border-radius: 12px; 
+            cursor: pointer; border: 1px solid #333; transition: 0.2s;
+            display: flex; align-items: center; gap: 15px;
         }
+        .station-item:active { transform: scale(0.98); background: #252525; }
+        .station-item.active { border-color: var(--db-red); background: rgba(226, 0, 26, 0.1); }
+        .station-icon { color: var(--db-blue); font-size: 1.2rem; }
 
-        /* FILTER BUTTONS IM MENÜ */
-        .filter-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .filter-btn, .time-select {
-            padding: 12px; background: #1a1a1a; border: 1px solid #444;
-            color: #ccc; border-radius: 8px; cursor: pointer; text-align: center; font-size: 0.9rem;
-        }
-        .filter-btn.active { background: var(--db-blue); color: white; border-color: var(--db-blue); }
-        .time-select { width: 100%; background: #1a1a1a; }
-
-        /* MONITOR (Das eigentliche Design) */
+        /* MONITOR (Die Anzeige) */
         .monitor { 
             width: 100%; max-width: 1200px; margin: 0 auto; flex-grow: 1; 
             display: flex; flex-direction: column; background: #000;
+            overflow: hidden;
         }
 
         .header { 
@@ -70,20 +70,25 @@
             background: #111; padding: 15px 20px; border-bottom: 4px solid var(--db-blue);
         }
 
-        .station-name { font-size: 1.4rem; font-weight: bold; color: #fff; letter-spacing: 0.5px; }
-        #current-time { font-size: 1.8rem; font-weight: bold; color: var(--ontime-green); font-family: monospace; }
+        .station-name { font-size: 1.5rem; font-weight: bold; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
+        #current-time { font-size: 2rem; font-weight: bold; color: var(--ontime-green); font-family: 'Courier New', monospace; }
 
+        /* TABELLE & SCROLLEN */
         .table-header { 
-            display: grid; grid-template-columns: 70px 1fr 70px 90px 110px; 
-            background: #1a1a1a; color: #777; font-size: 0.75rem; 
-            font-weight: bold; padding: 10px 20px; text-transform: uppercase; 
+            display: grid; grid-template-columns: 75px 1fr 70px 95px 120px; 
+            background: #1a1a1a; color: #888; font-size: 0.8rem; 
+            font-weight: bold; padding: 12px 20px; border-bottom: 1px solid #333;
         }
 
-        #board { overflow-y: auto; flex-grow: 1; }
+        #board { 
+            overflow-y: scroll; /* Erzwingt Scrollbarkeit */
+            flex-grow: 1; 
+            -webkit-overflow-scrolling: touch; /* Sanftes Scrollen auf iOS */
+        }
 
         .row {
-            display: grid; grid-template-columns: 70px 1fr 70px 90px 110px; 
-            align-items: center; padding: 12px 20px; border-bottom: 1px solid #111;
+            display: grid; grid-template-columns: 75px 1fr 70px 95px 120px; 
+            align-items: center; padding: 15px 20px; border-bottom: 1px solid #151515;
         }
 
         @media (max-width: 600px) {
@@ -91,59 +96,55 @@
             .info-box-cell { display: none; }
         }
 
-        .line { background: #fff; color: #000; padding: 3px 6px; border-radius: 3px; font-weight: bold; text-align: center; font-size: 0.85rem; }
-        .destination { font-size: 1.2rem; font-weight: 500; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .platform { text-align: center; font-size: 1.3rem; font-weight: bold; color: var(--platform-yellow); }
+        .line { background: #fff; color: #000; padding: 4px 8px; border-radius: 4px; font-weight: 800; text-align: center; font-size: 0.9rem; }
+        .destination { font-size: 1.2rem; font-weight: 500; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .platform { text-align: center; font-size: 1.4rem; font-weight: bold; color: var(--platform-yellow); }
         .time-box { text-align: right; }
-        .actual { font-size: 1.3rem; font-weight: bold; }
-        .scheduled { display: block; font-size: 0.8rem; color: #666; text-decoration: line-through; }
+        .actual { font-size: 1.4rem; font-weight: bold; }
+        .scheduled { display: block; font-size: 0.85rem; color: #666; text-decoration: line-through; }
         
-        .info-text { font-size: 0.85rem; font-weight: bold; text-align: center; padding: 5px; border-radius: 4px; }
-        .is-delayed { background: rgba(255, 77, 77, 0.1); color: var(--delay-red); border: 1px solid var(--delay-red); }
+        .info-text { font-size: 0.85rem; font-weight: bold; text-align: center; padding: 6px; border-radius: 6px; }
+        .is-delayed { background: rgba(255, 77, 77, 0.15); color: var(--delay-red); border: 1px solid var(--delay-red); }
         
-        footer { padding: 8px 20px; font-size: 0.75rem; color: #444; background: #050505; border-top: 1px solid #111; }
+        footer { padding: 10px 20px; font-size: 0.8rem; color: #555; background: #0a0a0a; border-top: 1px solid #222; }
+
+        /* Custom Scrollbar */
+        #board::-webkit-scrollbar { width: 8px; }
+        #board::-webkit-scrollbar-track { background: #000; }
+        #board::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
     </style>
 </head>
 <body>
 
 <div class="top-bar">
-    <button class="burger-btn" onclick="toggleMenu()">&#9776;</button>
-    <div style="color: var(--db-red); font-weight: bold; font-size: 0.9rem;">LIVE-MONITOR</div>
+    <button class="burger-btn" onclick="toggleMenu()">☰</button>
+    <div style="color: var(--db-red); font-weight: bold; letter-spacing: 1.5px; font-size: 0.8rem;">DEUTSCHE BAHN LIVE</div>
 </div>
 
 <div class="menu-overlay" id="menu">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-        <h2 style="margin: 0; color: white;">Einstellungen</h2>
-        <button class="burger-btn" onclick="toggleMenu()" style="font-size: 35px;">&times;</button>
+    <div class="menu-header">
+        <h2 style="margin: 0; color: white; font-size: 1.8rem;">Stationen</h2>
+        <button class="burger-btn" onclick="toggleMenu()" style="font-size: 40px;">&times;</button>
     </div>
 
-    <div class="menu-section">
-        <h3>Bahnhof auswählen</h3>
-        <input type="text" class="search-input" id="search" placeholder="Suchen..." oninput="filterStations()">
-        <div class="station-list" id="station-list" style="margin-top: 15px;"></div>
-    </div>
-
-    <div class="menu-section">
-        <h3>Filter (Typ)</h3>
-        <div class="filter-grid">
-            <button class="filter-btn active" onclick="setFilter('ALL', this)">Alle</button>
-            <button class="filter-btn" onclick="setFilter('TRAIN_ONLY', this)">Nur Züge</button>
-            <button class="filter-btn" onclick="setFilter('FERN', this)">ICE / IC</button>
-            <button class="filter-btn" onclick="setFilter('REGIO', this)">Regio / S-Bahn</button>
+    <div class="menu-scroll-area">
+        <input type="text" class="search-input" id="search" placeholder="Bahnhof suchen..." oninput="filterStations()">
+        
+        <div style="margin: 20px 0;">
+            <p style="color: #666; font-size: 0.8rem; text-transform: uppercase;">Optionen</p>
+            <select class="search-input" id="time-limit" onchange="loadData()" style="margin-bottom: 10px;">
+                <option value="60">Nächste 60 Min.</option>
+                <option value="120">Nächste 2 Std.</option>
+                <option value="9999">Ganzes Tagesprogramm</option>
+            </select>
+            <select class="search-input" id="type-filter" onchange="updateFilter()">
+                <option value="ALL">Alle Verkehrsmittel</option>
+                <option value="TRAIN_ONLY">Nur Züge (RE, RB, S, IC)</option>
+            </select>
         </div>
-    </div>
 
-    <div class="menu-section">
-        <h3>Zeitraum</h3>
-        <select class="time-select" id="time-limit" onchange="loadData(); toggleMenu();">
-            <option value="60">Nächste 60 Minuten</option>
-            <option value="120">Nächste 2 Stunden</option>
-            <option value="240">Nächste 4 Stunden</option>
-            <option value="9999">Ganzes Tagesprogramm</option>
-        </select>
+        <div class="station-grid" id="station-list"></div>
     </div>
-    
-    <button class="filter-btn" onclick="toggleMenu()" style="width: 100%; margin-top: 20px; background: var(--db-red); color: white; border: none;">Fertig & Schließen</button>
 </div>
 
 <div class="monitor">
@@ -155,10 +156,17 @@
     <div class="table-header">
         <div>Linie</div><div>Ziel</div><div style="text-align: center;">Gl.</div><div style="text-align: right;">Abfahrt</div><div class="info-box-cell">Info</div>
     </div>
-    <div id="board"></div>
+    
+    <div id="board">
+        </div>
 </div>
 
-<footer><span id="last-update">-</span></footer>
+<footer>
+    <div style="display: flex; justify-content: space-between;">
+        <span id="last-update">Update: --:--:--</span>
+        <span>DB LIVE MONITOR</span>
+    </div>
+</footer>
 
 <script>
     const BASE_URL = 'https://raw.githubusercontent.com/nicopro2021/Abfahrtstafel-/main/';
@@ -180,10 +188,8 @@
 
     function toggleMenu() { document.getElementById('menu').classList.toggle('open'); }
 
-    function setFilter(type, btn) {
-        activeFilter = type;
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+    function updateFilter() {
+        activeFilter = document.getElementById('type-filter').value;
         loadData();
     }
 
@@ -191,7 +197,10 @@
         const list = document.getElementById('station-list');
         list.innerHTML = stations.map(s => `
             <div class="station-item ${s.file === currentFile ? 'active' : ''}" 
-                 onclick="selectStation('${s.file}', '${s.name}')">${s.name}</div>
+                 onclick="selectStation('${s.file}', '${s.name}')">
+                 <span class="station-icon">🚉</span>
+                 <span style="font-weight: 600;">${s.name}</span>
+            </div>
         `).join('');
     }
 
@@ -199,14 +208,16 @@
         const q = document.getElementById('search').value.toLowerCase();
         const items = document.getElementsByClassName('station-item');
         Array.from(items).forEach(it => {
-            it.style.display = it.innerText.toLowerCase().includes(q) ? 'block' : 'none';
+            it.style.display = it.innerText.toLowerCase().includes(q) ? 'flex' : 'none';
         });
     }
 
     function selectStation(file, name) {
         currentFile = file;
         document.getElementById('display-station').innerText = name;
-        renderStations(); loadData(); toggleMenu();
+        renderStations();
+        loadData();
+        toggleMenu();
     }
 
     async function loadData() {
@@ -214,37 +225,29 @@
             const res = await fetch(`${BASE_URL}${currentFile}?t=${Date.now()}`);
             const data = await res.json();
             const board = document.getElementById('board');
-            const timeLimitMin = parseInt(document.getElementById('time-limit').value);
+            const limit = parseInt(document.getElementById('time-limit').value);
             board.innerHTML = '';
 
             const jetzt = new Date();
-            
-            // Sortierung nach Zeit (falls im JSON durcheinander)
             data.sort((a, b) => a.zeit.localeCompare(b.zeit));
 
             data.forEach(zug => {
                 const l = zug.linie.toUpperCase();
-                let cat = '';
-                let isTrain = false;
-
-                if (l.includes('ICE') || l.includes('IC') || l.includes('EC')) { cat = 'FERN'; isTrain = true; } 
-                else if (l.includes('RE') || l.includes('RB') || l.includes('HBX') || (l.startsWith('S') && !l.startsWith('STR'))) { cat = 'REGIO'; isTrain = true; } 
-                else { cat = 'STADT'; isTrain = false; }
-
+                let isTrain = (l.includes('RE') || l.includes('RB') || l.includes('IC') || l.includes('ICE') || (l.startsWith('S') && !l.startsWith('STR')));
+                
                 if (activeFilter === 'TRAIN_ONLY' && !isTrain) return;
-                if (activeFilter !== 'ALL' && activeFilter !== 'TRAIN_ONLY' && activeFilter !== cat) return;
 
                 const hatEchtzeit = zug.echte_zeit && zug.echte_zeit !== "" && zug.echte_zeit !== "null";
-                const abfahrtAnzeige = hatEchtzeit ? zug.echte_zeit : zug.zeit;
-                const [h, m] = abfahrtAnzeige.split(':');
-                const zugZeit = new Date(); zugZeit.setHours(h, m, 0, 0);
+                const zeit = hatEchtzeit ? zug.echte_zeit : zug.zeit;
+                
+                const [h, m] = zeit.split(':');
+                const zTime = new Date(); zTime.setHours(h, m, 0, 0);
+                const diff = (zTime - jetzt) / 60000;
 
-                const diffMin = (zugZeit - jetzt) / 60000;
-                if (diffMin < -2 || diffMin > timeLimitMin) return;
+                if (diff < -2 || diff > limit) return;
 
-                const infoTxt = zug.info || "";
-                const istVerspaetet = hatEchtzeit && zug.echte_zeit !== zug.zeit;
-                const isDelayed = istVerspaetet || infoTxt.includes('+') || infoTxt.toLowerCase().includes("fällt");
+                const info = zug.info || "";
+                const delayed = hatEchtzeit && zug.echte_zeit !== zug.zeit || info.includes('+');
 
                 board.innerHTML += `
                     <div class="row">
@@ -252,14 +255,14 @@
                         <div class="destination">${zug.ziel}</div>
                         <div class="platform">${zug.gleis || "-"}</div>
                         <div class="time-box">
-                            ${istVerspaetet ? `<span class="scheduled">${zug.zeit}</span>` : ''}
-                            <span class="actual ${isDelayed ? 'delayed' : 'on-time'}">${abfahrtAnzeige}</span>
+                            ${hatEchtzeit && zug.echte_zeit !== zug.zeit ? `<span class="scheduled">${zug.zeit}</span>` : ''}
+                            <span class="actual ${delayed ? 'delayed' : 'on-time'}">${zeit}</span>
                         </div>
-                        <div class="info-box-cell"><div class="info-text ${isDelayed ? 'is-delayed' : ''}">${infoTxt}</div></div>
+                        <div class="info-box-cell"><div class="info-text ${delayed ? 'is-delayed' : ''}">${info}</div></div>
                     </div>`;
             });
             document.getElementById('last-update').innerText = "Update: " + jetzt.toLocaleTimeString('de-DE');
-        } catch (e) { console.error(e); }
+        } catch (e) { console.error("Fehler:", e); }
     }
 
     renderStations();
