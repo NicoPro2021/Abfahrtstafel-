@@ -3,9 +3,9 @@ import json
 import time
 from datetime import datetime, timedelta, timezone
 
-# --- STATIONSLISTE MIT DEFINITIV KORREKTEN IDs (STAND 2025) ---
+# --- STATIONSLISTE MIT KORREKTEN IDs (STAND DEZEMBER 2025) ---
 stationen = [
-    {"name": "zerbst", "id": "8010390"},           # Zerbst/Anhalt (Sachsen-Anhalt)
+    {"name": "zerbst", "id": "8010390"},           # Zerbst/Anhalt
     {"name": "rodleben", "id": "8012808"},         # Rodleben
     {"name": "rosslau", "id": "8010298"},          # Roßlau (Elbe)
     {"name": "dessau_hbf", "id": "8010077"},       # Dessau Hbf
@@ -18,11 +18,10 @@ stationen = [
 
 def hole_daten(station_id, station_name):
     jetzt = datetime.now(timezone.utc)
-    # Erhöhter Zeitraum (12 Std), damit wir immer Züge finden
-    url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=720&results=20&remarks=true"
+    # Wir fragen 10 Stunden ab, um sicherzugehen
+    url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=600&results=20&remarks=true"
     
     try:
-        # Timeout erhöht, da DB-API manchmal langsam ist
         r = requests.get(url, timeout=20)
         r.raise_for_status()
         data = r.json()
@@ -30,7 +29,7 @@ def hole_daten(station_id, station_name):
         
         fahrplan = []
         for dep in departures:
-            # WICHTIG: Nur Züge anzeigen, keine Busse/Taxis
+            # Nur Züge (RE, RB, S), keine Busse
             if dep.get('line', {}).get('product') == 'bus':
                 continue
 
@@ -38,7 +37,7 @@ def hole_daten(station_id, station_name):
             if not ist_w: continue
             
             zug_zeit_obj = datetime.fromisoformat(ist_w.replace('Z', '+00:00'))
-            # Filter: Züge die bereits weg sind (Toleranz 2 Min) ignorieren
+            # Züge die weg sind ignorieren
             if zug_zeit_obj < (jetzt - timedelta(minutes=2)): continue
 
             linie = dep.get('line', {}).get('name', '???').replace(" ", "")
@@ -64,23 +63,20 @@ def hole_daten(station_id, station_name):
                 "info": info_text
             })
 
-        # Nach Zeit sortieren
         fahrplan.sort(key=lambda x: x['zeit'])
         return fahrplan[:12]
 
     except Exception as e:
-        print(f"Fehler bei {station_name} ({station_id}): {e}")
-        return [] # Leere Liste bei Fehler
+        print(f"Fehler bei {station_name}: {e}")
+        return []
 
 if __name__ == "__main__":
     for st in stationen:
-        print(f"Update für {st['name']}...")
+        print(f"Lade {st['name']}...")
         daten = hole_daten(st['id'], st['name'])
         
-        # WICHTIG: Die Datei wird IMMER geschrieben. 
-        # Wenn daten = [], wird [] gespeichert -> Webseite zeigt "nicht bedient".
+        # WICHTIG: Die Datei wird IMMER geschrieben, auch wenn daten [] ist!
         filename = f"{st['name']}.json"
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(daten, f, ensure_ascii=False, indent=4)
-        
         print(f"Gespeichert: {filename} ({len(daten)} Züge)")
