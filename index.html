@@ -28,7 +28,6 @@
             overflow: hidden;
         }
 
-        /* NAVIGATION & BURGER MENU */
         .top-bar {
             display: flex;
             align-items: center;
@@ -103,18 +102,17 @@
             background: #111;
             overflow-x: auto;
             white-space: nowrap;
-            -webkit-overflow-scrolling: touch;
         }
 
         .filter-bar::-webkit-scrollbar { display: none; }
 
         .filter-btn {
-            padding: 6px 12px;
+            padding: 6px 14px;
             background: #222;
             border: 1px solid #444;
             color: #aaa;
             border-radius: 15px;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             cursor: pointer;
             transition: 0.2s;
         }
@@ -125,7 +123,6 @@
             border-color: var(--db-red);
         }
 
-        /* MONITOR DESIGN */
         .monitor { 
             width: 100%; 
             max-width: 1100px; 
@@ -216,10 +213,10 @@
 
     <div class="filter-bar">
         <button class="filter-btn active" onclick="setFilter('ALL', this)">Alle</button>
+        <button class="filter-btn" onclick="setFilter('TRAIN_ONLY', this)">Nur Zug</button>
         <button class="filter-btn" onclick="setFilter('FERN', this)">Fernverkehr</button>
         <button class="filter-btn" onclick="setFilter('REGIO', this)">RE/RB</button>
-        <button class="filter-btn" onclick="setFilter('HBX', this)">HBX</button>
-        <button class="filter-btn" onclick="setFilter('STADT', this)">Tram/Bus</button>
+        <button class="filter-btn" onclick="setFilter('STADT', this)">Bus/Tram</button>
     </div>
 
     <div class="table-header">
@@ -242,10 +239,10 @@
         { name: "Roßlau (Elbe)", file: "rosslau.json" },
         { name: "Dessau Hbf", file: "dessau_hbf.json" },
         { name: "Dessau Süd", file: "dessau_sued.json" },
+        { name: "Biederitz", file: "biederitz.json" },
         { name: "Magdeburg Hbf", file: "magdeburg_hbf.json" },
         { name: "Magdeburg Neustadt", file: "magdeburg_neustadt.json" },
         { name: "Magdeburg Herrenkrug", file: "magdeburg_herrenkrug.json" },
-        { name: "Biederitz", file: "biederitz.json" },
         { name: "Leipzig Hbf", file: "leipzig_hbf.json" }
     ];
 
@@ -298,15 +295,18 @@
             const jetzt = new Date();
 
             data.forEach(zug => {
-                // Filter Logik
                 const l = zug.linie.toUpperCase();
                 let cat = 'SONST';
-                if (l.includes('ICE') || l.includes('IC') || l.includes('EC')) cat = 'FERN';
-                else if (l.includes('RE') || l.includes('RB')) cat = 'REGIO';
-                else if (l.includes('HBX')) cat = 'HBX';
-                else if (l.includes('TRAM') || l.includes('BUS') || l.includes('STR')) cat = 'STADT';
+                let isTrain = false;
 
-                if (activeFilter !== 'ALL' && activeFilter !== cat) return;
+                // Kategorisierung & Zug-Check
+                if (l.includes('ICE') || l.includes('IC') || l.includes('EC')) { cat = 'FERN'; isTrain = true; }
+                else if (l.includes('RE') || l.includes('RB') || l.includes('HBX') || l.startsWith('S')) { cat = 'REGIO'; isTrain = true; }
+                else if (l.includes('TRAM') || l.includes('BUS') || l.includes('STR')) { cat = 'STADT'; isTrain = false; }
+
+                // Filter anwenden
+                if (activeFilter === 'TRAIN_ONLY' && !isTrain) return;
+                if (activeFilter !== 'ALL' && activeFilter !== 'TRAIN_ONLY' && activeFilter !== cat) return;
 
                 const hatEchtzeit = zug.echte_zeit && zug.echte_zeit !== "" && zug.echte_zeit !== "null";
                 const abfahrtAnzeige = hatEchtzeit ? zug.echte_zeit : zug.zeit;
