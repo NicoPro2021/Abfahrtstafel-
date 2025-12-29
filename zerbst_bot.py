@@ -3,11 +3,10 @@ from datetime import datetime, timedelta, timezone
 
 def hole_daten():
     jetzt = datetime.now(timezone.utc)
-    # Update-Zeitpunkt der Datei
     u_zeit = (jetzt + timedelta(hours=1)).strftime("%H:%M")
     
-    # ID 8010391 = Zerbst/Anhalt (Offizielle DB Kennung)
-    station_id = "8010391" 
+    # ID 8010405 = Zerbst/Anhalt (Sachsen-Anhalt)
+    station_id = "8010405" 
     
     try:
         url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=480&results=20&remarks=true"
@@ -23,43 +22,42 @@ def hole_daten():
                 line = d.get('line')
                 if not line or line.get('product') == 'bus': continue
                 
-                # Wir prüfen auf die Region Zerbst (RE/RB), lassen den Filter aber etwas offener
+                # Filter: Nur Züge der Region (RE13, RE14, RB51)
                 name = line.get('name', '').replace(" ", "")
-                
+                # Falls wir wieder woanders landen, blocken wir Thüringer Ziele
+                ziel = d.get('direction', 'Unbekannt')
+                if any(x in ziel for x in ["Erfurt", "Würzburg", "Meiningen"]): continue
+
                 soll_raw = d.get('plannedWhen')
                 ist_raw = d.get('when') or soll_raw
                 if not soll_raw: continue
 
-                # Zeitberechnung
+                # Zeitberechnung für Minuten
                 soll_dt = datetime.fromisoformat(soll_raw.replace('Z', '+00:00'))
                 ist_dt = datetime.fromisoformat(ist_raw.replace('Z', '+00:00'))
                 diff = int((ist_dt - soll_dt).total_seconds() / 60)
                 
-                # Info-Logik: Minuten bei Verspätung, sonst LEER
+                # DEINE LOGIK: +Minuten oder LEER
                 info_feld = ""
                 if d.get('cancelled'):
                     info_feld = "FÄLLT AUS"
                 elif diff > 0:
                     info_feld = f"+{diff}"
-                # Bei 0 oder weniger bleibt info_feld = ""
 
                 res.append({
                     "zeit": soll_dt.strftime("%H:%M"), 
                     "echte_zeit": ist_dt.strftime("%H:%M"), 
                     "linie": name, 
-                    "ziel": d.get('direction', 'Unbekannt')[:18], 
+                    "ziel": ziel[:18], 
                     "gleis": str(d.get('platform') or d.get('plannedPlatform') or "-"), 
                     "info": info_feld, 
                     "grund": " | ".join([rm.get('text','') for rm in d.get('remarks',[]) if rm.get('type')=='hint'][:1]),
                     "update": u_zeit
                 })
-            except:
-                continue
+            except: continue
             
         return res[:10]
-
-    except Exception as e:
-        return []
+    except: return []
 
 if __name__ == "__main__":
     daten = hole_daten()
