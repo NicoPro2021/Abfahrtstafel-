@@ -1,5 +1,6 @@
 import requests
 import json
+import time
 from datetime import datetime, timezone
 
 # --- STATIONSLISTE ---
@@ -16,58 +17,52 @@ stationen = [
 ]
 
 def hole_daten(station_id, station_name):
-    url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=1200&results=20"
-    
-    try:
-        r = requests.get(url, timeout=20)
-        r.raise_for_status()
-        data = r.json()
-        departures = data.get('departures', [])
-        
-        fahrplan = []
-        for dep in departures:
-            ist_w = dep.get('when') or dep.get('plannedWhen')
-            if not ist_w: continue
+    # Wir versuchen es bis zu 3 Mal, falls der Server (500) spinnt
+    for versuch in range(3):
+        url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=1200&results=15"
+        try:
+            r = requests.get(url, timeout=25)
             
-            linie = dep.get('line', {}).get('name', '???').replace(" ", "")
-            soll_zeit = ist_w.split('T')[1][:5]
+            if r.status_code == 200:
+                data = r.json()
+                departures = data.get('departures', [])
+                
+                if not departures:
+                    return [] # Station hat aktuell einfach keine Fahrten
+
+                fahrplan = []
+                for dep in departures:
+                    ist_w = dep.get('when') or dep.get('plannedWhen')
+                    if not ist_w: continue
+                    linie = dep.get('line', {}).get('name', '???').replace(" ", "")
+                    soll_zeit = ist_w.split('T')[1][:5]
+                    
+                    fahrplan.append({
+                        "zeit": soll_zeit, 
+                        "echte_zeit": "", 
+                        "linie": linie,
+                        "ziel": dep.get('direction', 'Ziel unbekannt')[:18],
+                        "gleis": str(dep.get('platform') or "-"),
+                        "info": ""
+                    })
+                return fahrplan
             
-            fahrplan.append({
-                "zeit": soll_zeit, 
-                "echte_zeit": "", 
-                "linie": linie,
-                "ziel": dep.get('direction', 'Ziel unbekannt')[:18],
-                "gleis": str(dep.get('platform') or "-"),
-                "info": ""
-            })
-
-        # --- FALLBACK: Wenn die API leer zurückgibt, schreibe Test-Info ---
-        if not fahrplan:
-            return [{
-                "zeit": "--:--", 
-                "echte_zeit": "", 
-                "linie": "INFO", 
-                "ziel": "API liefert keine Daten", 
-                "gleis": "!", 
-                "info": "Bitte ID prüfen"
-            }]
-
-        return fahrplan[:12]
-
-    except Exception as e:
-        return [{
-            "zeit": "ERR", 
-            "echte_zeit": "", 
-            "linie": "FAIL", 
-            "ziel": str(e)[:20], 
-            "gleis": "!", 
-            "info": "Verbindungsfehler"
-        }]
+            elif r.status_code == 500:
+                print(f"Server-Fehler (500) bei {station_name}, Versuch {versuch+1}...")
+                time.sleep(5) # 5 Sekunden warten vor Neustart
+                continue
+                
+        except Exception as e:
+            print(f"Fehler: {e}")
+            
+    # Wenn alle Versuche scheitern:
+    return []
 
 if __name__ == "__main__":
     for st in stationen:
+        print(f"Lade {st['name']}...")
         daten = hole_daten(st['id'], st['name'])
-        filename = f"{st['name']}.json"
-        with open(filename, 'w', encoding='utf-8') as f:
+        
+        # WICHTIG: Erzeugt die Datei immer. Wenn daten=[], wird die Seite 'nicht bedient' zeigen.
+        with open(f"{st['name']}.json", 'w', encoding='utf-8') as f:
             json.dump(daten, f, ensure_ascii=False, indent=4)
-        print(f"Datei {filename} geschrieben.")
