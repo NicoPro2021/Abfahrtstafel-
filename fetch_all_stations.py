@@ -1,8 +1,8 @@
 import requests
 import json
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 
-# --- STATIONSLISTE (Konsequent Kleinschreibung) ---
+# --- STATIONSLISTE ---
 stationen = [
     {"name": "zerbst", "id": "8013313"},
     {"name": "rodleben", "id": "8012808"},
@@ -16,16 +16,12 @@ stationen = [
 ]
 
 def hole_daten(station_id, station_name):
-    jetzt = datetime.now(timezone.utc)
-    # Dauer auf 1200 Minuten fuer Magdeburg, damit immer etwas gefunden wird
-    url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=1200&results=30&remarks=true"
+    url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=1200&results=20"
     
     try:
-        r = requests.get(url, timeout=25)
+        r = requests.get(url, timeout=20)
         r.raise_for_status()
         data = r.json()
-        
-        # Falls die API 'departures' nicht liefert, suchen wir in 'departures' (manchmal unterschiedliche Formate)
         departures = data.get('departures', [])
         
         fahrplan = []
@@ -33,39 +29,40 @@ def hole_daten(station_id, station_name):
             ist_w = dep.get('when') or dep.get('plannedWhen')
             if not ist_w: continue
             
-            zug_zeit_obj = datetime.fromisoformat(ist_w.replace('Z', '+00:00'))
-            # Zeige Züge ab 5 Minuten vor jetzt
-            if zug_zeit_obj < (jetzt - timedelta(minutes=5)): continue
-
             linie = dep.get('line', {}).get('name', '???').replace(" ", "")
-            soll_w = dep.get('plannedWhen')
-            soll_zeit = soll_w.split('T')[1][:5] if soll_w else ist_w.split('T')[1][:5]
-            ist_zeit = ist_w.split('T')[1][:5]
+            soll_zeit = ist_w.split('T')[1][:5]
             
-            cancelled = dep.get('cancelled', False)
-            delay = dep.get('delay', 0)
-            
-            info_text = ""
-            if cancelled:
-                info_text = "FÄLLT AUS"
-            elif delay and delay >= 60:
-                info_text = f"+{int(delay / 60)} Min"
-
             fahrplan.append({
                 "zeit": soll_zeit, 
-                "echte_zeit": ist_zeit if ist_zeit != soll_zeit else "", 
+                "echte_zeit": "", 
                 "linie": linie,
                 "ziel": dep.get('direction', 'Ziel unbekannt')[:18],
-                "gleis": str(dep.get('platform') or dep.get('plannedPlatform') or "-"),
-                "info": info_text
+                "gleis": str(dep.get('platform') or "-"),
+                "info": ""
             })
 
-        fahrplan.sort(key=lambda x: x['zeit'])
-        return fahrplan[:15]
+        # --- FALLBACK: Wenn die API leer zurückgibt, schreibe Test-Info ---
+        if not fahrplan:
+            return [{
+                "zeit": "--:--", 
+                "echte_zeit": "", 
+                "linie": "INFO", 
+                "ziel": "API liefert keine Daten", 
+                "gleis": "!", 
+                "info": "Bitte ID prüfen"
+            }]
+
+        return fahrplan[:12]
 
     except Exception as e:
-        print(f"Fehler bei {station_name}: {e}")
-        return []
+        return [{
+            "zeit": "ERR", 
+            "echte_zeit": "", 
+            "linie": "FAIL", 
+            "ziel": str(e)[:20], 
+            "gleis": "!", 
+            "info": "Verbindungsfehler"
+        }]
 
 if __name__ == "__main__":
     for st in stationen:
@@ -73,4 +70,4 @@ if __name__ == "__main__":
         filename = f"{st['name']}.json"
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(daten, f, ensure_ascii=False, indent=4)
-        print(f"Datei {filename} aktualisiert: {len(daten)} Züge gefunden.")
+        print(f"Datei {filename} geschrieben.")
