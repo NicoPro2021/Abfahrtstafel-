@@ -17,7 +17,7 @@ jobs:
           python-version: '3.10'
       - run: pip install requests
 
-      - name: Bots ausführen
+      - name: Alle Bots nacheinander ausführen
         run: |
           python zerbst_bot.py
           python rodleben_bot.py
@@ -29,10 +29,12 @@ jobs:
           python magdeburg_herrenkrug_bot.py
           python leipzig_hbf_bot.py
 
-      - name: Änderungen hochladen
+      - name: Dateien radikal hochladen
         run: |
-          git config --global user.name "Multi-Station Bot"
-          git config --global user.email "bot@bahn-anzeige.de"
+          git config --local user.name "Multi-Bot"
+          git config --local user.email "bot@db.de"
           git add *.json
-          git commit -m "Automatisches Live-Update (Erfolgs-Schema)" || exit 0
-          git push
+          # Wir erzwingen das Commit, auch wenn git meint, es gäbe keine Änderungen
+          git commit -m "Force Update: $(date)" || echo "Keine Änderungen zu committen"
+          # Force Push, um Konflikte zu überschreiben
+          git push --force origin main
