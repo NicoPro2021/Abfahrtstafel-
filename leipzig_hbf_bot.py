@@ -2,58 +2,75 @@ import requests, json
 from datetime import datetime, timezone
 
 def run():
-    # Wir nutzen eine breitere Abfrage für Leipzig, um S-Bahn und Fernbahn zu erwischen
-    url = "https://v6.db.transport.rest/stops/8010205/departures?duration=600&results=30&suburban=true&regional=true&national=true"
+    # Wir nutzen hier die stabilste API-Route für Großbahnhöfe
+    # ID 8010205 = Leipzig Hbf
+    url = "https://v6.db.transport.rest/stops/8010205/departures?duration=600&results=50&suburban=true&regional=true&national=true"
     
     try:
-        r = requests.get(url, timeout=25)
+        headers = {'User-Agent': 'Mozilla/5.0'}
+        r = requests.get(url, headers=headers, timeout=30)
         r.raise_for_status()
         data = r.json()
+        
+        # Die API liefert manchmal 'departures' oder direkt eine Liste
         departures = data.get('departures', [])
         
         res = []
+        # Wir nehmen die ersten 15 gültigen Züge
         for d in departures:
-            # Wir nehmen ALLES außer Busse und Trams
+            if len(res) >= 15: break
+            
+            # Filter: Busse und Trams raus
             product = d.get('line', {}).get('product', '')
             if product in ['bus', 'tram']: continue
             
-            # Zeit-Logik
+            # Zeit extrahieren
             soll_iso = d.get('plannedWhen') or d.get('when')
             if not soll_iso: continue
             zeit = soll_iso.split('T')[1][:5]
             
-            # Ziel-Korrektur (Leipzig Hbf (tief) -> Leipzig Hbf)
+            # Linie und Ziel
+            linie = d.get('line', {}).get('name', '???')
             ziel = d.get('direction', 'Ziel unbekannt').replace(" (tief)", "")
             
+            # Verspätung prüfen
+            ist_iso = d.get('when')
+            ist_zeit = ist_iso.split('T')[1][:5] if ist_iso else zeit
+            info = f"ca. {ist_zeit}" if ist_zeit != zeit else ""
+            if d.get('cancelled'): info = "FÄLLT AUS"
+
             res.append({
                 "zeit": zeit, 
-                "linie": d.get('line', {}).get('name', '???'), 
-                "ziel": ziel[:18], 
+                "linie": linie, 
+                "ziel": ziel[:20], 
                 "gleis": str(d.get('platform') or d.get('plannedPlatform') or "-"),
-                "info": "FÄLLT AUS" if d.get('cancelled') else ""
+                "info": info,
+                "debug_ts": datetime.now(timezone.utc).strftime("%H:%M:%S") # Zwingt GitHub zum Update
             })
         
-        # Falls die Liste leer ist, schreiben wir einen Test-Eintrag!
+        # FALLBACK: Falls die API wirklich leer ist, schreiben wir Test-Daten
+        # So sehen wir, ob der Bot überhaupt durchkommt
         if not res:
-            res.append({
-                "zeit": "--:--",
+            res = [{
+                "zeit": datetime.now(timezone.utc).strftime("%H:%M"),
                 "linie": "INFO",
-                "ziel": "Keine Züge gefunden",
+                "ziel": "Warten auf API...",
                 "gleis": "!",
-                "info": "API Check"
-            })
-
-        # Zeitstempel hinzufügen, damit die Datei sich IMMER ändert
-        for item in res:
-            item["last_run"] = datetime.now(timezone.utc).strftime("%H:%M:%S")
+                "info": "Keine Daten empfangen",
+                "debug_ts": datetime.now(timezone.utc).strftime("%H:%M:%S")
+            }]
 
         with open('leipzig_hbf.json', 'w', encoding='utf-8') as f:
             json.dump(res, f, ensure_ascii=False, indent=4)
             
-        print(f"Leipzig: {len(res)} Einträge gespeichert.")
+        print(f"Leipzig Bot fertig: {len(res)} Einträge.")
 
     except Exception as e:
-        print(f"Kritischer Fehler Leipzig: {e}")
+        # Selbst im Fehlerfall schreiben wir etwas, damit wir es in der JSON sehen
+        error_data = [{"zeit": "ERR", "linie": "Bot", "ziel": "Fehler", "info": str(e)[:30]}]
+        with open('leipzig_hbf.json', 'w', encoding='utf-8') as f:
+            json.dump(error_data, f, ensure_ascii=False, indent=4)
+        print(f"Fehler bei Leipzig: {e}")
 
 if __name__ == "__main__":
     run()
