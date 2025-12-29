@@ -2,9 +2,9 @@ import requests
 import json
 from datetime import datetime, timedelta, timezone
 
-# --- KONFIGURATION: IDs STAND DEZEMBER 2025 ---
+# --- STATIONSLISTE (ID CHECK 2025: ZERBST/ANHALT = 8010390) ---
 stationen = [
-    {"name": "zerbst", "id": "8010391"},           # Zerbst/Anhalt (Sachsen-Anhalt)
+    {"name": "zerbst", "id": "8010390"},           # Zerbst/Anhalt (Magdeburg-Leipzig)
     {"name": "rodleben", "id": "8012808"},         # Rodleben
     {"name": "rosslau", "id": "8010298"},          # Roßlau (Elbe)
     {"name": "dessau_hbf", "id": "8010077"},       # Dessau Hbf
@@ -17,9 +17,9 @@ stationen = [
 
 def hole_daten(station_id, station_name):
     jetzt = datetime.now(timezone.utc)
-    u_zeit = (jetzt + timedelta(hours=1)).strftime("%H:%M") # Update-Zeit für die Anzeige
+    u_zeit = (jetzt + timedelta(hours=1)).strftime("%H:%M")
     
-    # URL mit duration=600 (10 Stunden) für weite Voraussicht
+    # URL Abfrage
     url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=600&results=20&remarks=true"
     
     try:
@@ -30,7 +30,7 @@ def hole_daten(station_id, station_name):
         
         fahrplan = []
         for dep in departures:
-            # FILTER: Nur Züge, keine Busse
+            # Busse ausfiltern
             if dep.get('line', {}).get('product') == 'bus':
                 continue
 
@@ -38,7 +38,6 @@ def hole_daten(station_id, station_name):
             if not ist_w: continue
             
             zug_zeit_obj = datetime.fromisoformat(ist_w.replace('Z', '+00:00'))
-            # Filter: Züge die mehr als 2 Minuten weg sind ignorieren
             if zug_zeit_obj < (jetzt - timedelta(minutes=2)): continue
 
             linie = dep.get('line', {}).get('name', '???').replace(" ", "")
@@ -46,26 +45,13 @@ def hole_daten(station_id, station_name):
             soll_zeit = soll_w.split('T')[1][:5] if soll_w else "--:--"
             ist_zeit = ist_w.split('T')[1][:5]
             
-            # Remarks / Infos sammeln (z.B. Gleiswechsel, Baustellen)
-            remarks = dep.get('remarks', [])
-            texte = []
-            for rm in remarks:
-                if rm.get('type') == 'hint':
-                    t = rm.get('text', '').strip()
-                    if t and t not in texte: texte.append(t)
-            
-            grund = " | ".join(texte)
+            # Info-Logik
             cancelled = dep.get('cancelled', False)
-            delay = dep.get('delay') # in Sekunden
-            
             info_text = ""
             if cancelled:
                 info_text = "FÄLLT AUS"
-            elif delay and delay >= 60:
-                minuten = int(delay / 60)
-                info_text = f"ca. {ist_zeit}" # Wir schreiben die neue Zeit in die Info
-            else:
-                info_text = grund[:30] # Kurze Info falls vorhanden
+            elif ist_zeit != soll_zeit:
+                info_text = f"ca. {ist_zeit}"
 
             fahrplan.append({
                 "zeit": soll_zeit, 
@@ -77,7 +63,6 @@ def hole_daten(station_id, station_name):
                 "update": u_zeit
             })
 
-        # Sortieren nach tatsächlicher Abfahrt
         fahrplan.sort(key=lambda x: x['zeit'])
         return fahrplan[:12]
 
@@ -87,10 +72,8 @@ def hole_daten(station_id, station_name):
 
 if __name__ == "__main__":
     for st in stationen:
-        print(f"Verarbeite: {st['name']}...")
+        print(f"Lade {st['name']} (ID {st['id']})...")
         ergebnis = hole_daten(st['id'], st['name'])
         
-        # Speichern als individuelle JSON Datei
-        filename = f"{st['name']}.json"
-        with open(filename, 'w', encoding='utf-8') as f:
+        with open(f"{st['name']}.json", 'w', encoding='utf-8') as f:
             json.dump(ergebnis, f, ensure_ascii=False, indent=4)
