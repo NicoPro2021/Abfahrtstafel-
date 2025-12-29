@@ -5,11 +5,11 @@ def hole_daten():
     jetzt = datetime.now(timezone.utc)
     u_zeit = (jetzt + timedelta(hours=1)).strftime("%H:%M")
     
-    # ID 8010405 = Zerbst/Anhalt (Sachsen-Anhalt)
-    station_id = "8010405" 
+    # Wir probieren die stabilste Regional-ID für Zerbst/Anhalt
+    station_id = "8010404" 
     
     try:
-        url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=480&results=20&remarks=true"
+        url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=480&results=30&remarks=true"
         r_raw = requests.get(url, timeout=15)
         r_raw.raise_for_status()
         data = r_raw.json()
@@ -19,25 +19,24 @@ def hole_daten():
         
         for d in departures:
             try:
-                line = d.get('line')
-                if not line or line.get('product') == 'bus': continue
-                
-                # Filter: Nur Züge der Region (RE13, RE14, RB51)
+                line = d.get('line', {})
                 name = line.get('name', '').replace(" ", "")
-                # Falls wir wieder woanders landen, blocken wir Thüringer Ziele
-                ziel = d.get('direction', 'Unbekannt')
-                if any(x in ziel for x in ["Erfurt", "Würzburg", "Meiningen"]): continue
+                
+                # --- DIE SICHERHEITSSCHRANKE ---
+                # In Zerbst/Anhalt fahren NUR RE13 und RB51.
+                # Alles andere (S7, RE1, RE7, S1) ist Berlin/Brandenburg und wird IGNORIERT.
+                if not any(typ in name for typ in ["RE13", "RB51"]):
+                    continue
 
                 soll_raw = d.get('plannedWhen')
                 ist_raw = d.get('when') or soll_raw
                 if not soll_raw: continue
 
-                # Zeitberechnung für Minuten
+                # Verspätungs-Minuten berechnen
                 soll_dt = datetime.fromisoformat(soll_raw.replace('Z', '+00:00'))
                 ist_dt = datetime.fromisoformat(ist_raw.replace('Z', '+00:00'))
                 diff = int((ist_dt - soll_dt).total_seconds() / 60)
                 
-                # DEINE LOGIK: +Minuten oder LEER
                 info_feld = ""
                 if d.get('cancelled'):
                     info_feld = "FÄLLT AUS"
@@ -48,7 +47,7 @@ def hole_daten():
                     "zeit": soll_dt.strftime("%H:%M"), 
                     "echte_zeit": ist_dt.strftime("%H:%M"), 
                     "linie": name, 
-                    "ziel": ziel[:18], 
+                    "ziel": d.get('direction', 'Ziel')[:18], 
                     "gleis": str(d.get('platform') or d.get('plannedPlatform') or "-"), 
                     "info": info_feld, 
                     "grund": " | ".join([rm.get('text','') for rm in d.get('remarks',[]) if rm.get('type')=='hint'][:1]),
