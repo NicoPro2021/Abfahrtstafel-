@@ -5,14 +5,20 @@ def hole_daten():
     jetzt = datetime.now(timezone.utc)
     u_zeit = (jetzt + timedelta(hours=1)).strftime("%H:%M")
     
-    # Wir nutzen die ID 8010405, aber mit einer eingebauten "Berlin-Sperre"
-    url = "https://v6.db.transport.rest/stops/8010405/departures?duration=480&results=50&remarks=true"
-    
     try:
-        r = requests.get(url, timeout=20)
-        r.raise_for_status()
-        data = r.json()
-        departures = data.get('departures', [])
+        # 1. Schritt: Wir suchen die ID für Zerbst/Anhalt ganz frisch
+        suche_url = "https://v6.db.transport.rest/locations?query=Zerbst/Anhalt&results=1"
+        suche_data = requests.get(suche_url, timeout=10).json()
+        
+        if not suche_data:
+            return [{"zeit": "---", "linie": "INFO", "ziel": "Station nicht gef.", "info": ""}]
+        
+        station_id = suche_data[0]['id']
+        
+        # 2. Schritt: Abfahrten laden
+        url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=480&results=20&remarks=true"
+        r = requests.get(url, timeout=15).json()
+        departures = r.get('departures', [])
         
         res = []
         for d in departures:
@@ -20,18 +26,12 @@ def hole_daten():
                 line = d.get('line', {})
                 name = line.get('name', '').replace(" ", "")
                 ziel = d.get('direction', '')
-
-                # --- DER BERLIN-BLOCKER ---
-                # Wenn diese Begriffe auftauchen, sind wir im falschen Bundesland:
-                falsche_ziele = ["Ahrensfelde", "Potsdam", "Wannsee", "Frankfurt(Oder)", "Oranienburg", "Rudow", "Cottbus"]
-                if any(stadt in ziel for stadt in falsche_ziele):
-                    continue
                 
-                # In Zerbst fahren nur RE13, RE14 oder RB51
-                if not any(x in name for x in ["RE13", "RE14", "RB51"]):
-                    continue
+                # Sicherheits-Filter: Wir blocken S-Bahnen und Berliner Ziele
+                if line.get('product') in ['suburban', 'bus']: continue
+                if any(stadt in ziel for stadt in ["Ahrensfelde", "Potsdam", "Wannsee"]): continue
 
-                # Zeitberechnung für deine Minuten-Anzeige
+                # Zeit-Berechnung
                 soll_raw = d.get('plannedWhen')
                 ist_raw = d.get('when') or soll_raw
                 if not soll_raw: continue
@@ -40,7 +40,7 @@ def hole_daten():
                 ist_dt = datetime.fromisoformat(ist_raw.replace('Z', '+00:00'))
                 diff = int((ist_dt - soll_dt).total_seconds() / 60)
                 
-                # Deine Logik: +Minuten oder leer
+                # Deine Logik: +Minuten bei Verspätung, sonst leer
                 info_feld = ""
                 if d.get('cancelled'):
                     info_feld = "FÄLLT AUS"
@@ -58,10 +58,14 @@ def hole_daten():
                     "update": u_zeit
                 })
             except: continue
+
+        # Falls die Liste leer ist, geben wir eine Info-Zeile aus, damit wir wissen was los ist
+        if not res:
+            res = [{"zeit": "---", "linie": "INFO", "ziel": "Keine Züge aktuell", "info": "", "update": u_zeit}]
             
         return res[:10]
-    except:
-        return []
+    except Exception as e:
+        return [{"zeit": "ERR", "linie": "Bot", "ziel": "Fehler", "info": str(e)[:10]}]
 
 if __name__ == "__main__":
     daten = hole_daten()
