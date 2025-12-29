@@ -95,6 +95,36 @@
 
         .station-item.active { border-left-color: var(--db-red); background: #222; }
 
+        /* FILTER BUTTONS */
+        .filter-bar {
+            display: flex;
+            gap: 8px;
+            padding: 10px;
+            background: #111;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .filter-bar::-webkit-scrollbar { display: none; }
+
+        .filter-btn {
+            padding: 6px 12px;
+            background: #222;
+            border: 1px solid #444;
+            color: #aaa;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .filter-btn.active {
+            background: var(--db-red);
+            color: white;
+            border-color: var(--db-red);
+        }
+
         /* MONITOR DESIGN */
         .monitor { 
             width: 100%; 
@@ -153,7 +183,6 @@
         
         footer { padding: 5px 15px; font-size: 0.7rem; color: #555; text-align: right; }
 
-        /* MELDUNG FÜR LEERE STATION */
         .empty-msg {
             text-align: center;
             padding: 50px 20px;
@@ -184,6 +213,15 @@
         <div class="station-name" id="display-station">Lade...</div>
         <div id="current-time">00:00:00</div>
     </div>
+
+    <div class="filter-bar">
+        <button class="filter-btn active" onclick="setFilter('ALL', this)">Alle</button>
+        <button class="filter-btn" onclick="setFilter('FERN', this)">Fernverkehr</button>
+        <button class="filter-btn" onclick="setFilter('REGIO', this)">RE/RB</button>
+        <button class="filter-btn" onclick="setFilter('HBX', this)">HBX</button>
+        <button class="filter-btn" onclick="setFilter('STADT', this)">Tram/Bus</button>
+    </div>
+
     <div class="table-header">
         <div>Linie</div>
         <div>Ziel</div>
@@ -211,8 +249,16 @@
     ];
 
     let currentFile = stations[0].file;
+    let activeFilter = 'ALL';
 
     function toggleMenu() { document.getElementById('menu').classList.toggle('open'); }
+
+    function setFilter(type, btn) {
+        activeFilter = type;
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        loadData();
+    }
 
     function renderStations() {
         const list = document.getElementById('station-list');
@@ -243,7 +289,6 @@
             const board = document.getElementById('board');
             board.innerHTML = '';
 
-            // --- HIER NEU: Wenn Liste leer ist [] ---
             if (!data || data.length === 0) {
                 board.innerHTML = `<div class="empty-msg">Station gerade nicht bedient</div>`;
                 return;
@@ -252,6 +297,16 @@
             const jetzt = new Date();
 
             data.forEach(zug => {
+                // Filter Logik
+                const l = zug.linie.toUpperCase();
+                let cat = 'SONST';
+                if (l.includes('ICE') || l.includes('IC') || l.includes('EC')) cat = 'FERN';
+                else if (l.includes('RE') || l.includes('RB')) cat = 'REGIO';
+                else if (l.includes('HBX')) cat = 'HBX';
+                else if (l.includes('TRAM') || l.includes('BUS') || l.includes('STR')) cat = 'STADT';
+
+                if (activeFilter !== 'ALL' && activeFilter !== cat) return;
+
                 const hatEchtzeit = zug.echte_zeit && zug.echte_zeit !== "" && zug.echte_zeit !== "null";
                 const abfahrtAnzeige = hatEchtzeit ? zug.echte_zeit : zug.zeit;
                 
