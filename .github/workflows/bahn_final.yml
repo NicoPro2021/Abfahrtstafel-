@@ -30,29 +30,23 @@ jobs:
 
       - name: 4-Stunden-Loop (60s Takt)
         run: |
-          # 240 Runden á 60 Sekunden = 4 Stunden Laufzeit
           for i in {1..240}
           do
-            echo "--- Runde $i von 240 ---"
-            
-            # Startet die main.py (Dauer ca. 50s)
+            echo "Runde $i"
             python main.py
             
-            # Git Konfiguration & Push
             git config --local user.email "action@github.com"
             git config --local user.name "GitHub Action Bot"
             git add *.json
             
-            # Nur pushen, wenn die API echte Daten (keine leeren Klammern) geliefert hat
+            # Nur pushen, wenn sich wirklich was geändert hat
             if ! git diff --quiet --staged; then
               git commit -m "Update Runde $i"
               git push
-            else
-              echo "Keine neuen Daten oder API-Blockade."
             fi
             
-            echo "Kurze Pause bis zur nächsten Minute..."
-            sleep 10 # Ergänzt die restliche Zeit bis zur vollen Minute
+            echo "Warte auf nächste Minute..."
+            sleep 10
           done
 
       - name: Workflow-Neustart
