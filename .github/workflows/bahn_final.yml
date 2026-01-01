@@ -1,13 +1,14 @@
 name: Endlos High-Frequency Update
 
 on:
-  workflow_dispatch:      # Ermöglicht manuellen Start
+  workflow_dispatch:      # Ermöglicht dir den manuellen Start unter "Actions"
   schedule:
-    - cron: '0 * * * *'   # Startet jede Stunde zur Sicherheit neu
+    - cron: '0 * * * *'   # Sicherheits-Start jede Stunde, falls der Loop mal reißt
 
+# Verhindert, dass zwei Workflows gleichzeitig laufen
 concurrency: 
   group: bahn-update-group
-  cancel-in-progress: true # Falls ein neuer startet, bricht der alte sauber ab
+  cancel-in-progress: true 
 
 jobs:
   update-cycle:
@@ -28,32 +29,38 @@ jobs:
       - name: Bibliotheken installieren
         run: pip install requests
 
-      - name: 4 Stunden Update-Loop (alle 120s)
+      - name: 4-Stunden-Dauerschleife
         run: |
-          # Wir machen 120 Durchläufe. 120 * 120 Sek = 4 Stunden.
+          # 120 Durchläufe mal 120 Sekunden Pause = 14.400 Sekunden (4 Stunden)
           for i in {1..120}
           do
-            echo "--- Durchlauf $i von 120 ---"
+            echo "--- Update Runde $i von 120 ---"
             
-            # Ruft die main.py auf, die wiederum die 10 Bots nacheinander startet
+            # Startet die main.py, die alle 10 Bots mit Pausen abarbeitet
             python main.py
             
-            # Änderungen speichern und pushen
+            # Änderungen im Git speichern
             git config --local user.email "action@github.com"
             git config --local user.name "GitHub Action Bot"
             git add *.json
             
-            # Nur committen, wenn sich wirklich Daten geändert haben
-            git diff --quiet && git diff --staged --quiet || (git commit -m "Live-Update Runde $i" && git push)
+            # Nur pushen, wenn sich die Daten (Verspätungen etc.) wirklich geändert haben
+            if ! git diff --quiet --staged; then
+              git commit -m "Daten-Update Runde $i"
+              git push
+              echo "Daten wurden aktualisiert."
+            else
+              echo "Keine Änderungen in den Daten gefunden."
+            fi
             
-            echo "Pause für 120 Sekunden (2 Minuten)..."
+            echo "Warte 120 Sekunden bis zum nächsten Abruf..."
             sleep 120
           done
 
-      - name: Workflow neu starten
+      - name: Workflow selbst neu starten
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "Zyklus beendet. Starte neu für die nächsten 4 Stunden..."
+          echo "Zyklus beendet. Starte neuen Workflow für die nächsten 4 Stunden..."
           sleep 10
           gh workflow run "Endlos High-Frequency Update"
