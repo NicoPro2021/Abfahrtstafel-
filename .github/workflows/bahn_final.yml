@@ -1,14 +1,13 @@
 name: Endlos High-Frequency Update
 
 on:
-  workflow_dispatch:      # Ermöglicht den manuellen Erststart
+  workflow_dispatch:      # Ermöglicht manuellen Start
   schedule:
-    - cron: '0 * * * *'   # Sicherheits-Start jede Stunde, falls der Loop mal reißt
+    - cron: '0 * * * *'   # Startet jede Stunde zur Sicherheit neu
 
-# Schutz: Verhindert, dass zwei Workflows gleichzeitig laufen und sich blockieren
 concurrency: 
   group: bahn-update-group
-  cancel-in-progress: false 
+  cancel-in-progress: true # Falls ein neuer startet, bricht der alte sauber ab
 
 jobs:
   update-cycle:
@@ -29,42 +28,32 @@ jobs:
       - name: Bibliotheken installieren
         run: pip install requests
 
-      - name: 40 Minuten Update-Schleife (alle 80s)
+      - name: 4 Stunden Update-Loop (alle 120s)
         run: |
-          # 30 Durchläufe mal 80 Sekunden ergeben 2400 Sekunden (40 Minuten)
-          for i in {1..30}
+          # Wir machen 120 Durchläufe. 120 * 120 Sek = 4 Stunden.
+          for i in {1..120}
           do
-            echo "--- Durchlauf $i von 30 - Starte alle 10 Bots ---"
+            echo "--- Durchlauf $i von 120 ---"
             
-            # Führt alle 10 Bots nacheinander aus
-            python zerbst_bot.py
-            python rodleben_bot.py
-            python rosslau_bot.py
-            python dessau_hbf_bot.py
-            python dessau_sued_bot.py
-            python biederitz_bot.py
-            python magdeburg_hbf_bot.py
-            python magdeburg_neustadt_bot.py
-            python magdeburg_herrenkrug_bot.py
-            python leipzig_hbf_bot.py
+            # Ruft die main.py auf, die wiederum die 10 Bots nacheinander startet
+            python main.py
             
             # Änderungen speichern und pushen
             git config --local user.email "action@github.com"
             git config --local user.name "GitHub Action Bot"
             git add *.json
             
-            # Nur committen, wenn sich wirklich Daten geändert haben (spart Speicher)
-            git diff --quiet && git diff --staged --quiet || (git commit -m "Live-Update Durchlauf $i" && git push)
+            # Nur committen, wenn sich wirklich Daten geändert haben
+            git diff --quiet && git diff --staged --quiet || (git commit -m "Live-Update Runde $i" && git push)
             
-            echo "Warte 80 Sekunden bis zum nächsten Abruf..."
-            sleep 80
+            echo "Pause für 120 Sekunden (2 Minuten)..."
+            sleep 120
           done
 
-      - name: Workflow neu starten (Endlos-Schleife)
+      - name: Workflow neu starten
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "40 Minuten Zyklus beendet. Starte neuen Workflow..."
-          # Kurze Abkühlphase vor dem Neustart
-          sleep 20
+          echo "Zyklus beendet. Starte neu für die nächsten 4 Stunden..."
+          sleep 10
           gh workflow run "Endlos High-Frequency Update"
