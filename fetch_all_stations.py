@@ -15,7 +15,8 @@ STATIONS = {
     "rodleben": "8012777",          # ID für Rodleben Bahnhof
     "magdeburg_neustadt": "8010226", # ID für MD-Neustadt
     "magdeburg_herrenkrug": "8013455", # ID für MD-Herrenkrug
-    "biederitz": "8010047"
+    "biederitz": "8010047",
+    "pretzier_altm": "8012673"
 }
 
 def hole_daten(station_id, dateiname):
