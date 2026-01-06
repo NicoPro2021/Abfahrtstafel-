@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Abfahrtstafel Pro - EasyConfig</title>
+    <title>DB Monitor Pro</title>
     <style>
         :root {
             --db-blue: #005b8c;
-            --bg-color: #0a0a0a;
-            --card-bg: #161616;
+            --bg-color: #050505;
+            --card-bg: #121212;
             --text-main: #eee;
             --delay-red: #ff4d4d;
             --ontime-green: #44ff44;
@@ -16,117 +16,147 @@
             --db-red: #e2001a;
         }
 
-        body { 
-            font-family: -apple-system, sans-serif; 
-            background: var(--bg-color); color: var(--text-main); 
-            margin: 0; padding: 0; height: 100vh; overflow: hidden;
+        /* Verhindert Scrollen des gesamten Bodys auf Android */
+        html, body { 
+            height: 100%; 
+            margin: 0; 
+            padding: 0; 
+            overflow: hidden; 
+            background: #000;
+            font-family: -apple-system, Roboto, "Segoe UI", sans-serif;
+            color: var(--text-main);
         }
 
-        /* --- STARTBILDSCHIRM --- */
+        /* STARTBILDSCHIRM - Z-Index 3000 */
         #welcome-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed; inset: 0;
             background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
             z-index: 3000; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         #welcome-screen.hidden { transform: translateY(-100%); }
 
-        .welcome-content { text-align: center; width: 85%; max-width: 400px; }
-        .welcome-content h1 { font-size: 1.8rem; margin-bottom: 5px; color: white; }
-        .welcome-content p { color: #888; margin-bottom: 30px; font-size: 0.95rem; }
-
+        .welcome-content { text-align: center; width: 85%; max-width: 350px; }
         .search-trigger {
-            background: var(--card-bg); border: 1px solid #333; padding: 15px;
-            border-radius: 12px; display: flex; align-items: center; gap: 15px;
-            cursor: pointer; transition: 0.3s; margin-bottom: 40px;
+            background: var(--card-bg); border: 1px solid #333; padding: 18px;
+            border-radius: 15px; display: flex; align-items: center; gap: 15px;
+            cursor: pointer; margin-bottom: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.5);
         }
 
-        .fav-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; }
+        .fav-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
         .fav-card { 
             background: #111; border: 1px solid #222; padding: 12px 5px; 
-            border-radius: 10px; color: #666; font-size: 0.7rem; cursor: pointer;
-            display: flex; flex-direction: column; align-items: center; gap: 8px;
-            transition: 0.2s;
+            border-radius: 12px; font-size: 0.75rem; text-align: center; cursor: pointer;
         }
-        .fav-card.active { color: var(--platform-yellow); border-color: #444; background: #1a1a1a; }
+        .fav-card.active { border-color: var(--platform-yellow); background: #1a1500; color: #fff; }
 
-        /* --- MONITOR --- */
-        .monitor { display: none; height: 100vh; flex-direction: column; background: #000; }
+        /* MONITOR CONTAINER */
+        .monitor { 
+            display: none; 
+            flex-direction: column; 
+            height: 100vh; /* Volle Android-Höhe */
+            width: 100%;
+        }
         .monitor.active { display: flex; }
 
-        .top-bar { display: flex; align-items: center; padding: 10px 15px; background: #111; border-bottom: 1px solid #222; }
-        .back-btn { background: none; border: none; color: white; font-size: 22px; cursor: pointer; padding: 5px; }
-        .fav-toggle { margin-left: auto; background: none; border: none; font-size: 1.4rem; cursor: pointer; color: #333; }
-        .fav-toggle.is-fav { color: var(--platform-yellow); }
-
-        .header { padding: 15px; border-bottom: 3px solid var(--db-blue); }
-        .station-name { font-size: 1.4rem; font-weight: bold; display: block; }
-        #current-time { color: var(--ontime-green); font-family: monospace; font-size: 1rem; margin-top: 4px; }
-
-        #board { overflow-y: auto; flex-grow: 1; }
-        .row { display: grid; grid-template-columns: 55px 1fr 35px 75px; padding: 14px 12px; border-bottom: 1px solid #111; }
-        .line { background: #fff; color: #000; padding: 3px; border-radius: 3px; font-weight: 900; text-align: center; font-size: 0.75rem; }
-        .destination { font-size: 1.05rem; font-weight: 500; padding-left: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .platform { text-align: center; font-weight: bold; color: var(--platform-yellow); font-size: 1.1rem; }
-        .time-box { text-align: right; }
-        .actual { font-weight: bold; font-size: 1.15rem; display: block; }
-        .delay-info { color: var(--delay-red); font-size: 0.8rem; font-weight: bold; }
-        .info-row { grid-column: 1 / -1; font-size: 0.75rem; color: #888; margin-top: 6px; font-style: italic; border-left: 2px solid var(--db-red); padding-left: 8px; }
-
-        /* --- SUCHE --- */
-        #search-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 4000; display: none; flex-direction: column;
+        .top-bar { 
+            display: flex; align-items: center; padding: 12px 15px; 
+            background: #111; border-bottom: 1px solid #222; 
         }
-        .search-header { padding: 15px; display: flex; align-items: center; gap: 15px; border-bottom: 1px solid #222; }
-        .search-input { flex-grow: 1; background: #1a1a1a; border: 1px solid #333; color: white; padding: 12px; border-radius: 10px; outline: none; font-size: 1rem; }
-        .result-item { padding: 18px; border-bottom: 1px solid #111; font-size: 1.1rem; cursor: pointer; }
-        .result-item:active { background: #111; }
+
+        .header { 
+            padding: 15px; background: #000; border-bottom: 3px solid var(--db-blue); 
+            flex-shrink: 0; /* Verhindert das Zusammenquetschen auf kleinen Screens */
+        }
+        .station-name { font-size: 1.25rem; font-weight: bold; }
+        #current-time { color: var(--ontime-green); font-family: monospace; font-size: 1rem; }
+
+        /* TABELLE MIT EIGENEM SCROLLBEREICH */
+        #board { 
+            flex-grow: 1; 
+            overflow-y: auto; 
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch; /* Flüssiges Scrollen auf Android/iOS */
+        }
+
+        .row { 
+            display: grid; 
+            grid-template-columns: 55px 1fr 35px 80px; 
+            padding: 12px 10px; 
+            border-bottom: 1px solid #181818;
+            align-items: center;
+        }
+        
+        .row.cancelled { background: rgba(226, 0, 26, 0.05); }
+        .row.cancelled * { color: #666 !important; }
+        
+        .line { background: #fff; color: #000; padding: 3px 0; border-radius: 4px; font-weight: 900; text-align: center; font-size: 0.8rem; }
+        .destination { font-size: 1.05rem; font-weight: 500; padding: 0 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .platform { text-align: center; font-weight: bold; color: var(--platform-yellow); font-size: 1.1rem; }
+        
+        .time-box { text-align: right; line-height: 1.1; }
+        .scheduled { font-size: 0.75rem; color: #777; text-decoration: line-through; display: block; }
+        .actual { font-weight: bold; font-size: 1.15rem; color: var(--ontime-green); }
+        .actual.delayed { color: var(--delay-red); }
+        .actual.cancelled-text { color: var(--db-red); text-decoration: line-through; }
+
+        .info-row { grid-column: 1 / -1; font-size: 0.75rem; color: #aaa; margin-top: 5px; font-style: italic; border-left: 2px solid var(--db-red); padding-left: 8px; }
+        .cancelled-badge { color: var(--db-red); font-weight: bold; font-size: 0.65rem; text-transform: uppercase; margin-bottom: 2px; display: block; }
+
+        /* SUCHE */
+        #search-overlay {
+            position: fixed; inset: 0; background: #000; z-index: 4000; 
+            display: none; flex-direction: column;
+        }
+        .search-header { padding: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #222; }
+        .search-input { flex-grow: 1; background: #1a1a1a; border: 1px solid #333; color: white; padding: 12px; border-radius: 12px; font-size: 1rem; outline: none; }
+        .result-item { padding: 18px; border-bottom: 1px solid #111; font-size: 1.1rem; }
+
+        /* BUTTONS */
+        .back-btn { background: none; border: none; color: white; font-size: 24px; cursor: pointer; }
+        .fav-toggle { margin-left: auto; background: none; border: none; font-size: 1.5rem; color: #333; }
+        .fav-toggle.is-fav { color: var(--platform-yellow); }
     </style>
 </head>
 <body>
 
 <div id="welcome-screen">
     <div class="welcome-content">
-        <h1>Guten Tag</h1>
-        <p>Wo soll die Reise hingehen?</p>
+        <h1 style="margin:0">Guten Tag</h1>
+        <p style="margin-top:5px; margin-bottom:30px">Wo soll die Reise hingehen?</p>
         
         <div class="search-trigger" onclick="openSearch()">
-            <span style="font-size: 20px;">🔍</span>
-            <span style="color: #888;">Station suchen...</span>
+            <span style="font-size: 22px">🔍</span>
+            <span style="color: #666">Station suchen...</span>
         </div>
 
-        <div style="text-align: left; margin-bottom: 12px; font-size: 0.7rem; color: #444; letter-spacing: 1px; font-weight: bold;">MEINE FAVORITEN</div>
-        <div class="fav-grid" id="fav-bar">
-            </div>
+        <div style="text-align: left; margin-bottom: 10px; font-size: 0.7rem; color: #444; font-weight: bold; letter-spacing: 1px;">MEINE FAVORITEN</div>
+        <div class="fav-grid" id="fav-bar"></div>
     </div>
 </div>
 
 <div id="search-overlay">
     <div class="search-header">
         <button class="back-btn" onclick="closeSearch()">✕</button>
-        <input type="text" class="search-input" id="station-query" placeholder="Name des Bahnhofs..." oninput="filterStations()">
+        <input type="text" class="search-input" id="station-query" placeholder="Suchen..." oninput="filterStations()">
     </div>
-    <div id="search-results" style="overflow-y: auto;"></div>
+    <div id="search-results" style="overflow-y: auto"></div>
 </div>
 
 <div class="monitor" id="monitor-app">
     <div class="top-bar">
         <button class="back-btn" onclick="goHome()">←</button>
-        <div style="color: var(--db-red); font-weight: bold; font-size: 0.75rem; margin-left: 10px;">LIVE MONITOR</div>
+        <div style="color: var(--db-red); font-weight: bold; font-size: 0.8rem; margin-left: 10px">DB LIVE MONITOR</div>
         <button id="star-icon" class="fav-toggle" onclick="toggleFavorite()">★</button>
     </div>
     <div class="header">
-        <span id="display-station" class="station-name">Station</span>
+        <span id="display-station" class="station-name">Lade...</span>
         <div id="current-time">00:00:00</div>
     </div>
     <div id="board"></div>
 </div>
 
 <script>
-    // ==========================================
-    // HIER EINFACH NEUE STATIONEN EINTRAGEN
-    // ==========================================
     const STATIONS_DB = [
         { name: "Zerbst/Anhalt", file: "zerbst.json" },
         { name: "Rodleben", file: "rodleben.json" },
@@ -140,75 +170,48 @@
         { name: "Leipzig Hbf", file: "leipzig_hbf.json" },
         { name: "Pretzier(Altm)", file: "pretzier_altm.json" }
     ];
-    // ==========================================
 
     const BASE_URL = 'https://raw.githubusercontent.com/nicopro2021/Abfahrtstafel-/main/';
     let currentStation = null;
-    let favorites = JSON.parse(localStorage.getItem('db_pro_favs')) || [null, null, null];
+    let favorites = JSON.parse(localStorage.getItem('db_final_favs')) || [null, null, null];
 
     function openSearch() { document.getElementById('search-overlay').style.display = 'flex'; document.getElementById('station-query').focus(); filterStations(); }
     function closeSearch() { document.getElementById('search-overlay').style.display = 'none'; }
-    
-    function goHome() {
-        document.getElementById('welcome-screen').classList.remove('hidden');
-        document.getElementById('monitor-app').classList.remove('active');
-        updateFavUI();
-    }
+    function goHome() { document.getElementById('welcome-screen').classList.remove('hidden'); document.getElementById('monitor-app').classList.remove('active'); updateFavUI(); }
 
     function selectStation(station) {
         currentStation = station;
         document.getElementById('display-station').innerText = station.name;
         document.getElementById('welcome-screen').classList.add('hidden');
         document.getElementById('monitor-app').classList.add('active');
-        
-        // Prüfen ob Favorit für Stern-Icon
         const isFav = favorites.some(f => f && f.file === station.file);
         document.getElementById('star-icon').className = isFav ? 'fav-toggle is-fav' : 'fav-toggle';
-        
-        closeSearch();
-        loadData();
+        closeSearch(); loadData();
     }
 
     function filterStations() {
         const q = document.getElementById('station-query').value.toLowerCase();
         const res = document.getElementById('search-results');
-        res.innerHTML = STATIONS_DB
-            .filter(s => s.name.toLowerCase().includes(q))
-            .map(s => `<div class="result-item" onclick='selectStation(${JSON.stringify(s)})'>${s.name}</div>`)
-            .join('');
+        res.innerHTML = STATIONS_DB.filter(s => s.name.toLowerCase().includes(q))
+            .map(s => `<div class="result-item" onclick='selectStation(${JSON.stringify(s)})'>${s.name}</div>`).join('');
     }
 
     function updateFavUI() {
-        const bar = document.getElementById('fav-bar');
-        bar.innerHTML = favorites.map((fav, i) => `
+        document.getElementById('fav-bar').innerHTML = favorites.map((fav, i) => `
             <div class="fav-card ${fav ? 'active' : ''}" onclick="handleFavClick(${i})">
-                <span style="font-size: 1.2rem;">${fav ? '📍' : '＋'}</span>
-                <b>${fav ? fav.name.split('/')[0].substring(0, 10) : 'Slot ' + (i+1)}</b>
-            </div>
-        `).join('');
+                <div style="font-size: 1.2rem; margin-bottom: 4px">${fav ? '📍' : '＋'}</div>
+                <b>${fav ? fav.name.split('/')[0].substring(0, 8) : 'Slot ' + (i+1)}</b>
+            </div>`).join('');
     }
 
-    function handleFavClick(i) {
-        if(favorites[i]) selectStation(favorites[i]);
-        else openSearch();
-    }
+    function handleFavClick(i) { if(favorites[i]) selectStation(favorites[i]); else openSearch(); }
 
     function toggleFavorite() {
         const index = favorites.findIndex(f => f && f.file === currentStation.file);
-        if (index > -1) {
-            favorites[index] = null; // Entfernen
-            alert("Favorit entfernt");
-        } else {
-            const emptySlot = favorites.indexOf(null);
-            if (emptySlot > -1) {
-                favorites[emptySlot] = currentStation;
-            } else {
-                favorites[0] = currentStation; // Überschreiben wenn voll
-            }
-            alert("Als Favorit gespeichert");
-        }
-        localStorage.setItem('db_pro_favs', JSON.stringify(favorites));
-        selectStation(currentStation); // UI aktualisieren
+        if (index > -1) favorites[index] = null;
+        else { const empty = favorites.indexOf(null); if (empty > -1) favorites[empty] = currentStation; else favorites[0] = currentStation; }
+        localStorage.setItem('db_final_favs', JSON.stringify(favorites));
+        selectStation(currentStation);
     }
 
     async function loadData() {
@@ -221,30 +224,31 @@
             
             data.sort((a, b) => a.zeit.localeCompare(b.zeit));
             data.forEach(zug => {
-                const info = zug.info || "";
-                const delayMatch = info.match(/\+(\d+)/);
-                const delayValue = delayMatch ? delayMatch[0] : "";
-                const cleanInfo = info.replace(/\+\d+/, "").trim();
-                const zeit = (zug.echte_zeit && zug.echte_zeit !== "null") ? zug.echte_zeit : zug.zeit;
+                const info = (zug.info || "").trim();
+                const isCancelled = info.toLowerCase().includes("fällt aus") || info.toLowerCase().includes("halt entfällt");
+                const hatEchtzeit = zug.echte_zeit && zug.echte_zeit !== "null" && zug.echte_zeit !== "";
+                const zeitAnzeige = hatEchtzeit ? zug.echte_zeit : zug.zeit;
+                const istVerspaetet = hatEchtzeit && zug.echte_zeit !== zug.zeit;
 
                 board.innerHTML += `
-                    <div class="row">
+                    <div class="row ${isCancelled ? 'cancelled' : ''}">
                         <div class="line">${zug.linie}</div>
-                        <div class="destination">${zug.ziel}</div>
+                        <div class="destination">
+                            ${isCancelled ? `<span class="cancelled-badge">Ausfall</span>` : ''}
+                            ${zug.ziel}
+                        </div>
                         <div class="platform">${zug.gleis || "-"}</div>
                         <div class="time-box">
-                            <span class="actual">${zeit}</span>
-                            ${delayValue ? `<span class="delay-info">${delayValue}</span>` : ''}
+                            ${(istVerspaetet || isCancelled) ? `<span class="scheduled">${zug.zeit}</span>` : ''}
+                            <span class="actual ${isCancelled ? 'cancelled-text' : (istVerspaetet ? 'delayed' : '')}">${zeitAnzeige}</span>
                         </div>
-                        ${cleanInfo ? `<div class="info-row">${cleanInfo}</div>` : ''}
+                        ${info ? `<div class="info-row">${info}</div>` : ''}
                     </div>`;
             });
         } catch (e) { console.error(e); }
     }
 
-    setInterval(() => {
-        document.getElementById('current-time').innerText = new Date().toLocaleTimeString('de-DE');
-    }, 1000);
+    setInterval(() => { document.getElementById('current-time').innerText = new Date().toLocaleTimeString('de-DE'); }, 1000);
     setInterval(loadData, 30000);
     updateFavUI();
 </script>
