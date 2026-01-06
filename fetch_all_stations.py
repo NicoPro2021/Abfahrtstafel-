@@ -3,44 +3,39 @@ import json
 import time
 from datetime import datetime, timedelta, timezone
 
-# Deine Liste der Bahnhöfe
-# Ich habe hier die Suchbegriffe so präzise wie möglich gemacht
+# Wir nutzen jetzt IDs statt Namen, um die [] Fehler zu vermeiden
+# Diese Nummern sind die eindeutigen Bahnhofs-Kennungen (EVA)
 STATIONS = {
-    "magdeburg_hbf": "Magdeburg Hbf",
-    "leipzig_hbf": "Leipzig Hbf",
-    "zerbst": "Zerbst/Anhalt",
-    "dessau_hbf": "Dessau Hbf",
-    "dessau_sued": "Dessau Süd",
-    "rosslau": "Roßlau(Elbe)",
-    "rodleben": "Rodleben",
-    "magdeburg_neustadt": "Magdeburg-Neustadt",
-    "magdeburg_herrenkrug": "Magdeburg-Herrenkrug",
-    "biederitz": "Biederitz"
+    "magdeburg_hbf": "8010224",
+    "leipzig_hbf": "8010205",
+    "zerbst": "8010392",
+    "dessau_hbf": "8010077",
+    "dessau_sued": "8011382",
+    "rosslau": "8010297",
+    "rodleben": "8010293",          # ID für Rodleben Bahnhof
+    "magdeburg_neustadt": "8010226", # ID für MD-Neustadt
+    "magdeburg_herrenkrug": "8010225", # ID für MD-Herrenkrug
+    "biederitz": "8010052"
 }
 
-def hole_daten(suchbegriff):
+def hole_daten(station_id, dateiname):
     jetzt = datetime.now(timezone.utc)
     u_zeit = (jetzt + timedelta(hours=1)).strftime("%H:%M")
     
     try:
-        # SCHRITT 1: Suche nach der Station (Deine Logik)
-        suche_url = f"https://v6.db.transport.rest/locations?query={suchbegriff}&results=1"
-        suche_data = requests.get(suche_url, timeout=10).json()
-        
-        if not suche_data:
-            print(f"Station nicht gefunden: {suchbegriff}")
-            return []
-            
-        station_id = suche_data[0]['id']
-        
-        # SCHRITT 2: Abfahrten holen
-        # duration=120 statt 60, damit bei Lücken im Fahrplan nicht sofort [] kommt
-        url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=120&results=100&remarks=true"
+        # Wir fragen direkt mit der ID ab - das ist 100% treffsicher
+        # duration=120 zeigt Züge der nächsten 2 Stunden (wichtig für Rodleben!)
+        url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=120&results=50&remarks=true"
         r = requests.get(url, timeout=15).json()
         
         res = []
-        # Wir greifen auf r['departures'] zu, wie in deinem Code
-        for d in r.get('departures', []):
+        departures = r.get('departures', [])
+        
+        if not departures:
+            print(f"Hinweis: Keine Züge aktuell in {dateiname}")
+            return []
+
+        for d in departures:
             try:
                 line = d.get('line', {})
                 name = line.get('name', '').replace(" ", "")
@@ -54,8 +49,6 @@ def hole_daten(suchbegriff):
                 ist_dt = datetime.fromisoformat(ist_raw.replace('Z', '+00:00'))
                 
                 diff = int((ist_dt - soll_dt).total_seconds() / 60)
-                
-                # Deine Info-Logik
                 info_feld = "FÄLLT AUS" if d.get('cancelled') else (f"+{diff}" if diff > 0 else "")
                 
                 res.append({
@@ -72,20 +65,17 @@ def hole_daten(suchbegriff):
                 continue
         return res
     except Exception as e:
-        print(f"Fehler bei {suchbegriff}: {e}")
+        print(f"Fehler bei {dateiname}: {e}")
         return []
 
 if __name__ == "__main__":
-    for dateiname, anzeigename in STATIONS.items():
-        print(f"Verarbeite: {anzeigename}...")
-        daten = hole_daten(anzeigename)
+    for dateiname, s_id in STATIONS.items():
+        print(f"Hole Daten für: {dateiname} (ID: {s_id})")
+        daten = hole_daten(s_id, dateiname)
         
-        # Speichern unter dem jeweiligen Namen (z.B. zerbst.json)
         with open(f'{dateiname}.json', 'w', encoding='utf-8') as f:
             json.dump(daten, f, ensure_ascii=False, indent=4)
         
-        # Ganz wichtig: 1 Sekunde Pause zwischen den Bahnhöfen, 
-        # damit die API uns nicht blockiert!
-        time.sleep(1)
+        time.sleep(0.5) # Kurze Pause für die API
 
-    print("Alle Stationen wurden aktualisiert.")
+    print("Alle Stationen wurden erfolgreich geprüft.")
