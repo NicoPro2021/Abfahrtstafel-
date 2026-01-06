@@ -1,85 +1,76 @@
 import requests
 import json
-import time
 from datetime import datetime, timedelta, timezone
 
-# --- STATIONSLISTE (IDs GEPRÜFT) ---
-stationen = [
-    {"name": "zerbst", "id": "8010390"},
-    {"name": "rodleben", "id": "8012808"},
-    {"name": "rosslau", "id": "8010298"},
-    {"name": "dessau_hbf", "id": "8010077"},
-    {"name": "dessau_sued", "id": "8011384"},
-    {"name": "magdeburg_hbf", "id": "8010224"},
-    {"name": "magdeburg_neustadt", "id": "8010226"},
-    {"name": "magdeburg_herrenkrug", "id": "8011910"},
-    {"name": "leipzig_hbf", "id": "8010205"}
-]
+# Konfiguration: Hier einfach alle Bahnhöfe hinzufügen
+STATIONS = {
+    "magdeburg_hbf": "Magdeburg Hbf",
+    "zerbst": "Zerbst",
+    "leipzig_hbf": "Leipzig Hbf",
+    "dessau_hbf": "Dessau Hbf",
+    "dessau_sued": "Dessau Süd",
+    "roshlau": "Roßlau(Elbe)",
+    "rodleben": "Rodleben",
+    "magdeburg_neustadt": "Magdeburg-Neustadt",
+    "magdeburg_herrenkrug": "Magdeburg-Herrenkrug",
+    "biederitz": "Biederitz"
+}
 
-def hole_daten(station_id, station_name):
+def hole_daten(station_name):
     jetzt = datetime.now(timezone.utc)
-    # ZWEI VERSCHIEDENE APIS ALS BACKUP
-    urls = [
-        f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=720&results=20",
-        f"https://v6.vbb.transport.rest/stops/{station_id}/departures?duration=720&results=20" # Backup API
-    ]
+    u_zeit = (jetzt + timedelta(hours=1)).strftime("%H:%M")
     
-    for url in urls:
-        try:
-            r = requests.get(url, timeout=20)
-            if r.status_code != 200: continue
-            
-            data = r.json()
-            # Je nach API liegt die Liste in 'departures' oder direkt im Hauptobjekt
-            departures = data.get('departures', data if isinstance(data, list) else [])
-            
-            if not departures or len(departures) == 0:
-                continue # Nächste API probieren
-
-            fahrplan = []
-            for dep in departures:
-                if dep.get('line', {}).get('product') == 'bus': continue
-
-                ist_w = dep.get('when') or dep.get('plannedWhen')
-                if not ist_w: continue
+    try:
+        # 1. Station ID finden
+        suche_url = f"https://v6.db.transport.rest/locations?query={station_name}&results=1"
+        suche_data = requests.get(suche_url, timeout=10).json()
+        if not suche_data: return []
+        
+        station_id = suche_data[0]['id']
+        
+        # 2. Abfahrten abrufen
+        url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=60&results=100&remarks=true"
+        r = requests.get(url, timeout=15).json()
+        
+        res = []
+        for d in r.get('departures', []):
+            try:
+                line = d.get('line', {})
+                name = line.get('name', '').replace(" ", "")
+                ziel = d.get('direction', '')
+                soll_raw = d.get('plannedWhen')
+                ist_raw = d.get('when') or soll_raw
+                if not soll_raw: continue
                 
-                zug_zeit_obj = datetime.fromisoformat(ist_w.replace('Z', '+00:00'))
-                if zug_zeit_obj < (jetzt - timedelta(minutes=2)): continue
-
-                linie = dep.get('line', {}).get('name', '???').replace(" ", "")
-                soll_w = dep.get('plannedWhen')
-                soll_zeit = soll_w.split('T')[1][:5] if soll_w else ist_w.split('T')[1][:5]
-                ist_zeit = ist_w.split('T')[1][:5]
+                soll_dt = datetime.fromisoformat(soll_raw.replace('Z', '+00:00'))
+                ist_dt = datetime.fromisoformat(ist_raw.replace('Z', '+00:00'))
+                diff = int((ist_dt - soll_dt).total_seconds() / 60)
                 
-                info = "ca. " + ist_zeit if ist_zeit != soll_zeit else ""
-                if dep.get('cancelled'): info = "FÄLLT AUS"
-
-                fahrplan.append({
-                    "zeit": soll_zeit, 
-                    "echte_zeit": ist_zeit if ist_zeit != soll_zeit else "", 
-                    "linie": linie,
-                    "ziel": dep.get('direction', 'Ziel unbekannt')[:18],
-                    "gleis": str(dep.get('platform') or dep.get('plannedPlatform') or "-"),
-                    "info": info
+                info_feld = "FÄLLT AUS" if d.get('cancelled') else (f"+{diff}" if diff > 0 else "")
+                
+                res.append({
+                    "zeit": soll_dt.strftime("%H:%M"), 
+                    "echte_zeit": ist_dt.strftime("%H:%M"), 
+                    "linie": name, 
+                    "ziel": ziel[:18], 
+                    "gleis": str(d.get('platform') or d.get('plannedPlatform') or "-"), 
+                    "info": info_feld, 
+                    "grund": " | ".join([rm.get('text','') for rm in d.get('remarks',[]) if rm.get('type')=='hint'][:1]),
+                    "update": u_zeit
                 })
-
-            if fahrplan:
-                fahrplan.sort(key=lambda x: x['zeit'])
-                return fahrplan[:12]
-        except:
-            continue
-            
-    return [] # Wenn beide APIs versagen
+            except: continue
+        return res
+    except Exception as e:
+        print(f"Fehler bei {station_name}: {e}")
+        return []
 
 if __name__ == "__main__":
-    for st in stationen:
-        print(f"Update: {st['name']}")
-        daten = hole_daten(st['id'], st['name'])
+    for dateiname, anzeigename in STATIONS.items():
+        print(f"Lade Daten für {anzeigename}...")
+        daten = hole_daten(anzeigename)
         
-        # Falls daten leer sind, prüfen wir, ob wir "Station nicht bedient" erzwingen
-        if not daten:
-            print(f"WARNUNG: Keine Daten für {st['name']} gefunden.")
-        
-        filename = f"{st['name']}.json"
-        with open(filename, 'w', encoding='utf-8') as f:
+        # Speichert jede Station in ihre eigene .json Datei (wie vorher)
+        with open(f'{dateiname}.json', 'w', encoding='utf-8') as f:
             json.dump(daten, f, ensure_ascii=False, indent=4)
+    
+    print("Alle Stationen aktualisiert!")
