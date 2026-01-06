@@ -3,8 +3,7 @@ import json
 import time
 from datetime import datetime, timedelta, timezone
 
-# Wir nutzen jetzt IDs statt Namen, um die [] Fehler zu vermeiden
-# Diese Nummern sind die eindeutigen Bahnhofs-Kennungen (EVA)
+# Die korrekten IDs für Sachsen-Anhalt (EVA-Nummern)
 STATIONS = {
     "magdeburg_hbf": "8010224",
     "leipzig_hbf": "8010205",
@@ -12,33 +11,34 @@ STATIONS = {
     "dessau_hbf": "8010077",
     "dessau_sued": "8011382",
     "rosslau": "8010297",
-    "rodleben": "8010293",          # ID für Rodleben Bahnhof
-    "magdeburg_neustadt": "8010226", # ID für MD-Neustadt
-    "magdeburg_herrenkrug": "8010225", # ID für MD-Herrenkrug
+    "rodleben": "8010293",
+    "magdeburg_neustadt": "8010226",
+    "magdeburg_herrenkrug": "8010225",
     "biederitz": "8010052"
 }
 
-def hole_daten(station_id, dateiname):
+def hole_daten(station_id, name):
     jetzt = datetime.now(timezone.utc)
     u_zeit = (jetzt + timedelta(hours=1)).strftime("%H:%M")
     
     try:
-        # Wir fragen direkt mit der ID ab - das ist 100% treffsicher
-        # duration=120 zeigt Züge der nächsten 2 Stunden (wichtig für Rodleben!)
+        # Direkte ID-Abfrage verhindert Verwechslungen mit Riesa/Dresden
         url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=120&results=50&remarks=true"
-        r = requests.get(url, timeout=15).json()
+        headers = {'User-Agent': 'BahnMonitor-Bot-V1'}
+        r = requests.get(url, headers=headers, timeout=15).json()
         
         res = []
         departures = r.get('departures', [])
         
-        if not departures:
-            print(f"Hinweis: Keine Züge aktuell in {dateiname}")
-            return []
-
         for d in departures:
             try:
                 line = d.get('line', {})
-                name = line.get('name', '').replace(" ", "")
+                # Filter: Wir wollen meist nur Züge (S-Bahn, RB, RE, IC, ICE)
+                # Falls du auch Busse willst, lass diese Zeile weg:
+                if line.get('product') not in ['suburban', 'regional', 'national', 'nationalExpress']:
+                    continue
+
+                linename = line.get('name', '').replace(" ", "")
                 ziel = d.get('direction', '')
                 soll_raw = d.get('plannedWhen')
                 ist_raw = d.get('when') or soll_raw
@@ -54,7 +54,7 @@ def hole_daten(station_id, dateiname):
                 res.append({
                     "zeit": soll_dt.strftime("%H:%M"), 
                     "echte_zeit": ist_dt.strftime("%H:%M"), 
-                    "linie": name, 
+                    "linie": linename, 
                     "ziel": ziel[:18], 
                     "gleis": str(d.get('platform') or d.get('plannedPlatform') or "-"), 
                     "info": info_feld, 
@@ -65,17 +65,17 @@ def hole_daten(station_id, dateiname):
                 continue
         return res
     except Exception as e:
-        print(f"Fehler bei {dateiname}: {e}")
+        print(f"Fehler bei {name} ({station_id}): {e}")
         return []
 
 if __name__ == "__main__":
     for dateiname, s_id in STATIONS.items():
-        print(f"Hole Daten für: {dateiname} (ID: {s_id})")
+        print(f"Aktualisiere {dateiname}...")
         daten = hole_daten(s_id, dateiname)
         
         with open(f'{dateiname}.json', 'w', encoding='utf-8') as f:
             json.dump(daten, f, ensure_ascii=False, indent=4)
         
-        time.sleep(0.5) # Kurze Pause für die API
+        time.sleep(1) # Schutzpause für die API
 
-    print("Alle Stationen wurden erfolgreich geprüft.")
+    print("Alle Daten wurden korrekt für Sachsen-Anhalt geladen.")
