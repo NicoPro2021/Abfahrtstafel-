@@ -1,57 +1,33 @@
-name: Endlos High-Frequency Update
+name: Bahn Daten Update
 
 on:
-  workflow_dispatch:
   schedule:
-    - cron: '0 * * * *'
-
-concurrency: 
-  group: bahn-update-group
-  cancel-in-progress: true 
+    - cron: '*/5 * * * *' # Alle 5 Minuten
+  workflow_dispatch: # Erlaubt manuelles Starten
 
 jobs:
-  update-cycle:
+  update-data:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      actions: write
-
     steps:
       - name: Code auschecken
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Python installieren
-        uses: actions/setup-python@v4
+      - name: Python einrichten
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: '3.x'
 
-      - name: Bibliotheken installieren
+      - name: Abhängigkeiten installieren
         run: pip install requests
 
-      - name: 4-Stunden-Loop (60s Takt)
-        run: |
-          for i in {1..240}
-          do
-            echo "Runde $i"
-            python main.py
-            
-            git config --local user.email "action@github.com"
-            git config --local user.name "GitHub Action Bot"
-            git add *.json
-            
-            # Nur pushen, wenn sich wirklich was geändert hat
-            if ! git diff --quiet --staged; then
-              git commit -m "Update Runde $i"
-              git push
-            fi
-            
-            echo "Warte auf nächste Minute..."
-            sleep 10
-          done
+      - name: Alle Bahnhöfe aktualisieren
+        run: python fetch_all_stations.py
 
-      - name: Workflow-Neustart
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Daten hochladen (Commit & Push)
         run: |
-          sleep 10
-          gh workflow run "Endlos High-Frequency Update"
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add *.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update Runde $(date +%H:%M)" && git push)
