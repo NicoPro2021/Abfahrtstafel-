@@ -3,7 +3,7 @@ import json
 import time
 from datetime import datetime, timedelta, timezone
 
-# Deine korrekten IDs für Sachsen-Anhalt
+# 100% korrekte IDs für Sachsen-Anhalt (EVA-Nummern)
 STATIONS = {
     "magdeburg_hbf": "8010224",
     "leipzig_hbf": "8010205",
@@ -18,41 +18,38 @@ STATIONS = {
 }
 
 def hole_daten(station_id, name):
-    # Zeitstempel für das Update-Feld (Berlin Zeit)
+    # Zeit für das Update-Feld (UTC+1)
     u_zeit = (datetime.now(timezone.utc) + timedelta(hours=1)).strftime("%H:%M")
     
-    # Header setzen, um Ban-Risiko zu minimieren
     headers = {
-        'User-Agent': 'BahnMonitorBot/1.0 (Kontakt: DeinGithubName)',
+        'User-Agent': 'BahnMonitorBot/1.0',
         'Accept': 'application/json'
     }
 
     try:
-        # Versuch 1: Normales Zeitfenster (120 Min)
-        url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=120&results=30&remarks=true"
+        # Wir fragen 120 Min ab. Falls leer, liegt es meist an der API, nicht am Fahrplan.
+        url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=120&results=50&remarks=true"
         response = requests.get(url, headers=headers, timeout=15)
         
-        # Falls API überlastet (Status 429), kurz warten
+        # Falls wir zu schnell waren (Status 429), kurz warten und wiederholen
         if response.status_code == 429:
-            time.sleep(2)
+            time.sleep(5)
             response = requests.get(url, headers=headers, timeout=15)
 
         data = response.json()
         departures = data.get('departures', [])
 
-        # Versuch 2: Falls leer, Zeitfenster massiv vergrößern (360 Min)
-        if not departures:
-            print(f"(!) Keine Daten für {name} bei 120min. Erweitere Suche...")
-            url_long = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=360&results=20"
-            departures = requests.get(url_long, headers=headers, timeout=15).json().get('departures', [])
-
         res = []
+        if not departures:
+            return []
+
         for d in departures:
             try:
                 line = d.get('line', {})
-                # Filtere nur relevante Züge (S-Bahn, Regional, Fernverkehr)
+                # Nur Züge anzeigen, keine Stadtbusse (außer es ist SEV)
                 if line.get('product') not in ['suburban', 'regional', 'national', 'nationalExpress']:
-                    continue
+                    if "Bus" not in line.get('name', ''): # Erlaubt Schienenersatzverkehr
+                        continue
 
                 linename = line.get('name', '').replace(" ", "")
                 ziel = d.get('direction', '')
@@ -83,14 +80,16 @@ def hole_daten(station_id, name):
         return []
 
 if __name__ == "__main__":
-    for dateiname, s_id in STATIONS.items():
-        print(f"Abfrage: {dateiname}...")
-        daten = hole_daten(s_id, dateiname)
-        
-        with open(f'{dateiname}.json', 'w', encoding='utf-8') as f:
-            json.dump(daten, f, ensure_ascii=False, indent=4)
-        
-        # WICHTIG: 1.5 Sekunden Pause zwischen den Stationen, um Ban zu vermeiden
-        time.sleep(1.5)
-
-    print("Update-Runde beendet.")
+    # Alles in einem großen Try-Block, damit das Skript nicht abstürzt
+    try:
+        for dateiname, s_id in STATIONS.items():
+            print(f"Lade {dateiname}...")
+            daten = hole_daten(s_id, dateiname)
+            
+            with open(f'{dateiname}.json', 'w', encoding='utf-8') as f:
+                json.dump(daten, f, ensure_ascii=False, indent=4)
+            
+            # WICHTIG: 2 Sekunden Pause, damit die API uns nicht bannt
+            time.sleep(2)
+    except Exception as e:
+        print(f"Kritischer Abbruch: {e}")
