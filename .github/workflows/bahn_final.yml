@@ -2,13 +2,12 @@ name: Bahn Monitor Loop
 
 on:
   schedule:
-    - cron: '*/45 * * * *' # Startet alle 45 Min als Backup
-  workflow_dispatch: # Manueller Start möglich
+    - cron: '*/45 * * * *'
+  workflow_dispatch:
 
-# Verhindert, dass zwei Loops gleichzeitig laufen
 concurrency:
   group: bahn-singleton
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   run-loop:
@@ -20,41 +19,41 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Wichtig für stabiles Pulling
 
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
-      - name: Install Requests
+      - name: Install Dependencies
         run: pip install requests
 
-      - name: 40 Minuten Dauer-Loop
+      - name: 40 Minute Loop (Alle 80 Sek)
         run: |
           git config --global user.name "Bahn-Bot"
           git config --global user.email "bot@github.com"
 
-          # 30 Durchläufe à ca. 80-90 Sekunden
           for i in {1..30}
           do
-            echo "Runde $i startet..."
+            echo "Durchlauf $i startet..."
             
-            # 1. Daten holen
-            python fetch_all_stations.py || echo "Python Fehler, ignoriere..."
+            # Skript ausführen
+            python fetch_all_stations.py || echo "Fehler im Python-Skript"
             
-            # 2. Git Pull (verhindert Abbrüche durch Konflikte)
-            git pull --rebase origin main || echo "Pull fehlgeschlagen"
-            
-            # 3. Änderungen pushen
+            # Git Push Routine mit Fehlerbehandlung
             git add *.json
-            if git commit -m "Live-Update Runde $i"; then
-              git push || echo "Push fehlgeschlagen, versuche es in 80s erneut"
+            # Prüfen ob überhaupt Änderungen da sind
+            if ! git diff --cached --exit-code; then
+              git commit -m "Live-Update Runde $i"
+              # Versuche Push, falls Konflikt erst Pull Rebase
+              git push || (git pull --rebase origin main && git push) || echo "Push fehlgeschlagen, wird in 80s nachgeholt"
             else
-              echo "Keine Änderungen zum Committen"
+              echo "Keine neuen Daten zum Pushen."
             fi
             
-            # 4. Warten bis zur nächsten Abfrage
-            echo "Warte auf nächste Runde..."
+            echo "Warte 80 Sekunden..."
             sleep 80
           done
 
@@ -63,5 +62,5 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          echo "Loop beendet. Starte neu..."
+          echo "Loop beendet, löse Neustart aus..."
           gh workflow run bahn_update.yml
