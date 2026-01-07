@@ -1,60 +1,28 @@
 name: Bahn Monitor Loop
 
 on:
+  workflow_dispatch:
   schedule:
-    - cron: '*/45 * * * *'
-  workflow_dispatch: # Das hier erlaubt dir das manuelle Starten!
-
-concurrency:
-  group: bahn-singleton
-  cancel-in-progress: true
+    - cron: '*/40 * * * *'
 
 jobs:
-  run-loop:
+  run:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      actions: write
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.x'
-
-      - name: Install Requests
-        run: pip install requests
-
-      - name: 40 Minute Loop
+      - uses: actions/checkout@v4
+      - name: Run Bot
         run: |
-          git config --global user.name "Bahn-Bot"
-          git config --global user.email "bot@github.com"
-
-          for i in {1..30}
+          pip install requests
+          git config --global user.name "Bot"
+          git config --global user.email "bot@example.com"
+          
+          for i in {1..20}
           do
-            echo "Runde $i startet..."
-            python fetch_all_stations.py || echo "Python Fehler"
-            
+            python fetch_all_stations.py
             git add *.json
-            # Prüfen ob Änderungen da sind
-            if ! git diff --cached --exit-code; then
-              git commit -m "Live Update $i"
-              # Aggressiver Pull & Push
-              git pull --rebase origin main
-              git push origin main || echo "Push fehlgeschlagen"
-            fi
-            
-            echo "Warte 80s..."
-            sleep 80
+            # Aggressiver Commit & Push
+            git commit -m "Update $(date +%H:%M)" && git push origin main --force || echo "No changes"
+            sleep 120 # Alle 2 Minuten ein Update ist für GitHub gesünder
           done
-
-      - name: Restart
-        if: always()
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh workflow run bahn_update.yml
