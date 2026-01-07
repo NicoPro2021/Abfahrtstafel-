@@ -3,11 +3,11 @@ import json
 import time
 from datetime import datetime, timedelta, timezone
 
-# 100% korrekte IDs für Sachsen-Anhalt (EVA-Nummern)
+# Die IDs für Sachsen-Anhalt. Zerbst wird als Name hinterlegt, um Zinnowitz zu vermeiden.
 STATIONS = {
     "magdeburg_hbf": "8010224",
     "leipzig_hbf": "8010205",
-    "zerbst": "8010392",
+    "zerbst": "Zerbst/Anhalt",  # Sonderfall: Name statt ID
     "dessau_hbf": "8010077",
     "dessau_sued": "8011382",
     "rosslau": "8010297",
@@ -17,79 +17,58 @@ STATIONS = {
     "biederitz": "8010052"
 }
 
-def hole_daten(station_id, name):
-    # Zeit für das Update-Feld (UTC+1)
+def hole_daten(id_oder_name, dateiname):
     u_zeit = (datetime.now(timezone.utc) + timedelta(hours=1)).strftime("%H:%M")
+    headers = {'User-Agent': 'BahnMonitorBot/1.1'}
     
-    headers = {
-        'User-Agent': 'BahnMonitorBot/1.0',
-        'Accept': 'application/json'
-    }
-
     try:
-        # Wir fragen 120 Min ab. Falls leer, liegt es meist an der API, nicht am Fahrplan.
-        url = f"https://v6.db.transport.rest/stops/{station_id}/departures?duration=120&results=50&remarks=true"
-        response = requests.get(url, headers=headers, timeout=15)
+        # Schritt 1: Die richtige ID finden
+        final_id = id_oder_name
+        if not id_oder_name.isdigit():
+            # Suche speziell für Zerbst/Anhalt
+            search_url = f"https://v6.db.transport.rest/locations?query={id_oder_name}&results=1"
+            search_data = requests.get(search_url, headers=headers, timeout=10).json()
+            if search_data:
+                final_id = search_data[0]['id']
+            else:
+                return []
+
+        # Schritt 2: Abfahrten holen (mit 3h Zeitfenster gegen leere Klammern)
+        url = f"https://v6.db.transport.rest/stops/{final_id}/departures?duration=180&results=50&remarks=true"
+        r = requests.get(url, headers=headers, timeout=15).json()
         
-        # Falls wir zu schnell waren (Status 429), kurz warten und wiederholen
-        if response.status_code == 429:
-            time.sleep(5)
-            response = requests.get(url, headers=headers, timeout=15)
-
-        data = response.json()
-        departures = data.get('departures', [])
-
-        res = []
+        departures = r.get('departures', [])
         if not departures:
             return []
 
+        res = []
         for d in departures:
             try:
                 line = d.get('line', {})
-                # Nur Züge anzeigen, keine Stadtbusse (außer es ist SEV)
-                if line.get('product') not in ['suburban', 'regional', 'national', 'nationalExpress']:
-                    if "Bus" not in line.get('name', ''): # Erlaubt Schienenersatzverkehr
-                        continue
+                # Filter: Nur Züge und SEV-Busse
+                if line.get('product') not in ['suburban', 'regional', 'national', 'nationalExpress'] and "Bus" not in line.get('name', ''):
+                    continue
 
-                linename = line.get('name', '').replace(" ", "")
-                ziel = d.get('direction', '')
-                soll_raw = d.get('plannedWhen') or d.get('when')
-                if not soll_raw: continue
-                
-                soll_dt = datetime.fromisoformat(soll_raw.replace('Z', '+00:00'))
-                ist_raw = d.get('when') or soll_raw
-                ist_dt = datetime.fromisoformat(ist_raw.replace('Z', '+00:00'))
-                
-                diff = int((ist_dt - soll_dt).total_seconds() / 60)
-                info_feld = "FÄLLT AUS" if d.get('cancelled') else (f"+{diff}" if diff > 0 else "")
-                
                 res.append({
-                    "zeit": soll_dt.strftime("%H:%M"), 
-                    "echte_zeit": ist_dt.strftime("%H:%M"), 
-                    "linie": linename, 
-                    "ziel": ziel[:18], 
+                    "zeit": datetime.fromisoformat((d.get('plannedWhen') or d.get('when')).replace('Z', '+00:00')).strftime("%H:%M"), 
+                    "echte_zeit": datetime.fromisoformat((d.get('when') or d.get('plannedWhen')).replace('Z', '+00:00')).strftime("%H:%M"), 
+                    "linie": line.get('name', '').replace(" ", ""), 
+                    "ziel": d.get('direction', '')[:18], 
                     "gleis": str(d.get('platform') or d.get('plannedPlatform') or "-"), 
-                    "info": info_feld, 
+                    "info": "FÄLLT AUS" if d.get('cancelled') else (f"+{int((datetime.fromisoformat((d.get('when') or d.get('plannedWhen')).replace('Z', '+00:00')) - datetime.fromisoformat((d.get('plannedWhen') or d.get('when')).replace('Z', '+00:00'))).total_seconds() / 60)}" if int((datetime.fromisoformat((d.get('when') or d.get('plannedWhen')).replace('Z', '+00:00')) - datetime.fromisoformat((d.get('plannedWhen') or d.get('when')).replace('Z', '+00:00'))).total_seconds() / 60) > 0 else ""), 
                     "grund": " | ".join([rm.get('text','') for rm in d.get('remarks',[]) if rm.get('type')=='hint'][:1]),
                     "update": u_zeit
                 })
             except: continue
         return res
     except Exception as e:
-        print(f"Fehler bei {name}: {e}")
+        print(f"Fehler bei {dateiname}: {e}")
         return []
 
 if __name__ == "__main__":
-    # Alles in einem großen Try-Block, damit das Skript nicht abstürzt
-    try:
-        for dateiname, s_id in STATIONS.items():
-            print(f"Lade {dateiname}...")
-            daten = hole_daten(s_id, dateiname)
-            
-            with open(f'{dateiname}.json', 'w', encoding='utf-8') as f:
-                json.dump(daten, f, ensure_ascii=False, indent=4)
-            
-            # WICHTIG: 2 Sekunden Pause, damit die API uns nicht bannt
-            time.sleep(2)
-    except Exception as e:
-        print(f"Kritischer Abbruch: {e}")
+    for dateiname, identifier in STATIONS.items():
+        print(f"Verarbeite {dateiname}...")
+        daten = hole_daten(identifier, dateiname)
+        with open(f'{dateiname}.json', 'w', encoding='utf-8') as f:
+            json.dump(daten, f, ensure_ascii=False, indent=4)
+        time.sleep(2) # API-Schutz
