@@ -3,7 +3,7 @@ name: Bahn Monitor Loop
 on:
   schedule:
     - cron: '*/45 * * * *'
-  workflow_dispatch:
+  workflow_dispatch: # Das hier erlaubt dir das manuelle Starten!
 
 concurrency:
   group: bahn-singleton
@@ -20,47 +20,41 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Wichtig für stabiles Pulling
+          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
-      - name: Install Dependencies
+      - name: Install Requests
         run: pip install requests
 
-      - name: 40 Minute Loop (Alle 80 Sek)
+      - name: 40 Minute Loop
         run: |
           git config --global user.name "Bahn-Bot"
           git config --global user.email "bot@github.com"
 
           for i in {1..30}
           do
-            echo "Durchlauf $i startet..."
+            echo "Runde $i startet..."
+            python fetch_all_stations.py || echo "Python Fehler"
             
-            # Skript ausführen
-            python fetch_all_stations.py || echo "Fehler im Python-Skript"
-            
-            # Git Push Routine mit Fehlerbehandlung
             git add *.json
-            # Prüfen ob überhaupt Änderungen da sind
+            # Prüfen ob Änderungen da sind
             if ! git diff --cached --exit-code; then
-              git commit -m "Live-Update Runde $i"
-              # Versuche Push, falls Konflikt erst Pull Rebase
-              git push || (git pull --rebase origin main && git push) || echo "Push fehlgeschlagen, wird in 80s nachgeholt"
-            else
-              echo "Keine neuen Daten zum Pushen."
+              git commit -m "Live Update $i"
+              # Aggressiver Pull & Push
+              git pull --rebase origin main
+              git push origin main || echo "Push fehlgeschlagen"
             fi
             
-            echo "Warte 80 Sekunden..."
+            echo "Warte 80s..."
             sleep 80
           done
 
-      - name: Self-Restart
+      - name: Restart
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
-        run: |
-          echo "Loop beendet, löse Neustart aus..."
-          gh workflow run bahn_update.yml
+        run: gh workflow run bahn_update.yml
