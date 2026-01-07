@@ -9,7 +9,7 @@ STATIONS = {
     "leipzig_hbf": "8010205",
     "zerbst": "Zerbst/Anhalt",  # Sonderfall: Name statt ID
     "dessau_hbf": "8010077",
-    "dessau_sued": "Dessau Süd",
+    "dessau_sued": "DessauSüd",
     "rosslau": "8010297",
     "rodleben": "8010293",
     "magdeburg_neustadt": "8010226",
