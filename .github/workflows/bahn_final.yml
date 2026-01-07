@@ -1,25 +1,24 @@
 name: Bahn Monitor Loop
 
 on:
-  workflow_dispatch: # Ermöglicht den manuellen Start und den Neustart durch sich selbst
   schedule:
-    - cron: '0 * * * *' # Sicherheits-Start einmal pro Stunde, falls der Loop mal reißt
+    - cron: '*/45 * * * *' # Startet alle 45 Min als Backup
+  workflow_dispatch: # Manueller Start möglich
 
-# SCHUTZ VOR DOPPELLOOPS:
-# Nur eine Instanz dieses Workflows darf zur gleichen Zeit laufen.
+# Verhindert, dass zwei Loops gleichzeitig laufen
 concurrency:
-  group: bahn-monitor-singleton
-  cancel-in-progress: false # Verhindert, dass der laufende Loop gekillt wird
+  group: bahn-singleton
+  cancel-in-progress: false
 
 jobs:
-  update_loop:
+  run-loop:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      actions: write # Erlaubt das Auslösen des nächsten Workflows
+      actions: write
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Python
@@ -27,34 +26,42 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install Dependencies
+      - name: Install Requests
         run: pip install requests
 
-      - name: 40 Minute Loop (Alle 80 Sekunden)
+      - name: 40 Minuten Dauer-Loop
         run: |
           git config --global user.name "Bahn-Bot"
           git config --global user.email "bot@github.com"
 
+          # 30 Durchläufe à ca. 80-90 Sekunden
           for i in {1..30}
           do
-            echo "Durchlauf $i von 30 - $(date)"
+            echo "Runde $i startet..."
             
-            python fetch_all_stations.py
+            # 1. Daten holen
+            python fetch_all_stations.py || echo "Python Fehler, ignoriere..."
             
+            # 2. Git Pull (verhindert Abbrüche durch Konflikte)
+            git pull --rebase origin main || echo "Pull fehlgeschlagen"
+            
+            # 3. Änderungen pushen
             git add *.json
-            if git commit -m "Update Bahnhofsdaten Durchlauf $i"; then
-              git push
+            if git commit -m "Live-Update Runde $i"; then
+              git push || echo "Push fehlgeschlagen, versuche es in 80s erneut"
+            else
+              echo "Keine Änderungen zum Committen"
             fi
             
-            if [ $i -lt 30 ]; then
-              sleep 80
-            fi
+            # 4. Warten bis zur nächsten Abfrage
+            echo "Warte auf nächste Runde..."
+            sleep 80
           done
 
-      - name: Trigger Next Run
-        if: always() # Startet den nächsten Loop auch wenn oben etwas schiefging
+      - name: Self-Restart
+        if: always()
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          echo "40 Minuten um. Starte neuen Workflow..."
+          echo "Loop beendet. Starte neu..."
           gh workflow run bahn_update.yml
