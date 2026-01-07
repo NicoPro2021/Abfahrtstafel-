@@ -3,6 +3,7 @@ import json
 import time
 from datetime import datetime, timedelta, timezone
 
+# Wir nutzen Zerbst/Anhalt als Text, um die fehlerhafte Zinnowitz-ID zu umgehen
 STATIONS = {
     "magdeburg_hbf": "8010224",
     "leipzig_hbf": "8010205",
@@ -17,18 +18,19 @@ STATIONS = {
 }
 
 def hole_daten(identifier, dateiname):
-    # Zeitstempel erzwingen (Berlin Zeit)
     u_zeit = (datetime.now(timezone.utc) + timedelta(hours=1)).strftime("%H:%M")
     headers = {'User-Agent': 'BahnMonitor/2.0'}
     
     try:
         final_id = identifier
         if not identifier.isdigit():
+            # Gezielte Suche für Zerbst/Anhalt
             s_data = requests.get(f"https://v6.db.transport.rest/locations?query={identifier}&results=1", timeout=10).json()
             final_id = s_data[0]['id'] if s_data else None
         
         if not final_id: return None
 
+        # Abfrage der Abfahrten
         r = requests.get(f"https://v6.db.transport.rest/stops/{final_id}/departures?duration=180", timeout=15).json()
         departures = r.get('departures', [])
         
@@ -62,4 +64,3 @@ if __name__ == "__main__":
             with open(f'{dateiname}.json', 'w', encoding='utf-8') as f:
                 json.dump(daten, f, ensure_ascii=False, indent=4)
         time.sleep(1)
-
