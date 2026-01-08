@@ -1,31 +1,61 @@
 name: Bahn Monitor Loop
+
 on:
-  workflow_dispatch:
   schedule:
-    - cron: '*/40 * * * *'
+    - cron: '*/45 * * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: bahn-singleton
+  cancel-in-progress: true
+
 jobs:
-  run:
+  run-loop:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      actions: write
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Run Bot
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install Dependencies
+        run: pip install requests
+
+      - name: 40 Minute Loop
         run: |
-          pip install requests
-          # Das Skript ausführen und prüfen, ob es Dateien erzeugt
-          python fetch_all_stations.py
-          
-          git config --global user.name "Bot"
-          git config --global user.email "bot@example.com"
-          
-          # Sicherstellen, dass alle JSONs erfasst werden
-          git add *.json
-          
-          # Nur committen und pushen, wenn sich der Inhalt wirklich geändert hat
-          if ! git diff --cached --quiet; then
-            git commit -m "Live Update $(date +%H:%M)"
-            git push origin main
-          else
-            echo "Keine Änderungen vom Skript erzeugt."
-          fi
+          git config --global user.name "Bahn-Bot"
+          git config --global user.email "bot@github.com"
+
+          for i in {1..25}
+          do
+            echo "Runde $i startet..."
+            python fetch_all_stations.py
+            
+            git add *.json
+            # Commit und Push nur wenn Änderungen da sind
+            if ! git diff --cached --exit-code; then
+              git commit -m "Live Update Runde $i"
+              # Aggressiver Pull & Push um Stau zu vermeiden
+              git pull --rebase origin main
+              git push origin main || echo "Push fehlgeschlagen, versuche es gleich wieder"
+            else
+              echo "Keine neuen Daten zum Pushen."
+            fi
+            
+            sleep 90
+          done
+
+      - name: Self-Restart
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run bahn_update.yml
