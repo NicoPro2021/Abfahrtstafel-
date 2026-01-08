@@ -1,28 +1,19 @@
 name: Bahn Monitor Loop
 
 on:
-  schedule:
-    - cron: '*/45 * * * *'
   workflow_dispatch:
-
-concurrency:
-  group: bahn-singleton
-  cancel-in-progress: true
+  schedule:
+    - cron: '*/40 * * * *'
 
 jobs:
-  run-loop:
+  run:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
-      actions: write
-
+      contents: write # Das ist das Wichtigste!
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Setup Python
+      - uses: actions/checkout@v4
+      
+      - name: Install Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
@@ -30,21 +21,32 @@ jobs:
       - name: Install Requests
         run: pip install requests
 
-      - name: 40 Minute Loop (90s Takt)
+      - name: Update Loop
         run: |
-          git config --global user.name "Bahn-Bot"
-          git config --global user.email "bot@github.com"
-
-          for i in {1..25}
+          git config --global user.name "Bot"
+          git config --global user.email "bot@example.com"
+          
+          for i in {1..20}
           do
-            echo "Runde $i startet..."
+            # Skript ausführen
             python fetch_all_stations.py
             
-            git add *.json
-            # Commit und Push (Zwang)
-            git commit -m "Live Update Runde $i ($(date +%H:%M))" && git pull --rebase origin main && git push origin main || echo "Keine Änderungen oder Push-Konflikt"
+            # Kontrolle: Zeige uns die Dateien im Log!
+            ls -l *.json
             
-            sleep 90
+            # Git Force Add
+            git add *.json
+            
+            # Commit & Push nur wenn Änderungen da sind
+            if ! git diff --cached --quiet; then
+              git commit -m "Live Update $i"
+              git push origin main --force
+              echo "Änderungen hochgeladen!"
+            else
+              echo "Git sieht keine Änderungen - Skript hat nichts geschrieben!"
+            fi
+            
+            sleep 120
           done
 
       - name: Self-Restart
