@@ -1,10 +1,8 @@
 name: Bahn Monitor Loop
-
 on:
   workflow_dispatch:
   schedule:
     - cron: '*/40 * * * *'
-
 jobs:
   run:
     runs-on: ubuntu-latest
@@ -15,14 +13,19 @@ jobs:
       - name: Run Bot
         run: |
           pip install requests
-          git config --global user.name "GitHub Action Bot"
-          git config --global user.email "actions@github.com"
+          # Das Skript ausführen und prüfen, ob es Dateien erzeugt
+          python fetch_all_stations.py
           
-          for i in {1..20}
-          do
-            python fetch_all_stations.py
-            git add *.json
-            # Erzwingt den Upload, um den Stau aufzuloesen
-            git commit -m "Live Update $(date +%H:%M)" && git push origin main --force || echo "No changes"
-            sleep 120
-          done
+          git config --global user.name "Bot"
+          git config --global user.email "bot@example.com"
+          
+          # Sicherstellen, dass alle JSONs erfasst werden
+          git add *.json
+          
+          # Nur committen und pushen, wenn sich der Inhalt wirklich geändert hat
+          if ! git diff --cached --quiet; then
+            git commit -m "Live Update $(date +%H:%M)"
+            git push origin main
+          else
+            echo "Keine Änderungen vom Skript erzeugt."
+          fi
