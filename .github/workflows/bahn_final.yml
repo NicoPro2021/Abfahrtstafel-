@@ -3,53 +3,37 @@ name: Bahn Monitor Loop
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/40 * * * *'
+    - cron: '*/45 * * * *'
 
 jobs:
   run:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Das ist das Wichtigste!
+      contents: write
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Install Python
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
-
       - name: Install Requests
         run: pip install requests
-
-      - name: Update Loop
+      - name: Main Loop
         run: |
-          git config --global user.name "Bot"
-          git config --global user.email "bot@example.com"
-          
-          for i in {1..20}
+          git config --global user.name "Bahn-Bot"
+          git config --global user.email "bot@github.com"
+          for i in {1..15}
           do
-            # Skript ausführen
             python fetch_all_stations.py
-            
-            # Kontrolle: Zeige uns die Dateien im Log!
-            ls -l *.json
-            
-            # Git Force Add
             git add *.json
-            
-            # Commit & Push nur wenn Änderungen da sind
+            # Commit nur wenn sich was geändert hat
             if ! git diff --cached --quiet; then
-              git commit -m "Live Update $i"
-              git push origin main --force
-              echo "Änderungen hochgeladen!"
-            else
-              echo "Git sieht keine Änderungen - Skript hat nichts geschrieben!"
+              git commit -m "Live Update Runde $i ($(date +%H:%M))"
+              git push origin main || (git pull --rebase origin main && git push origin main)
             fi
-            
-            sleep 120
+            sleep 150 # Alle 2,5 Minuten ein Update reicht völlig aus
           done
-
-      - name: Self-Restart
+      - name: Restart
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
