@@ -27,10 +27,10 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install Dependencies
+      - name: Install Requests
         run: pip install requests
 
-      - name: 40 Minute Loop
+      - name: 40 Minute Loop (90s Takt)
         run: |
           git config --global user.name "Bahn-Bot"
           git config --global user.email "bot@github.com"
@@ -41,15 +41,8 @@ jobs:
             python fetch_all_stations.py
             
             git add *.json
-            # Commit und Push nur wenn Änderungen da sind
-            if ! git diff --cached --exit-code; then
-              git commit -m "Live Update Runde $i"
-              # Aggressiver Pull & Push um Stau zu vermeiden
-              git pull --rebase origin main
-              git push origin main || echo "Push fehlgeschlagen, versuche es gleich wieder"
-            else
-              echo "Keine neuen Daten zum Pushen."
-            fi
+            # Commit und Push (Zwang)
+            git commit -m "Live Update Runde $i ($(date +%H:%M))" && git pull --rebase origin main && git push origin main || echo "Keine Änderungen oder Push-Konflikt"
             
             sleep 90
           done
