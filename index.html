@@ -16,7 +16,6 @@
             --db-red: #e2001a;
         }
 
-        /* Verhindert Scrollen des gesamten Bodys auf Android */
         html, body { 
             height: 100%; 
             margin: 0; 
@@ -27,7 +26,6 @@
             color: var(--text-main);
         }
 
-        /* STARTBILDSCHIRM - Z-Index 3000 */
         #welcome-screen {
             position: fixed; inset: 0;
             background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
@@ -50,11 +48,10 @@
         }
         .fav-card.active { border-color: var(--platform-yellow); background: #1a1500; color: #fff; }
 
-        /* MONITOR CONTAINER */
         .monitor { 
             display: none; 
             flex-direction: column; 
-            height: 100vh; /* Volle Android-Höhe */
+            height: 100vh;
             width: 100%;
         }
         .monitor.active { display: flex; }
@@ -66,17 +63,16 @@
 
         .header { 
             padding: 15px; background: #000; border-bottom: 3px solid var(--db-blue); 
-            flex-shrink: 0; /* Verhindert das Zusammenquetschen auf kleinen Screens */
+            flex-shrink: 0; 
         }
         .station-name { font-size: 1.25rem; font-weight: bold; }
         #current-time { color: var(--ontime-green); font-family: monospace; font-size: 1rem; }
 
-        /* TABELLE MIT EIGENEM SCROLLBEREICH */
         #board { 
             flex-grow: 1; 
             overflow-y: auto; 
             overflow-x: hidden;
-            -webkit-overflow-scrolling: touch; /* Flüssiges Scrollen auf Android/iOS */
+            -webkit-overflow-scrolling: touch;
         }
 
         .row { 
@@ -86,14 +82,14 @@
             border-bottom: 1px solid #181818;
             align-items: center;
         }
-        
+
         .row.cancelled { background: rgba(226, 0, 26, 0.05); }
         .row.cancelled * { color: #666 !important; }
-        
+
         .line { background: #fff; color: #000; padding: 3px 0; border-radius: 4px; font-weight: 900; text-align: center; font-size: 0.8rem; }
         .destination { font-size: 1.05rem; font-weight: 500; padding: 0 8px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .platform { text-align: center; font-weight: bold; color: var(--platform-yellow); font-size: 1.1rem; }
-        
+
         .time-box { text-align: right; line-height: 1.1; }
         .scheduled { font-size: 0.75rem; color: #777; text-decoration: line-through; display: block; }
         .actual { font-weight: bold; font-size: 1.15rem; color: var(--ontime-green); }
@@ -103,7 +99,6 @@
         .info-row { grid-column: 1 / -1; font-size: 0.75rem; color: #aaa; margin-top: 5px; font-style: italic; border-left: 2px solid var(--db-red); padding-left: 8px; }
         .cancelled-badge { color: var(--db-red); font-weight: bold; font-size: 0.65rem; text-transform: uppercase; margin-bottom: 2px; display: block; }
 
-        /* SUCHE */
         #search-overlay {
             position: fixed; inset: 0; background: #000; z-index: 4000; 
             display: none; flex-direction: column;
@@ -112,7 +107,6 @@
         .search-input { flex-grow: 1; background: #1a1a1a; border: 1px solid #333; color: white; padding: 12px; border-radius: 12px; font-size: 1rem; outline: none; }
         .result-item { padding: 18px; border-bottom: 1px solid #111; font-size: 1.1rem; }
 
-        /* BUTTONS */
         .back-btn { background: none; border: none; color: white; font-size: 24px; cursor: pointer; }
         .fav-toggle { margin-left: auto; background: none; border: none; font-size: 1.5rem; color: #333; }
         .fav-toggle.is-fav { color: var(--platform-yellow); }
@@ -124,7 +118,7 @@
     <div class="welcome-content">
         <h1 style="margin:0">Guten Tag</h1>
         <p style="margin-top:5px; margin-bottom:30px">Wo soll die Reise hingehen?</p>
-        
+
         <div class="search-trigger" onclick="openSearch()">
             <span style="font-size: 22px">🔍</span>
             <span style="color: #666">Station suchen...</span>
@@ -159,16 +153,16 @@
 <script>
     const STATIONS_DB = [
         { name: "Zerbst/Anhalt", file: "zerbst.json" },
-        //{ name: "Rodleben", file: "rodleben.json" },
-        //{ name: "Roßlau (Elbe)", file: "rosslau.json" },
-        //{ name: "Dessau Hbf", file: "dessau_hbf.json" },
-        //{ name: "Dessau Süd", file: "dessau_sued.json" },
-        //{ name: "Biederitz", file: "biederitz.json" },
+        { name: "Rodleben", file: "rodleben.json" },
+        { name: "Roßlau (Elbe)", file: "rosslau.json" },
+        { name: "Dessau Hbf", file: "dessau_hbf.json" },
+        { name: "Dessau Süd", file: "dessau_sued.json" },
+        { name: "Biederitz", file: "biederitz.json" },
         { name: "Magdeburg Hbf", file: "magdeburg_hbf.json" },
         { name: "Magdeburg Neustadt", file: "magdeburg_neustadt.json" },
-        //{ name: "Magdeburg Herrenkrug", file: "magdeburg_herrenkrug.json" },
+        { name: "Magdeburg Herrenkrug", file: "magdeburg_herrenkrug.json" },
         { name: "Leipzig Hbf", file: "leipzig_hbf.json" },
-        //{ name: "Pretzier(Altm)", file: "pretzier_altm.json" }
+        { name: "Pretzier(Altm)", file: "pretzier_altm.json" }
     ];
 
     const BASE_URL = 'https://raw.githubusercontent.com/nicopro2021/Abfahrtstafel-/main/';
@@ -220,10 +214,23 @@
             const res = await fetch(`${BASE_URL}${currentStation.file}?t=${Date.now()}`);
             const data = await res.json();
             const board = document.getElementById('board');
-            board.innerHTML = '';
             
+            const now = new Date();
+            board.innerHTML = '';
+
             data.sort((a, b) => a.zeit.localeCompare(b.zeit));
-            data.forEach(zug => {
+
+            // FILTER: Züge, die mehr als 60 Sekunden in der Vergangenheit liegen, entfernen
+            const filteredData = data.filter(zug => {
+                const [h, m] = zug.zeit.split(':').map(Number);
+                const trainTime = new Date();
+                trainTime.setHours(h, m, 0, 0);
+                
+                // 60000ms = 1 Minute Puffer vor dem Verschwinden
+                return trainTime.getTime() > (Date.now() - 60000);
+            });
+
+            filteredData.forEach(zug => {
                 const info = (zug.info || "").trim();
                 const isCancelled = info.toLowerCase().includes("fällt aus") || info.toLowerCase().includes("halt entfällt");
                 const hatEchtzeit = zug.echte_zeit && zug.echte_zeit !== "null" && zug.echte_zeit !== "";
@@ -249,7 +256,7 @@
     }
 
     setInterval(() => { document.getElementById('current-time').innerText = new Date().toLocaleTimeString('de-DE'); }, 1000);
-    setInterval(loadData, 10000);
+    setInterval(loadData, 10000); // Aktualisiert alle 10 Sekunden
     updateFavUI();
 </script>
 </body>
