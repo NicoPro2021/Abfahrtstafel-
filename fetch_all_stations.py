@@ -15,7 +15,7 @@ STATIONS = {
     "magdeburg_neustadt": "8010226",
     "magdeburg_herrenkrug": "8010225",
     "biederitz": "8010052",
-    "pretzier_altm":  "Pretzier Altm" 
+    "pretzier_altm": "Pretzier Altm" 
 }
 
 def hole_daten(identifier, dateiname):
