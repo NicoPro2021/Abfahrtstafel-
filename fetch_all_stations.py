@@ -11,7 +11,7 @@ STATIONS = {
     "dessau_hbf": "8010077",
     "dessau_sued": "Dessau Süd",
     "rosslau": "8010297",
-    "rodleben": "8010293",
+    "rodleben": "rodleben",
     "magdeburg_neustadt": "8010226",
     "magdeburg_herrenkrug": "8010225",
     "biederitz": "8010052",
