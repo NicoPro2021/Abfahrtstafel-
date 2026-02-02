@@ -13,8 +13,8 @@ STATIONS = {
     "rosslau": "8010297",
     "rodleben": "rodleben",
     "magdeburg_neustadt": "8010226",
-    "magdeburg_herrenkrug": "8010225",
-    "biederitz": "8010052",
+    "magdeburg_herrenkrug": "Magdeburg Herrenkrug",
+    "biederitz": "Biederitz",
     "pretzier_altm": "Pretzier Altm" 
 }
 
