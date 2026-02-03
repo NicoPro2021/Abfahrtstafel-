@@ -19,10 +19,10 @@
         html, body { 
             height: 100%; margin: 0; padding: 0; 
             background: #000; font-family: -apple-system, Roboto, sans-serif; color: var(--text-main);
-            overflow: hidden; /* Verhindert das Scrollen der gesamten Seite */
+            overflow: hidden; 
         }
 
-        /* --- FAVORITEN SLOTS --- */
+        /* FAVORITEN SLOTS - Fix */
         .fav-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px; width: 100%; }
         .fav-card { 
             background: #111; border: 1px solid #222; padding: 12px 5px; 
@@ -30,62 +30,65 @@
         }
         .fav-card.active { border-color: var(--platform-yellow); background: #1a1500; color: #fff; }
 
-        /* --- MONITOR LAYOUT --- */
+        /* SCROLL FIX */
         .monitor { display: none; flex-direction: column; height: 100vh; width: 100%; }
         .monitor.active { display: flex; }
 
         #board { 
             flex-grow: 1; 
-            overflow-y: auto; /* WICHTIG: Macht die Stationsliste scrollbar */
+            overflow-y: auto; 
             -webkit-overflow-scrolling: touch;
-            padding-bottom: 20px;
+            padding-bottom: 30px;
         }
 
         .row { 
             display: grid; grid-template-columns: 55px 1fr 35px 85px; 
-            padding: 12px 10px; border-bottom: 1px solid #181818; align-items: center;
+            padding: 14px 10px; border-bottom: 1px solid #181818; align-items: center;
         }
 
-        .row.cancelled { background: rgba(226, 0, 26, 0.15); }
+        /* AUSFALL STYLING */
+        .row.cancelled { background: rgba(226, 0, 26, 0.2); }
+        .row.cancelled .line { background: #333; color: #777; }
+        .row.cancelled .destination { color: var(--db-red); font-weight: bold; }
 
         .line { background: #fff; color: #000; padding: 3px 0; border-radius: 4px; font-weight: 900; text-align: center; font-size: 0.8rem; }
         .destination-container { display: flex; flex-direction: column; overflow: hidden; padding: 0 8px; }
-        .destination { font-size: 1.05rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .destination { font-size: 1.1rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         
-        /* --- LAUFTEXT --- */
-        .reason-container { font-size: 0.75rem; color: var(--delay-red); overflow: hidden; white-space: nowrap; margin-top: 2px; }
+        /* LAUFTEXT / GRUND */
+        .reason-container { font-size: 0.8rem; color: var(--delay-red); overflow: hidden; white-space: nowrap; margin-top: 4px; font-weight: bold; }
         .marquee { display: inline-block; padding-left: 100%; animation: marquee 15s linear infinite; }
         @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
 
         .platform { text-align: center; font-weight: bold; color: var(--platform-yellow); font-size: 1.1rem; }
         .time-box { text-align: right; line-height: 1.1; }
-        .scheduled { font-size: 0.75rem; color: #777; text-decoration: line-through; display: block; }
-        .actual { font-weight: bold; font-size: 1.15rem; color: var(--ontime-green); }
+        .scheduled { font-size: 0.8rem; color: #777; text-decoration: line-through; display: block; }
+        .actual { font-weight: bold; font-size: 1.2rem; color: var(--ontime-green); }
         .actual.delayed { color: var(--delay-red); }
         .actual.cancelled-text { color: var(--db-red); text-decoration: line-through; }
-        .cancelled-badge { background: var(--db-red); color: white; padding: 1px 4px; border-radius: 3px; font-size: 0.6rem; font-weight: bold; text-transform: uppercase; margin-bottom: 2px; width: fit-content; }
+        .cancelled-badge { background: var(--db-red); color: white; padding: 2px 5px; border-radius: 3px; font-size: 0.65rem; font-weight: bold; text-transform: uppercase; margin-bottom: 4px; width: fit-content; }
 
-        /* --- UI --- */
+        /* UI ELEMENTE */
         #welcome-screen { position: fixed; inset: 0; background: #000; z-index: 3000; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         #welcome-screen.hidden { display: none; }
         .header { padding: 15px; border-bottom: 3px solid var(--db-blue); background: #000; }
-        .station-name { font-size: 1.25rem; font-weight: bold; }
-        #current-time { color: var(--ontime-green); font-family: monospace; }
-        .search-trigger { background: var(--card-bg); padding: 18px; border-radius: 15px; cursor: pointer; text-align: center; width: 80%; }
+        .station-name { font-size: 1.4rem; font-weight: bold; }
+        #current-time { color: var(--ontime-green); font-family: monospace; font-size: 1.1rem; }
+        .search-trigger { background: var(--card-bg); padding: 20px; border-radius: 15px; cursor: pointer; text-align: center; width: 85%; border: 1px solid #333; }
         #search-overlay { position: fixed; inset: 0; background: #000; z-index: 4000; display: none; flex-direction: column; }
         .search-header { padding: 15px; display: flex; gap: 10px; border-bottom: 1px solid #222; }
-        .search-input { flex-grow: 1; background: #1a1a1a; border: 1px solid #333; color: white; padding: 12px; border-radius: 12px; }
-        .result-item { padding: 18px; border-bottom: 1px solid #111; }
-        .back-btn { background: none; border: none; color: white; font-size: 24px; cursor: pointer; }
-        .fav-toggle { margin-left: auto; background: none; border: none; font-size: 1.5rem; color: #333; }
+        .search-input { flex-grow: 1; background: #1a1a1a; border: 1px solid #333; color: white; padding: 12px; border-radius: 12px; font-size: 1rem; }
+        .result-item { padding: 20px; border-bottom: 1px solid #111; font-size: 1.1rem; }
+        .back-btn { background: none; border: none; color: white; font-size: 26px; cursor: pointer; }
+        .fav-toggle { margin-left: auto; background: none; border: none; font-size: 1.8rem; color: #333; }
         .fav-toggle.is-fav { color: var(--platform-yellow); }
     </style>
 </head>
 <body>
 
 <div id="welcome-screen">
-    <div style="text-align:center; width: 85%; display: flex; flex-direction: column; align-items: center;">
-        <h1 style="margin-bottom: 20px;">Guten Tag</h1>
+    <div style="text-align:center; width: 90%; display: flex; flex-direction: column; align-items: center;">
+        <h1 style="margin-bottom: 25px; font-size: 2rem;">Guten Tag</h1>
         <div class="search-trigger" onclick="openSearch()">🔍 Station suchen...</div>
         <div class="fav-grid" id="fav-bar"></div>
     </div>
@@ -100,9 +103,9 @@
 </div>
 
 <div class="monitor" id="monitor-app">
-    <div style="display:flex; align-items:center; padding: 10px; background: #111;">
+    <div style="display:flex; align-items:center; padding: 12px; background: #111;">
         <button class="back-btn" onclick="goHome()">←</button>
-        <div style="color: var(--db-red); font-weight: bold; font-size: 0.8rem; margin-left: 10px">DB LIVE</div>
+        <div style="color: var(--db-red); font-weight: bold; font-size: 0.9rem; margin-left: 12px; letter-spacing: 1px;">DB LIVE MONITOR</div>
         <button id="star-icon" class="fav-toggle" onclick="toggleFavorite()">★</button>
     </div>
     <div class="header">
@@ -155,8 +158,8 @@
     function updateFavUI() {
         document.getElementById('fav-bar').innerHTML = favorites.map((fav, i) => `
             <div class="fav-card ${fav ? 'active' : ''}" onclick="handleFavClick(${i})">
-                <div style="font-size: 1.2rem; margin-bottom: 4px">${fav ? '📍' : '＋'}</div>
-                <b>${fav ? fav.name.substring(0, 10) : 'Slot ' + (i+1)}</b>
+                <div style="font-size: 1.4rem; margin-bottom: 5px">${fav ? '📍' : '＋'}</div>
+                <b style="display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${fav ? fav.name : 'Slot ' + (i+1)}</b>
             </div>`).join('');
     }
 
@@ -187,27 +190,29 @@
             const data = await res.json();
             const board = document.getElementById('board');
             board.innerHTML = '';
+            
             data.sort((a, b) => a.zeit.localeCompare(b.zeit));
 
             data.filter(zug => {
                 const [h, m] = zug.zeit.split(':').map(Number);
                 const trainTime = new Date(); trainTime.setHours(h, m, 0, 0);
-                return trainTime.getTime() > (Date.now() - 60000);
+                return trainTime.getTime() > (Date.now() - 120000); // 2 Min Puffer
             }).forEach(zug => {
                 const info = (zug.info || "").trim();
                 const grund = (zug.grund || "").trim();
-                const isCancelled = info.toLowerCase().includes("fällt aus");
+                const isCancelled = info.toLowerCase().includes("fällt aus") || info.toLowerCase().includes("halt entfällt");
+                
                 const hatEchtzeit = zug.echte_zeit && zug.echte_zeit !== "null";
                 const zeitAnzeige = hatEchtzeit ? zug.echte_zeit : zug.zeit;
                 const istVerspaetet = hatEchtzeit && zug.echte_zeit !== zug.zeit;
 
-                let grundHTML = grund ? `<div class="reason-container"><span class="${grund.length > 35 ? 'marquee' : ''}">${grund}</span></div>` : '';
+                let grundHTML = grund ? `<div class="reason-container"><span class="${grund.length > 30 ? 'marquee' : ''}">${grund}</span></div>` : '';
 
                 board.innerHTML += `
                     <div class="row ${isCancelled ? 'cancelled' : ''}">
                         <div class="line">${zug.linie}</div>
                         <div class="destination-container">
-                            ${isCancelled ? `<span class="cancelled-badge">Ausfall</span>` : ''}
+                            ${isCancelled ? `<span class="cancelled-badge">Fahrt fällt aus</span>` : ''}
                             <div class="destination">${zug.ziel}</div>
                             ${grundHTML}
                         </div>
@@ -218,12 +223,16 @@
                         </div>
                     </div>`;
             });
-        } catch (e) { console.error(e); }
+        } catch (e) { console.error("Ladefehler:", e); }
     }
 
-    setInterval(() => { document.getElementById('current-time').innerText = new Date().toLocaleTimeString('de-DE'); }, 1000);
+    setInterval(() => { 
+        const now = new Date();
+        document.getElementById('current-time').innerText = now.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', second: '2-digit' }); 
+    }, 1000);
+    
     setInterval(loadData, 10000);
-    updateFavUI(); // Initialer Aufruf für die Speicherslots
+    updateFavUI();
 </script>
 </body>
 </html>
