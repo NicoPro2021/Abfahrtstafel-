@@ -24,26 +24,23 @@ STATIONS = {
 def hole_daten(identifier, dateiname):
     u_zeit = (datetime.now(timezone.utc) + timedelta(hours=1)).strftime("%H:%M")
     headers = {'User-Agent': 'Mozilla/5.0 (BahnMonitorBot/6.0)'}
-    
+
     try:
         final_id = identifier
         if not identifier.isdigit():
-            # Suche für Zerbst
             s_res = requests.get(f"https://v6.db.transport.rest/locations?query={identifier}&results=1", headers=headers, timeout=10)
             s_data = s_res.json()
             final_id = s_data[0]['id'] if s_data else None
-        
+
         if not final_id: return None
 
-        # Abfrage der Abfahrten
-        res_api = requests.get(f"https://v6.db.transport.rest/stops/{final_id}/departures?duration=180", headers=headers, timeout=15)
+        res_api = requests.get(f"https://v6.db.transport.rest/stops/{final_id}/departures?duration=180&remarks=true", headers=headers, timeout=15)
         if res_api.status_code != 200:
-            print(f"API Status {res_api.status_code} für {dateiname}")
             return None
-            
+
         r = res_api.json()
         departures = r.get('departures', [])
-        
+
         if not departures:
             return [{"update": u_zeit, "info": "Keine Fahrten"}]
 
@@ -54,7 +51,20 @@ def hole_daten(identifier, dateiname):
                 planned = datetime.fromisoformat((d.get('plannedWhen') or d.get('when')).replace('Z', '+00:00'))
                 actual = datetime.fromisoformat((d.get('when') or d.get('plannedWhen')).replace('Z', '+00:00'))
                 diff = int((actual - planned).total_seconds() / 60)
+
+                # --- NEU: Gründe/Anmerkungen extrahieren ---
+                remarks = d.get('remarks', [])
+                grund_liste = []
+                for rem in remarks:
+                    # Wir filtern nach Typ 'warning', da hier die echten Gründe stehen
+                    if rem.get('type') == 'warning':
+                        text = rem.get('text', '').strip()
+                        if text and text not in grund_liste:
+                            grund_liste.append(text)
                 
+                grund_text = " | ".join(grund_liste)
+                # --------------------------------------------
+
                 res_list.append({
                     "zeit": planned.strftime("%H:%M"), 
                     "echte_zeit": actual.strftime("%H:%M"), 
@@ -62,6 +72,7 @@ def hole_daten(identifier, dateiname):
                     "ziel": d.get('direction', '')[:18], 
                     "gleis": str(d.get('platform') or "-"), 
                     "info": "FÄLLT AUS" if d.get('cancelled') else (f"+{diff}" if diff > 0 else ""), 
+                    "grund": grund_text, # Hier wird der Grund gespeichert
                     "update": u_zeit
                 })
             except: continue
@@ -74,9 +85,7 @@ if __name__ == "__main__":
     base_path = os.path.dirname(os.path.abspath(__file__))
     for dateiname, identifier in STATIONS.items():
         daten = hole_daten(identifier, dateiname)
-        # WICHTIG: Nur speichern, wenn wir ECHTE Daten oder "Keine Fahrten" haben.
-        # Niemals bei None (API Fehler) speichern!
         if daten is not None:
             with open(os.path.join(base_path, f"{dateiname}.json"), 'w', encoding='utf-8') as f:
                 json.dump(daten, f, ensure_ascii=False, indent=4)
-        time.sleep(3) # Längere Pause gegen API-Sperren
+        time.sleep(3)
