@@ -16,7 +16,8 @@ STATIONS = {
     "magdeburg_herrenkrug": "Magdeburg Herrenkrug",
     "biederitz": "Biederitz",
     "pretzier_altm": "Pretzier Altm",
-    "bad_belzig": "Bad Belzig" 
+    "bad_belzig": "Bad Belzig",
+    "gommern": "Gommern"
 }
 
 def hole_daten(identifier, dateiname):
