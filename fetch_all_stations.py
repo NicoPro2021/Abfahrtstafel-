@@ -5,45 +5,28 @@ import os
 from datetime import datetime, timedelta, timezone
 
 STATIONS = {
-    "magdeburg_hbf": "8010224",
-    "leipzig_hbf": "Leipzig Hbf",
-    "zerbst": "Zerbst/Anhalt", 
-    "dessau_hbf": "8010077",
-    "dessau_sued": "Dessau Süd",
-    "rosslau": "8010297",
-    "rodleben": "rodleben",
-    "magdeburg_neustadt": "8010226",
-    "magdeburg_herrenkrug": "Magdeburg Herrenkrug",
-    "biederitz": "Biederitz",
-    "pretzier_altm": "Pretzier Altm",
-    "bad_belzig": "Bad Belzig",
-    "gommern": "Gommern",
-    "wusterwitz": "Wusterwitz"
+    "magdeburg_hbf": "8010224", "leipzig_hbf": "Leipzig Hbf", "zerbst": "Zerbst/Anhalt",
+    "dessau_hbf": "8010077", "dessau_sued": "Dessau Süd", "rosslau": "8010297",
+    "rodleben": "rodleben", "magdeburg_neustadt": "8010226", "magdeburg_herrenkrug": "Magdeburg Herrenkrug",
+    "biederitz": "Biederitz", "pretzier_altm": "Pretzier Altm", "bad_belzig": "Bad Belzig",
+    "gommern": "Gommern", "wusterwitz": "Wusterwitz"
 }
 
 def hole_daten(identifier, dateiname):
     u_zeit = (datetime.now(timezone.utc) + timedelta(hours=1)).strftime("%H:%M")
     headers = {'User-Agent': 'Mozilla/5.0 (BahnMonitorBot/6.0)'}
-
     try:
         final_id = identifier
         if not identifier.isdigit():
             s_res = requests.get(f"https://v6.db.transport.rest/locations?query={identifier}&results=1", headers=headers, timeout=10)
-            s_data = s_res.json()
-            final_id = s_data[0]['id'] if s_data else None
-
+            final_id = s_res.json()[0]['id'] if s_res.json() else None
         if not final_id: return None
 
-        # WICHTIG: remarks=true liefert die Begründungen (z.B. Weichenreparatur)
+        # remarks=true ist gesetzt
         res_api = requests.get(f"https://v6.db.transport.rest/stops/{final_id}/departures?duration=180&remarks=true", headers=headers, timeout=15)
-        if res_api.status_code != 200: return None
-
         r = res_api.json()
         departures = r.get('departures', [])
-
-        if not departures:
-            return [{"update": u_zeit, "info": "Keine Fahrten"}]
-
+        
         res_list = []
         for d in departures:
             try:
@@ -52,35 +35,29 @@ def hole_daten(identifier, dateiname):
                 actual = datetime.fromisoformat((d.get('when') or d.get('plannedWhen')).replace('Z', '+00:00'))
                 diff = int((actual - planned).total_seconds() / 60)
 
-                # --- EXTRAKTION VON INFOS (GRÜNDE, FAHRRAD, AUSLASTUNG) ---
+                # --- ALLE FILTER ENTFERNT ---
                 remarks = d.get('remarks', [])
                 grund_liste = []
                 
-                # Sitzplatz-Auslastung (👤 Icons)
-                load = d.get('load')
-                if load:
-                    icons = ["👤", "👤👤", "👤👤👤", "❗👤"]
-                    grund_liste.append(f"Auslastung: {icons[load-1] if load <= 4 else ''}")
-
+                # Jede einzelne Bemerkung wird hinzugefügt
                 for rem in remarks:
                     text = rem.get('text', '').strip()
-                    if text and "http" not in text:
-                        # Icons für Platzersparnis auf dem Monitor
-                        t = text.replace("Fahrradmitnahme möglich", "🚲")
-                        t = t.replace("Fahrradmitnahme begrenzt möglich", "🚲 (begr.)")
-                        t = t.replace("Rollstuhlgerechtes Fahrzeug", "♿")
-                        if t not in grund_liste: grund_liste.append(t)
+                    if text:
+                        grund_liste.append(text)
                 
-                grund_final = " | ".join(grund_liste)
+                # Auch die Auslastung direkt dazu
+                load = d.get('load')
+                if load:
+                    grund_liste.append(f"Load: {load}")
 
                 res_list.append({
-                    "zeit": planned.strftime("%H:%M"), 
-                    "echte_zeit": actual.strftime("%H:%M"), 
-                    "linie": line.get('name', '').replace(" ", ""), 
-                    "ziel": d.get('direction', '')[:18], 
-                    "gleis": str(d.get('platform') or "-"), 
-                    "info": "FÄLLT AUS" if d.get('cancelled') else (f"+{diff}" if diff > 0 else ""), 
-                    "grund": grund_final,
+                    "zeit": planned.strftime("%H:%M"),
+                    "echte_zeit": actual.strftime("%H:%M"),
+                    "linie": line.get('name', '').replace(" ", ""),
+                    "ziel": d.get('direction', '')[:18],
+                    "gleis": str(d.get('platform') or "-"),
+                    "info": "FÄLLT AUS" if d.get('cancelled') else (f"+{diff}" if diff > 0 else ""),
+                    "grund": " | ".join(grund_liste), # Alles wird hier reingeschrieben
                     "update": u_zeit
                 })
             except: continue
