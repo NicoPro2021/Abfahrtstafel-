@@ -19,7 +19,8 @@ STATIONS = {
     "pretzier_altm": "Pretzier Altm",
     "bad_belzig": "Bad Belzig",
     "gommern": "Gommern",
-    "wusterwitz": "Wusterwitz"
+    "wusterwitz": "Wusterwitz",
+    "brandenburg_hbf": "Brandenburg Hbf"
 }
 
 def hole_daten(identifier, dateiname):
