@@ -4,7 +4,6 @@ import time
 import os
 from datetime import datetime, timedelta, timezone
 
-# Deine vollständige Stationsliste
 STATIONS = {
     "magdeburg_hbf": "8010224",
     "leipzig_hbf": "Leipzig Hbf",
@@ -23,7 +22,6 @@ STATIONS = {
 }
 
 def hole_daten(identifier, dateiname):
-    # Zeitstempel für das Update (UTC+1 für Deutschland)
     u_zeit = (datetime.now(timezone.utc) + timedelta(hours=1)).strftime("%H:%M")
     headers = {'User-Agent': 'Mozilla/5.0 (BahnMonitorBot/6.0)'}
 
@@ -36,10 +34,9 @@ def hole_daten(identifier, dateiname):
 
         if not final_id: return None
 
-        # Abfrage inklusive Remarks
+        # WICHTIG: remarks=true liefert die Begründungen (z.B. Weichenreparatur)
         res_api = requests.get(f"https://v6.db.transport.rest/stops/{final_id}/departures?duration=180&remarks=true", headers=headers, timeout=15)
-        if res_api.status_code != 200:
-            return None
+        if res_api.status_code != 200: return None
 
         r = res_api.json()
         departures = r.get('departures', [])
@@ -51,42 +48,30 @@ def hole_daten(identifier, dateiname):
         for d in departures:
             try:
                 line = d.get('line', {})
-                planned_str = d.get('plannedWhen') or d.get('when')
-                actual_str = d.get('when') or d.get('plannedWhen')
-                
-                planned = datetime.fromisoformat(planned_str.replace('Z', '+00:00'))
-                actual = datetime.fromisoformat(actual_str.replace('Z', '+00:00'))
+                planned = datetime.fromisoformat((d.get('plannedWhen') or d.get('when')).replace('Z', '+00:00'))
+                actual = datetime.fromisoformat((d.get('when') or d.get('plannedWhen')).replace('Z', '+00:00'))
                 diff = int((actual - planned).total_seconds() / 60)
 
-                # --- EXTRAKTION DER INFOS (GRÜNDE, FAHRRAD, WAGENREIHUNG) ---
+                # --- EXTRAKTION VON INFOS (GRÜNDE, FAHRRAD, AUSLASTUNG) ---
                 remarks = d.get('remarks', [])
                 grund_liste = []
                 
-                # Wir filtern jetzt NICHT mehr nach Fahrrad/Wagen, sondern lassen es durch
-                # Nur sehr technische Codes (wie 'G01') oder unwichtige Web-Links filtern wir aus
-                ignore_liste = ["http", "bit.ly", "db-anzeige", "code"]
-
-                for rem in remarks:
-                    text = rem.get('text', '').strip()
-                    if text and not any(wort in text.lower() for wort in ignore_liste):
-                        # Kurze Aufbereitung von Begriffen für den Monitor
-                        t = text.replace("Fahrradmitnahme möglich", "🚲")
-                        t = t.replace("Fahrradmitnahme begrenzt möglich", "🚲 (begrenzt)")
-                        t = t.replace("Keine Fahrradmitnahme möglich", "❌🚲")
-                        t = t.replace("Rollstuhlgerechtes Fahrzeug", "♿")
-                        
-                        if t not in grund_liste:
-                            grund_liste.append(t)
-                
-                # Wagenreihung / Auslastung hinzufügen (falls vorhanden)
-                # Die API liefert manchmal Auslastungswerte (1-4)
+                # Sitzplatz-Auslastung (👤 Icons)
                 load = d.get('load')
                 if load:
                     icons = ["👤", "👤👤", "👤👤👤", "❗👤"]
-                    grund_liste.insert(0, f"Auslastung: {icons[load-1] if load <= 4 else ''}")
+                    grund_liste.append(f"Auslastung: {icons[load-1] if load <= 4 else ''}")
 
-                grund_text = " | ".join(grund_liste)
-                # -----------------------------------
+                for rem in remarks:
+                    text = rem.get('text', '').strip()
+                    if text and "http" not in text:
+                        # Icons für Platzersparnis auf dem Monitor
+                        t = text.replace("Fahrradmitnahme möglich", "🚲")
+                        t = t.replace("Fahrradmitnahme begrenzt möglich", "🚲 (begr.)")
+                        t = t.replace("Rollstuhlgerechtes Fahrzeug", "♿")
+                        if t not in grund_liste: grund_liste.append(t)
+                
+                grund_final = " | ".join(grund_liste)
 
                 res_list.append({
                     "zeit": planned.strftime("%H:%M"), 
@@ -95,15 +80,12 @@ def hole_daten(identifier, dateiname):
                     "ziel": d.get('direction', '')[:18], 
                     "gleis": str(d.get('platform') or "-"), 
                     "info": "FÄLLT AUS" if d.get('cancelled') else (f"+{diff}" if diff > 0 else ""), 
-                    "grund": grund_text,
+                    "grund": grund_final,
                     "update": u_zeit
                 })
-            except:
-                continue
-        
+            except: continue
         return res_list
-    except:
-        return None
+    except: return None
 
 if __name__ == "__main__":
     base_path = os.path.dirname(os.path.abspath(__file__))
@@ -113,3 +95,4 @@ if __name__ == "__main__":
             with open(os.path.join(base_path, f"{dateiname}.json"), 'w', encoding='utf-8') as f:
                 json.dump(daten, f, ensure_ascii=False, indent=4)
         time.sleep(2)
+        
