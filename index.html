@@ -1,232 +1,97 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>DB Monitor Pro</title>
-    <style>
-        :root {
-            --db-blue: #005b8c;
-            --bg-color: #050505;
-            --card-bg: #121212;
-            --text-main: #eee;
-            --delay-red: #ff4d4d;
-            --ontime-green: #44ff44;
-            --platform-yellow: #ffcc00;
-            --db-red: #e2001a;
-        }
+import requests
+import json
+import time
+import os
+from datetime import datetime, timedelta, timezone
 
-        html, body { 
-            height: 100%; margin: 0; padding: 0; 
-            background: #000; font-family: -apple-system, Roboto, sans-serif; color: var(--text-main);
-            overflow: hidden; 
-        }
+STATIONS = {
+    "magdeburg_hbf": "8010224",
+    "leipzig_hbf": "Leipzig Hbf",
+    "zerbst": "Zerbst/Anhalt", 
+    "dessau_hbf": "8010077",
+    "dessau_sued": "Dessau Süd",
+    "rosslau": "8010297",
+    "rodleben": "rodleben",
+    "magdeburg_neustadt": "8010226",
+    "magdeburg_herrenkrug": "Magdeburg Herrenkrug",
+    "biederitz": "Biederitz",
+    "pretzier_altm": "Pretzier Altm",
+    "bad_belzig": "Bad Belzig",
+    "gommern": "Gommern",
+    "wusterwitz": "Wusterwitz"
+}
 
-        #welcome-screen { 
-            position: fixed; inset: 0; background: #000; z-index: 3000; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center; 
-        }
-        #welcome-screen.hidden { display: none; }
+def hole_daten(identifier, dateiname):
+    u_zeit = (datetime.now(timezone.utc) + timedelta(hours=1)).strftime("%H:%M")
+    headers = {'User-Agent': 'Mozilla/5.0 (BahnMonitorBot/6.0)'}
 
-        .search-trigger { 
-            background: var(--card-bg); padding: 20px; border-radius: 15px; 
-            cursor: pointer; text-align: center; width: 85%; border: 1px solid #333; 
-            margin-bottom: 30px; font-size: 1.1rem;
-        }
+    try:
+        final_id = identifier
+        if not identifier.isdigit():
+            s_res = requests.get(f"https://v6.db.transport.rest/locations?query={identifier}&results=1", headers=headers, timeout=10)
+            s_data = s_res.json()
+            final_id = s_data[0]['id'] if s_data else None
 
-        .fav-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 90%; }
-        .fav-card { 
-            background: #111; border: 1px solid #222; padding: 15px 5px; 
-            border-radius: 12px; font-size: 0.8rem; text-align: center; cursor: pointer;
-        }
-        .fav-card.active { border-color: var(--platform-yellow); background: #1a1500; color: #fff; }
+        if not final_id: return None
 
-        .monitor { 
-            display: none; flex-direction: column; 
-            height: 100vh; width: 100%; overflow: hidden; 
-        }
-        .monitor.active { display: flex; }
+        # WICHTIG: remarks=true liefert die Begründungen (z.B. Weichenreparatur)
+        res_api = requests.get(f"https://v6.db.transport.rest/stops/{final_id}/departures?duration=180&remarks=true", headers=headers, timeout=15)
+        if res_api.status_code != 200: return None
 
-        .top-nav { display: flex; align-items: center; padding: 10px; background: #111; border-bottom: 1px solid #222; }
-        .header { padding: 15px; border-bottom: 3px solid var(--db-blue); background: #000; flex-shrink: 0; }
-        .station-name { font-size: 1.4rem; font-weight: bold; display: block; }
-        #current-time { color: var(--ontime-green); font-family: monospace; font-size: 1.1rem; }
+        r = res_api.json()
+        departures = r.get('departures', [])
 
-        #board { 
-            flex: 1; 
-            overflow-y: auto; 
-            -webkit-overflow-scrolling: touch;
-            padding-bottom: 100px; 
-        }
+        if not departures:
+            return [{"update": u_zeit, "info": "Keine Fahrten"}]
 
-        .row { 
-            display: grid; grid-template-columns: 55px 1fr 35px 85px; 
-            padding: 15px 10px; border-bottom: 1px solid #181818; align-items: center;
-        }
+        res_list = []
+        for d in departures:
+            try:
+                line = d.get('line', {})
+                planned = datetime.fromisoformat((d.get('plannedWhen') or d.get('when')).replace('Z', '+00:00'))
+                actual = datetime.fromisoformat((d.get('when') or d.get('plannedWhen')).replace('Z', '+00:00'))
+                diff = int((actual - planned).total_seconds() / 60)
 
-        .row.cancelled { background: rgba(226, 0, 26, 0.2); }
-        .line { background: #fff; color: #000; padding: 3px 0; border-radius: 4px; font-weight: 900; text-align: center; font-size: 0.8rem; }
-        .destination-container { display: flex; flex-direction: column; overflow: hidden; padding: 0 8px; }
-        .destination { font-size: 1.1rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        
-        .reason-container { font-size: 0.8rem; color: var(--delay-red); overflow: hidden; white-space: nowrap; margin-top: 4px; font-weight: bold; }
-        .marquee { display: inline-block; padding-left: 100%; animation: marquee 15s linear infinite; }
-        @keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
+                # --- EXTRAKTION VON INFOS (GRÜNDE, FAHRRAD, AUSLASTUNG) ---
+                remarks = d.get('remarks', [])
+                grund_liste = []
+                
+                # Sitzplatz-Auslastung (👤 Icons)
+                load = d.get('load')
+                if load:
+                    icons = ["👤", "👤👤", "👤👤👤", "❗👤"]
+                    grund_liste.append(f"Auslastung: {icons[load-1] if load <= 4 else ''}")
 
-        .platform { text-align: center; font-weight: bold; color: var(--platform-yellow); font-size: 1.1rem; }
-        .time-box { text-align: right; line-height: 1.1; }
-        .scheduled { font-size: 0.8rem; color: #777; text-decoration: line-through; display: block; }
-        .actual { font-weight: bold; font-size: 1.2rem; color: var(--ontime-green); }
-        .actual.delayed { color: var(--delay-red); }
-        .actual.cancelled-text { color: var(--db-red); text-decoration: line-through; }
-        
-        #search-overlay { position: fixed; inset: 0; background: #000; z-index: 4000; display: none; flex-direction: column; }
-        .search-header { padding: 15px; display: flex; gap: 10px; border-bottom: 1px solid #222; }
-        .search-input { flex-grow: 1; background: #1a1a1a; border: 1px solid #333; color: white; padding: 12px; border-radius: 12px; font-size: 1rem; }
-        .result-item { padding: 20px; border-bottom: 1px solid #111; font-size: 1.1rem; }
-        
-        .back-btn { background: none; border: none; color: white; font-size: 26px; cursor: pointer; }
-        .fav-toggle { margin-left: auto; background: none; border: none; font-size: 1.8rem; color: #333; padding: 5px 15px; }
-        .fav-toggle.is-fav { color: var(--platform-yellow); }
-    </style>
-</head>
-<body>
+                for rem in remarks:
+                    text = rem.get('text', '').strip()
+                    if text and "http" not in text:
+                        # Icons für Platzersparnis auf dem Monitor
+                        t = text.replace("Fahrradmitnahme möglich", "🚲")
+                        t = t.replace("Fahrradmitnahme begrenzt möglich", "🚲 (begr.)")
+                        t = t.replace("Rollstuhlgerechtes Fahrzeug", "♿")
+                        if t not in grund_liste: grund_liste.append(t)
+                
+                grund_final = " | ".join(grund_liste)
 
-<div id="welcome-screen">
-    <h1 style="margin-bottom: 25px; font-size: 2rem;">Guten Tag</h1>
-    <div class="search-trigger" onclick="openSearch()">🔍 Station suchen...</div>
-    <div class="fav-grid" id="fav-bar"></div>
-</div>
+                res_list.append({
+                    "zeit": planned.strftime("%H:%M"), 
+                    "echte_zeit": actual.strftime("%H:%M"), 
+                    "linie": line.get('name', '').replace(" ", ""), 
+                    "ziel": d.get('direction', '')[:18], 
+                    "gleis": str(d.get('platform') or "-"), 
+                    "info": "FÄLLT AUS" if d.get('cancelled') else (f"+{diff}" if diff > 0 else ""), 
+                    "grund": grund_final,
+                    "update": u_zeit
+                })
+            except: continue
+        return res_list
+    except: return None
 
-<div id="search-overlay">
-    <div class="search-header">
-        <button class="back-btn" onclick="closeSearch()">✕</button>
-        <input type="text" class="search-input" id="station-query" placeholder="Suchen..." oninput="filterStations()">
-    </div>
-    <div id="search-results" style="overflow-y: auto;"></div>
-</div>
-
-<div class="monitor" id="monitor-app">
-    <div class="top-nav">
-        <button class="back-btn" onclick="goHome()">←</button>
-        <button id="star-icon" class="fav-toggle" onclick="toggleFavorite()">★</button>
-    </div>
-    <div class="header">
-        <div id="display-station" class="station-name">Lade...</div>
-        <div id="current-time">00:00:00</div>
-    </div>
-    <div id="board"></div>
-</div>
-
-<script>
-    // Jetzt mit allen Stationen aus deinem Bot
-    const STATIONS_DB = [
-        { name: "Bad Belzig", file: "bad_belzig.json" },
-        { name: "Biederitz", file: "biederitz.json" },
-        { name: "Dessau Hbf", file: "dessau_hbf.json" },
-        { name: "Dessau Süd", file: "dessau_sued.json" },
-        { name: "Gommern", file: "gommern.json" },
-        { name: "Leipzig Hbf", file: "leipzig_hbf.json" },
-        { name: "Magdeburg Herrenkrug", file: "magdeburg_herrenkrug.json" },
-        { name: "Magdeburg Hbf", file: "magdeburg_hbf.json" },
-        { name: "Magdeburg Neustadt", file: "magdeburg_neustadt.json" },
-        { name: "Pretzier (Altm)", file: "pretzier_altm.json" },
-        { name: "Rodleben", file: "rodleben.json" },
-        { name: "Roßlau (Elbe)", file: "rosslau.json" },
-        { name: "Wusterwitz", file: "wusterwitz.json" },
-        { name: "Zerbst/Anhalt", file: "zerbst.json" }
-    ];
-
-    const BASE_URL = 'https://raw.githubusercontent.com/nicopro2021/Abfahrtstafel-/main/';
-    let currentStation = null;
-    let favorites = JSON.parse(localStorage.getItem('db_final_favs')) || [null, null, null];
-
-    function openSearch() { document.getElementById('search-overlay').style.display = 'flex'; filterStations(); }
-    function closeSearch() { document.getElementById('search-overlay').style.display = 'none'; }
-    function goHome() { document.getElementById('welcome-screen').classList.remove('hidden'); document.getElementById('monitor-app').classList.remove('active'); updateFavUI(); }
-
-    function selectStation(station) {
-        currentStation = station;
-        document.getElementById('display-station').innerText = station.name;
-        document.getElementById('welcome-screen').classList.add('hidden');
-        document.getElementById('monitor-app').classList.add('active');
-        updateStarIcon();
-        closeSearch(); 
-        loadData();
-    }
-
-    function filterStations() {
-        const q = document.getElementById('station-query').value.toLowerCase();
-        document.getElementById('search-results').innerHTML = STATIONS_DB.filter(s => s.name.toLowerCase().includes(q))
-            .map(s => `<div class="result-item" onclick='selectStation(${JSON.stringify(s)})'>${s.name}</div>`).join('');
-    }
-
-    function updateFavUI() {
-        document.getElementById('fav-bar').innerHTML = favorites.map((fav, i) => `
-            <div class="fav-card ${fav ? 'active' : ''}" onclick="handleFavClick(${i})">
-                <div style="font-size: 1.4rem; margin-bottom: 5px">${fav ? '📍' : '＋'}</div>
-                <b>${fav ? fav.name.split(' ')[0] : 'Slot ' + (i+1)}</b>
-            </div>`).join('');
-    }
-
-    function handleFavClick(i) { if(favorites[i]) selectStation(favorites[i]); else openSearch(); }
-
-    function toggleFavorite() {
-        const index = favorites.findIndex(f => f && f.file === currentStation.file);
-        if (index > -1) favorites[index] = null;
-        else { const empty = favorites.indexOf(null); if (empty > -1) favorites[empty] = currentStation; else favorites[0] = currentStation; }
-        localStorage.setItem('db_final_favs', JSON.stringify(favorites));
-        updateStarIcon();
-    }
-
-    function updateStarIcon() {
-        const isFav = favorites.some(f => f && f.file === currentStation.file);
-        document.getElementById('star-icon').className = isFav ? 'fav-toggle is-fav' : 'fav-toggle';
-    }
-
-    async function loadData() {
-        if(!currentStation) return;
-        try {
-            const res = await fetch(`${BASE_URL}${currentStation.file}?t=${Date.now()}`);
-            const data = await res.json();
-            const board = document.getElementById('board');
-            board.innerHTML = '';
-            data.sort((a, b) => a.zeit.localeCompare(b.zeit));
-
-            data.filter(zug => {
-                const [h, m] = zug.zeit.split(':').map(Number);
-                const trainTime = new Date(); trainTime.setHours(h, m, 0, 0);
-                return trainTime.getTime() > (Date.now() - 120000); 
-            }).forEach(zug => {
-                const info = (zug.info || "").trim();
-                const grund = (zug.grund || "").trim();
-                const isCancelled = info.toLowerCase().includes("fällt aus");
-                const hatEchtzeit = zug.echte_zeit && zug.echte_zeit !== "null";
-                const zeitAnzeige = hatEchtzeit ? zug.echte_zeit : zug.zeit;
-                const istVerspaetet = hatEchtzeit && zug.echte_zeit !== zug.zeit;
-
-                let grundHTML = grund ? `<div class="reason-container"><span class="${grund.length > 30 ? 'marquee' : ''}">${grund}</span></div>` : '';
-
-                board.innerHTML += `
-                    <div class="row ${isCancelled ? 'cancelled' : ''}">
-                        <div class="line">${zug.linie}</div>
-                        <div class="destination-container">
-                            <div class="destination">${zug.ziel}</div>
-                            ${grundHTML}
-                        </div>
-                        <div class="platform">${zug.gleis || "-"}</div>
-                        <div class="time-box">
-                            ${(istVerspaetet || isCancelled) ? `<span class="scheduled">${zug.zeit}</span>` : ''}
-                            <span class="actual ${isCancelled ? 'cancelled-text' : (istVerspaetet ? 'delayed' : '')}">${isCancelled ? '—' : zeitAnzeige}</span>
-                        </div>
-                    </div>`;
-            });
-        } catch (e) { console.error(e); }
-    }
-
-    setInterval(() => { document.getElementById('current-time').innerText = new Date().toLocaleTimeString('de-DE'); }, 1000);
-    setInterval(loadData, 10000);
-    updateFavUI();
-</script>
-</body>
-</html>
+if __name__ == "__main__":
+    base_path = os.path.dirname(os.path.abspath(__file__))
+    for dateiname, identifier in STATIONS.items():
+        daten = hole_daten(identifier, dateiname)
+        if daten is not None:
+            with open(os.path.join(base_path, f"{dateiname}.json"), 'w', encoding='utf-8') as f:
+                json.dump(daten, f, ensure_ascii=False, indent=4)
+        time.sleep(2)
