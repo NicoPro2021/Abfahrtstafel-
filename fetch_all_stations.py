@@ -20,7 +20,8 @@ STATIONS = {
     "bad_belzig": "Bad Belzig",
     "gommern": "Gommern",
     "wusterwitz": "Wusterwitz",
-    "brandenburg_hbf": "Brandenburg Hbf"
+    "brandenburg_hbf": "Brandenburg Hbf",
+    "berlin_hbf": "Berlin Hbf"
 }
 
 def hole_daten(identifier, dateiname):
