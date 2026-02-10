@@ -1,8 +1,9 @@
-Name: Bahn Monitor Loop
+name: Bahn Monitor Loop
 
 on:
   workflow_dispatch:
   schedule:
+    # Startet alle 45 Minuten neu
     - cron: '*/45 * * * *'
 
 jobs:
@@ -12,30 +13,47 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Wichtig, um Push-Fehler zu vermeiden
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
+
       - name: Install Requests
         run: pip install requests
+
       - name: Main Loop
         run: |
           git config --global user.name "Bahn-Bot"
           git config --global user.email "bot@github.com"
-          for i in {1..15}
-          do
+          
+          # Die Schleife läuft maximal 40 Minuten (2400 Sek), 
+          # damit sie sich nicht mit dem nächsten Cron-Job überschneidet.
+          end=$((SECONDS + 2400))
+          
+          while [ $SECONDS -lt $end ]; do
+            echo "Starte Update-Runde um $(date +%H:%M:%S)"
+            
             python fetch_all_stations.py
+            
             git add *.json
-            # Commit nur wenn sich was geändert hat
+            # Nur committen, wenn sich tatsächlich Daten geändert haben
             if ! git diff --cached --quiet; then
-              git commit -m "Live Update Runde $i ($(date +%H:%M))"
-              git push origin main || (git pull --rebase origin main && git push origin main)
+              git commit -m "Live Update: $(date +%H:%M)"
+              
+              # Sicherer Push: Falls jemand anders (oder ein anderer Job) 
+              # gerade gepusht hat, holen wir erst die Änderungen.
+              git pull --rebase origin main
+              git push origin main
+            else
+              echo "Keine Änderungen in dieser Runde."
             fi
-            sleep 150 # Alle 2,5 Minuten ein Update reicht völlig aus
+            
+            echo "Warte 150 Sekunden bis zur nächsten Runde..."
+            sleep 150
           done
-      - name: Restart
-        if: always()
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh workflow run bahn_update.yml
-        
+
+      # Der "Restart" Step wird hier NICHT mehr benötigt, 
+      # da der 'cron' oben den Job alle 45 Min zuverlässig neu startet.
