@@ -10,12 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      actions: write # Notwendig für den Self-Restart!
+      actions: write
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Zwingend erforderlich für Pull & Push
-      
+          fetch-depth: 0
+
       - name: Install Python
         uses: actions/setup-python@v5
         with:
@@ -26,32 +26,46 @@ jobs:
 
       - name: Update Loop
         run: |
+          # Git Konfiguration
           git config --global user.name "Bot"
           git config --global user.email "bot@example.com"
           
+          # Sicherstellen, dass wir auf dem richtigen Branch sind
+          git checkout main
+          
           for i in {1..20}
           do
-            python fetch_all_stations.py
+            echo "--- STARTE RUNDE $i ---"
             
-            ls -l *.json
+            # Skript ausführen und Fehler unterdrücken, damit Schleife nicht stirbt
+            python fetch_all_stations.py || echo "Python Fehler in Runde $i"
             
+            # Dateien anzeigen (Kontrolle im Log)
+            ls -l *.json || echo "Keine JSON Dateien gefunden!"
+            
+            # Git Add & Commit Logik
             git add *.json
-            
             if ! git diff --cached --quiet; then
               git commit -m "Live Update $i"
-              # REPARATUR: Erst pullen, dann pushen. Sonst bricht der Workflow ab!
+              
+              # DER FIX: Erst pullen (rebase), dann pushen. 
+              # Ohne pull bricht der Pfad hier ab!
               git pull --rebase origin main
-              git push origin main --force
-              echo "Änderungen hochgeladen!"
+              git push origin main
+              echo "Runde $i: Hochgeladen!"
             else
-              echo "Git sieht keine Änderungen!"
+              echo "Runde $i: Keine Änderungen gefunden."
             fi
             
+            echo "Warte 120 Sekunden..."
             sleep 120
           done
 
       - name: Self-Restart
-        if: always() # Stellt sicher, dass der Restart IMMER versucht wird
+        if: always()
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh workflow run bahn_final.yml # Achte darauf, dass deine Datei so heißt!
+        run: |
+          # Prüfe genau ob die Datei bahn_final.yml oder bahn_update.yml heißt!
+          gh workflow run bahn_final.yml || gh workflow run bahn_update.yml
+          
