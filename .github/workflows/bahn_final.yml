@@ -10,10 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      actions: write # ERGÄNZUNG: Erlaubt den Neustart-Befehl überhaupt erst
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Erlaubt Git den Zugriff auf die Historie, um Dateien zu aktualisieren
+          fetch-depth: 0 # ERGÄNZUNG: Ohne das "sieht" er die JSONs nach dem ersten Push nicht mehr
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -28,18 +29,15 @@ jobs:
           do
             python fetch_all_stations.py
             git add *.json
-            # Commit nur wenn sich was geändert hat
             if ! git diff --cached --quiet; then
               git commit -m "Live Update Runde $i ($(date +%H:%M))"
-              # Sicherer Push, damit der Bot nicht abbricht, wenn der Server kurz blockiert
-              git pull --rebase origin main
-              git push origin main
+              # REPARATUR: pull --rebase VOR dem Push verhindert das "Stehenbleiben"
+              git pull --rebase origin main && git push origin main
             fi
-            sleep 150 # Alle 2,5 Minuten ein Update reicht völlig aus
+            sleep 150
           done
       - name: Restart
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run bahn_update.yml
-        
