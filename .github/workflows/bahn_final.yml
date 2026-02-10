@@ -1,4 +1,4 @@
-name: Bahn Monitor Loop
+Name: Bahn Monitor Loop
 
 on:
   workflow_dispatch:
@@ -9,9 +9,12 @@ jobs:
   run:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Das ist das Wichtigste!
+      contents: write
+      actions: write # Notwendig für den Self-Restart!
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Zwingend erforderlich für Pull & Push
       
       - name: Install Python
         uses: actions/setup-python@v5
@@ -28,29 +31,27 @@ jobs:
           
           for i in {1..20}
           do
-            # Skript ausführen
             python fetch_all_stations.py
             
-            # Kontrolle: Zeige uns die Dateien im Log!
             ls -l *.json
             
-            # Git Force Add
             git add *.json
             
-            # Commit & Push nur wenn Änderungen da sind
             if ! git diff --cached --quiet; then
               git commit -m "Live Update $i"
+              # REPARATUR: Erst pullen, dann pushen. Sonst bricht der Workflow ab!
+              git pull --rebase origin main
               git push origin main --force
               echo "Änderungen hochgeladen!"
             else
-              echo "Git sieht keine Änderungen - Skript hat nichts geschrieben!"
+              echo "Git sieht keine Änderungen!"
             fi
             
             sleep 120
           done
 
       - name: Self-Restart
-        if: always()
+        if: always() # Stellt sicher, dass der Restart IMMER versucht wird
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh workflow run bahn_update.yml
+        run: gh workflow run bahn_final.yml # Achte darauf, dass deine Datei so heißt!
