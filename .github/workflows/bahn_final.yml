@@ -3,8 +3,8 @@ name: Bahn Monitor Loop
 on:
   workflow_dispatch:
   schedule:
-    # Startet alle 45 Minuten neu
-    - cron: '*/45 * * * *'
+    # Startet alle 30 Minuten frisch
+    - cron: '*/30 * * * *'
 
 jobs:
   run:
@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Wichtig, um Push-Fehler zu vermeiden
+          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -29,31 +29,21 @@ jobs:
           git config --global user.name "Bahn-Bot"
           git config --global user.email "bot@github.com"
           
-          # Die Schleife läuft maximal 40 Minuten (2400 Sek), 
-          # damit sie sich nicht mit dem nächsten Cron-Job überschneidet.
-          end=$((SECONDS + 2400))
+          # Der Bot läuft genau 25 Minuten lang (1500 Sekunden)
+          end=$((SECONDS + 1500))
           
           while [ $SECONDS -lt $end ]; do
-            echo "Starte Update-Runde um $(date +%H:%M:%S)"
-            
             python fetch_all_stations.py
             
             git add *.json
-            # Nur committen, wenn sich tatsächlich Daten geändert haben
             if ! git diff --cached --quiet; then
-              git commit -m "Live Update: $(date +%H:%M)"
-              
-              # Sicherer Push: Falls jemand anders (oder ein anderer Job) 
-              # gerade gepusht hat, holen wir erst die Änderungen.
+              git commit -m "Live Update $(date +%H:%M)"
+              # Verhindert Fehler, falls gleichzeitig manuell geändert wurde
               git pull --rebase origin main
               git push origin main
-            else
-              echo "Keine Änderungen in dieser Runde."
             fi
             
-            echo "Warte 150 Sekunden bis zur nächsten Runde..."
+            echo "Warte auf nächste Runde..."
             sleep 150
           done
-
-      # Der "Restart" Step wird hier NICHT mehr benötigt, 
-      # da der 'cron' oben den Job alle 45 Min zuverlässig neu startet.
+          
