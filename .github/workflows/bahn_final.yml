@@ -3,7 +3,8 @@ name: Bahn Monitor Loop
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/45 * * * *'
+    # Alle 30 Minuten starten
+    - cron: '*/30 * * * *'
 
 jobs:
   run:
@@ -12,29 +13,36 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Wichtig für Rebase
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
+
       - name: Install Requests
         run: pip install requests
+
       - name: Main Loop
         run: |
           git config --global user.name "Bahn-Bot"
           git config --global user.email "bot@github.com"
-          for i in {1..15}
-          do
+          
+          # Wir laufen 25 Minuten lang, um dem 30-Min-Cron nicht in die Quere zu kommen
+          end=$((SECONDS + 1500)) 
+          
+          while [ $SECONDS -lt $end ]; do
             python fetch_all_stations.py
+            
             git add *.json
-            # Commit nur wenn sich was geändert hat
             if ! git diff --cached --quiet; then
-              git commit -m "Live Update Runde $i ($(date +%H:%M))"
-              git push origin main || (git pull --rebase origin main && git push origin main)
+              # Versuche zu committen und zu pushen, bei Fehler kurz warten und skippen
+              if git commit -m "Live Update $(date +%H:%M:%S)"; then
+                git pull --rebase origin main
+                git push origin main || echo "Push failed, retrying next loop"
+              fi
             fi
-            sleep 150 # Alle 2,5 Minuten ein Update reicht völlig aus
+            
+            sleep 150
           done
-      - name: Restart
-        if: always()
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh workflow run bahn_update.yml
