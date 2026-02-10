@@ -1,43 +1,56 @@
-Name: Bahn Monitor Loop
+name: Bahn Monitor Loop
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/45 * * * *'
+    - cron: '*/40 * * * *'
 
 jobs:
   run:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
-      actions: write  # Das fehlte! Ohne das darf der Restart nicht feuern.
+      contents: write # Das ist das Wichtigste!
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Setup Python
+      
+      - name: Install Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
+
       - name: Install Requests
         run: pip install requests
-      - name: Main Loop
+
+      - name: Update Loop
         run: |
-          git config --global user.name "Bahn-Bot"
-          git config --global user.email "bot@github.com"
-          for i in {1..15}
+          git config --global user.name "Bot"
+          git config --global user.email "bot@example.com"
+          
+          for i in {1..20}
           do
+            # Skript ausführen
             python fetch_all_stations.py
+            
+            # Kontrolle: Zeige uns die Dateien im Log!
+            ls -l *.json
+            
+            # Git Force Add
             git add *.json
+            
+            # Commit & Push nur wenn Änderungen da sind
             if ! git diff --cached --quiet; then
-              git commit -m "Live Update Runde $i ($(date +%H:%M))"
-              # Rebase ist nötig, damit der Push nicht wegen Zeitüberschneidung abbricht
-              git pull --rebase origin main && git push origin main
+              git commit -m "Live Update $i"
+              git push origin main --force
+              echo "Änderungen hochgeladen!"
+            else
+              echo "Git sieht keine Änderungen - Skript hat nichts geschrieben!"
             fi
-            sleep 150
+            
+            sleep 120
           done
-      - name: Restart
+
+      - name: Self-Restart
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh workflow run bahn_final.yml # Hier stand "update", muss aber "final" sein!
+        run: gh workflow run bahn_update.yml
