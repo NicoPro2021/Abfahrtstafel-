@@ -3,69 +3,45 @@ Name: Bahn Monitor Loop
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/40 * * * *'
+    - cron: '*/45 * * * *'
 
 jobs:
   run:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      actions: write
+      actions: write  # KRITISCH: Ohne das darf der Restart-Befehl nicht feuern
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-
-      - name: Install Python
+          fetch-depth: 0 # KRITISCH: Damit Git die Dateien überschreiben darf
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
-
       - name: Install Requests
         run: pip install requests
-
-      - name: Update Loop
+      - name: Main Loop
         run: |
-          # Git Konfiguration
-          git config --global user.name "Bot"
-          git config --global user.email "bot@example.com"
-          
-          # Sicherstellen, dass wir auf dem richtigen Branch sind
-          git checkout main
-          
-          for i in {1..20}
+          git config --global user.name "Bahn-Bot"
+          git config --global user.email "bot@github.com"
+          for i in {1..15}
           do
-            echo "--- STARTE RUNDE $i ---"
-            
-            # Skript ausführen und Fehler unterdrücken, damit Schleife nicht stirbt
-            python fetch_all_stations.py || echo "Python Fehler in Runde $i"
-            
-            # Dateien anzeigen (Kontrolle im Log)
-            ls -l *.json || echo "Keine JSON Dateien gefunden!"
-            
-            # Git Add & Commit Logik
+            python fetch_all_stations.py
             git add *.json
+            # Commit nur wenn sich was geändert hat
             if ! git diff --cached --quiet; then
-              git commit -m "Live Update $i"
-              
-              # DER FIX: Erst pullen (rebase), dann pushen. 
-              # Ohne pull bricht der Pfad hier ab!
+              git commit -m "Live Update Runde $i ($(date +%H:%M))"
+              # Rebase vor dem Push verhindert, dass der Bot bei Zeitüberschneidungen abbricht
               git pull --rebase origin main
-              git push origin main
-              echo "Runde $i: Hochgeladen!"
-            else
-              echo "Runde $i: Keine Änderungen gefunden."
+              git push origin main || (git pull --rebase origin main && git push origin main)
             fi
-            
-            echo "Warte 120 Sekunden..."
-            sleep 120
+            sleep 150 # Alle 2,5 Minuten ein Update reicht völlig aus
           done
-
-      - name: Self-Restart
+      - name: Restart
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
-        run: |
-          # Prüfe genau ob die Datei bahn_final.yml oder bahn_update.yml heißt!
-          gh workflow run bahn_final.yml || gh workflow run bahn_update.yml
-          
+        # WICHTIG: Prüfe, ob deine Datei bahn_update.yml oder bahn_final.yml heißt!
+        run: gh workflow run bahn_final.yml
+        
