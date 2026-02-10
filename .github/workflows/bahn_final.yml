@@ -1,10 +1,9 @@
-name: Bahn Monitor Loop
+Name: Bahn Monitor Loop
 
 on:
   workflow_dispatch:
   schedule:
-    # Startet alle 30 Minuten frisch
-    - cron: '*/30 * * * *'
+    - cron: '*/45 * * * *'
 
 jobs:
   run:
@@ -14,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # Wichtig für stabiles Pull & Push
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -29,21 +28,26 @@ jobs:
           git config --global user.name "Bahn-Bot"
           git config --global user.email "bot@github.com"
           
-          # Der Bot läuft genau 25 Minuten lang (1500 Sekunden)
-          end=$((SECONDS + 1500))
-          
-          while [ $SECONDS -lt $end ]; do
-            python fetch_all_stations.py
+          for i in {1..15}
+          do
+            # Fehler abfangen, damit die Schleife nicht stirbt
+            python fetch_all_stations.py || echo "Script Fehler, überspringe Runde..."
             
             git add *.json
             if ! git diff --cached --quiet; then
-              git commit -m "Live Update $(date +%H:%M)"
-              # Verhindert Fehler, falls gleichzeitig manuell geändert wurde
+              git commit -m "Live Update Runde $i ($(date +%H:%M))"
+              # Verbesserte Push-Logik gegen Abbrüche
               git pull --rebase origin main
-              git push origin main
+              git push origin main || echo "Push fehlgeschlagen, versuche es nächste Runde"
             fi
-            
-            echo "Warte auf nächste Runde..."
             sleep 150
           done
+
+      - name: Restart
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Verhindert, dass der Neustart-Befehl den ganzen Job als "failed" markiert
+          gh workflow run bahn_update.yml || echo "Restart aktuell nicht möglich"
           
