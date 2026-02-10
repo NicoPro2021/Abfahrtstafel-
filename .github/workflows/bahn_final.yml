@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      actions: write # ERGÄNZUNG: Erlaubt den Neustart-Befehl überhaupt erst
+      actions: write  # Das fehlte! Ohne das darf der Restart nicht feuern.
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # ERGÄNZUNG: Ohne das "sieht" er die JSONs nach dem ersten Push nicht mehr
+          fetch-depth: 0
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -31,7 +31,7 @@ jobs:
             git add *.json
             if ! git diff --cached --quiet; then
               git commit -m "Live Update Runde $i ($(date +%H:%M))"
-              # REPARATUR: pull --rebase VOR dem Push verhindert das "Stehenbleiben"
+              # Rebase ist nötig, damit der Push nicht wegen Zeitüberschneidung abbricht
               git pull --rebase origin main && git push origin main
             fi
             sleep 150
@@ -40,4 +40,4 @@ jobs:
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh workflow run bahn_update.yml
+        run: gh workflow run bahn_final.yml # Hier stand "update", muss aber "final" sein!
