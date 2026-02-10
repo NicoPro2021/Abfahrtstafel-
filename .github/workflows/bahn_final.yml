@@ -44,4 +44,3 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         # WICHTIG: Prüfe, ob deine Datei bahn_update.yml oder bahn_final.yml heißt!
         run: gh workflow run bahn_final.yml
-        
