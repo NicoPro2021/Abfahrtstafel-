@@ -8,6 +8,10 @@ on:
 jobs:
   run:
     runs-on: ubuntu-latest
+    # Verhindert, dass mehrere Bots gleichzeitig laufen und sich gegenseitig blockieren
+    concurrency:
+      group: bahn-monitor
+      cancel-in-progress: true
     permissions:
       contents: write
       actions: write
@@ -15,30 +19,41 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
+
       - name: Install Requests
         run: pip install requests
+
       - name: Main Loop
         run: |
           git config --global user.name "Bahn-Bot"
           git config --global user.email "bot@github.com"
+          
           for i in {1..15}
           do
+            echo "Runde $i startet..."
             python fetch_all_stations.py
+            
             git add *.json
             if ! git diff --cached --quiet; then
               git commit -m "Live Update Runde $i ($(date +%H:%M))"
+              # Erst pullen, dann pushen - das ist der sicherste Weg
               git pull --rebase origin main
               git push origin main
+              echo "Update hochgeladen."
+            else
+              echo "Keine Änderungen gefunden."
             fi
+            
             sleep 150
           done
+
       - name: Restart
         if: always()
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run bahn_final.yml
-        
