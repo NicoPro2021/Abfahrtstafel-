@@ -25,6 +25,7 @@ STATIONS = {
     "gommern": "Gommern",
     "wusterwitz": "Wusterwitz"
 }
+ }
 
 def hole_daten(identifier, dateiname):
     # Zeitstempel für das Update (Deutschland Zeit)
