@@ -1,4 +1,4 @@
-Name: Bahn Monitor Loop
+name: Bahn Monitor Loop
 
 on:
   workflow_dispatch:
@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      actions: write  # Erlaubt den Self-Restart
+      actions: write
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Ermöglicht saubere Git-Updates
+          fetch-depth: 0
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -29,18 +29,16 @@ jobs:
           do
             python fetch_all_stations.py
             git add *.json
-            # Commit nur wenn sich was geändert hat
             if ! git diff --cached --quiet; then
               git commit -m "Live Update Runde $i ($(date +%H:%M))"
-              # Rebase vor dem Push verhindert Abbrüche
               git pull --rebase origin main
-              git push origin main || (git pull --rebase origin main && git push origin main)
+              git push origin main
             fi
-            sleep 150 # Alle 2,5 Minuten ein Update
+            sleep 150
           done
       - name: Restart
-        if: always() # Läuft auch bei Fehlern in der Schleife
+        if: always()
         env:
           GH_TOKEN: ${{ github.token }}
-        # Startet exakt diese Datei neu
         run: gh workflow run bahn_final.yml
+        
