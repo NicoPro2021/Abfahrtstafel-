@@ -4,9 +4,8 @@ import time
 import os
 from datetime import datetime, timedelta, timezone
 
-# Vollständige Liste deiner Stationen
+# Vollständige Liste deiner Stationen mit Namen und IDs
 STATIONS = {
-    STATIONS = {
     "magdeburg_hbf": "8010224",
     "leipzig_hbf": "Leipzig Hbf",
     "berlin_hbf": "Berlin Hbf",
@@ -24,11 +23,9 @@ STATIONS = {
     "bad_belzig": "Bad Belzig",
     "gommern": "Gommern",
     "wusterwitz": "Wusterwitz"
-}
- }
+} # <--- Hier war der Fehler: Die Klammer ist jetzt zu!
 
 def hole_daten(identifier, dateiname):
-    # Zeitstempel für das Update (Deutschland Zeit)
     u_zeit = (datetime.now(timezone.utc) + timedelta(hours=1)).strftime("%H:%M")
     headers = {'User-Agent': 'Mozilla/5.0 (BahnMonitorBot/6.0)'}
 
@@ -41,10 +38,8 @@ def hole_daten(identifier, dateiname):
 
         if not final_id: return None
 
-        # Abfrage mit &remarks=true für alle verfügbaren Texte
         res_api = requests.get(f"https://v6.db.transport.rest/stops/{final_id}/departures?duration=180&remarks=true", headers=headers, timeout=15)
-        if res_api.status_code != 200:
-            return None
+        if res_api.status_code != 200: return None
 
         r = res_api.json()
         departures = r.get('departures', [])
@@ -56,28 +51,25 @@ def hole_daten(identifier, dateiname):
         for d in departures:
             try:
                 line = d.get('line', {})
-                planned_str = d.get('plannedWhen') or d.get('when')
-                actual_str = d.get('when') or d.get('plannedWhen')
-                
-                planned = datetime.fromisoformat(planned_str.replace('Z', '+00:00'))
-                actual = datetime.fromisoformat(actual_str.replace('Z', '+00:00'))
+                planned = datetime.fromisoformat((d.get('plannedWhen') or d.get('when')).replace('Z', '+00:00'))
+                actual = datetime.fromisoformat((d.get('when') or d.get('plannedWhen')).replace('Z', '+00:00'))
                 diff = int((actual - planned).total_seconds() / 60)
 
-                # --- NULL FILTER: Wir nehmen ALLES was kommt ---
                 remarks = d.get('remarks', [])
                 grund_liste = []
                 
-                for rem in remarks:
-                    text = rem.get('text', '').strip()
-                    if text:
-                        # Wir fügen den Text ungefiltert hinzu
-                        if text not in grund_liste:
-                            grund_liste.append(text)
-                
-                # Auslastung hinzufügen
                 load = d.get('load')
                 if load:
-                    grund_liste.append(f"Auslastung: {load}")
+                    icons = ["👤", "👤👤", "👤👤👤", "❗👤"]
+                    grund_liste.append(f"Auslastung: {icons[load-1] if load <= 4 else ''}")
+
+                for rem in remarks:
+                    text = rem.get('text', '').strip()
+                    if text and "http" not in text:
+                        t = text.replace("Fahrradmitnahme möglich", "🚲")
+                        if t not in grund_liste: grund_liste.append(t)
+                
+                grund_final = " | ".join(grund_liste)
 
                 res_list.append({
                     "zeit": planned.strftime("%H:%M"), 
@@ -86,15 +78,12 @@ def hole_daten(identifier, dateiname):
                     "ziel": d.get('direction', '')[:18], 
                     "gleis": str(d.get('platform') or "-"), 
                     "info": "FÄLLT AUS" if d.get('cancelled') else (f"+{diff}" if diff > 0 else ""), 
-                    "grund": " | ".join(grund_liste),
+                    "grund": grund_final,
                     "update": u_zeit
                 })
-            except:
-                continue
-        
+            except: continue
         return res_list
-    except:
-        return None
+    except: return None
 
 if __name__ == "__main__":
     base_path = os.path.dirname(os.path.abspath(__file__))
@@ -104,3 +93,5 @@ if __name__ == "__main__":
             with open(os.path.join(base_path, f"{dateiname}.json"), 'w', encoding='utf-8') as f:
                 json.dump(daten, f, ensure_ascii=False, indent=4)
         time.sleep(2)
+
+   
