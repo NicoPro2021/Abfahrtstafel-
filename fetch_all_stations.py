@@ -6,9 +6,13 @@ from datetime import datetime, timedelta, timezone
 
 # Vollständige Liste deiner Stationen
 STATIONS = {
+    STATIONS = {
     "magdeburg_hbf": "8010224",
     "leipzig_hbf": "Leipzig Hbf",
-    "zerbst": "Zerbst/Anhalt", 
+    "berlin_hbf": "Berlin Hbf",
+    "brandenburg_hbf": "Brandenburg Hbf",
+    "opernhaus_magdeburg": "692138",
+    "zerbst": "Zerbst/Anhalt",
     "dessau_hbf": "8010077",
     "dessau_sued": "Dessau Süd",
     "rosslau": "8010297",
@@ -19,10 +23,7 @@ STATIONS = {
     "pretzier_altm": "Pretzier Altm",
     "bad_belzig": "Bad Belzig",
     "gommern": "Gommern",
-    "wusterwitz": "Wusterwitz",
-    "brandenburg_hbf": "Brandenburg Hbf",
-    "berlin_hbf": "Berlin Hbf",
-    "opernhaus_magdeburg": "953333"
+    "wusterwitz": "Wusterwitz"
 }
 
 def hole_daten(identifier, dateiname):
