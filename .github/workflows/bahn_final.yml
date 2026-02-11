@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      actions: write  # KRITISCH: Ohne das darf der Restart-Befehl nicht feuern
+      actions: write  # Erlaubt den Self-Restart
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # KRITISCH: Damit Git die Dateien überschreiben darf
+          fetch-depth: 0 # Ermöglicht saubere Git-Updates
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -32,15 +32,15 @@ jobs:
             # Commit nur wenn sich was geändert hat
             if ! git diff --cached --quiet; then
               git commit -m "Live Update Runde $i ($(date +%H:%M))"
-              # Rebase vor dem Push verhindert, dass der Bot bei Zeitüberschneidungen abbricht
+              # Rebase vor dem Push verhindert Abbrüche
               git pull --rebase origin main
               git push origin main || (git pull --rebase origin main && git push origin main)
             fi
-            sleep 150 # Alle 2,5 Minuten ein Update reicht völlig aus
+            sleep 150 # Alle 2,5 Minuten ein Update
           done
       - name: Restart
-        if: always()
+        if: always() # Läuft auch bei Fehlern in der Schleife
         env:
           GH_TOKEN: ${{ github.token }}
-        # WICHTIG: Prüfe, ob deine Datei bahn_update.yml oder bahn_final.yml heißt!
+        # Startet exakt diese Datei neu
         run: gh workflow run bahn_final.yml
