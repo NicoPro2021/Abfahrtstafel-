@@ -10,7 +10,7 @@ STATIONS = {
     "leipzig_hbf": "Leipzig Hbf",
     "berlin_hbf": "Berlin Hbf",
     "brandenburg_hbf": "Brandenburg Hbf",
-    "opernhaus_magdeburg": "692138",
+    "opernhaus_magdeburg": "Magdeburg Opernhaus",
     "zerbst": "Zerbst/Anhalt",
     "dessau_hbf": "8010077",
     "dessau_sued": "Dessau Süd",
