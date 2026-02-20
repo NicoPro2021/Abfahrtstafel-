@@ -1,97 +1,133 @@
 import requests
+import xml.etree.ElementTree as ET
+import json
 import os
 import time
-import xml.etree.ElementTree as ET
 from datetime import datetime
 from zoneinfo import ZoneInfo
 from concurrent.futures import ThreadPoolExecutor
-import json
 
-# DEINE NEUEN ZUGANGSDATEN
+# DEINE ZUGANGSDATEN
 CLIENT_ID = "647fddb98582bec8984c65e1256eb617"
 CLIENT_SECRET = "6af72e24106f2250967364fac780bbe6"
 
-# WICHTIG: Die offizielle API braucht zwingend die numerische EVA-ID
+# ALLE STATIONEN MIT KORREKTEN IDs
 STATIONS = {
     "magdeburg_hbf": "8010224",
+    "leipzig_hbf": "8010205",
+    "berlin_hbf": "8011160",
+    "brandenburg_hbf": "8010060",
+    "zerbst": "8010392",
     "dessau_hbf": "8010077",
+    "dessau_sued": "8010076",
     "rosslau": "8010297",
+    "rodleben": "8010294",
     "magdeburg_neustadt": "8010226",
-    # Füge hier die weiteren numerischen IDs hinzu
+    "magdeburg_herrenkrug": "8010225",
+    "biederitz": "8010052",
+    "pretzier_altm": "8012724",
+    "bad_belzig": "8010033",
+    "gommern": "8010141",
+    "wusterwitz": "8010388"
 }
 
-def hole_daten_offiziell(eva_id):
+HEADERS = {
+    'DB-Client-Id': CLIENT_ID,
+    'DB-Api-Key': CLIENT_SECRET,
+    'accept': 'application/xml'
+}
+
+def hole_station_daten(eva_id):
     tz = ZoneInfo("Europe/Berlin")
     jetzt = datetime.now(tz)
     u_zeit = jetzt.strftime("%H:%M")
     
-    # Format für die offizielle API: YYMMDD/HH
+    # Zeitformate für die API
     datum = jetzt.strftime("%y%m%d")
     stunde = jetzt.strftime("%H")
     
-    url = f"https://apis.deutschebahn.com/db-api-marketplace/apis/timetables/v1/plan/{eva_id}/{datum}/{stunde}"
-    
-    headers = {
-        'DB-Client-Id': CLIENT_ID,
-        'DB-Api-Key': CLIENT_SECRET,
-        'accept': 'application/xml'
-    }
+    plan_url = f"https://apis.deutschebahn.com/db-api-marketplace/apis/timetables/v1/plan/{eva_id}/{datum}/{stunde}"
+    change_url = f"https://apis.deutschebahn.com/db-api-marketplace/apis/timetables/v1/fchg/{eva_id}"
 
     try:
-        res = requests.get(url, headers=headers, timeout=15)
-        if res.status_code != 200:
-            print(f"Fehler {res.status_code} bei ID {eva_id}")
-            return None
+        # 1. Echtzeit-Änderungen laden (Verspätungen)
+        changes = {}
+        c_res = requests.get(change_url, headers=HEADERS, timeout=10)
+        if c_res.status_code == 200:
+            c_root = ET.fromstring(c_res.content)
+            for s in c_root.findall('s'):
+                t_id = s.get('id')
+                dp = s.find('dp')
+                if dp is not None:
+                    changes[t_id] = {
+                        "ct": dp.get('ct'), # geänderte Zeit
+                        "cp": dp.get('cp'), # geändertes Gleis
+                        "cs": dp.get('cs')  # Status (z.B. CANCELLED)
+                    }
 
-        # XML parsen
-        root = ET.fromstring(res.content)
+        # 2. Plan-Daten laden
+        p_res = requests.get(plan_url, headers=HEADERS, timeout=10)
+        if p_res.status_code != 200: return None
+        
+        p_root = ET.fromstring(p_res.content)
         res_list = []
 
-        for s in root.findall('s'):
-            # Abfahrts-Informationen (dp = departure)
+        for s in p_root.findall('s'):
+            trip_id = s.get('id')
+            tl = s.find('tl')
             dp = s.find('dp')
-            tl = s.find('tl') # Train-Logik
             
             if dp is not None and tl is not None:
-                # Geplante Zeit (Format: YYMMDDHHMM)
+                # Geplante Daten
                 p_time_str = dp.get('pt')
                 p_time = datetime.strptime(p_time_str, "%y%m%d%H%M").replace(tzinfo=tz)
                 
+                # Echtzeit-Abgleich
+                chg = changes.get(trip_id, {})
+                e_time_str = chg.get('ct') or p_time_str
+                e_time = datetime.strptime(e_time_str, "%y%m%d%H%M").replace(tzinfo=tz)
+                
+                diff = int((e_time - p_time).total_seconds() / 60)
+                
+                # LINIE: Bevorzugt 'l' (RE13), sonst Kategorie+Nummer (RE16043)
+                linie = dp.get('l') or f"{tl.get('c')}{tl.get('n')}"
+                
+                # INFO Feld
+                info_text = "pünktlich"
+                if chg.get('cs') == "c": info_text = "FÄLLT AUS"
+                elif diff > 0: info_text = f"+{diff}"
+
                 res_list.append({
                     "zeit": p_time.strftime("%H:%M"),
-                    "linie": (tl.get('c') or "") + (tl.get('n') or ""), # z.B. RE13
-                    "ziel": dp.get('ppth').split('|')[-1], # Letztes Ziel in der Route
-                    "gleis": dp.get('pp') or "-",
-                    "info": "", # Verspätungen müssten über die /fchg-Schnittstelle geladen werden
+                    "echte_zeit": e_time.strftime("%H:%M"),
+                    "linie": linie,
+                    "ziel": dp.get('ppth').split('|')[-1][:20],
+                    "gleis": chg.get('cp') or dp.get('pp') or "-",
+                    "info": info_text,
                     "update": u_zeit
                 })
         
-        return res_list if res_list else [{"update": u_zeit, "info": "Keine Fahrten"}]
+        # Sortieren nach Zeit
+        res_list.sort(key=lambda x: x['zeit'])
+        return res_list
+
     except Exception as e:
-        print(f"Fehler: {e}")
+        print(f"Fehler bei {eva_id}: {e}")
         return None
 
 def verarbeite_station(item):
-    dateiname, identifier = item
+    dateiname, eva_id = item
     base_path = os.path.dirname(os.path.abspath(__file__))
     
-    # Check, ob wir eine Nummer haben (die offizielle API kann keine Namen suchen)
-    if not identifier.isdigit():
-        print(f"Überspringe {dateiname}: Benötige numerische EVA-ID!")
-        return
-
-    daten = hole_daten_offiziell(identifier)
+    print(f"Update läuft: {dateiname}...")
+    daten = hole_station_daten(eva_id)
     
     if daten is not None:
-        file_path = os.path.join(base_path, f"{dateiname}.json")
-        with open(file_path, 'w', encoding='utf-8') as f:
+        with open(os.path.join(base_path, f"{dateiname}.json"), 'w', encoding='utf-8') as f:
             json.dump(daten, f, ensure_ascii=False, indent=4)
-        print(f"Erfolgreich aktualisiert: {dateiname}")
 
 if __name__ == "__main__":
-    start_time = time.time()
-    with ThreadPoolExecutor(max_workers=5) as executor: # Weniger Worker, um DB-Sperren zu vermeiden
+    start = time.time()
+    with ThreadPoolExecutor(max_workers=5) as executor:
         executor.map(verarbeite_station, STATIONS.items())
-    
-    print(f"\nUpdate beendet in {round(time.time() - start_time, 2)} Sek.")
-    
+    print(f"\nFertig! Alles aktualisiert in {round(time.time() - start, 2)} Sek.")
