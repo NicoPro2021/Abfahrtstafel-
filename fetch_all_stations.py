@@ -11,7 +11,7 @@ from concurrent.futures import ThreadPoolExecutor
 CLIENT_ID = "647fddb98582bec8984c65e1256eb617"
 CLIENT_SECRET = "6af72e24106f2250967364fac780bbe6"
 
-# ALLE STATIONEN MIT KORREKTEN IDs
+# VOLLSTÄNDIGE STATIONSLISTE
 STATIONS = {
     "magdeburg_hbf": "8010224",
     "leipzig_hbf": "8010205",
@@ -42,7 +42,6 @@ def hole_station_daten(eva_id):
     jetzt = datetime.now(tz)
     u_zeit = jetzt.strftime("%H:%M")
     
-    # Zeitformate für die API
     datum = jetzt.strftime("%y%m%d")
     stunde = jetzt.strftime("%H")
     
@@ -50,23 +49,33 @@ def hole_station_daten(eva_id):
     change_url = f"https://apis.deutschebahn.com/db-api-marketplace/apis/timetables/v1/fchg/{eva_id}"
 
     try:
-        # 1. Echtzeit-Änderungen laden (Verspätungen)
+        # 1. ÄNDERUNGEN UND BEGRÜNDUNGEN LADEN (fchg)
         changes = {}
-        c_res = requests.get(change_url, headers=HEADERS, timeout=10)
+        c_res = requests.get(change_url, headers=HEADERS, timeout=12)
         if c_res.status_code == 200:
             c_root = ET.fromstring(c_res.content)
             for s in c_root.findall('s'):
                 t_id = s.get('id')
                 dp = s.find('dp')
-                if dp is not None:
-                    changes[t_id] = {
-                        "ct": dp.get('ct'), # geänderte Zeit
-                        "cp": dp.get('cp'), # geändertes Gleis
-                        "cs": dp.get('cs')  # Status (z.B. CANCELLED)
-                    }
+                
+                # Begründungen sammeln (HIM-Meldungen)
+                messages = []
+                for m in s.findall('m'):
+                    # Wir suchen nach Verspätungsgründen (t='d') oder Störungen (t='r')
+                    grund = m.get('c')
+                    if grund and m.get('t') in ['d', 'r', 'f']:
+                        # Manche Gründe sind nur Codes, oft liefert die API aber Text
+                        messages.append(grund)
+                
+                changes[t_id] = {
+                    "ct": dp.get('ct') if dp is not None else None,
+                    "cp": dp.get('cp') if dp is not None else None,
+                    "cs": dp.get('cs') if dp is not None else None,
+                    "grund": " | ".join(dict.fromkeys(messages)) # Dubletten entfernen
+                }
 
-        # 2. Plan-Daten laden
-        p_res = requests.get(plan_url, headers=HEADERS, timeout=10)
+        # 2. PLAN-DATEN LADEN
+        p_res = requests.get(plan_url, headers=HEADERS, timeout=12)
         if p_res.status_code != 200: return None
         
         p_root = ET.fromstring(p_res.content)
@@ -78,24 +87,25 @@ def hole_station_daten(eva_id):
             dp = s.find('dp')
             
             if dp is not None and tl is not None:
-                # Geplante Daten
                 p_time_str = dp.get('pt')
                 p_time = datetime.strptime(p_time_str, "%y%m%d%H%M").replace(tzinfo=tz)
                 
-                # Echtzeit-Abgleich
+                # Abgleich mit Echtzeit-Daten
                 chg = changes.get(trip_id, {})
                 e_time_str = chg.get('ct') or p_time_str
                 e_time = datetime.strptime(e_time_str, "%y%m%d%H%M").replace(tzinfo=tz)
                 
                 diff = int((e_time - p_time).total_seconds() / 60)
                 
-                # LINIE: Bevorzugt 'l' (RE13), sonst Kategorie+Nummer (RE16043)
+                # Linie (RE13 etc.)
                 linie = dp.get('l') or f"{tl.get('c')}{tl.get('n')}"
                 
-                # INFO Feld
+                # Status-Text (Verspätung oder Ausfall)
                 info_text = "pünktlich"
-                if chg.get('cs') == "c": info_text = "FÄLLT AUS"
-                elif diff > 0: info_text = f"+{diff}"
+                if chg.get('cs') == "c":
+                    info_text = "FÄLLT AUS"
+                elif diff > 0:
+                    info_text = f"+{diff}"
 
                 res_list.append({
                     "zeit": p_time.strftime("%H:%M"),
@@ -104,30 +114,35 @@ def hole_station_daten(eva_id):
                     "ziel": dp.get('ppth').split('|')[-1][:20],
                     "gleis": chg.get('cp') or dp.get('pp') or "-",
                     "info": info_text,
+                    "begruendung": chg.get('messages') or "", # Die neue Spalte für den Grund
                     "update": u_zeit
                 })
         
-        # Sortieren nach Zeit
         res_list.sort(key=lambda x: x['zeit'])
         return res_list
 
     except Exception as e:
-        print(f"Fehler bei {eva_id}: {e}")
+        print(f"Fehler bei Station {eva_id}: {e}")
         return None
 
 def verarbeite_station(item):
     dateiname, eva_id = item
     base_path = os.path.dirname(os.path.abspath(__file__))
     
-    print(f"Update läuft: {dateiname}...")
+    print(f"Abfrage läuft: {dateiname} (ID: {eva_id})")
     daten = hole_station_daten(eva_id)
     
     if daten is not None:
-        with open(os.path.join(base_path, f"{dateiname}.json"), 'w', encoding='utf-8') as f:
+        file_path = os.path.join(base_path, f"{dateiname}.json")
+        with open(file_path, 'w', encoding='utf-8') as f:
             json.dump(daten, f, ensure_ascii=False, indent=4)
+        print(f"Datei gespeichert: {dateiname}.json")
 
 if __name__ == "__main__":
-    start = time.time()
+    print("Starte Bahn-Monitor Update...")
+    start_time = time.time()
+    
     with ThreadPoolExecutor(max_workers=5) as executor:
         executor.map(verarbeite_station, STATIONS.items())
-    print(f"\nFertig! Alles aktualisiert in {round(time.time() - start, 2)} Sek.")
+        
+    print(f"\nUpdate abgeschlossen! Dauer: {round(time.time() - start_time, 2)} Sekunden.")
