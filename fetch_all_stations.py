@@ -17,7 +17,7 @@ STATIONS = {
     "leipzig_hbf": "8010205",
     "berlin_hbf": "8011160",
     "brandenburg_hbf": "8010060",
-    "zerbst": "8010392",
+    "zerbst": "8013389",
     "dessau_hbf": "8010077",
     "dessau_sued": "8010076",
     "rosslau": "8010297",
