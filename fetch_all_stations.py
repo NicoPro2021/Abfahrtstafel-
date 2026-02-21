@@ -11,10 +11,11 @@ from concurrent.futures import ThreadPoolExecutor
 CLIENT_ID = "647fddb98582bec8984c65e1256eb617"
 CLIENT_SECRET = "6af72e24106f2250967364fac780bbe6"
 
-# VOLLSTÄNDIGE STATIONSLISTE
+# VOLLSTÄNDIGE STATIONSLISTE (Inklusive Leipzig Tief für S-Bahn Gleis 1-2)
 STATIONS = {
     "magdeburg_hbf": "8010224",
     "leipzig_hbf": "8010205",
+    "leipzig_hbf_tief": "8011161", # NEU: Für S-Bahnen im Tunnel
     "berlin_hbf": "8011160",
     "brandenburg_hbf": "8010060",
     "zerbst": "8013389",
@@ -58,20 +59,18 @@ def hole_station_daten(eva_id):
                 t_id = s.get('id')
                 dp = s.find('dp')
                 
-                # Begründungen sammeln (HIM-Meldungen)
                 messages = []
                 for m in s.findall('m'):
-                    # Wir suchen nach Verspätungsgründen (t='d') oder Störungen (t='r')
-                    grund = m.get('c')
-                    if grund and m.get('t') in ['d', 'r', 'f']:
-                        # Manche Gründe sind nur Codes, oft liefert die API aber Text
-                        messages.append(grund)
+                    text = m.get('c')
+                    # Wir nehmen Typ 'd' (Verspätungsgrund) und 'r' (Störung)
+                    if text and m.get('t') in ['d', 'r', 'f']:
+                        messages.append(text)
                 
                 changes[t_id] = {
                     "ct": dp.get('ct') if dp is not None else None,
                     "cp": dp.get('cp') if dp is not None else None,
                     "cs": dp.get('cs') if dp is not None else None,
-                    "grund": " | ".join(dict.fromkeys(messages)) # Dubletten entfernen
+                    "grund": " | ".join(dict.fromkeys(messages)) 
                 }
 
         # 2. PLAN-DATEN LADEN
@@ -90,17 +89,13 @@ def hole_station_daten(eva_id):
                 p_time_str = dp.get('pt')
                 p_time = datetime.strptime(p_time_str, "%y%m%d%H%M").replace(tzinfo=tz)
                 
-                # Abgleich mit Echtzeit-Daten
                 chg = changes.get(trip_id, {})
                 e_time_str = chg.get('ct') or p_time_str
                 e_time = datetime.strptime(e_time_str, "%y%m%d%H%M").replace(tzinfo=tz)
                 
                 diff = int((e_time - p_time).total_seconds() / 60)
-                
-                # Linie (RE13 etc.)
                 linie = dp.get('l') or f"{tl.get('c')}{tl.get('n')}"
                 
-                # Status-Text (Verspätung oder Ausfall)
                 info_text = "pünktlich"
                 if chg.get('cs') == "c":
                     info_text = "FÄLLT AUS"
@@ -114,7 +109,7 @@ def hole_station_daten(eva_id):
                     "ziel": dp.get('ppth').split('|')[-1][:20],
                     "gleis": chg.get('cp') or dp.get('pp') or "-",
                     "info": info_text,
-                    "begruendung": chg.get('messages') or "", # Die neue Spalte für den Grund
+                    "begruendung": chg.get('grund') or "", # KORRIGIERT: Nutzt jetzt 'grund'
                     "update": u_zeit
                 })
         
@@ -129,20 +124,17 @@ def verarbeite_station(item):
     dateiname, eva_id = item
     base_path = os.path.dirname(os.path.abspath(__file__))
     
-    print(f"Abfrage läuft: {dateiname} (ID: {eva_id})")
+    print(f"Abfrage läuft: {dateiname}")
     daten = hole_station_daten(eva_id)
     
     if daten is not None:
         file_path = os.path.join(base_path, f"{dateiname}.json")
         with open(file_path, 'w', encoding='utf-8') as f:
             json.dump(daten, f, ensure_ascii=False, indent=4)
-        print(f"Datei gespeichert: {dateiname}.json")
 
 if __name__ == "__main__":
-    print("Starte Bahn-Monitor Update...")
     start_time = time.time()
-    
     with ThreadPoolExecutor(max_workers=5) as executor:
         executor.map(verarbeite_station, STATIONS.items())
-        
-    print(f"\nUpdate abgeschlossen! Dauer: {round(time.time() - start_time, 2)} Sekunden.")
+    print(f"Fertig! Dauer: {round(time.time() - start_time, 2)} Sek.")
+    
