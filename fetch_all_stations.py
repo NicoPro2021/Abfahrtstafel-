@@ -3,7 +3,7 @@ import xml.etree.ElementTree as ET
 import json
 import os
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 from concurrent.futures import ThreadPoolExecutor
 
@@ -11,11 +11,10 @@ from concurrent.futures import ThreadPoolExecutor
 CLIENT_ID = "647fddb98582bec8984c65e1256eb617"
 CLIENT_SECRET = "6af72e24106f2250967364fac780bbe6"
 
-# VOLLSTÄNDIGE STATIONSLISTE (Inklusive Leipzig Tief für S-Bahn Gleis 1-2)
 STATIONS = {
     "magdeburg_hbf": "8010224",
     "leipzig_hbf": "8010205",
-    "leipzig_hbf_tief": "8011161", # NEU: Für S-Bahnen im Tunnel
+    "leipzig_hbf_tief": "8011161",
     "berlin_hbf": "8011160",
     "brandenburg_hbf": "8010060",
     "zerbst": "8013389",
@@ -38,103 +37,101 @@ HEADERS = {
     'accept': 'application/xml'
 }
 
+def hole_daten_fuer_stunde(eva_id, datum, stunde, changes, tz):
+    url = f"https://apis.deutschebahn.com/db-api-marketplace/apis/timetables/v1/plan/{eva_id}/{datum}/{stunde}"
+    res = requests.get(url, headers=HEADERS, timeout=10)
+    if res.status_code != 200: return []
+    
+    root = ET.fromstring(res.content)
+    verbindungen = []
+    for s in root.findall('s'):
+        trip_id = s.get('id')
+        tl = s.find('tl')
+        dp = s.find('dp')
+        if dp is not None and tl is not None:
+            p_time_str = dp.get('pt')
+            p_time = datetime.strptime(p_time_str, "%y%m%d%H%M").replace(tzinfo=tz)
+            
+            chg = changes.get(trip_id, {})
+            e_time_str = chg.get('ct') or p_time_str
+            e_time = datetime.strptime(e_time_str, "%y%m%d%H%M").replace(tzinfo=tz)
+            
+            # Nur Züge anzeigen, die nicht älter als 10 Minuten sind
+            if e_time < datetime.now(tz) - timedelta(minutes=10): continue
+
+            diff = int((e_time - p_time).total_seconds() / 60)
+            linie = dp.get('l') or f"{tl.get('c')}{tl.get('n')}"
+            info_text = "pünktlich"
+            if chg.get('cs') == "c": info_text = "FÄLLT AUS"
+            elif diff > 0: info_text = f"+{diff}"
+
+            verbindungen.append({
+                "zeit": p_time.strftime("%H:%M"),
+                "echte_zeit": e_time.strftime("%H:%M"),
+                "linie": linie,
+                "ziel": dp.get('ppth').split('|')[-1][:20],
+                "gleis": chg.get('cp') or dp.get('pp') or "-",
+                "info": info_text,
+                "begruendung": chg.get('grund') or ""
+            })
+    return verbindungen
+
 def hole_station_daten(eva_id):
     tz = ZoneInfo("Europe/Berlin")
     jetzt = datetime.now(tz)
-    u_zeit = jetzt.strftime("%H:%M")
     
-    datum = jetzt.strftime("%y%m%d")
-    stunde = jetzt.strftime("%H")
-    
-    plan_url = f"https://apis.deutschebahn.com/db-api-marketplace/apis/timetables/v1/plan/{eva_id}/{datum}/{stunde}"
-    change_url = f"https://apis.deutschebahn.com/db-api-marketplace/apis/timetables/v1/fchg/{eva_id}"
-
-    try:
-        # 1. ÄNDERUNGEN UND BEGRÜNDUNGEN LADEN (fchg)
-        changes = {}
-        c_res = requests.get(change_url, headers=HEADERS, timeout=12)
-        if c_res.status_code == 200:
-            c_root = ET.fromstring(c_res.content)
-            for s in c_root.findall('s'):
-                t_id = s.get('id')
-                dp = s.find('dp')
-                
-                messages = []
-                for m in s.findall('m'):
-                    text = m.get('c')
-                    # Wir nehmen Typ 'd' (Verspätungsgrund) und 'r' (Störung)
-                    if text and m.get('t') in ['d', 'r', 'f']:
-                        messages.append(text)
-                
-                changes[t_id] = {
-                    "ct": dp.get('ct') if dp is not None else None,
-                    "cp": dp.get('cp') if dp is not None else None,
-                    "cs": dp.get('cs') if dp is not None else None,
-                    "grund": " | ".join(dict.fromkeys(messages)) 
-                }
-
-        # 2. PLAN-DATEN LADEN
-        p_res = requests.get(plan_url, headers=HEADERS, timeout=12)
-        if p_res.status_code != 200: return None
-        
-        p_root = ET.fromstring(p_res.content)
-        res_list = []
-
-        for s in p_root.findall('s'):
-            trip_id = s.get('id')
-            tl = s.find('tl')
+    # 1. Echtzeit-Änderungen (fchg) laden
+    changes = {}
+    c_res = requests.get(f"https://apis.deutschebahn.com/db-api-marketplace/apis/timetables/v1/fchg/{eva_id}", headers=HEADERS, timeout=10)
+    if c_res.status_code == 200:
+        c_root = ET.fromstring(c_res.content)
+        for s in c_root.findall('s'):
+            t_id = s.get('id')
             dp = s.find('dp')
-            
-            if dp is not None and tl is not None:
-                p_time_str = dp.get('pt')
-                p_time = datetime.strptime(p_time_str, "%y%m%d%H%M").replace(tzinfo=tz)
-                
-                chg = changes.get(trip_id, {})
-                e_time_str = chg.get('ct') or p_time_str
-                e_time = datetime.strptime(e_time_str, "%y%m%d%H%M").replace(tzinfo=tz)
-                
-                diff = int((e_time - p_time).total_seconds() / 60)
-                linie = dp.get('l') or f"{tl.get('c')}{tl.get('n')}"
-                
-                info_text = "pünktlich"
-                if chg.get('cs') == "c":
-                    info_text = "FÄLLT AUS"
-                elif diff > 0:
-                    info_text = f"+{diff}"
+            msgs = [m.get('c') for m in s.findall('m') if m.get('c') and m.get('t') in ['d','r','f']]
+            changes[t_id] = {
+                "ct": dp.get('ct') if dp is not None else None,
+                "cp": dp.get('cp') if dp is not None else None,
+                "cs": dp.get('cs') if dp is not None else None,
+                "grund": " | ".join(dict.fromkeys(msgs))
+            }
 
-                res_list.append({
-                    "zeit": p_time.strftime("%H:%M"),
-                    "echte_zeit": e_time.strftime("%H:%M"),
-                    "linie": linie,
-                    "ziel": dp.get('ppth').split('|')[-1][:20],
-                    "gleis": chg.get('cp') or dp.get('pp') or "-",
-                    "info": info_text,
-                    "begruendung": chg.get('grund') or "", # KORRIGIERT: Nutzt jetzt 'grund'
-                    "update": u_zeit
-                })
-        
-        res_list.sort(key=lambda x: x['zeit'])
-        return res_list
+    # 2. Plan für AKTUELLE Stunde und NÄCHSTE Stunde laden
+    stunde_jetzt = jetzt.strftime("%H")
+    datum_jetzt = jetzt.strftime("%y%m%d")
+    
+naechste_zeit = jetzt + timedelta(hours=1)
+    stunde_naechste = naechste_zeit.strftime("%H")
+    datum_naechste = naechste_zeit.strftime("%y%m%d")
 
-    except Exception as e:
-        print(f"Fehler bei Station {eva_id}: {e}")
-        return None
+    liste = hole_daten_fuer_stunde(eva_id, datum_jetzt, stunde_jetzt, changes, tz)
+    liste += hole_daten_fuer_stunde(eva_id, datum_naechste, stunde_naechste, changes, tz)
+    
+    # Sortieren und Update-Zeit hinzufügen
+    liste.sort(key=lambda x: x['zeit'])
+    for eintrag in liste: eintrag["update"] = jetzt.strftime("%H:%M")
+    
+    return liste
 
 def verarbeite_station(item):
     dateiname, eva_id = item
-    base_path = os.path.dirname(os.path.abspath(__file__))
-    
-    print(f"Abfrage läuft: {dateiname}")
     daten = hole_station_daten(eva_id)
-    
-    if daten is not None:
-        file_path = os.path.join(base_path, f"{dateiname}.json")
-        with open(file_path, 'w', encoding='utf-8') as f:
+    if daten:
+        with open(f"{dateiname}.json", 'w', encoding='utf-8') as f:
             json.dump(daten, f, ensure_ascii=False, indent=4)
+        print(f"[{datetime.now().strftime('%H:%M:%S')}] {dateiname} aktualisiert.")
 
 if __name__ == "__main__":
-    start_time = time.time()
-    with ThreadPoolExecutor(max_workers=5) as executor:
-        executor.map(verarbeite_station, STATIONS.items())
-    print(f"Fertig! Dauer: {round(time.time() - start_time, 2)} Sek.")
-    
+    print("Bahn-Monitor gestartet. Drücke STRG+C zum Beenden.")
+    while True:
+        try:
+            with ThreadPoolExecutor(max_workers=5) as executor:
+                executor.map(verarbeite_station, STATIONS.items())
+            # 60 Sekunden warten bis zum nächsten Durchlauf
+            time.sleep(60) 
+        except KeyboardInterrupt:
+            break
+        except Exception as e:
+            print(f"Fehler im Loop: {e}")
+            time.sleep(10)
+            
