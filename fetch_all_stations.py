@@ -11,6 +11,7 @@ from concurrent.futures import ThreadPoolExecutor
 CLIENT_ID = "647fddb98582bec8984c65e1256eb617"
 CLIENT_SECRET = "6af72e24106f2250967364fac780bbe6"
 
+# VOLLSTÄNDIGE STATIONSLISTE (Inklusive Leipzig Tief und Zerbst Korrektur)
 STATIONS = {
     "magdeburg_hbf": "8010224",
     "leipzig_hbf": "8010205",
@@ -57,11 +58,12 @@ def hole_daten_fuer_stunde(eva_id, datum, stunde, changes, tz):
                 e_time_str = chg.get('ct') or p_time_str
                 e_time = datetime.strptime(e_time_str, "%y%m%d%H%M").replace(tzinfo=tz)
                 
-                # Nur Züge, die nicht älter als 10 Minuten sind
+                # Nur Züge anzeigen, die nicht älter als 10 Minuten sind
                 if e_time < datetime.now(tz) - timedelta(minutes=10): continue
 
                 diff = int((e_time - p_time).total_seconds() / 60)
                 linie = dp.get('l') or f"{tl.get('c')}{tl.get('n')}"
+                
                 info_text = "pünktlich"
                 if chg.get('cs') == "c": info_text = "FÄLLT AUS"
                 elif diff > 0: info_text = f"+{diff}"
@@ -91,6 +93,7 @@ def hole_station_daten(eva_id):
             for s in c_root.findall('s'):
                 t_id = s.get('id')
                 dp = s.find('dp')
+                # Begründungen (HIM-Messages) sammeln
                 msgs = [m.get('c') for m in s.findall('m') if m.get('c') and m.get('t') in ['d','r','f']]
                 changes[t_id] = {
                     "ct": dp.get('ct') if dp is not None else None,
@@ -100,17 +103,18 @@ def hole_station_daten(eva_id):
                 }
     except: pass
 
-    # 2. Plan für AKTUELLE und NÄCHSTE Stunde laden
+    # 2. Plan für AKTUELLE und NÄCHSTE Stunde laden (Stundenscheibe fixen)
     datum_jetzt = jetzt.strftime("%y%m%d")
     stunde_jetzt = jetzt.strftime("%H")
     
     naechste_zeit = jetzt + timedelta(hours=1)
     datum_naechste = naechste_zeit.strftime("%y%m%d")
-    stunde_naechste = naechste_zeit.strftime("%H")
+    stunde_naechste = naechste_zeit.strftime("%H") # Einrückung korrigiert!
 
     liste = hole_daten_fuer_stunde(eva_id, datum_jetzt, stunde_jetzt, changes, tz)
     liste += hole_daten_fuer_stunde(eva_id, datum_naechste, stunde_naechste, changes, tz)
     
+    # Sortieren und Zeitstempel für die Webseite
     liste.sort(key=lambda x: x['zeit'])
     for eintrag in liste: eintrag["update"] = jetzt.strftime("%H:%M")
     
@@ -120,18 +124,13 @@ def verarbeite_station(item):
     dateiname, eva_id = item
     daten = hole_station_daten(eva_id)
     if daten:
+        # Speichert die JSON-Datei im aktuellen Verzeichnis
         with open(f"{dateiname}.json", 'w', encoding='utf-8') as f:
             json.dump(daten, f, ensure_ascii=False, indent=4)
-        print(f"Update: {dateiname} um {datetime.now().strftime('%H:%M:%S')}")
+        print(f"Update abgeschlossen: {dateiname}")
 
 if __name__ == "__main__":
-    print("Bahn-Bot läuft...")
-    while True:
-        try:
-            with ThreadPoolExecutor(max_workers=5) as executor:
-                executor.map(verarbeite_station, STATIONS.items())
-            time.sleep(60) 
-        except KeyboardInterrupt: break
-        except Exception as e:
-            print(f"Fehler: {e}")
-            time.sleep(10)
+    # ThreadPool für maximale Geschwindigkeit auf dem GitHub Server
+    with ThreadPoolExecutor(max_workers=5) as executor:
+        executor.map(verarbeite_station, STATIONS.items())
+    
