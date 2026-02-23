@@ -3,59 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>DB Monitor Pro - Reisebegleiter</title>
+    <title>DB Monitor Pro</title>
     <style>
         :root {
             --db-red: #e2001a;
             --db-gray-bg: #f0f3f5;
-            --db-dark-blue: #212d40;
+            --db-dark: #212d40;
             --text-main: #212121;
             --text-secondary: #656c78;
             --ontime-green: #008754;
             --delay-red: #d50000;
-            --border-color: #dcdcdc;
         }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-        body { 
-            margin: 0; padding: 0; 
+        /* Verhindert das Abschneiden am unteren Rand */
+        html, body { 
+            height: 100%; margin: 0; padding: 0; 
             background: var(--db-gray-bg); 
-            font-family: "DB Type", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-            color: var(--text-main);
-            height: 100vh; display: flex; flex-direction: column;
-            overflow: hidden;
+            font-family: sans-serif; 
+            overflow: hidden; 
         }
 
-        /* --- HEADER --- */
         .db-navbar {
-            background: #fff;
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border-color);
-            z-index: 100;
+            background: #fff; padding: 12px 16px;
+            display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 1px solid #dcdcdc; flex-shrink: 0;
         }
 
-        .db-logo {
-            background: var(--db-red);
-            color: white;
-            font-weight: 900;
-            padding: 2px 6px;
-            font-size: 1.1rem;
-            border-radius: 1px;
-        }
+        .db-logo { background: var(--db-red); color: white; font-weight: 900; padding: 2px 6px; border-radius: 1px; }
 
-        .nav-title {
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* --- STARTSEITE --- */
+        /* Welcome Screen */
         #welcome-screen { 
             position: fixed; inset: 0; background: var(--db-gray-bg); z-index: 3000; 
             display: flex; flex-direction: column; align-items: center; padding-top: 40px;
@@ -64,65 +40,50 @@
 
         .search-box { 
             background: #fff; padding: 18px; border-radius: 4px; 
-            width: 90%; border: 1px solid #ccc; margin-bottom: 30px; 
-            color: var(--text-secondary); cursor: pointer;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+            width: 90%; border: 1px solid #ccc; margin-bottom: 25px; cursor: pointer;
         }
 
-        .fav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 90%; }
-        .fav-item { 
-            background: #fff; border: 1px solid #ddd; padding: 15px; 
-            border-radius: 4px; text-align: left; cursor: pointer;
-            display: flex; align-items: center; gap: 10px;
-        }
-        .fav-item b { font-size: 0.95rem; color: var(--db-dark-blue); }
+        .fav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 90%; }
+        .fav-item { background: #fff; border: 1px solid #ddd; padding: 15px; border-radius: 4px; text-align: left; cursor: pointer; }
 
-        /* --- MONITOR ANSICHT --- */
-        .monitor { display: none; flex-direction: column; height: 100vh; background: #fff; }
+        /* Monitor App */
+        .monitor { display: none; flex-direction: column; height: 100%; background: #fff; }
         .monitor.active { display: flex; }
 
-        .station-header { padding: 15px 20px; background: #fff; border-bottom: 2px solid var(--db-red); }
-        .station-name { font-size: 1.6rem; font-weight: 800; color: var(--db-dark-blue); margin: 5px 0; }
-        .meta-info { display: flex; justify-content: space-between; align-items: center; }
+        .station-header { padding: 15px 20px; border-bottom: 2px solid var(--db-red); flex-shrink: 0; }
+        .station-name { font-size: 1.5rem; font-weight: 800; color: var(--db-dark); margin: 5px 0; }
 
-        #board { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+        /* Scroll-Bereich Fix */
+        #board { 
+            flex: 1; 
+            overflow-y: auto; 
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 80px; /* Platz für System-Gesten */
+        }
 
-        /* --- ABFAHRTS-ZEILE (DB LOOK) --- */
+        /* Zeilen-Design */
         .departure-row { 
-            display: grid; 
-            grid-template-columns: 90px 1fr 55px; 
-            padding: 16px 20px; 
-            border-bottom: 1px solid #eee;
-            align-items: start;
+            display: grid; grid-template-columns: 85px 1fr 55px; 
+            padding: 16px 20px; border-bottom: 1px solid #eee; align-items: start;
         }
         .departure-row.cancelled { background: #fff0f1; }
 
-        .time-group { display: flex; flex-direction: column; }
-        .p-time { font-size: 1.25rem; font-weight: 700; color: var(--db-dark-blue); }
-        .status-msg { font-size: 0.85rem; font-weight: 700; margin-top: 2px; }
+        .p-time { font-size: 1.2rem; font-weight: 700; color: var(--db-dark); display: block; }
+        .status-msg { font-size: 0.85rem; font-weight: 700; }
         .status-ontime { color: var(--ontime-green); }
         .status-delayed { color: var(--delay-red); }
 
-        .trip-group { padding-left: 8px; }
-        .train-id { font-size: 0.8rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; }
-        .train-dest { font-size: 1.2rem; font-weight: 700; color: var(--db-dark-blue); display: block; }
+        .train-id { font-size: 0.8rem; font-weight: 800; color: var(--text-secondary); }
+        .train-dest { font-size: 1.15rem; font-weight: 700; display: block; color: var(--db-dark); }
         
-        .platform-group { text-align: right; }
-        .pl-label { font-size: 0.65rem; color: var(--text-secondary); font-weight: 700; display: block; }
-        .pl-value { font-size: 1.4rem; font-weight: 800; color: var(--db-dark-blue); }
+        .pl-label { font-size: 0.6rem; color: var(--text-secondary); font-weight: 700; display: block; }
+        .pl-value { font-size: 1.3rem; font-weight: 800; }
 
-        .delay-reason { 
-            grid-column: 2 / 4; 
-            color: var(--delay-red); 
-            font-size: 0.9rem; 
-            font-weight: 700; 
-            margin-top: 6px; 
-            padding-left: 8px;
-        }
+        .delay-reason { grid-column: 2 / 4; color: var(--delay-red); font-size: 0.85rem; font-weight: 700; margin-top: 5px; }
 
-        /* --- OVERLAYS --- */
+        /* Suche Overlay */
         #search-overlay { position: fixed; inset: 0; background: #fff; z-index: 4000; display: none; flex-direction: column; }
-        .search-nav { padding: 12px; background: var(--db-dark-blue); display: flex; gap: 10px; }
+        .search-nav { padding: 12px; background: var(--db-dark); display: flex; gap: 10px; }
         .search-input { flex: 1; border: none; padding: 12px; border-radius: 4px; font-size: 1rem; }
     </style>
 </head>
@@ -130,30 +91,29 @@
 
 <div class="db-navbar">
     <div class="db-logo">DB</div>
-    <div class="nav-title">Abfahrtstafel</div>
-    <div style="width: 30px;"></div>
+    <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-secondary);">REISEBEGLEITER</div>
+    <div style="width: 20px;"></div>
 </div>
 
 <div id="welcome-screen">
     <div class="search-box" onclick="openSearch()">🔍 Bahnhof suchen...</div>
-    <div style="width: 90%; font-size: 0.75rem; font-weight: 800; color: var(--text-secondary); margin-bottom: 12px;">MEINE STATIONEN</div>
     <div class="fav-grid" id="fav-bar"></div>
 </div>
 
 <div id="search-overlay">
     <div class="search-nav">
-        <button onclick="closeSearch()" style="background:none; border:none; color:white; font-size:1.5rem;">✕</button>
-        <input type="text" class="search-input" id="station-query" placeholder="Name des Bahnhofs..." oninput="filterStations()">
+        <button onclick="closeSearch()" style="color:white; background:none; border:none; font-size:1.5rem;">✕</button>
+        <input type="text" class="search-input" id="station-query" placeholder="Suchen..." oninput="filterStations()">
     </div>
     <div id="search-results" style="overflow-y: auto;"></div>
 </div>
 
 <div class="monitor" id="monitor-app">
     <div class="station-header">
-        <div class="meta-info">
-            <button onclick="goHome()" style="background:none; border:none; font-size:1.5rem; color:var(--db-dark-blue); padding:0;">←</button>
-            <div id="clock" style="font-weight: 700; color: var(--text-secondary);">00:00</div>
-            <button id="fav-toggle" onclick="toggleFavorite()" style="background:none; border:none; font-size:1.5rem; color:#ccc;">★</button>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <button onclick="goHome()" style="background:none; border:none; font-size:1.5rem;">←</button>
+            <div id="clock" style="font-weight: 700;">00:00</div>
+            <button id="star" onclick="toggleFavorite()" style="background:none; border:none; font-size:1.5rem; color:#ccc;">★</button>
         </div>
         <h1 id="display-station" class="station-name">Lade...</h1>
     </div>
@@ -161,68 +121,69 @@
 </div>
 
 <script>
+    // Stationen alphabetisch sortiert
     const STATIONS_DB = [
-        { name: "Magdeburg Hbf", file: "magdeburg_hbf.json" },
-        { name: "Leipzig Hbf", file: "leipzig_hbf.json" },
-        { name: "Berlin Hbf", file: "berlin_hbf.json" },
-        { name: "Brandenburg Hbf", file: "brandenburg_hbf.json" },
-        { name: "Zerbst/Anhalt", file: "zerbst.json" },
-        { name: "Dessau Hbf", file: "dessau_hbf.json" },
         { name: "Bad Belzig", file: "bad_belzig.json" },
+        { name: "Berlin Hbf", file: "berlin_hbf.json" },
+        { name: "Biederitz", file: "biederitz.json" },
+        { name: "Brandenburg Hbf", file: "brandenburg_hbf.json" },
+        { name: "Dessau Hbf", file: "dessau_hbf.json" },
+        { name: "Dessau Süd", file: "dessau_sued.json" },
         { name: "Gommern", file: "gommern.json" },
+        { name: "Leipzig Hbf", file: "leipzig_hbf.json" },
+        { name: "Magdeburg Hbf", file: "magdeburg_hbf.json" },
+        { name: "Magdeburg Herrenkrug", file: "magdeburg_herrenkrug.json" },
+        { name: "Magdeburg Neustadt", file: "magdeburg_neustadt.json" },
+        { name: "Pretzier (Altm)", file: "pretzier_altm.json" },
+        { name: "Rodleben", file: "rodleben.json" },
         { name: "Roßlau (Elbe)", file: "rosslau.json" },
-        { name: "Wusterwitz", file: "wusterwitz.json" }
-    ];
+        { name: "Wusterwitz", file: "wusterwitz.json" },
+        { name: "Zerbst/Anhalt", file: "zerbst.json" }
+    ].sort((a, b) => a.name.localeCompare(b.name));
 
     const BASE_URL = 'https://raw.githubusercontent.com/nicopro2021/Abfahrtstafel-/main/';
     let currentStation = null;
     let favorites = JSON.parse(localStorage.getItem('db_monitor_favs')) || [null, null, null, null];
 
-    function openSearch() { document.getElementById('search-overlay').style.display = 'flex'; document.getElementById('station-query').focus(); filterStations(); }
+    function openSearch() { document.getElementById('search-overlay').style.display = 'flex'; filterStations(); }
     function closeSearch() { document.getElementById('search-overlay').style.display = 'none'; }
-    function goHome() { 
-        document.getElementById('welcome-screen').classList.remove('hidden'); 
-        document.getElementById('monitor-app').classList.remove('active'); 
-        updateFavUI(); 
-    }
+    function goHome() { document.getElementById('welcome-screen').classList.remove('hidden'); document.getElementById('monitor-app').classList.remove('active'); updateFavUI(); }
 
     function selectStation(station) {
         currentStation = station;
         document.getElementById('display-station').innerText = station.name;
         document.getElementById('welcome-screen').classList.add('hidden');
         document.getElementById('monitor-app').classList.add('active');
-        closeSearch(); 
-        updateFavStatus();
-        loadData();
+        closeSearch(); updateStar(); loadData();
     }
 
     function filterStations() {
         const q = document.getElementById('station-query').value.toLowerCase();
         document.getElementById('search-results').innerHTML = STATIONS_DB.filter(s => s.name.toLowerCase().includes(q))
-            .map(s => `<div style="padding:16px; border-bottom:1px solid #eee;" onclick='selectStation(${JSON.stringify(s)})'>${s.name}</div>`).join('');
+            .map(s => `<div style="padding:15px; border-bottom:1px solid #eee;" onclick='selectStation(${JSON.stringify(s)})'>${s.name}</div>`).join('');
     }
 
     function updateFavUI() {
-        document.getElementById('fav-bar').innerHTML = favorites.map((fav, i) => `
-            <div class="fav-item" onclick="handleFavClick(${i})">
-                <span style="color:${fav ? 'var(--db-red)' : '#ccc'}">${fav ? '📍' : '＋'}</span>
-                <b>${fav ? fav.name : 'Platzhalter'}</b>
+        document.getElementById('fav-bar').innerHTML = favorites.map((f, i) => `
+            <div class="fav-item" onclick="fClick(${i})">
+                <span style="color:${f ? 'var(--db-red)' : '#ccc'}">${f ? '📍' : '＋'}</span>
+                <b>${f ? f.name.split(' ')[0] : 'Slot'}</b>
             </div>`).join('');
     }
 
-    function handleFavClick(i) { if(favorites[i]) selectStation(favorites[i]); else openSearch(); }
+    function fClick(i) { if(favorites[i]) selectStation(favorites[i]); else openSearch(); }
 
     function toggleFavorite() {
         const idx = favorites.findIndex(f => f && f.file === currentStation.file);
         if (idx > -1) favorites[idx] = null;
         else { const empty = favorites.indexOf(null); if (empty > -1) favorites[empty] = currentStation; else favorites[0] = currentStation; }
         localStorage.setItem('db_monitor_favs', JSON.stringify(favorites));
-        updateFavStatus();
+        updateStar();
     }
 
-    function updateFavStatus() {
+    function updateStar() {
         const isFav = favorites.some(f => f && f.file === currentStation.file);
-        document.getElementById('fav-toggle').style.color = isFav ? 'var(--db-red)' : '#ccc';
+        document.getElementById('star').style.color = isFav ? 'var(--db-red)' : '#ccc';
     }
 
     async function loadData() {
@@ -233,9 +194,7 @@
             const board = document.getElementById('board');
             board.innerHTML = '';
             
-            data.sort((a, b) => a.zeit.localeCompare(b.zeit));
-
-            data.forEach(zug => {
+            data.sort((a, b) => a.zeit.localeCompare(b.zeit)).forEach(zug => {
                 const isCancelled = (zug.info || "").includes("FÄLLT AUS");
                 const isDelayed = zug.echte_zeit !== zug.zeit && !isCancelled;
                 
@@ -247,7 +206,7 @@
                                 ${isCancelled ? 'fällt aus' : (isDelayed ? zug.echte_zeit : 'pünktlich')}
                             </span>
                         </div>
-                        <div class="trip-group">
+                        <div>
                             <span class="train-id">${zug.linie}</span>
                             <span class="train-dest">${zug.ziel}</span>
                         </div>
@@ -258,7 +217,7 @@
                         ${zug.begruendung ? `<div class="delay-reason">${zug.begruendung}</div>` : ''}
                     </div>`;
             });
-        } catch (e) { console.error("Fehler beim Laden:", e); }
+        } catch (e) { console.error(e); }
     }
 
     setInterval(() => { 
