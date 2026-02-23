@@ -11,7 +11,45 @@ from concurrent.futures import ThreadPoolExecutor
 CLIENT_ID = "647fddb98582bec8984c65e1256eb617"
 CLIENT_SECRET = "6af72e24106f2250967364fac780bbe6"
 
-# VOLLSTÄNDIGE STATIONSLISTE (Inklusive Leipzig Tief und Zerbst Korrektur)
+# DB-Verspätungscodes (Auszug der häufigsten Gründe laut API-Dokumentation)
+DB_CODES = {
+    "1": "Sicherheitsrelevante Störung",
+    "2": "Feuerwehreinsatz an der Strecke",
+    "3": "Notarzteinsatz am Gleis",
+    "4": "Vandalismusschaden",
+    "5": "Personen im Gleis",
+    "7": "Verzögerungen im Betriebsablauf",
+    "8": "Anschlussabwartung",
+    "9": "Warten auf Gegenverkehr",
+    "10": "Ausfall der Leit- und Sicherungstechnik",
+    "11": "Störung an einem Bahnübergang",
+    "15": "Bauarbeiten",
+    "16": "Witterungsbedingte Störung",
+    "18": "Defekt am Zug",
+    "19": "Defekt an der Strecke",
+    "20": "Tiere im Gleis",
+    "21": "Türstörung",
+    "22": "Defekt an der Bremse",
+    "23": "Schaden am Triebfahrzeug",
+    "24": "Defekt an der Oberleitung",
+    "31": "Bauarbeiten (kurzfristig)",
+    "34": "Signalstörung",
+    "35": "Streckensperrung",
+    "38": "Defekt an der Klimaanlage",
+    "40": "Stellwerksstörung",
+    "41": "Defekt an einem anderen Zug",
+    "42": "Eingriff Unbefugter",
+    "43": "Kurzfristiger Personalausfall",
+    "44": "Warten auf Personal",
+    "46": "Verspätung eines vorausfahrenden Zuges",
+    "47": "Verspätete Bereitstellung",
+    "80": "Andere Wagenreihung",
+    "90": "Kein Halt an diesem Bahnhof",
+    "91": "Fehlende Fahrzeugreserve",
+    "92": "Technische Störung am Zug",
+    "93": "Technische Störung an der Strecke",
+}
+
 STATIONS = {
     "magdeburg_hbf": "8010224",
     "leipzig_hbf": "8010205",
@@ -43,7 +81,7 @@ def hole_daten_fuer_stunde(eva_id, datum, stunde, changes, tz):
     try:
         res = requests.get(url, headers=HEADERS, timeout=10)
         if res.status_code != 200: return []
-        
+
         root = ET.fromstring(res.content)
         verbindungen = []
         for s in root.findall('s'):
@@ -53,17 +91,16 @@ def hole_daten_fuer_stunde(eva_id, datum, stunde, changes, tz):
             if dp is not None and tl is not None:
                 p_time_str = dp.get('pt')
                 p_time = datetime.strptime(p_time_str, "%y%m%d%H%M").replace(tzinfo=tz)
-                
+
                 chg = changes.get(trip_id, {})
                 e_time_str = chg.get('ct') or p_time_str
                 e_time = datetime.strptime(e_time_str, "%y%m%d%H%M").replace(tzinfo=tz)
-                
-                # Nur Züge anzeigen, die nicht älter als 10 Minuten sind
+
                 if e_time < datetime.now(tz) - timedelta(minutes=10): continue
 
                 diff = int((e_time - p_time).total_seconds() / 60)
                 linie = dp.get('l') or f"{tl.get('c')}{tl.get('n')}"
-                
+
                 info_text = "pünktlich"
                 if chg.get('cs') == "c": info_text = "FÄLLT AUS"
                 elif diff > 0: info_text = f"+{diff}"
@@ -83,8 +120,7 @@ def hole_daten_fuer_stunde(eva_id, datum, stunde, changes, tz):
 def hole_station_daten(eva_id):
     tz = ZoneInfo("Europe/Berlin")
     jetzt = datetime.now(tz)
-    
-    # 1. Echtzeit-Änderungen (fchg) laden
+
     changes = {}
     try:
         c_res = requests.get(f"https://apis.deutschebahn.com/db-api-marketplace/apis/timetables/v1/fchg/{eva_id}", headers=HEADERS, timeout=10)
@@ -93,44 +129,47 @@ def hole_station_daten(eva_id):
             for s in c_root.findall('s'):
                 t_id = s.get('id')
                 dp = s.find('dp')
-                # Begründungen (HIM-Messages) sammeln
-                msgs = [m.get('c') for m in s.findall('m') if m.get('c') and m.get('t') in ['d','r','f']]
+                
+                # Begründungen übersetzen (basierend auf Code 'c' und Typ 't')
+                begruendungen = []
+                for m in s.findall('m'):
+                    code = m.get('c')
+                    # Typ 'd' (Delay) oder 'f' (Free text/HIM) sind relevant
+                    if code in DB_CODES:
+                        begruendungen.append(DB_CODES[code])
+                
                 changes[t_id] = {
                     "ct": dp.get('ct') if dp is not None else None,
                     "cp": dp.get('cp') if dp is not None else None,
                     "cs": dp.get('cs') if dp is not None else None,
-                    "grund": " | ".join(dict.fromkeys(msgs))
+                    "grund": " | ".join(dict.fromkeys(begruendungen))
                 }
     except: pass
 
-    # 2. Plan für AKTUELLE und NÄCHSTE Stunde laden (Stundenscheibe fixen)
+    # Plan-Daten abrufen
     datum_jetzt = jetzt.strftime("%y%m%d")
     stunde_jetzt = jetzt.strftime("%H")
-    
+
     naechste_zeit = jetzt + timedelta(hours=1)
     datum_naechste = naechste_zeit.strftime("%y%m%d")
-    stunde_naechste = naechste_zeit.strftime("%H") # Einrückung korrigiert!
+    stunde_naechste = naechste_zeit.strftime("%H")
 
     liste = hole_daten_fuer_stunde(eva_id, datum_jetzt, stunde_jetzt, changes, tz)
     liste += hole_daten_fuer_stunde(eva_id, datum_naechste, stunde_naechste, changes, tz)
-    
-    # Sortieren und Zeitstempel für die Webseite
+
     liste.sort(key=lambda x: x['zeit'])
     for eintrag in liste: eintrag["update"] = jetzt.strftime("%H:%M")
-    
+
     return liste
 
 def verarbeite_station(item):
     dateiname, eva_id = item
     daten = hole_station_daten(eva_id)
     if daten:
-        # Speichert die JSON-Datei im aktuellen Verzeichnis
         with open(f"{dateiname}.json", 'w', encoding='utf-8') as f:
             json.dump(daten, f, ensure_ascii=False, indent=4)
         print(f"Update abgeschlossen: {dateiname}")
 
 if __name__ == "__main__":
-    # ThreadPool für maximale Geschwindigkeit auf dem GitHub Server
     with ThreadPoolExecutor(max_workers=5) as executor:
         executor.map(verarbeite_station, STATIONS.items())
-    
