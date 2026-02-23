@@ -3,18 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>DB Monitor Pro</title>
+    <title>DB Monitor Pro - Reisebegleiter</title>
     <style>
         :root {
             --db-red: #e2001a;
             --db-gray-bg: #f0f3f5;
-            --db-dark: #212d40;
-            --card-bg: #ffffff;
+            --db-dark-blue: #212d40;
             --text-main: #212121;
             --text-secondary: #656c78;
-            --delay-red: #d50000;
             --ontime-green: #008754;
-            --platform-box: #333333;
+            --delay-red: #d50000;
+            --border-color: #dcdcdc;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -22,21 +21,20 @@
         body { 
             margin: 0; padding: 0; 
             background: var(--db-gray-bg); 
-            font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            font-family: "DB Type", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
             color: var(--text-main);
             height: 100vh; display: flex; flex-direction: column;
             overflow: hidden;
         }
 
-        /* --- LOGO / HEADER --- */
-        .db-header {
+        /* --- HEADER --- */
+        .db-navbar {
             background: #fff;
-            padding: 10px 15px;
+            padding: 12px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 1px solid #dcdcdc;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-bottom: 1px solid var(--border-color);
             z-index: 100;
         }
 
@@ -44,165 +42,171 @@
             background: var(--db-red);
             color: white;
             font-weight: 900;
-            padding: 2px 8px;
-            font-size: 1.2rem;
-            border-radius: 2px;
-            letter-spacing: -1px;
+            padding: 2px 6px;
+            font-size: 1.1rem;
+            border-radius: 1px;
         }
 
-        /* --- STARTBILDSCHIRM --- */
+        .nav-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* --- STARTSEITE --- */
         #welcome-screen { 
             position: fixed; inset: 0; background: var(--db-gray-bg); z-index: 3000; 
-            display: flex; flex-direction: column; align-items: center; padding-top: 60px;
+            display: flex; flex-direction: column; align-items: center; padding-top: 40px;
         }
         #welcome-screen.hidden { display: none; }
 
-        .search-trigger { 
-            background: #fff; padding: 16px; border-radius: 8px; 
-            cursor: pointer; text-align: left; width: 90%; 
-            border: 1px solid #ccc; margin-bottom: 25px; color: var(--text-secondary);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        .search-box { 
+            background: #fff; padding: 18px; border-radius: 4px; 
+            width: 90%; border: 1px solid #ccc; margin-bottom: 30px; 
+            color: var(--text-secondary); cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
         }
 
-        .fav-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 90%; }
-        .fav-card { 
-            background: #fff; border: 1px solid #ddd; padding: 20px 15px; 
-            border-radius: 8px; text-align: center; cursor: pointer;
-            transition: transform 0.1s;
+        .fav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 90%; }
+        .fav-item { 
+            background: #fff; border: 1px solid #ddd; padding: 15px; 
+            border-radius: 4px; text-align: left; cursor: pointer;
+            display: flex; align-items: center; gap: 10px;
         }
-        .fav-card:active { transform: scale(0.98); background: #f9f9f9; }
-        .fav-card b { display: block; margin-top: 8px; color: var(--db-dark); }
+        .fav-item b { font-size: 0.95rem; color: var(--db-dark-blue); }
 
-        /* --- MONITOR --- */
+        /* --- MONITOR ANSICHT --- */
         .monitor { display: none; flex-direction: column; height: 100vh; background: #fff; }
         .monitor.active { display: flex; }
 
-        .station-info { padding: 15px; background: #fff; border-bottom: 1px solid #eee; }
-        .station-name { font-size: 1.5rem; font-weight: 700; color: var(--db-dark); }
-        #current-time { font-weight: 400; color: var(--text-secondary); font-size: 0.9rem; }
+        .station-header { padding: 15px 20px; background: #fff; border-bottom: 2px solid var(--db-red); }
+        .station-name { font-size: 1.6rem; font-weight: 800; color: var(--db-dark-blue); margin: 5px 0; }
+        .meta-info { display: flex; justify-content: space-between; align-items: center; }
 
-        #board { flex: 1; overflow-y: auto; background: #fff; }
+        #board { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
 
-        /* --- ZEILEN DESIGN --- */
-        .row { 
+        /* --- ABFAHRTS-ZEILE (DB LOOK) --- */
+        .departure-row { 
             display: grid; 
-            grid-template-columns: 75px 1fr 45px; 
-            grid-template-rows: auto auto;
-            padding: 12px 15px; 
+            grid-template-columns: 90px 1fr 55px; 
+            padding: 16px 20px; 
             border-bottom: 1px solid #eee;
-            gap: 2px 10px;
+            align-items: start;
         }
+        .departure-row.cancelled { background: #fff0f1; }
 
-        .row.cancelled { background: #fff0f1; }
+        .time-group { display: flex; flex-direction: column; }
+        .p-time { font-size: 1.25rem; font-weight: 700; color: var(--db-dark-blue); }
+        .status-msg { font-size: 0.85rem; font-weight: 700; margin-top: 2px; }
+        .status-ontime { color: var(--ontime-green); }
+        .status-delayed { color: var(--delay-red); }
 
-        .time-col { grid-row: 1 / 3; display: flex; flex-direction: column; justify-content: flex-start; }
-        .planned-time { font-weight: 700; font-size: 1.1rem; }
-        .delay-time { font-weight: 700; font-size: 0.9rem; color: var(--delay-red); }
-        .ontime { color: var(--ontime-green); }
-
-        .trip-col { font-size: 0.9rem; font-weight: 700; color: var(--text-secondary); }
-        .dest-col { font-size: 1.1rem; font-weight: 700; color: var(--db-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .trip-group { padding-left: 8px; }
+        .train-id { font-size: 0.8rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; }
+        .train-dest { font-size: 1.2rem; font-weight: 700; color: var(--db-dark-blue); display: block; }
         
-        .platform-col { 
-            grid-row: 1 / 3; display: flex; align-items: center; justify-content: center;
-            font-weight: 700; font-size: 1.2rem; color: var(--text-main);
-        }
+        .platform-group { text-align: right; }
+        .pl-label { font-size: 0.65rem; color: var(--text-secondary); font-weight: 700; display: block; }
+        .pl-value { font-size: 1.4rem; font-weight: 800; color: var(--db-dark-blue); }
 
-        .info-row { grid-column: 2; color: var(--delay-red); font-size: 0.85rem; font-weight: 600; margin-top: 2px; }
+        .delay-reason { 
+            grid-column: 2 / 4; 
+            color: var(--delay-red); 
+            font-size: 0.9rem; 
+            font-weight: 700; 
+            margin-top: 6px; 
+            padding-left: 8px;
+        }
 
         /* --- OVERLAYS --- */
         #search-overlay { position: fixed; inset: 0; background: #fff; z-index: 4000; display: none; flex-direction: column; }
-        .search-header { padding: 10px; display: flex; gap: 10px; background: var(--db-dark); }
-        .search-input { flex-grow: 1; border: none; padding: 12px; border-radius: 4px; font-size: 1rem; }
-        .result-item { padding: 15px 20px; border-bottom: 1px solid #eee; font-size: 1.1rem; }
-
-        .btn-icon { background: none; border: none; font-size: 1.5rem; cursor: pointer; padding: 5px; }
+        .search-nav { padding: 12px; background: var(--db-dark-blue); display: flex; gap: 10px; }
+        .search-input { flex: 1; border: none; padding: 12px; border-radius: 4px; font-size: 1rem; }
     </style>
 </head>
 <body>
 
-<div class="db-header">
+<div class="db-navbar">
     <div class="db-logo">DB</div>
-    <div style="font-size: 0.9rem; font-weight: bold; color: var(--text-secondary);">REISEBEGLEITER</div>
+    <div class="nav-title">Abfahrtstafel</div>
+    <div style="width: 30px;"></div>
 </div>
 
 <div id="welcome-screen">
-    <div class="search-trigger" onclick="openSearch()">🔍 Wohin möchten Sie?</div>
-    <div style="width: 90%; margin-bottom: 10px; font-size: 0.8rem; color: var(--text-secondary); font-weight: bold; letter-spacing: 1px;">FAVORITEN</div>
+    <div class="search-box" onclick="openSearch()">🔍 Bahnhof suchen...</div>
+    <div style="width: 90%; font-size: 0.75rem; font-weight: 800; color: var(--text-secondary); margin-bottom: 12px;">MEINE STATIONEN</div>
     <div class="fav-grid" id="fav-bar"></div>
 </div>
 
 <div id="search-overlay">
-    <div class="search-header">
-        <button class="btn-icon" style="color:white" onclick="closeSearch()">✕</button>
-        <input type="text" class="search-input" id="station-query" placeholder="Bahnhof suchen..." oninput="filterStations()">
+    <div class="search-nav">
+        <button onclick="closeSearch()" style="background:none; border:none; color:white; font-size:1.5rem;">✕</button>
+        <input type="text" class="search-input" id="station-query" placeholder="Name des Bahnhofs..." oninput="filterStations()">
     </div>
-    <div id="search-results"></div>
+    <div id="search-results" style="overflow-y: auto;"></div>
 </div>
 
 <div class="monitor" id="monitor-app">
-    <div class="station-info">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-            <button class="btn-icon" onclick="goHome()">←</button>
-            <div style="text-align: right;">
-                <div id="display-station" class="station-name">Lade...</div>
-                <div id="current-time">00:00</div>
-            </div>
-            <button id="star-icon" class="btn-icon" onclick="toggleFavorite()">☆</button>
+    <div class="station-header">
+        <div class="meta-info">
+            <button onclick="goHome()" style="background:none; border:none; font-size:1.5rem; color:var(--db-dark-blue); padding:0;">←</button>
+            <div id="clock" style="font-weight: 700; color: var(--text-secondary);">00:00</div>
+            <button id="fav-toggle" onclick="toggleFavorite()" style="background:none; border:none; font-size:1.5rem; color:#ccc;">★</button>
         </div>
+        <h1 id="display-station" class="station-name">Lade...</h1>
     </div>
     <div id="board"></div>
 </div>
 
 <script>
     const STATIONS_DB = [
-        { name: "Bad Belzig", file: "bad_belzig.json" },
-        { name: "Berlin Hbf", file: "berlin_hbf.json" },
-        { name: "Biederitz", file: "biederitz.json" },
-        { name: "Brandenburg Hbf", file: "brandenburg_hbf.json" },
-        { name: "Dessau Hbf", file: "dessau_hbf.json" },
-        { name: "Dessau Süd", file: "dessau_sued.json" },
-        { name: "Gommern", file: "gommern.json" },
-        { name: "Leipzig Hbf", file: "leipzig_hbf.json" },
-        { name: "Magdeburg Herrenkrug", file: "magdeburg_herrenkrug.json" },
         { name: "Magdeburg Hbf", file: "magdeburg_hbf.json" },
-        { name: "Magdeburg Neustadt", file: "magdeburg_neustadt.json" },
-        { name: "Pretzier (Altm)", file: "pretzier_altm.json" },
-        { name: "Rodleben", file: "rodleben.json" },
+        { name: "Leipzig Hbf", file: "leipzig_hbf.json" },
+        { name: "Berlin Hbf", file: "berlin_hbf.json" },
+        { name: "Brandenburg Hbf", file: "brandenburg_hbf.json" },
+        { name: "Zerbst/Anhalt", file: "zerbst.json" },
+        { name: "Dessau Hbf", file: "dessau_hbf.json" },
+        { name: "Bad Belzig", file: "bad_belzig.json" },
+        { name: "Gommern", file: "gommern.json" },
         { name: "Roßlau (Elbe)", file: "rosslau.json" },
-        { name: "Wusterwitz", file: "wusterwitz.json" },
-        { name: "Zerbst/Anhalt", file: "zerbst.json" }
+        { name: "Wusterwitz", file: "wusterwitz.json" }
     ];
 
     const BASE_URL = 'https://raw.githubusercontent.com/nicopro2021/Abfahrtstafel-/main/';
     let currentStation = null;
-    let favorites = JSON.parse(localStorage.getItem('db_pro_favs')) || [null, null, null, null];
+    let favorites = JSON.parse(localStorage.getItem('db_monitor_favs')) || [null, null, null, null];
 
     function openSearch() { document.getElementById('search-overlay').style.display = 'flex'; document.getElementById('station-query').focus(); filterStations(); }
     function closeSearch() { document.getElementById('search-overlay').style.display = 'none'; }
-    function goHome() { document.getElementById('welcome-screen').classList.remove('hidden'); document.getElementById('monitor-app').classList.remove('active'); updateFavUI(); }
+    function goHome() { 
+        document.getElementById('welcome-screen').classList.remove('hidden'); 
+        document.getElementById('monitor-app').classList.remove('active'); 
+        updateFavUI(); 
+    }
 
     function selectStation(station) {
         currentStation = station;
         document.getElementById('display-station').innerText = station.name;
         document.getElementById('welcome-screen').classList.add('hidden');
         document.getElementById('monitor-app').classList.add('active');
-        updateStarIcon();
         closeSearch(); 
+        updateFavStatus();
         loadData();
     }
 
     function filterStations() {
         const q = document.getElementById('station-query').value.toLowerCase();
         document.getElementById('search-results').innerHTML = STATIONS_DB.filter(s => s.name.toLowerCase().includes(q))
-            .map(s => `<div class="result-item" onclick='selectStation(${JSON.stringify(s)})'>${s.name}</div>`).join('');
+            .map(s => `<div style="padding:16px; border-bottom:1px solid #eee;" onclick='selectStation(${JSON.stringify(s)})'>${s.name}</div>`).join('');
     }
 
     function updateFavUI() {
         document.getElementById('fav-bar').innerHTML = favorites.map((fav, i) => `
-            <div class="fav-card" onclick="handleFavClick(${i})">
-                <span style="color: ${fav ? 'var(--db-red)' : '#ccc'}; font-size: 1.2rem;">${fav ? '📍' : '＋'}</span>
-                <b>${fav ? fav.name : 'Hinzufügen'}</b>
+            <div class="fav-item" onclick="handleFavClick(${i})">
+                <span style="color:${fav ? 'var(--db-red)' : '#ccc'}">${fav ? '📍' : '＋'}</span>
+                <b>${fav ? fav.name : 'Platzhalter'}</b>
             </div>`).join('');
     }
 
@@ -212,14 +216,13 @@
         const idx = favorites.findIndex(f => f && f.file === currentStation.file);
         if (idx > -1) favorites[idx] = null;
         else { const empty = favorites.indexOf(null); if (empty > -1) favorites[empty] = currentStation; else favorites[0] = currentStation; }
-        localStorage.setItem('db_pro_favs', JSON.stringify(favorites));
-        updateStarIcon();
+        localStorage.setItem('db_monitor_favs', JSON.stringify(favorites));
+        updateFavStatus();
     }
 
-    function updateStarIcon() {
+    function updateFavStatus() {
         const isFav = favorites.some(f => f && f.file === currentStation.file);
-        document.getElementById('star-icon').innerText = isFav ? '★' : '☆';
-        document.getElementById('star-icon').style.color = isFav ? 'var(--db-red)' : 'inherit';
+        document.getElementById('fav-toggle').style.color = isFav ? 'var(--db-red)' : '#ccc';
     }
 
     async function loadData() {
@@ -232,34 +235,34 @@
             
             data.sort((a, b) => a.zeit.localeCompare(b.zeit));
 
-            data.filter(zug => {
-                const ref = (zug.echte_zeit && zug.echte_zeit !== "null") ? zug.echte_zeit : zug.zeit;
-                const [h, m] = ref.split(':').map(Number);
-                const t = new Date(); t.setHours(h, m, 0, 0);
-                return t.getTime() > (Date.now() - 60000); 
-            }).forEach(zug => {
+            data.forEach(zug => {
                 const isCancelled = (zug.info || "").includes("FÄLLT AUS");
-                const istVerspaetet = zug.echte_zeit !== zug.zeit && !isCancelled;
+                const isDelayed = zug.echte_zeit !== zug.zeit && !isCancelled;
                 
                 board.innerHTML += `
-                    <div class="row ${isCancelled ? 'cancelled' : ''}">
-                        <div class="time-col">
-                            <span class="planned-time">${zug.zeit}</span>
-                            ${isCancelled ? '<span class="delay-time">fällt aus</span>' : 
-                             (istVerspaetet ? `<span class="delay-time">${zug.echte_zeit}</span>` : '<span class="delay-time ontime">pünktlich</span>')}
+                    <div class="departure-row ${isCancelled ? 'cancelled' : ''}">
+                        <div class="time-group">
+                            <span class="p-time">${zug.zeit}</span>
+                            <span class="status-msg ${isCancelled || isDelayed ? 'status-delayed' : 'status-ontime'}">
+                                ${isCancelled ? 'fällt aus' : (isDelayed ? zug.echte_zeit : 'pünktlich')}
+                            </span>
                         </div>
-                        <div class="trip-col">${zug.linie}</div>
-                        <div class="platform-col">${isCancelled ? '' : zug.gleis}</div>
-                        <div class="dest-col">${zug.ziel}</div>
-                        ${zug.grund ? `<div class="info-row">${zug.grund}</div>` : ''}
+                        <div class="trip-group">
+                            <span class="train-id">${zug.linie}</span>
+                            <span class="train-dest">${zug.ziel}</span>
+                        </div>
+                        <div class="platform-group">
+                            <span class="pl-label">Gleis</span>
+                            <span class="pl-value">${isCancelled ? '' : (zug.gleis || '—')}</span>
+                        </div>
+                        ${zug.begruendung ? `<div class="delay-reason">${zug.begruendung}</div>` : ''}
                     </div>`;
             });
-        } catch (e) { console.error(e); }
+        } catch (e) { console.error("Fehler beim Laden:", e); }
     }
 
     setInterval(() => { 
-        const now = new Date();
-        document.getElementById('current-time').innerText = now.toLocaleTimeString('de-DE', {hour: '2-digit', minute:'2-digit'}); 
+        document.getElementById('clock').innerText = new Date().toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'}); 
     }, 1000);
     setInterval(loadData, 30000);
     updateFavUI();
