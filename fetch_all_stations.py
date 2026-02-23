@@ -59,7 +59,7 @@ STATIONS = {
     "zerbst": "8013389",
     "dessau_hbf": "8010077",
     "dessau_sued": "8010076",
-    "roßlau(elbe)": "8010302",
+    "rosslau": "8010302",
     "rodleben": "8010294",
     "magdeburg_neustadt": "8010226",
     "magdeburg_herrenkrug": "8010225",
