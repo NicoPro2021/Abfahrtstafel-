@@ -15,7 +15,6 @@
             --delay-red: #d50000;
         }
 
-        /* Verhindert das Abschneiden am unteren Rand */
         html, body { 
             height: 100%; margin: 0; padding: 0; 
             background: var(--db-gray-bg); 
@@ -31,7 +30,6 @@
 
         .db-logo { background: var(--db-red); color: white; font-weight: 900; padding: 2px 6px; border-radius: 1px; }
 
-        /* Welcome Screen */
         #welcome-screen { 
             position: fixed; inset: 0; background: var(--db-gray-bg); z-index: 3000; 
             display: flex; flex-direction: column; align-items: center; padding-top: 40px;
@@ -46,25 +44,23 @@
         .fav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 90%; }
         .fav-item { background: #fff; border: 1px solid #ddd; padding: 15px; border-radius: 4px; text-align: left; cursor: pointer; }
 
-        /* Monitor App */
         .monitor { display: none; flex-direction: column; height: 100%; background: #fff; }
         .monitor.active { display: flex; }
 
         .station-header { padding: 15px 20px; border-bottom: 2px solid var(--db-red); flex-shrink: 0; }
         .station-name { font-size: 1.5rem; font-weight: 800; color: var(--db-dark); margin: 5px 0; }
 
-        /* Scroll-Bereich Fix */
         #board { 
             flex: 1; 
             overflow-y: auto; 
             -webkit-overflow-scrolling: touch;
-            padding-bottom: 80px; /* Platz für System-Gesten */
+            padding-bottom: 80px; 
         }
 
-        /* Zeilen-Design */
         .departure-row { 
             display: grid; grid-template-columns: 85px 1fr 55px; 
             padding: 16px 20px; border-bottom: 1px solid #eee; align-items: start;
+            position: relative;
         }
         .departure-row.cancelled { background: #fff0f1; }
 
@@ -79,9 +75,21 @@
         .pl-label { font-size: 0.6rem; color: var(--text-secondary); font-weight: 700; display: block; }
         .pl-value { font-size: 1.3rem; font-weight: 800; }
 
-        .delay-reason { grid-column: 2 / 4; color: var(--delay-red); font-size: 0.85rem; font-weight: 700; margin-top: 5px; }
+        .delay-reason { grid-column: 2 / 4; color: var(--delay-red); font-size: 0.85rem; font-weight: 700; margin-top: 5px; line-height: 1.2; }
 
-        /* Suche Overlay */
+        /* Blinkender Punkt Animation */
+        .blink-dot {
+            width: 8px; height: 8px; background: var(--db-red); border-radius: 50%;
+            position: absolute; left: 8px; top: 24px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
         #search-overlay { position: fixed; inset: 0; background: #fff; z-index: 4000; display: none; flex-direction: column; }
         .search-nav { padding: 12px; background: var(--db-dark); display: flex; gap: 10px; }
         .search-input { flex: 1; border: none; padding: 12px; border-radius: 4px; font-size: 1rem; }
@@ -121,7 +129,6 @@
 </div>
 
 <script>
-    // Stationen alphabetisch sortiert
     const STATIONS_DB = [
         { name: "Bad Belzig", file: "bad_belzig.json" },
         { name: "Berlin Hbf", file: "berlin_hbf.json" },
@@ -131,6 +138,7 @@
         { name: "Dessau Süd", file: "dessau_sued.json" },
         { name: "Gommern", file: "gommern.json" },
         { name: "Leipzig Hbf", file: "leipzig_hbf.json" },
+        { name: "Leipzig Hbf (tief)", file: "leipzig_hbf_tief.json" },
         { name: "Magdeburg Hbf", file: "magdeburg_hbf.json" },
         { name: "Magdeburg Herrenkrug", file: "magdeburg_herrenkrug.json" },
         { name: "Magdeburg Neustadt", file: "magdeburg_neustadt.json" },
@@ -194,12 +202,28 @@
             const board = document.getElementById('board');
             board.innerHTML = '';
             
-            data.sort((a, b) => a.zeit.localeCompare(b.zeit)).forEach(zug => {
+            const jetzt = new Date();
+            const aktuelleMinuten = jetzt.getHours() * 60 + jetzt.getMinutes();
+
+            data.filter(zug => {
+                const [h, m] = zug.echte_zeit.split(':').map(Number);
+                const zugMinuten = h * 60 + m;
+                return zugMinuten >= (aktuelleMinuten - 1);
+            })
+            .sort((a, b) => a.zeit.localeCompare(b.zeit))
+            .forEach(zug => {
                 const isCancelled = (zug.info || "").includes("FÄLLT AUS");
+                const [h, m] = zug.echte_zeit.split(':').map(Number);
+                const zugMinuten = h * 60 + m;
+                
+                // Blink-Logik: Erscheint 3 Min vor Abfahrt bis zum Verschwinden
+                const isAboutToDepart = (zugMinuten - aktuelleMinuten) <= 3 && (zugMinuten - aktuelleMinuten) >= 0;
+                
                 const isDelayed = zug.echte_zeit !== zug.zeit && !isCancelled;
                 
                 board.innerHTML += `
                     <div class="departure-row ${isCancelled ? 'cancelled' : ''}">
+                        ${isAboutToDepart && !isCancelled ? '<div class="blink-dot"></div>' : ''}
                         <div class="time-group">
                             <span class="p-time">${zug.zeit}</span>
                             <span class="status-msg ${isCancelled || isDelayed ? 'status-delayed' : 'status-ontime'}">
@@ -214,7 +238,7 @@
                             <span class="pl-label">Gleis</span>
                             <span class="pl-value">${isCancelled ? '' : (zug.gleis || '—')}</span>
                         </div>
-                        ${zug.begruendung ? `<div class="delay-reason">${zug.begruendung}</div>` : ''}
+                        ${zug.begruendung ? `<div class="delay-reason">⚠ ${zug.begruendung}</div>` : ''}
                     </div>`;
             });
         } catch (e) { console.error(e); }
@@ -223,6 +247,8 @@
     setInterval(() => { 
         document.getElementById('clock').innerText = new Date().toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'}); 
     }, 1000);
+    
+    // Wir laden die Daten alle 30 Sek neu, damit der Blink-Punkt pünktlich erscheint
     setInterval(loadData, 30000);
     updateFavUI();
 </script>
