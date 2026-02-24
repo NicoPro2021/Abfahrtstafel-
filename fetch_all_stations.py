@@ -67,7 +67,7 @@ STATIONS = {
     "pretzier_altm": "8012724",
     "bad_belzig": "8010033",
     "gommern": "8010141",
-    "wusterwitz": "8010388"
+    "wusterwitz": "8013365"
 }
 
 HEADERS = {
