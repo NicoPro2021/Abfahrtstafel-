@@ -64,10 +64,20 @@
         }
         .departure-row.cancelled { background: #fff0f1; }
 
-        .p-time { font-size: 1.2rem; font-weight: 700; color: var(--db-dark); display: block; }
+        /* Zeit-Container Styling */
+        .time-container { display: flex; flex-direction: column; line-height: 1.2; }
+        .p-time { font-size: 1.2rem; font-weight: 700; color: var(--db-dark); }
+        .p-time.delayed { 
+            text-decoration: line-through; 
+            color: var(--text-secondary); 
+            font-size: 0.9rem; 
+            font-weight: 400;
+        }
+        .actual-time { color: var(--delay-red); font-size: 1.2rem; font-weight: 700; }
+        
         .status-msg { font-size: 0.85rem; font-weight: 700; }
-        .status-ontime { color: var(--ontime-green); }
-        .status-delayed { color: var(--delay-red); }
+        .status-ontime { color: var(--ontime-green); font-size: 0.85rem; font-weight: 700; }
+        .status-delayed { color: var(--delay-red); font-size: 0.85rem; font-weight: 700; }
 
         .train-id { font-size: 0.8rem; font-weight: 800; color: var(--text-secondary); }
         .train-dest { font-size: 1.15rem; font-weight: 700; display: block; color: var(--db-dark); }
@@ -77,18 +87,13 @@
 
         .delay-reason { grid-column: 2 / 4; color: var(--delay-red); font-size: 0.85rem; font-weight: 700; margin-top: 5px; line-height: 1.2; }
 
-        /* Blinkender Punkt Animation */
         .blink-dot {
             width: 8px; height: 8px; background: var(--db-red); border-radius: 50%;
-            position: absolute; left: 8px; top: 24px;
+            position: absolute; left: 6px; top: 22px;
             animation: blink 1s infinite;
         }
 
-        @keyframes blink {
-            0% { opacity: 1; }
-            50% { opacity: 0; }
-            100% { opacity: 1; }
-        }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
 
         #search-overlay { position: fixed; inset: 0; background: #fff; z-index: 4000; display: none; flex-direction: column; }
         .search-nav { padding: 12px; background: var(--db-dark); display: flex; gap: 10px; }
@@ -203,41 +208,49 @@
             board.innerHTML = '';
             
             const jetzt = new Date();
-            const aktuelleMinuten = jetzt.getHours() * 60 + jetzt.getMinutes();
+            const aktuelleSekunden = (jetzt.getHours() * 3600) + (jetzt.getMinutes() * 60) + jetzt.getSeconds();
 
             data.filter(zug => {
                 const [h, m] = zug.echte_zeit.split(':').map(Number);
-                const zugMinuten = h * 60 + m;
-                return zugMinuten >= (aktuelleMinuten - 1);
+                const zugSekunden = (h * 3600) + (m * 60);
+                // FILTER: Entfernt Züge exakt nach 30 Sekunden
+                return zugSekunden >= (aktuelleSekunden - 30);
             })
             .sort((a, b) => a.zeit.localeCompare(b.zeit))
             .forEach(zug => {
                 const isCancelled = (zug.info || "").includes("FÄLLT AUS");
                 const [h, m] = zug.echte_zeit.split(':').map(Number);
-                const zugMinuten = h * 60 + m;
+                const zugSekunden = (h * 3600) + (m * 60);
                 
-                // Blink-Logik: Erscheint 3 Min vor Abfahrt bis zum Verschwinden
-                const isAboutToDepart = (zugMinuten - aktuelleMinuten) <= 3 && (zugMinuten - aktuelleMinuten) >= 0;
-                
+                const diffSekunden = zugSekunden - aktuelleSekunden;
+                const isAboutToDepart = diffSekunden <= 180 && diffSekunden >= 0;
                 const isDelayed = zug.echte_zeit !== zug.zeit && !isCancelled;
                 
                 board.innerHTML += `
                     <div class="departure-row ${isCancelled ? 'cancelled' : ''}">
                         ${isAboutToDepart && !isCancelled ? '<div class="blink-dot"></div>' : ''}
-                        <div class="time-group">
-                            <span class="p-time">${zug.zeit}</span>
-                            <span class="status-msg ${isCancelled || isDelayed ? 'status-delayed' : 'status-ontime'}">
-                                ${isCancelled ? 'fällt aus' : (isDelayed ? zug.echte_zeit : 'pünktlich')}
-                            </span>
+                        
+                        <div class="time-container">
+                            ${isDelayed ? `
+                                <span class="actual-time">${zug.echte_zeit}</span>
+                                <span class="p-time delayed">${zug.zeit}</span>
+                            ` : `
+                                <span class="p-time">${zug.zeit}</span>
+                                <span class="status-ontime">pünktlich</span>
+                            `}
+                            ${isCancelled ? '<span class="status-delayed">fällt aus</span>' : ''}
                         </div>
+
                         <div>
                             <span class="train-id">${zug.linie}</span>
                             <span class="train-dest">${zug.ziel}</span>
                         </div>
+
                         <div class="platform-group">
                             <span class="pl-label">Gleis</span>
                             <span class="pl-value">${isCancelled ? '' : (zug.gleis || '—')}</span>
                         </div>
+                        
                         ${zug.begruendung ? `<div class="delay-reason">⚠ ${zug.begruendung}</div>` : ''}
                     </div>`;
             });
@@ -248,7 +261,6 @@
         document.getElementById('clock').innerText = new Date().toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'}); 
     }, 1000);
     
-    // Wir laden die Daten alle 30 Sek neu, damit der Blink-Punkt pünktlich erscheint
     setInterval(loadData, 30000);
     updateFavUI();
 </script>
