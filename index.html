@@ -13,6 +13,7 @@
             --text-secondary: #656c78;
             --ontime-green: #008754;
             --delay-red: #d50000;
+            --info-yellow: #ffcc00; /* Gelb für Bahnhofsinfos */
         }
 
         html, body { 
@@ -31,6 +32,12 @@
         }
         .db-logo { background: var(--db-red); color: white; font-weight: 900; padding: 2px 6px; border-radius: 1px; }
 
+        /* NEU: Status Lampe Styles */
+        .status-indicator { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 700; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; background-color: #ccc; }
+        .dot.online { background-color: var(--ontime-green); box-shadow: 0 0 5px var(--ontime-green); }
+        .dot.offline { background-color: var(--delay-red); box-shadow: 0 0 5px var(--delay-red); }
+
         /* Welcome Screen */
         #welcome-screen { 
             position: fixed; inset: 0; background: var(--db-gray-bg); z-index: 3000; 
@@ -39,11 +46,10 @@
         }
         #welcome-screen.hidden { display: none; }
 
-        /* Informationsquelle Style */
         .global-info-banner {
             width: 90%; background: #fff; border-radius: 8px; padding: 15px;
             margin-bottom: 20px; border-left: 4px solid var(--db-red);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); box-sizing: border-box;
         }
 
         .search-box { 
@@ -85,7 +91,20 @@
         .pl-label { font-size: 0.65rem; color: var(--text-secondary); font-weight: 700; display: block; text-transform: uppercase; }
         .pl-value { font-size: 1.3rem; font-weight: 800; color: var(--db-dark); }
 
-        .delay-reason { grid-column: 2 / 4; color: var(--delay-red); font-size: 0.85rem; font-weight: 700; margin-top: 8px; border-top: 1px dashed #ffcdd2; padding-top: 4px; }
+        /* NEU: Bahnhofsinfos als auffälliger gelber Balken */
+        .delay-reason { 
+            grid-column: 1 / 4; 
+            background-color: var(--info-yellow); 
+            color: #000; 
+            font-size: 0.85rem; 
+            font-weight: 700; 
+            margin-top: 10px; 
+            padding: 6px 10px; 
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
 
         .blink-dot {
             width: 8px; height: 8px; background: var(--db-red); border-radius: 50%;
@@ -104,8 +123,11 @@
 
 <div class="db-navbar">
     <div class="db-logo">DB</div>
-    <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-secondary);">REISEBEGLEITER</div>
-    <div id="weather-small" style="font-weight: bold; font-size: 0.8rem;">--°C</div>
+    <div class="status-indicator">
+        <div id="status-dot" class="dot"></div>
+        <span id="status-text" style="color: var(--text-secondary);">PRÜFE...</span>
+    </div>
+    <div id="weather-small" style="font-weight: bold; font-size: 0.8rem; color: var(--db-dark);">--°C</div>
 </div>
 
 <div id="welcome-screen">
@@ -166,7 +188,6 @@
     let currentStation = null;
     let favorites = JSON.parse(localStorage.getItem('db_monitor_favs')) || [null, null, null, null];
 
-    // Informationsquelle laden
     async function loadGlobalInfo() {
         try {
             const res = await fetch(`${BASE_URL}global_info.json?t=${Date.now()}`);
@@ -180,7 +201,6 @@
 
     function openSearch() { document.getElementById('search-overlay').style.display = 'flex'; filterStations(); }
     function closeSearch() { document.getElementById('search-overlay').style.display = 'none'; }
-    
     function goHome() { 
         document.getElementById('welcome-screen').classList.remove('hidden'); 
         document.getElementById('monitor-app').classList.remove('active'); 
@@ -231,22 +251,44 @@
         try {
             const res = await fetch(`${BASE_URL}${currentStation.file}?t=${Date.now()}`);
             const data = await res.json();
+            
+            // STATUS LAMPEN LOGIK
+            if (data && data.length > 0) {
+                const lastUpdateStr = data[0].update;
+                const [upH, upM] = lastUpdateStr.split(':').map(Number);
+                const jetzt = new Date();
+                const updateDate = new Date();
+                updateDate.setHours(upH, upM, 0);
+
+                const diffMin = Math.round((jetzt - updateDate) / 60000);
+                const dot = document.getElementById('status-dot');
+                const txt = document.getElementById('status-text');
+
+                if (diffMin < 15) {
+                    dot.className = 'dot online';
+                    txt.innerText = 'LIVE';
+                    txt.style.color = 'var(--ontime-green)';
+                } else {
+                    dot.className = 'dot offline';
+                    txt.innerText = 'VERALTET';
+                    txt.style.color = 'var(--delay-red)';
+                }
+            }
+
             const board = document.getElementById('board');
             board.innerHTML = '';
-            
             const jetzt = new Date();
             const aktuelleSekunden = (jetzt.getHours() * 3600) + (jetzt.getMinutes() * 60) + jetzt.getSeconds();
 
             data.filter(zug => {
                 const [h, m] = zug.echte_zeit.split(':').map(Number);
                 const zugSekunden = (h * 3600) + (m * 60);
-                return zugSekunden >= (aktuelleSekunden - 60); // Zeige Züge bis 1 Min nach Abfahrt
+                return zugSekunden >= (aktuelleSekunden - 60);
             })
             .forEach(zug => {
                 const isCancelled = (zug.info || "").includes("FÄLLT AUS");
                 const [h, m] = zug.echte_zeit.split(':').map(Number);
                 const zugSekunden = (h * 3600) + (m * 60);
-                
                 const diffSekunden = zugSekunden - aktuelleSekunden;
                 const isAboutToDepart = diffSekunden <= 180 && diffSekunden >= 0;
                 const isDelayed = zug.echte_zeit !== zug.zeit && !isCancelled;
@@ -254,7 +296,6 @@
                 board.innerHTML += `
                     <div class="departure-row ${isCancelled ? 'cancelled' : ''}">
                         ${isAboutToDepart && !isCancelled ? '<div class="blink-dot"></div>' : ''}
-                        
                         <div class="time-container">
                             ${isDelayed ? `
                                 <span class="actual-time">${zug.echte_zeit}</span>
@@ -265,30 +306,29 @@
                             `}
                             ${isCancelled ? '<span class="status-delayed">Fällt aus</span>' : ''}
                         </div>
-
                         <div>
                             <span class="train-id">${zug.linie}</span>
                             <span class="train-dest">${zug.ziel}</span>
                         </div>
-
                         <div class="platform-group" style="text-align:right;">
                             <span class="pl-label">Gleis</span>
                             <span class="pl-value" style="${isCancelled ? 'text-decoration:line-through; color:#ccc;' : ''}">${zug.gleis || '—'}</span>
                         </div>
-                        
-                        ${zug.grund ? `<div class="delay-reason">⚠ ${zug.grund}</div>` : ''}
+                        ${zug.begruendung ? `<div class="delay-reason">⚠️ ${zug.begruendung}</div>` : ''}
                     </div>`;
             });
         } catch (e) { console.error(e); }
     }
 
-    // Uhrzeit Update
     setInterval(() => { 
         document.getElementById('clock').innerText = new Date().toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'}); 
     }, 1000);
     
-    // Auto-Refresh
-    setInterval(loadData, 10000);
+    setInterval(() => {
+        loadData();
+        loadGlobalInfo();
+    }, 10000);
+
     loadGlobalInfo();
     updateFavUI();
 </script>
