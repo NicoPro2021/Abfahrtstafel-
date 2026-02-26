@@ -11,16 +11,30 @@ from concurrent.futures import ThreadPoolExecutor
 CLIENT_ID = "647fddb98582bec8984c65e1256eb617"
 CLIENT_SECRET = "6af72e24106f2250967364fac780bbe6"
 
-# DB-Verspätungscodes
+# ERWEITERTE DB-Verspätungscodes
 DB_CODES = {
-    "1": "Sicherheitsrelevante Störung", "2": "Feuerwehreinsatz am der Strecke",
+    "1": "Sicherheitsrelevante Störung", "2": "Feuerwehreinsatz am Gleis",
     "3": "Notarzteinsatz am Gleis", "4": "Vandalismusschaden", "5": "Personen im Gleis",
-    "7": "Verzögerungen im Betriebsablauf", "8": "Anschlussabwartung",
-    "9": "Warten auf Gegenverkehr", "10": "Ausfall der Leit- und Sicherungstechnik",
-    "15": "Bauarbeiten", "18": "Defekt am Zug", "21": "Türstörung",
-    "38": "Defekt an der Klimaanlage", "43": "Kurzfristiger Personalausfall",
-    "46": "Verspätung eines vorausfahrenden Zuges", "80": "Andere Wagenreihung",
-    "90": "Kein Halt an diesem Bahnhof", "92": "Technische Störung am Zug"
+    "6": "Gegenstände im Gleis", "7": "Verzögerungen im Betriebsablauf", 
+    "8": "Anschlussabwartung", "9": "Warten auf Gegenverkehr", 
+    "10": "Ausfall der Leit- und Sicherungstechnik", "11": "Störung am Bahnübergang",
+    "13": "Oberleitungsstörung", "15": "Bauarbeiten", "16": "Weichenstörung",
+    "17": "Signalstörung", "18": "Defekt am Zug", "19": "Unfall mit Straßenfahrzeug",
+    "20": "Tiere im Gleis", "21": "Türstörung", "22": "Defekt an der Bremse",
+    "23": "Schaden am Stromabnehmer", "24": "Defekt an der Zugbeeinflussung",
+    "25": "Störung am Triebfahrzeug", "31": "Bauarbeiten (kurzfristig)",
+    "38": "Defekt an der Klimaanlage", "40": "Zusatzhalt", "41": "Halt entfällt",
+    "42": "Halt verlegt", "43": "Kurzfristiger Personalausfall", 
+    "44": "Warten auf Begleitpersonal", "45": "Warten auf verspätetes Personal",
+    "46": "Verspätung eines vorausfahrenden Zuges", "47": "Verspätete Bereitstellung",
+    "48": "Verspätung aus dem Ausland", "64": "Gleissperrung",
+    "80": "Andere Wagenreihung", "82": "Mehrere Wagen fehlen", 
+    "83": "Fehlender Speisewagen", "85": "Ein Wagen fehlt", 
+    "86": "Keine Reservierungsanzeige", "87": "Wagenmangel", 
+    "88": "WLAN nicht verfügbar", "89": "Defekte Sanitäreinrichtung",
+    "90": "Kein Halt an diesem Bahnhof", "91": "Unwetter/Wetterbedingt",
+    "92": "Technische Störung am Zug", "93": "Glatteis", 
+    "95": "Hohes Fahrgastaufkommen", "98": "Sonderfahrt"
 }
 
 STATIONS = {
@@ -54,7 +68,9 @@ def hole_daten_fuer_stunde(eva_id, datum, stunde, changes, tz):
                 chg = changes.get(trip_id, {})
                 e_time_str = chg.get('ct') or p_time_str
                 e_time = datetime.strptime(e_time_str, "%y%m%d%H%M").replace(tzinfo=tz)
+                
                 if e_time < datetime.now(tz) - timedelta(minutes=10): continue
+                
                 diff = int((e_time - p_time).total_seconds() / 60)
                 
                 verbindungen.append({
@@ -64,7 +80,7 @@ def hole_daten_fuer_stunde(eva_id, datum, stunde, changes, tz):
                     "ziel": dp.get('ppth').split('|')[-1][:20],
                     "gleis": chg.get('cp') or dp.get('pp') or "-",
                     "info": "FÄLLT AUS" if chg.get('cs') == "c" else (f"+{diff}" if diff > 0 else "pünktlich"),
-                    "begruendung": chg.get('grund') or "" 
+                    "begruendung": chg.get('grund') or ""
                 })
         return verbindungen
     except: return []
@@ -78,20 +94,9 @@ def hole_station_daten(eva_id):
         if c_res.status_code == 200:
             for s in ET.fromstring(c_res.content).findall('s'):
                 dp = s.find('dp')
+                # FALLBACK: Wenn Code nicht in DB_CODES, zeige "Code Nr" an
+                msgs = [DB_CODES.get(m.get('c'), f"Code {m.get('c')}") for m in s.findall('m') if m.get('c')]
                 
-                # --- HIER IST DIE WICHTIGE ÄNDERUNG ---
-                msgs = []
-                for m in s.findall('m'):
-                    code = m.get('c')
-                    typ = m.get('t')
-                    # Wenn Typ 'h' (HIM/Info), ist 'c' direkt der Text!
-                    if typ == 'h':
-                        msgs.append(code)
-                    # Wenn Code in unserer Liste, nimm die Übersetzung
-                    elif code in DB_CODES:
-                        msgs.append(DB_CODES[code])
-                # --------------------------------------
-
                 changes[s.get('id')] = {
                     "ct": dp.get('ct') if dp is not None else None,
                     "cp": dp.get('cp') if dp is not None else None,
