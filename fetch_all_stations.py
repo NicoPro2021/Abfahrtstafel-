@@ -2,6 +2,7 @@ import requests
 import xml.etree.ElementTree as ET
 import json
 import os
+import time
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 from concurrent.futures import ThreadPoolExecutor
@@ -10,12 +11,16 @@ from concurrent.futures import ThreadPoolExecutor
 CLIENT_ID = "647fddb98582bec8984c65e1256eb617"
 CLIENT_SECRET = "6af72e24106f2250967364fac780bbe6"
 
-# DB-Verspätungscodes (Deine Original-Liste)
+# DB-Verspätungscodes
 DB_CODES = {
-    "1": "Sicherheitsrelevante Störung", "2": "Feuerwehreinsatz", "3": "Notarzteinsatz",
-    "4": "Vandalismus", "5": "Personen im Gleis", "7": "Betriebsablauf",
-    "10": "Signalstörung", "15": "Bauarbeiten", "18": "Defekt am Zug",
-    "80": "Andere Wagenreihung", "90": "Halt entfällt"
+    "1": "Sicherheitsrelevante Störung", "2": "Feuerwehreinsatz am der Strecke",
+    "3": "Notarzteinsatz am Gleis", "4": "Vandalismusschaden", "5": "Personen im Gleis",
+    "7": "Verzögerungen im Betriebsablauf", "8": "Anschlussabwartung",
+    "9": "Warten auf Gegenverkehr", "10": "Ausfall der Leit- und Sicherungstechnik",
+    "15": "Bauarbeiten", "18": "Defekt am Zug", "21": "Türstörung",
+    "38": "Defekt an der Klimaanlage", "43": "Kurzfristiger Personalausfall",
+    "46": "Verspätung eines vorausfahrenden Zuges", "80": "Andere Wagenreihung",
+    "90": "Kein Halt an diesem Bahnhof", "92": "Technische Störung am Zug"
 }
 
 STATIONS = {
@@ -27,84 +32,92 @@ STATIONS = {
     "gommern": "8010141", "wusterwitz": "8013365"
 }
 
-HEADERS = {'DB-Client-Id': CLIENT_ID, 'DB-Api-Key': CLIENT_SECRET, 'accept': 'application/xml'}
+HEADERS = {
+    'DB-Client-Id': CLIENT_ID,
+    'DB-Api-Key': CLIENT_SECRET,
+    'accept': 'application/xml'
+}
+
+def hole_daten_fuer_stunde(eva_id, datum, stunde, changes, tz):
+    url = f"https://apis.deutschebahn.com/db-api-marketplace/apis/timetables/v1/plan/{eva_id}/{datum}/{stunde}"
+    try:
+        res = requests.get(url, headers=HEADERS, timeout=10)
+        if res.status_code != 200: return []
+        root = ET.fromstring(res.content)
+        verbindungen = []
+        for s in root.findall('s'):
+            trip_id = s.get('id')
+            tl, dp = s.find('tl'), s.find('dp')
+            if dp is not None and tl is not None:
+                p_time_str = dp.get('pt')
+                p_time = datetime.strptime(p_time_str, "%y%m%d%H%M").replace(tzinfo=tz)
+                chg = changes.get(trip_id, {})
+                e_time_str = chg.get('ct') or p_time_str
+                e_time = datetime.strptime(e_time_str, "%y%m%d%H%M").replace(tzinfo=tz)
+                if e_time < datetime.now(tz) - timedelta(minutes=10): continue
+                diff = int((e_time - p_time).total_seconds() / 60)
+                
+                verbindungen.append({
+                    "zeit": p_time.strftime("%H:%M"),
+                    "echte_zeit": e_time.strftime("%H:%M"),
+                    "linie": dp.get('l') or f"{tl.get('c')}{tl.get('n')}",
+                    "ziel": dp.get('ppth').split('|')[-1][:20],
+                    "gleis": chg.get('cp') or dp.get('pp') or "-",
+                    "info": "FÄLLT AUS" if chg.get('cs') == "c" else (f"+{diff}" if diff > 0 else "pünktlich"),
+                    "begruendung": chg.get('grund') or "" 
+                })
+        return verbindungen
+    except: return []
 
 def hole_station_daten(eva_id):
     tz = ZoneInfo("Europe/Berlin")
     jetzt = datetime.now(tz)
     changes = {}
-    
-    # --- TEIL 1: AKTUELLER STATUS & INFOS (FCHG) ---
     try:
         c_res = requests.get(f"https://apis.deutschebahn.com/db-api-marketplace/apis/timetables/v1/fchg/{eva_id}", headers=HEADERS, timeout=10)
         if c_res.status_code == 200:
-            root = ET.fromstring(c_res.content)
-            for s in root.findall('s'):
-                t_id = s.get('id')
+            for s in ET.fromstring(c_res.content).findall('s'):
                 dp = s.find('dp')
                 
-                info_texte = []
+                # --- HIER IST DIE WICHTIGE ÄNDERUNG ---
+                msgs = []
                 for m in s.findall('m'):
-                    cat = m.get('c') # Code
-                    typ = m.get('t') # Typ: d=Verspätung, h=Information
-                    
-                    # Wenn Typ 'h' (HIM/Info), nimm den Klartext direkt aus dem Attribut 'c'
+                    code = m.get('c')
+                    typ = m.get('t')
+                    # Wenn Typ 'h' (HIM/Info), ist 'c' direkt der Text!
                     if typ == 'h':
-                        info_texte.append(cat) 
-                    # Wenn Typ 'd' (Verspätung), nutze unsere DB_CODES Liste
-                    elif cat in DB_CODES:
-                        info_texte.append(DB_CODES[cat])
+                        msgs.append(code)
+                    # Wenn Code in unserer Liste, nimm die Übersetzung
+                    elif code in DB_CODES:
+                        msgs.append(DB_CODES[code])
+                # --------------------------------------
 
-                changes[t_id] = {
+                changes[s.get('id')] = {
                     "ct": dp.get('ct') if dp is not None else None,
                     "cp": dp.get('cp') if dp is not None else None,
                     "cs": dp.get('cs') if dp is not None else None,
-                    "grund": " | ".join(dict.fromkeys(info_texte)) # Doppelte Texte filtern
+                    "grund": " | ".join(dict.fromkeys(msgs))
                 }
     except: pass
-
-    # --- TEIL 2: PLAN-DATEN ABGLEICHEN ---
-    verbindungen = []
-    for delta in [0, 1]: # Aktuelle und nächste Stunde
-        zeit = jetzt + timedelta(hours=delta)
-        url = f"https://apis.deutschebahn.com/db-api-marketplace/apis/timetables/v1/plan/{eva_id}/{zeit.strftime('%y%m%d')}/{zeit.strftime('%H')}"
-        try:
-            res = requests.get(url, headers=HEADERS, timeout=10)
-            if res.status_code != 200: continue
-            for s in ET.fromstring(res.content).findall('s'):
-                tl, dp = s.find('tl'), s.find('dp')
-                if not (dp and tl): continue
-                
-                p_time_str = dp.get('pt')
-                chg = changes.get(s.get('id'), {})
-                e_time_str = chg.get('ct') or p_time_str
-                
-                # Filter: Nur Züge zeigen, die noch nicht weg sind
-                e_time = datetime.strptime(e_time_str, "%y%m%d%H%M").replace(tzinfo=tz)
-                if e_time < jetzt - timedelta(minutes=5): continue
-
-                verbindungen.append({
-                    "zeit": datetime.strptime(p_time_str, "%y%m%d%H%M").strftime("%H:%M"),
-                    "echte_zeit": e_time.strftime("%H:%M"),
-                    "linie": dp.get('l') or f"{tl.get('c')}{tl.get('n')}",
-                    "ziel": dp.get('ppth').split('|')[-1][:20],
-                    "gleis": chg.get('cp') or dp.get('pp') or "-",
-                    "begruendung": chg.get('grund') or "", # Hier landen jetzt die HIM-Texte!
-                    "update": jetzt.strftime("%H:%M")
-                })
-        except: continue
     
-    verbindungen.sort(key=lambda x: x['zeit'])
-    return verbindungen
+    datum_j = jetzt.strftime("%y%m%d")
+    liste = hole_daten_fuer_stunde(eva_id, datum_j, jetzt.strftime("%H"), changes, tz)
+    naechste = jetzt + timedelta(hours=1)
+    liste += hole_daten_fuer_stunde(eva_id, naechste.strftime("%y%m%d"), naechste.strftime("%H"), changes, tz)
+    
+    liste.sort(key=lambda x: x['zeit'])
+    for e in liste: e["update"] = jetzt.strftime("%H:%M")
+    return liste
 
 def verarbeite_station(item):
     name, eva_id = item
     daten = hole_station_daten(eva_id)
-    # Immer speichern, damit GitHub Action "grün" bleibt
     if not daten:
-        daten = [{"zeit": "--:--", "echte_zeit": "--:--", "linie": "INFO", "ziel": "Keine Fahrten", "begruendung": "", "update": datetime.now().strftime("%H:%M")}]
+        daten = [{"zeit": "--:--", "echte_zeit": "--:--", "linie": "INFO", "ziel": "Keine Fahrten", "gleis": "-", "info": "", "begruendung": "", "update": datetime.now().strftime("%H:%M")}]
+    
     with open(f"{name}.json", 'w', encoding='utf-8') as f:
         json.dump(daten, f, ensure_ascii=False, indent=4)
+    print(f"Update: {name}")
 
 if __name__ == "__main__":
     with ThreadPoolExecutor(max_workers=5) as executor:
