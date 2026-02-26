@@ -13,7 +13,7 @@
             --text-secondary: #656c78;
             --ontime-green: #008754;
             --delay-red: #d50000;
-            --info-yellow: #ffcc00; /* Gelb für Bahnhofsinfos */
+            --info-yellow: #ffcc00;
         }
 
         html, body { 
@@ -32,7 +32,6 @@
         }
         .db-logo { background: var(--db-red); color: white; font-weight: 900; padding: 2px 6px; border-radius: 1px; }
 
-        /* NEU: Status Lampe Styles */
         .status-indicator { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 700; }
         .dot { width: 8px; height: 8px; border-radius: 50%; background-color: #ccc; }
         .dot.online { background-color: var(--ontime-green); box-shadow: 0 0 5px var(--ontime-green); }
@@ -91,7 +90,7 @@
         .pl-label { font-size: 0.65rem; color: var(--text-secondary); font-weight: 700; display: block; text-transform: uppercase; }
         .pl-value { font-size: 1.3rem; font-weight: 800; color: var(--db-dark); }
 
-        /* NEU: Bahnhofsinfos als auffälliger gelber Balken */
+        /* Gelber Balken mit Laufschrift für lange Meldungen */
         .delay-reason { 
             grid-column: 1 / 4; 
             background-color: var(--info-yellow); 
@@ -101,9 +100,19 @@
             margin-top: 10px; 
             padding: 6px 10px; 
             border-radius: 4px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            overflow: hidden; /* Für die Laufschrift nötig */
+            white-space: nowrap;
+        }
+
+        .marquee-container {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 15s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-100%, 0); }
         }
 
         .blink-dot {
@@ -113,7 +122,6 @@
 
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
 
-        /* Search Overlay */
         #search-overlay { position: fixed; inset: 0; background: #fff; z-index: 4000; display: none; flex-direction: column; }
         .search-nav { padding: 12px; background: var(--db-dark); display: flex; gap: 10px; align-items: center;}
         .search-input { flex: 1; border: none; padding: 12px; border-radius: 4px; font-size: 1rem; outline: none;}
@@ -138,7 +146,6 @@
         </div>
         <div id="g-msg" style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 5px;">Suche eine Station aus.</div>
     </div>
-
     <div class="search-box" onclick="openSearch()">🔍 Bahnhof suchen...</div>
     <div class="fav-grid" id="fav-bar"></div>
 </div>
@@ -146,7 +153,7 @@
 <div id="search-overlay">
     <div class="search-nav">
         <button onclick="closeSearch()" style="color:white; background:none; border:none; font-size:1.5rem; cursor:pointer;">✕</button>
-        <input type="text" class="search-input" id="station-query" placeholder="Suchen (z.B. Magdeburg)..." oninput="filterStations()">
+        <input type="text" class="search-input" id="station-query" placeholder="Suchen..." oninput="filterStations()">
     </div>
     <div id="search-results" style="overflow-y: auto;"></div>
 </div>
@@ -155,8 +162,8 @@
     <div class="station-header">
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <button onclick="goHome()" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">←</button>
-            <div id="clock" style="font-weight: 700; font-variant-numeric: tabular-nums;">00:00</div>
-            <button id="star" onclick="toggleFavorite()" style="background:none; border:none; font-size:1.5rem; color:#ccc; cursor:pointer;">★</button>
+            <div id="clock" style="font-weight: 700;">00:00</div>
+            <button id="star" onclick="toggleFavorite()" style="background:none; border:none; font-size:1.5rem; color:#ccc;">★</button>
         </div>
         <h1 id="display-station" class="station-name" onclick="loadData()">Lade...</h1>
     </div>
@@ -201,12 +208,7 @@
 
     function openSearch() { document.getElementById('search-overlay').style.display = 'flex'; filterStations(); }
     function closeSearch() { document.getElementById('search-overlay').style.display = 'none'; }
-    function goHome() { 
-        document.getElementById('welcome-screen').classList.remove('hidden'); 
-        document.getElementById('monitor-app').classList.remove('active'); 
-        loadGlobalInfo();
-        updateFavUI(); 
-    }
+    function goHome() { document.getElementById('welcome-screen').classList.remove('hidden'); document.getElementById('monitor-app').classList.remove('active'); loadGlobalInfo(); updateFavUI(); }
 
     function selectStation(station) {
         currentStation = station;
@@ -252,83 +254,70 @@
             const res = await fetch(`${BASE_URL}${currentStation.file}?t=${Date.now()}`);
             const data = await res.json();
             
-            // STATUS LAMPEN LOGIK
             if (data && data.length > 0) {
                 const lastUpdateStr = data[0].update;
                 const [upH, upM] = lastUpdateStr.split(':').map(Number);
                 const jetzt = new Date();
                 const updateDate = new Date();
                 updateDate.setHours(upH, upM, 0);
-
                 const diffMin = Math.round((jetzt - updateDate) / 60000);
                 const dot = document.getElementById('status-dot');
                 const txt = document.getElementById('status-text');
-
-                if (diffMin < 15) {
-                    dot.className = 'dot online';
-                    txt.innerText = 'LIVE';
-                    txt.style.color = 'var(--ontime-green)';
-                } else {
-                    dot.className = 'dot offline';
-                    txt.innerText = 'VERALTET';
-                    txt.style.color = 'var(--delay-red)';
-                }
+                if (diffMin < 15) { dot.className = 'dot online'; txt.innerText = 'LIVE'; txt.style.color = 'var(--ontime-green)'; }
+                else { dot.className = 'dot offline'; txt.innerText = 'VERALTET'; txt.style.color = 'var(--delay-red)'; }
             }
 
             const board = document.getElementById('board');
             board.innerHTML = '';
             const jetzt = new Date();
-            const aktuelleSekunden = (jetzt.getHours() * 3600) + (jetzt.getMinutes() * 60) + jetzt.getSeconds();
+            const aktuelleSek = (jetzt.getHours() * 3600) + (jetzt.getMinutes() * 60) + jetzt.getSeconds();
 
             data.filter(zug => {
                 const [h, m] = zug.echte_zeit.split(':').map(Number);
-                const zugSekunden = (h * 3600) + (m * 60);
-                return zugSekunden >= (aktuelleSekunden - 60);
+                const zugSek = (h * 3600) + (m * 60);
+                return zugSek >= (aktuelleSek - 60);
             })
             .forEach(zug => {
                 const isCancelled = (zug.info || "").includes("FÄLLT AUS");
                 const [h, m] = zug.echte_zeit.split(':').map(Number);
-                const zugSekunden = (h * 3600) + (m * 60);
-                const diffSekunden = zugSekunden - aktuelleSekunden;
-                const isAboutToDepart = diffSekunden <= 180 && diffSekunden >= 0;
-                const isDelayed = zug.echte_zeit !== zug.zeit && !isCancelled;
+                const zugSek = (h * 3600) + (m * 60);
+                const isAboutToDepart = (zugSek - aktuelleSek) <= 180 && (zugSek - aktuelleSek) >= 0;
+                
+                // Logik für lange Meldungen: Wenn Text > 50 Zeichen, aktiviere Laufschrift
+                let reasonHtml = '';
+                if (zug.begruendung) {
+                    const isLong = zug.begruendung.length > 50;
+                    reasonHtml = `
+                        <div class="delay-reason">
+                            <span class="${isLong ? 'marquee-container' : ''}">
+                                ⚠️ ${zug.begruendung}
+                            </span>
+                        </div>`;
+                }
                 
                 board.innerHTML += `
                     <div class="departure-row ${isCancelled ? 'cancelled' : ''}">
                         ${isAboutToDepart && !isCancelled ? '<div class="blink-dot"></div>' : ''}
                         <div class="time-container">
-                            ${isDelayed ? `
-                                <span class="actual-time">${zug.echte_zeit}</span>
-                                <span class="p-time delayed">${zug.zeit}</span>
-                            ` : `
-                                <span class="p-time">${zug.zeit}</span>
-                                <span class="status-ontime">pünktlich</span>
-                            `}
-                            ${isCancelled ? '<span class="status-delayed">Fällt aus</span>' : ''}
+                            <span class="actual-time">${zug.echte_zeit}</span>
+                            <span class="p-time ${zug.echte_zeit !== zug.zeit ? 'delayed' : ''}">${zug.zeit}</span>
                         </div>
                         <div>
                             <span class="train-id">${zug.linie}</span>
                             <span class="train-dest">${zug.ziel}</span>
                         </div>
-                        <div class="platform-group" style="text-align:right;">
+                        <div style="text-align:right;">
                             <span class="pl-label">Gleis</span>
-                            <span class="pl-value" style="${isCancelled ? 'text-decoration:line-through; color:#ccc;' : ''}">${zug.gleis || '—'}</span>
+                            <span class="pl-value">${isCancelled ? '' : (zug.gleis || '—')}</span>
                         </div>
-                        ${zug.begruendung ? `<div class="delay-reason">⚠️ ${zug.begruendung}</div>` : ''}
+                        ${reasonHtml}
                     </div>`;
             });
         } catch (e) { console.error(e); }
     }
 
-    setInterval(() => { 
-        document.getElementById('clock').innerText = new Date().toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'}); 
-    }, 1000);
-    
-    setInterval(() => {
-        loadData();
-        loadGlobalInfo();
-    }, 10000);
-
+    setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'}); }, 1000);
+    setInterval(() => { loadData(); loadGlobalInfo(); }, 10000);
     loadGlobalInfo();
     updateFavUI();
 </script>
