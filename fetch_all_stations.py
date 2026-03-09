@@ -23,7 +23,7 @@ DB_CODES = {
 
 STATIONS = {
     "magdeburg_hbf": "8010224", "leipzig_hbf": "8010205", "zerbst": "8013389",
-    "dessau_hbf": "8010077", "rosslau": "8010302", "rodleben": "8010294",
+    "dessau_hbf": "8010077", "rosslau": "8010302", "rodleben": "8012777",
     "bitterfeld": "8010050", "wolfen": "8013335", "magdeburg_herrenkrug": "8013455"
 }
 
