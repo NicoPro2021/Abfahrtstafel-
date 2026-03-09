@@ -24,7 +24,8 @@ DB_CODES = {
 STATIONS = {
     "magdeburg_hbf": "8010224", "leipzig_hbf": "8010205", "zerbst": "8013389",
     "dessau_hbf": "8010077", "rosslau": "8010302", "rodleben": "8012777",
-    "bitterfeld": "8010050", "wolfen": "8013335", "magdeburg_herrenkrug": "8013455", "bad_belzig": "8010031", "berlin_hbf": "8011160", "brandenburg_hbf": "8010060"
+    "bitterfeld": "8010050", "wolfen": "8013335", "magdeburg_herrenkrug": "8013455", "bad_belzig": "8010031", "berlin_hbf": "8011160", "brandenburg_hbf": "8010060",
+    "biederitz": "8010047"
 }
 
 HEADERS = {'DB-Client-Id': CLIENT_ID, 'DB-Api-Key': CLIENT_SECRET, 'accept': 'application/xml'}
