@@ -3,120 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>DB Monitor Pro</title>
+    <title>DB Monitor Pro | Live Dashboard</title>
     <style>
         :root {
             --db-red: #e2001a;
-            --db-gray-bg: #f0f3f5;
+            --db-red-hover: #c50016;
+            --db-gray-bg: #f4f7f9;
             --db-dark: #212d40;
-            --text-main: #212121;
-            --text-secondary: #656c78;
+            --text-main: #2d3436;
+            --text-secondary: #636e72;
             --ontime-green: #008754;
             --delay-red: #d50000;
-            --info-yellow: #ffcc00; /* Gelb für Bahnhofsinfos */
+            --info-yellow: #ffea00;
+            --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            --glass-bg: rgba(255, 255, 255, 0.9);
         }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         html, body { 
             height: 100%; margin: 0; padding: 0; 
             background: var(--db-gray-bg); 
-            font-family: 'Segoe UI', Arial, sans-serif; 
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
             overflow: hidden; 
+            color: var(--text-main);
         }
 
-        /* Navbar */
+        /* Navbar mit modernem Blur-Effekt */
         .db-navbar {
-            background: #fff; padding: 12px 16px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            padding: 12px 20px;
             display: flex; align-items: center; justify-content: space-between;
-            border-bottom: 1px solid #dcdcdc; flex-shrink: 0;
-            z-index: 100;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            position: sticky; top: 0; z-index: 1000;
         }
-        .db-logo { background: var(--db-red); color: white; font-weight: 900; padding: 2px 6px; border-radius: 1px; }
 
-        /* NEU: Status Lampe Styles */
-        .status-indicator { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 700; }
-        .dot { width: 8px; height: 8px; border-radius: 50%; background-color: #ccc; }
-        .dot.online { background-color: var(--ontime-green); box-shadow: 0 0 5px var(--ontime-green); }
-        .dot.offline { background-color: var(--delay-red); box-shadow: 0 0 5px var(--delay-red); }
+        .db-logo { 
+            background: var(--db-red); color: white; 
+            font-weight: 900; padding: 4px 10px; 
+            border-radius: 4px; letter-spacing: -1px;
+            font-size: 1.1rem;
+        }
 
-        /* Welcome Screen */
+        /* Status Lampe */
+        .status-indicator { display: flex; align-items: center; gap: 8px; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.5px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; background-color: #b2bec3; transition: 0.3s; }
+        .dot.online { background-color: var(--ontime-green); box-shadow: 0 0 8px var(--ontime-green); }
+        .dot.offline { background-color: var(--delay-red); box-shadow: 0 0 8px var(--delay-red); }
+
+        /* Welcome Screen Optimierung */
         #welcome-screen { 
             position: fixed; inset: 0; background: var(--db-gray-bg); z-index: 3000; 
-            display: flex; flex-direction: column; align-items: center; padding-top: 20px;
+            display: flex; flex-direction: column; align-items: center; padding: 20px 0;
             overflow-y: auto;
         }
         #welcome-screen.hidden { display: none; }
 
         .global-info-banner {
-            width: 90%; background: #fff; border-radius: 8px; padding: 15px;
-            margin-bottom: 20px; border-left: 4px solid var(--db-red);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1); box-sizing: border-box;
+            width: 92%; max-width: 600px; background: #fff; border-radius: 12px; padding: 20px;
+            margin-bottom: 25px; border-left: 6px solid var(--db-red);
+            box-shadow: var(--card-shadow);
         }
 
         .search-box { 
-            background: #fff; padding: 18px; border-radius: 4px; 
-            width: 90%; border: 1px solid #ccc; margin-bottom: 25px; cursor: pointer;
-            box-sizing: border-box; font-weight: bold; color: var(--text-secondary);
+            background: #fff; padding: 20px; border-radius: 12px; 
+            width: 92%; max-width: 600px; border: 1px solid rgba(0,0,0,0.1); 
+            margin-bottom: 30px; cursor: pointer;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.2s; display: flex; align-items: center; gap: 10px;
+            color: var(--text-secondary); font-weight: 600;
         }
+        .search-box:active { transform: scale(0.98); }
 
-        .fav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 90%; margin-bottom: 30px;}
-        .fav-item { background: #fff; border: 1px solid #ddd; padding: 15px; border-radius: 4px; text-align: left; cursor: pointer; }
+        /* Favoriten Grid */
+        .fav-grid { 
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; 
+            width: 92%; max-width: 600px; margin-bottom: 40px;
+        }
+        .fav-item { 
+            background: #fff; border: 1px solid rgba(0,0,0,0.05); padding: 18px; 
+            border-radius: 12px; text-align: left; cursor: pointer;
+            box-shadow: var(--card-shadow); transition: 0.3s;
+        }
+        .fav-item:active { background: #f1f2f6; }
+        .fav-item b { font-size: 1rem; color: var(--db-dark); }
 
         /* Monitor Ansicht */
         .monitor { display: none; flex-direction: column; height: 100%; background: #fff; }
         .monitor.active { display: flex; }
 
-        .station-header { padding: 15px 20px; border-bottom: 2px solid var(--db-red); flex-shrink: 0; background: #fff; }
-        .station-name { font-size: 1.4rem; font-weight: 800; color: var(--db-dark); margin: 5px 0; cursor: pointer; }
+        .station-header { 
+            padding: 20px; border-bottom: 3px solid var(--db-red); 
+            background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .station-name { font-size: 1.6rem; font-weight: 900; color: var(--db-dark); margin: 8px 0; }
 
-        #board { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-bottom: 80px; }
+        #board { flex: 1; overflow-y: auto; padding-bottom: 40px; }
 
         .departure-row { 
-            display: grid; grid-template-columns: 90px 1fr 60px; 
-            padding: 16px 20px; border-bottom: 1px solid #eee; align-items: start;
-            position: relative;
+            display: grid; grid-template-columns: 85px 1fr 70px; 
+            padding: 20px; border-bottom: 1px solid #f0f0f0; align-items: center;
+            position: relative; transition: background 0.2s;
         }
-        .departure-row.cancelled { background: #fff0f1; opacity: 0.8; }
+        .departure-row:active { background: #f9f9f9; }
+        .departure-row.cancelled { background: #fff5f5; opacity: 0.7; }
 
-        .time-container { display: flex; flex-direction: column; line-height: 1.1; }
-        .p-time { font-size: 1.2rem; font-weight: 700; color: var(--db-dark); }
-        .p-time.delayed { text-decoration: line-through; color: var(--text-secondary); font-size: 0.9rem; font-weight: 400; }
-        .actual-time { color: var(--delay-red); font-size: 1.2rem; font-weight: 700; }
+        .time-container { display: flex; flex-direction: column; gap: 2px; }
+        .p-time { font-size: 1.25rem; font-weight: 800; color: var(--db-dark); }
+        .p-time.delayed { text-decoration: line-through; color: var(--text-secondary); font-size: 0.9rem; font-weight: 600; }
+        .actual-time { color: var(--delay-red); font-size: 1.3rem; font-weight: 800; }
         
-        .status-ontime { color: var(--ontime-green); font-size: 0.8rem; font-weight: 700; }
-        .status-delayed { color: var(--delay-red); font-size: 0.8rem; font-weight: 700; }
+        .status-ontime { color: var(--ontime-green); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; }
+        .status-delayed { color: var(--delay-red); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; }
 
-        .train-id { font-size: 0.85rem; font-weight: 800; color: var(--text-secondary); text-transform: uppercase; }
-        .train-dest { font-size: 1.1rem; font-weight: 700; display: block; color: var(--db-dark); margin-top: 2px; }
+        .train-dest { font-size: 1.15rem; font-weight: 700; color: var(--db-dark); margin-top: 3px; display: block; }
+        .train-id { font-size: 0.8rem; font-weight: 800; color: var(--db-red); text-transform: uppercase; background: rgba(226, 0, 26, 0.1); padding: 2px 6px; border-radius: 4px; }
         
-        .pl-label { font-size: 0.65rem; color: var(--text-secondary); font-weight: 700; display: block; text-transform: uppercase; }
-        .pl-value { font-size: 1.3rem; font-weight: 800; color: var(--db-dark); }
+        .pl-label { font-size: 0.65rem; color: var(--text-secondary); font-weight: 800; text-transform: uppercase; }
+        .pl-value { font-size: 1.5rem; font-weight: 900; color: var(--db-dark); }
 
-        /* NEU: Bahnhofsinfos als auffälliger gelber Balken */
+        /* Info-Balken Styling */
         .delay-reason { 
             grid-column: 1 / 4; 
-            background-color: var(--info-yellow); 
-            color: #000; 
+            background: var(--info-yellow); 
+            color: #2d3436; 
             font-size: 0.85rem; 
             font-weight: 700; 
-            margin-top: 10px; 
-            padding: 6px 10px; 
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            margin-top: 12px; 
+            padding: 10px 14px; 
+            border-radius: 8px;
+            display: flex; align-items: center; gap: 10px;
+            box-shadow: inset 0 -2px 0 rgba(0,0,0,0.1);
         }
 
         .blink-dot {
-            width: 8px; height: 8px; background: var(--db-red); border-radius: 50%;
-            position: absolute; left: 6px; top: 22px; animation: blink 1s infinite;
+            width: 10px; height: 10px; background: var(--db-red); border-radius: 50%;
+            position: absolute; left: 8px; top: 50%; transform: translateY(-50%); 
+            animation: blink 1.2s infinite ease-in-out;
         }
 
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0; } 100% { opacity: 1; } }
+        @keyframes blink { 0%, 100% { opacity: 1; transform: translateY(-50%) scale(1); } 50% { opacity: 0.3; transform: translateY(-50%) scale(0.8); } }
 
-        /* Search Overlay */
+        /* Search Overlay Modern */
         #search-overlay { position: fixed; inset: 0; background: #fff; z-index: 4000; display: none; flex-direction: column; }
-        .search-nav { padding: 12px; background: var(--db-dark); display: flex; gap: 10px; align-items: center;}
-        .search-input { flex: 1; border: none; padding: 12px; border-radius: 4px; font-size: 1rem; outline: none;}
+        .search-nav { padding: 15px; background: var(--db-dark); display: flex; gap: 15px; align-items: center; }
+        .search-input { flex: 1; border: none; padding: 14px; border-radius: 8px; font-size: 1.1rem; outline: none; background: #f5f6fa; }
+
+        .search-res-item { padding: 18px 25px; border-bottom: 1px solid #f1f2f6; font-weight: 700; font-size: 1.1rem; display: flex; justify-content: space-between; }
+        .search-res-item:active { background: #f1f2f6; }
     </style>
 </head>
 <body>
@@ -125,28 +160,33 @@
     <div class="db-logo">DB</div>
     <div class="status-indicator">
         <div id="status-dot" class="dot"></div>
-        <span id="status-text" style="color: var(--text-secondary);">PRÜFE...</span>
+        <span id="status-text" style="color: var(--text-secondary);">PRÜFE DATEN...</span>
     </div>
-    <div id="weather-small" style="font-weight: bold; font-size: 0.8rem; color: var(--db-dark);">--°C</div>
+    <div id="weather-small" style="font-weight: 800; font-size: 0.85rem; color: var(--db-dark);">--°C</div>
 </div>
 
 <div id="welcome-screen">
     <div class="global-info-banner" id="global-info">
-        <div style="display: flex; justify-content: space-between;">
-            <b id="g-title">Lade...</b>
-            <span id="g-wetter">☀️ --°C</span>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <b id="g-title" style="font-size: 1.1rem;">Lade Infos...</b>
+            <span id="g-wetter" style="background: var(--db-gray-bg); padding: 4px 8px; border-radius: 6px; font-weight: 800;">☀️ --°C</span>
         </div>
-        <div id="g-msg" style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 5px;">Suche eine Station aus.</div>
+        <div id="g-msg" style="font-size: 0.95rem; color: var(--text-secondary); margin-top: 8px; line-height: 1.4;">Bitte wählen Sie einen Bahnhof aus der Liste oder den Favoriten.</div>
     </div>
 
-    <div class="search-box" onclick="openSearch()">🔍 Bahnhof suchen...</div>
+    <div class="search-box" onclick="openSearch()">
+        <span>🔍</span>
+        <span>Bahnhof suchen...</span>
+    </div>
+    
+    <div style="width: 92%; max-width: 600px; margin-bottom: 10px; font-weight: 800; font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase;">Favoriten</div>
     <div class="fav-grid" id="fav-bar"></div>
 </div>
 
 <div id="search-overlay">
     <div class="search-nav">
-        <button onclick="closeSearch()" style="color:white; background:none; border:none; font-size:1.5rem; cursor:pointer;">✕</button>
-        <input type="text" class="search-input" id="station-query" placeholder="Suchen (z.B. Magdeburg)..." oninput="filterStations()">
+        <button onclick="closeSearch()" style="color:white; background:none; border:none; font-size:1.8rem; cursor:pointer;">✕</button>
+        <input type="text" class="search-input" id="station-query" placeholder="Wohin solls gehen?" oninput="filterStations()">
     </div>
     <div id="search-results" style="overflow-y: auto;"></div>
 </div>
@@ -154,9 +194,9 @@
 <div class="monitor" id="monitor-app">
     <div class="station-header">
         <div style="display: flex; justify-content: space-between; align-items: center;">
-            <button onclick="goHome()" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">←</button>
-            <div id="clock" style="font-weight: 700; font-variant-numeric: tabular-nums;">00:00</div>
-            <button id="star" onclick="toggleFavorite()" style="background:none; border:none; font-size:1.5rem; color:#ccc; cursor:pointer;">★</button>
+            <button onclick="goHome()" style="background:#f5f6fa; border:none; width:40px; height:40px; border-radius:50%; font-size:1.2rem; cursor:pointer;">←</button>
+            <div id="clock" style="font-weight: 800; font-size: 1.2rem; font-variant-numeric: tabular-nums; background: var(--db-dark); color: white; padding: 4px 12px; border-radius: 20px;">00:00</div>
+            <button id="star" onclick="toggleFavorite()" style="background:none; border:none; font-size:1.8rem; color:#ccc; cursor:pointer;">★</button>
         </div>
         <h1 id="display-station" class="station-name" onclick="loadData()">Lade...</h1>
     </div>
@@ -164,6 +204,7 @@
 </div>
 
 <script>
+    // Liste der Stationen
     const STATIONS_DB = [
         { name: "Bad Belzig", file: "bad_belzig.json" },
         { name: "Berlin Hbf", file: "berlin_hbf.json" },
@@ -201,7 +242,7 @@
         } catch(e) { console.log("Info-Fehler"); }
     }
 
-    function openSearch() { document.getElementById('search-overlay').style.display = 'flex'; filterStations(); }
+    function openSearch() { document.getElementById('search-overlay').style.display = 'flex'; document.getElementById('station-query').focus(); filterStations(); }
     function closeSearch() { document.getElementById('search-overlay').style.display = 'none'; }
     function goHome() { 
         document.getElementById('welcome-screen').classList.remove('hidden'); 
@@ -221,14 +262,16 @@
     function filterStations() {
         const q = document.getElementById('station-query').value.toLowerCase();
         document.getElementById('search-results').innerHTML = STATIONS_DB.filter(s => s.name.toLowerCase().includes(q))
-            .map(s => `<div style="padding:15px; border-bottom:1px solid #eee; font-weight:bold;" onclick='selectStation(${JSON.stringify(s)})'>${s.name}</div>`).join('');
+            .map(s => `<div class="search-res-item" onclick='selectStation(${JSON.stringify(s)})'>${s.name} <span>›</span></div>`).join('');
     }
 
     function updateFavUI() {
         document.getElementById('fav-bar').innerHTML = favorites.map((f, i) => `
             <div class="fav-item" onclick="fClick(${i})">
-                <span style="color:${f ? 'var(--db-red)' : '#ccc'}; font-size:1.2rem;">${f ? '📍' : '＋'}</span>
-                <b style="display:block; margin-top:5px;">${f ? f.name.split(' ')[0] : 'Slot '+(i+1)}</b>
+                <div style="background:${f ? 'rgba(226, 0, 26, 0.1)' : '#f5f6fa'}; width:35px; height:35px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.1rem;">
+                    ${f ? '📍' : '＋'}
+                </div>
+                <b style="display:block; margin-top:10px;">${f ? f.name : 'Platz '+(i+1)}</b>
             </div>`).join('');
     }
 
@@ -256,7 +299,7 @@
             
             // STATUS LAMPEN LOGIK
             if (data && data.length > 0) {
-                const lastUpdateStr = data[0].update;
+                const lastUpdateStr = data[0].update || "00:00";
                 const [upH, upM] = lastUpdateStr.split(':').map(Number);
                 const jetzt = new Date();
                 const updateDate = new Date();
@@ -272,7 +315,7 @@
                     txt.style.color = 'var(--ontime-green)';
                 } else {
                     dot.className = 'dot offline';
-                    txt.innerText = 'VERALTET';
+                    txt.innerText = 'VERALTET ('+diffMin+'m)';
                     txt.style.color = 'var(--delay-red)';
                 }
             }
@@ -285,7 +328,7 @@
             data.filter(zug => {
                 const [h, m] = zug.echte_zeit.split(':').map(Number);
                 const zugSekunden = (h * 3600) + (m * 60);
-                return zugSekunden >= (aktuelleSekunden - 60);
+                return zugSekunden >= (aktuelleSekunden - 300); // Zeige Züge bis 5 Min nach Abfahrt
             })
             .forEach(zug => {
                 const isCancelled = (zug.info || "").includes("FÄLLT AUS");
@@ -308,7 +351,7 @@
                             `}
                             ${isCancelled ? '<span class="status-delayed">Fällt aus</span>' : ''}
                         </div>
-                        <div>
+                        <div style="padding-left: 10px;">
                             <span class="train-id">${zug.linie}</span>
                             <span class="train-dest">${zug.ziel}</span>
                         </div>
@@ -322,10 +365,12 @@
         } catch (e) { console.error(e); }
     }
 
+    // Uhrzeit Update
     setInterval(() => { 
         document.getElementById('clock').innerText = new Date().toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'}); 
     }, 1000);
     
+    // Auto-Refresh alle 30 Sekunden
     setInterval(() => {
         loadData();
         loadGlobalInfo();
