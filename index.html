@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>DB Monitor Pro | Live FIA</title>
+    <title>DB Monitor Pro | Live Dashboard</title>
     <style>
         :root {
             --fia-blue: #0000cc;
             --fia-white: #ffffff;
             --db-red: #e2001a;
             --db-dark: #111111;
-            --ontime-green: #008754;
-            --delay-red: #d50000;
+            --db-gray-bg: #f4f7f9;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -19,9 +18,8 @@
         html, body { 
             height: 100%; margin: 0; padding: 0; 
             background: #000; 
-            font-family: 'Segoe UI', Arial, sans-serif; 
+            font-family: Arial, Helvetica, sans-serif; 
             overflow: hidden; 
-            color: var(--fia-white);
         }
 
         /* Navbar */
@@ -30,107 +28,128 @@
             padding: 10px 20px;
             display: flex; align-items: center; justify-content: space-between;
             border-bottom: 3px solid var(--db-red);
-            color: #000;
+            position: sticky; top: 0; z-index: 1000;
         }
-        .db-logo { background: var(--db-red); color: white; font-weight: 900; padding: 4px 10px; border-radius: 2px; }
+        .db-logo { background: var(--db-red); color: white; font-weight: 900; padding: 4px 10px; border-radius: 4px; }
 
         /* Welcome Screen */
         #welcome-screen { 
-            position: fixed; inset: 0; background: #f4f7f9; z-index: 3000; 
+            position: fixed; inset: 0; background: var(--db-gray-bg); z-index: 3000; 
             display: flex; flex-direction: column; align-items: center; padding: 20px 0;
-            overflow-y: auto; color: #333;
+            overflow-y: auto; color: #111;
         }
         #welcome-screen.hidden { display: none; }
-        .search-box { background: #fff; padding: 20px; border-radius: 12px; width: 92%; max-width: 600px; border: 1px solid #ccc; cursor: pointer; text-align: center; font-weight: bold; }
-        .fav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 92%; max-width: 600px; margin-top: 20px; }
-        .fav-item { background: #fff; padding: 15px; border-radius: 12px; border: 1px solid #eee; cursor: pointer; text-align: center; }
 
-        /* Monitor / FIA Look */
-        .monitor { display: none; flex-direction: column; height: 100%; background: var(--fia-blue); }
+        .search-box { 
+            background: #fff; padding: 20px; border-radius: 12px; 
+            width: 92%; max-width: 600px; border: 1px solid #ddd; 
+            margin: 20px 0; cursor: pointer; text-align: center; font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .fav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 92%; max-width: 600px; }
+        .fav-item { 
+            background: #fff; padding: 18px; border-radius: 12px; text-align: center; 
+            cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.05); font-weight: bold;
+        }
+
+        /* Monitor / FIA Design */
+        .monitor { display: none; flex-direction: column; height: 100%; background: var(--fia-blue); color: #fff; }
         .monitor.active { display: flex; }
 
-        .station-header { 
-            padding: 15px 25px; border-bottom: 3px solid rgba(255,255,255,0.3); 
+        .fia-header { 
+            padding: 15px 25px; background: var(--fia-blue); border-bottom: 3px solid rgba(255,255,255,0.4);
             display: flex; justify-content: space-between; align-items: center;
         }
-        .station-name { font-size: 1.8rem; font-weight: 900; text-transform: uppercase; margin: 0; }
+        .station-name { font-size: 1.8rem; font-weight: bold; text-transform: uppercase; margin: 0; }
 
         #board { flex: 1; overflow-y: auto; }
 
         .departure-row { 
-            display: grid; grid-template-columns: 220px 1fr 100px; 
-            padding: 20px 25px; border-bottom: 1px solid rgba(255,255,255,0.2); 
+            display: grid; grid-template-columns: 280px 1fr 100px; 
+            padding: 20px 25px; border-bottom: 2px solid rgba(255,255,255,0.2); 
             align-items: center; position: relative;
+            min-height: 140px;
         }
 
-        /* Zeit-Sektion */
-        .time-container { display: flex; flex-direction: column; }
-        .line-id { font-size: 1.2rem; font-weight: bold; opacity: 0.8; margin-bottom: 5px; }
-        .time-wrapper { display: flex; align-items: center; gap: 10px; }
-        .plan-time { font-size: 2.8rem; font-weight: 800; line-height: 1; }
-        .delay-box { background: #fff; color: var(--fia-blue); padding: 2px 8px; font-size: 1.8rem; font-weight: 900; border-radius: 3px; }
+        /* Zeit-Sektion & Blinkpunkt */
+        .time-box { display: flex; flex-direction: column; }
+        .line-id { font-size: 1.3rem; font-weight: bold; margin-bottom: 5px; opacity: 0.8; }
+        .time-wrapper { display: flex; align-items: center; gap: 12px; }
+        .plan-time { font-size: 3.2rem; font-weight: bold; line-height: 1; }
+        
+        .delay-box { 
+            background: #fff; color: var(--fia-blue); padding: 2px 10px; 
+            font-size: 2rem; font-weight: bold; border-radius: 3px;
+            animation: delay-blink 1.5s step-end infinite;
+        }
+        @keyframes delay-blink { 50% { opacity: 0.2; } }
 
-        /* Mitte */
-        .dest-box { padding-left: 20px; }
-        .via-info { font-size: 1rem; opacity: 0.8; margin-bottom: 5px; min-height: 1.2rem; }
-        .destination { font-size: 3rem; font-weight: 800; letter-spacing: -1px; line-height: 1; }
-
-        /* Gleis */
-        .track-box { text-align: right; font-size: 4rem; font-weight: 900; }
-
-        /* Blink-Punkt (Weißer Punkt 3 Min vor Abfahrt) */
+        /* Der weiße Punkt 3 Min vor Abfahrt */
         .depart-point {
-            width: 14px; height: 14px; background: #fff; border-radius: 50%;
-            position: absolute; left: 6px; top: 50%; transform: translateY(-50%);
+            width: 15px; height: 15px; background: #fff; border-radius: 50%;
+            position: absolute; left: 8px; top: 50%; transform: translateY(-50%);
             animation: fia-blink 1.2s infinite;
         }
         @keyframes fia-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-        /* Fullscreen Modus Skalierung */
-        :fullscreen .departure-row { grid-template-columns: 450px 1fr 180px; padding: 40px 60px; min-height: 200px; }
-        :fullscreen .plan-time { font-size: 7rem; }
-        :fullscreen .delay-box { font-size: 4.5rem; }
-        :fullscreen .destination { font-size: 8rem; }
-        :fullscreen .track-box { font-size: 10rem; }
+        /* Ziel & Gleis */
+        .dest-box { padding-left: 20px; }
+        .destination { font-size: 3.5rem; font-weight: bold; letter-spacing: -1px; line-height: 1; }
+        .track-box { text-align: right; font-size: 4.5rem; font-weight: bold; }
+
+        /* Fullscreen */
+        :fullscreen .departure-row { grid-template-columns: 550px 1fr 200px; padding: 40px 60px; min-height: 250px; }
+        :fullscreen .plan-time { font-size: 9rem; }
+        :fullscreen .delay-box { font-size: 5rem; }
+        :fullscreen .destination { font-size: 9rem; }
+        :fullscreen .track-box { font-size: 11rem; }
         :fullscreen .station-name { font-size: 4rem; }
 
         /* Search Overlay */
-        #search-overlay { position: fixed; inset: 0; background: #fff; z-index: 4000; display: none; flex-direction: column; color: #000; }
+        #search-overlay { position: fixed; inset: 0; background: #fff; z-index: 4000; display: none; flex-direction: column; }
         .search-nav { padding: 15px; background: var(--db-dark); display: flex; gap: 15px; }
+        .search-input { flex: 1; border: none; padding: 14px; border-radius: 8px; font-size: 1.2rem; outline: none; }
     </style>
 </head>
 <body>
 
 <div class="db-navbar">
     <div class="db-logo">DB</div>
-    <div style="display: flex; gap: 15px; align-items: center;">
+    <div style="display: flex; gap: 15px; align-items: center; color: #000;">
         <div id="clock" style="font-weight: 900; font-size: 1.2rem;">00:00</div>
-        <button onclick="toggleFullscreen()" style="padding: 5px 10px; cursor:pointer;">VOLLBILD</button>
+        <button onclick="toggleFullscreen()" style="padding: 5px 12px; cursor:pointer; font-weight: bold; border: 1px solid #ccc; background: #fff;">VOLLBILD</button>
     </div>
 </div>
 
 <div id="welcome-screen">
+    <div style="margin: 20px 0; font-weight: 900; color: #111; font-size: 1.4rem;">DB MONITOR PRO</div>
     <div class="search-box" onclick="openSearch()">🔍 BAHNHOF SUCHEN...</div>
+    <div style="width: 92%; max-width: 600px; margin-bottom: 10px; font-weight: 800; color: #666; text-transform: uppercase; font-size: 0.8rem;">Favoriten</div>
     <div class="fav-grid" id="fav-bar"></div>
 </div>
 
 <div id="search-overlay">
     <div class="search-nav">
-        <button onclick="closeSearch()" style="color:white; background:none; border:none; font-size:1.8rem;">✕</button>
-        <input type="text" id="station-query" placeholder="Bahnhof Name..." oninput="filterStations()" style="flex:1; padding:10px; font-size:1.2rem;">
+        <button onclick="closeSearch()" style="color:white; background:none; border:none; font-size:1.8rem; cursor:pointer;">✕</button>
+        <input type="text" id="station-query" class="search-input" placeholder="Bahnhof suchen..." oninput="filterStations()">
     </div>
-    <div id="search-results" style="overflow-y: auto;"></div>
+    <div id="search-results" style="overflow-y: auto; color: #111;"></div>
 </div>
 
 <div class="monitor" id="monitor-app">
-    <div class="station-header">
-        <h1 id="display-station" class="station-name">STATION</h1>
-        <button onclick="goHome()" style="background:none; border:1px solid #fff; color:#fff; padding:5px 15px; cursor:pointer;">HOME</button>
+    <div class="fia-header">
+        <h1 id="display-station" class="station-name">BITTE WÄHLEN</h1>
+        <div style="display: flex; gap: 10px;">
+            <button id="star-btn" onclick="toggleFavorite()" style="background:none; border:1px solid #fff; color:#fff; padding:5px 15px; cursor:pointer; font-weight:bold;">★ FAV</button>
+            <button onclick="goHome()" style="background:none; border:1px solid #fff; color:#fff; padding:5px 15px; cursor:pointer; font-weight:bold;">HOME</button>
+        </div>
     </div>
     <div id="board"></div>
 </div>
 
 <script>
+    // Deine Server-Konfiguration
     const STATIONS_DB = [
         { name: "Bad Belzig", file: "bad_belzig.json" }, { name: "Berlin Hbf", file: "berlin_hbf.json" },
         { name: "Biederitz", file: "biederitz.json" }, { name: "Bitterfeld", file: "bitterfeld.json" },
@@ -155,20 +174,24 @@
 
     function openSearch() { document.getElementById('search-overlay').style.display = 'flex'; document.getElementById('station-query').focus(); filterStations(); }
     function closeSearch() { document.getElementById('search-overlay').style.display = 'none'; }
-    function goHome() { document.getElementById('welcome-screen').classList.remove('hidden'); document.getElementById('monitor-app').classList.remove('active'); updateFavUI(); }
+    function goHome() { 
+        document.getElementById('welcome-screen').classList.remove('hidden'); 
+        document.getElementById('monitor-app').classList.remove('active'); 
+        updateFavUI(); 
+    }
 
     function selectStation(station) {
         currentStation = station;
         document.getElementById('display-station').innerText = station.name.toUpperCase();
         document.getElementById('welcome-screen').classList.add('hidden');
         document.getElementById('monitor-app').classList.add('active');
-        closeSearch(); loadData();
+        closeSearch(); updateStar(); loadData();
     }
 
     function filterStations() {
         const q = document.getElementById('station-query').value.toLowerCase();
         document.getElementById('search-results').innerHTML = STATIONS_DB.filter(s => s.name.toLowerCase().includes(q))
-            .map(s => `<div style="padding:15px; border-bottom:1px solid #eee; cursor:pointer;" onclick='selectStation(${JSON.stringify(s)})'>${s.name}</div>`).join('');
+            .map(s => `<div style="padding:18px; border-bottom:1px solid #eee; cursor:pointer; font-weight:bold;" onclick='selectStation(${JSON.stringify(s)})'>${s.name}</div>`).join('');
     }
 
     async function loadData() {
@@ -186,10 +209,11 @@
                 const [h, m] = zug.echte_zeit.split(':').map(Number);
                 const echteSek = (h * 3600) + (m * 60);
 
-                // FILTER: Zug bleibt bis 120 Sek nach der ECHTEN Abfahrt sichtbar
+                // Filter: Zug bleibt bis 120 Sek nach ECHTER Abfahrt sichtbar
                 if (echteSek < aktuelleSek - 120) return;
 
                 const isDelayed = zug.echte_zeit !== zug.zeit;
+                // Weißer Punkt 3 Min (180s) vor echter Abfahrt
                 const isAboutToDepart = (echteSek - aktuelleSek) <= 180 && (echteSek - aktuelleSek) >= 0;
 
                 board.innerHTML += `
@@ -203,13 +227,25 @@
                             </div>
                         </div>
                         <div class="dest-box">
-                            <div class="via-info">${zug.begruendung || ''}</div>
                             <div class="destination">${zug.ziel}</div>
                         </div>
                         <div class="track-box">${zug.gleis || ''}</div>
                     </div>`;
             });
-        } catch (e) { console.error(e); }
+        } catch (e) { console.error("Server-Fehler"); }
+    }
+
+    function toggleFavorite() {
+        const idx = favorites.findIndex(f => f && f.file === currentStation.file);
+        if (idx > -1) favorites[idx] = null;
+        else { const empty = favorites.indexOf(null); if (empty > -1) favorites[empty] = currentStation; else favorites[0] = currentStation; }
+        localStorage.setItem('db_monitor_favs', JSON.stringify(favorites));
+        updateStar();
+    }
+
+    function updateStar() {
+        const isFav = currentStation && favorites.some(f => f && f.file === currentStation.file);
+        document.getElementById('star-btn').style.color = isFav ? '#ffcc00' : '#fff';
     }
 
     function updateFavUI() {
@@ -221,7 +257,7 @@
     setInterval(() => { 
         document.getElementById('clock').innerText = new Date().toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'}); 
     }, 1000);
-    setInterval(loadData, 20000);
+    setInterval(loadData, 20000); // Alle 20s Update
     updateFavUI();
 </script>
 </body>
