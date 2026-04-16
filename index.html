@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>DB FIA Monitor | Live</title>
+    <title>DB FIA Monitor Pro</title>
     <style>
         :root {
             --fia-blue: #0000cc;
@@ -14,101 +14,46 @@
         }
 
         * { box-sizing: border-box; }
+        html, body { height: 100%; margin: 0; padding: 0; background: #000; font-family: Arial, sans-serif; overflow: hidden; }
 
-        html, body { 
-            height: 100%; margin: 0; padding: 0; 
-            background: #000; 
-            font-family: Arial, Helvetica, sans-serif; 
-            overflow: hidden; 
-        }
-
-        /* Steuerung */
-        .db-navbar {
-            background: #111; padding: 10px 20px; display: flex; 
-            justify-content: space-between; align-items: center; border-bottom: 2px solid var(--db-red);
-        }
+        /* Header */
+        .db-navbar { background: #111; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--db-red); }
         .db-logo { background: var(--db-red); color: white; font-weight: bold; padding: 4px 10px; border-radius: 2px; }
         .btn { background: var(--fia-blue); color: white; border: 1px solid white; padding: 8px 15px; cursor: pointer; font-weight: bold; text-transform: uppercase; }
 
-        /* FIA Gehäuse */
-        .fia-container {
-            height: calc(100vh - 55px);
-            background: var(--fia-blue);
-            color: var(--fia-white);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .fia-header {
-            padding: 15px 30px;
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 3px solid rgba(255,255,255,0.4);
-        }
-        .station-name { font-size: 2.2rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+        /* Monitor */
+        .fia-container { height: calc(100vh - 55px); background: var(--fia-blue); color: var(--fia-white); display: flex; flex-direction: column; }
+        .fia-header { padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid rgba(255,255,255,0.4); }
+        .station-name { font-size: 2.2rem; font-weight: bold; text-transform: uppercase; }
         .clock { font-size: 2.2rem; font-weight: bold; }
 
         #board { flex: 1; overflow-y: auto; }
+        .departure-row { display: grid; grid-template-columns: 320px 1fr 120px; padding: 20px 30px; border-bottom: 2px solid rgba(255,255,255,0.2); position: relative; align-items: center; min-height: 140px; }
 
-        .departure-row {
-            display: grid;
-            grid-template-columns: 320px 1fr 120px; /* Mehr Platz für Zeit-Sektion */
-            padding: 20px 30px;
-            border-bottom: 2px solid rgba(255,255,255,0.2);
-            position: relative;
-            align-items: center;
-            min-height: 140px;
-        }
+        /* Animationen */
+        @keyframes delay-blink { 50% { opacity: 0.2; } }
+        @keyframes depart-blink { 50% { opacity: 0; } }
 
-        /* Zeit & Linie */
         .time-box { display: flex; flex-direction: column; }
-        .line-id { font-size: 1.5rem; font-weight: bold; margin-bottom: 8px; color: rgba(255,255,255,0.9); }
+        .line-id { font-size: 1.5rem; font-weight: bold; margin-bottom: 8px; }
         .time-wrapper { display: flex; align-items: center; gap: 15px; }
-        .plan-time { font-size: 3.8rem; font-weight: bold; line-height: 1; }
+        .plan-time { font-size: 3.8rem; font-weight: bold; }
         
-        /* Verspätungs-Kästchen mit Blink-Animation */
-        .delay-box { 
-            background: var(--fia-delay-bg); 
-            color: var(--fia-delay-text); 
-            padding: 4px 12px; 
-            font-size: 2rem; 
-            font-weight: bold; 
-            border-radius: 2px;
-            animation: delay-blink 1.5s step-end infinite;
-        }
+        .delay-box { background: var(--fia-delay-bg); color: var(--fia-delay-text); padding: 4px 12px; font-size: 2rem; font-weight: bold; border-radius: 2px; animation: delay-blink 1.5s step-end infinite; }
 
-        @keyframes delay-blink {
-            50% { visibility: hidden; }
-        }
+        .dest-box { padding-left: 20px; }
+        .destination { font-size: 4rem; font-weight: bold; line-height: 1.1; }
 
-        /* Mitte: Ziel */
-        .dest-box { padding-left: 20px; display: flex; flex-direction: column; justify-content: center; }
-        .via-info { font-size: 1.2rem; color: rgba(255,255,255,0.7); margin-bottom: 5px; min-height: 1.4rem; }
-        .destination { font-size: 4rem; font-weight: bold; letter-spacing: -1px; line-height: 1.1; }
-
-        /* Rechts: Gleis */
         .track-box { text-align: right; font-size: 4.5rem; font-weight: bold; }
 
-        /* FULLSCREEN OPTIMIERUNG - ABSOLUTE STABILITÄT */
-        :fullscreen .fia-header { padding: 30px 60px; border-bottom-width: 5px; }
-        :fullscreen .station-name { font-size: 5rem; }
-        :fullscreen .clock { font-size: 5rem; }
+        /* Der weiße Punkt signalisiert: "Zug fährt unmittelbar ab" (Self-Check/Türen schließen) */
+        .depart-point { width: 15px; height: 15px; background: white; border-radius: 50%; position: absolute; left: 8px; top: 50%; transform: translateY(-50%); animation: depart-blink 1s infinite; }
 
-        :fullscreen .departure-row { 
-            grid-template-columns: 550px 1fr 200px; /* Enormer Platz für Zeit verhindert Überlappung */
-            padding: 50px 60px;
-            min-height: 250px; 
-        }
+        /* Fullscreen */
+        :fullscreen .departure-row { grid-template-columns: 550px 1fr 200px; padding: 50px 60px; min-height: 250px; }
         :fullscreen .plan-time { font-size: 9rem; }
-        :fullscreen .delay-box { font-size: 5rem; padding: 10px 20px; }
         :fullscreen .destination { font-size: 9rem; }
         :fullscreen .track-box { font-size: 11rem; }
-        :fullscreen .line-id { font-size: 3rem; }
-        :fullscreen .via-info { font-size: 2.5rem; margin-bottom: 15px; }
-
-        /* Overlays */
-        #welcome { position: fixed; inset: 0; background: #000; z-index: 5000; display: flex; align-items: center; justify-content: center; }
-        #search-overlay { position: fixed; inset: 0; background: #000; z-index: 6000; display: none; padding: 40px; }
-        .s-input { width: 100%; padding: 25px; background: #111; color: white; border: 3px solid var(--fia-blue); font-size: 2.5rem; outline: none; }
     </style>
 </head>
 <body>
@@ -117,77 +62,55 @@
     <div class="db-logo">DB</div>
     <div style="display: flex; gap: 15px;">
         <button class="btn" onclick="toggleFullscreen()">VOLLBILD</button>
-        <button class="btn" onclick="location.reload()">HOME</button>
+        <button class="btn" onclick="goHome()">HOME</button>
     </div>
-</div>
-
-<div id="welcome">
-    <button class="btn" style="font-size: 2rem; padding: 30px 60px;" onclick="openSearch()">STATION WÄHLEN</button>
 </div>
 
 <div class="fia-container">
     <div class="fia-header">
-        <div class="station-name" id="display-station">DESSAU SÜD</div>
+        <div class="station-name" id="display-station">BITTE WÄHLEN</div>
         <div class="clock" id="clock">00:00</div>
     </div>
     <div id="board"></div>
 </div>
 
-<div id="search-overlay">
-    <input type="text" class="s-input" id="station-query" placeholder="Bahnhof Name..." oninput="filterStations()">
-    <div id="search-results" style="margin-top:30px; color:white; font-size:2rem; overflow-y:auto; max-height:75vh; cursor:pointer;"></div>
-</div>
-
 <script>
-    const STATIONS_DB = [
-        { name: "Bad Belzig", file: "bad_belzig.json" }, { name: "Berlin Hbf", file: "berlin_hbf.json" },
-        { name: "Biederitz", file: "biederitz.json" }, { name: "Bitterfeld", file: "bitterfeld.json" },
-        { name: "Brandenburg Hbf", file: "brandenburg_hbf.json" }, { name: "Dessau Hbf", file: "dessau_hbf.json" },
-        { name: "Dessau Süd", file: "dessau_sued.json" }, { name: "Gommern", file: "gommern.json" },
-        { name: "Güterglück", file: "gueterglueck.json" }, { name: "Leipzig Hbf", file: "leipzig_hbf.json" },
-        { name: "Leipzig Hbf (tief)", file: "leipzig_hbf_tief.json" }, { name: "Magdeburg Hbf", file: "magdeburg_hbf.json" },
-        { name: "Magdeburg Herrenkrug", file: "magdeburg_herrenkrug.json" }, { name: "Magdeburg Neustadt", file: "magdeburg_neustadt.json" },
-        { name: "Pretzier (Altm)", file: "pretzier_altm.json" }, { name: "Rodleben", file: "rodleben.json" },
-        { name: "Roßlau (Elbe)", file: "rosslau.json" }, { name: "Wolfen", file: "wolfen.json" },
-        { name: "Wusterwitz", file: "wusterwitz.json" }, { name: "Zerbst/Anhalt", file: "zerbst.json" }
-    ];
-
     const BASE_URL = 'https://raw.githubusercontent.com/nicopro2021/Abfahrtstafel-/main/';
-    let currentStation = null;
+    let currentStation = { name: "Dessau Süd", file: "dessau_sued.json" }; // Beispiel-Start
 
     function toggleFullscreen() {
         if (!document.fullscreenElement) document.documentElement.requestFullscreen();
         else document.exitFullscreen();
     }
 
-    function openSearch() { document.getElementById('search-overlay').style.display = 'block'; document.getElementById('station-query').focus(); }
-
-    function selectStation(station) {
-        currentStation = station;
-        document.getElementById('display-station').innerText = station.name.toUpperCase();
-        document.getElementById('welcome').style.display = 'none';
-        document.getElementById('search-overlay').style.display = 'none';
-        loadData();
-    }
-
-    function filterStations() {
-        const q = document.getElementById('station-query').value.toLowerCase();
-        document.getElementById('search-results').innerHTML = STATIONS_DB.filter(s => s.name.toLowerCase().includes(q))
-            .map(s => `<div onclick='selectStation(${JSON.stringify(s)})' style="padding:20px; border-bottom:1px solid #333;">${s.name}</div>`).join('');
-    }
-
     async function loadData() {
-        if(!currentStation) return;
         try {
             const res = await fetch(`${BASE_URL}${currentStation.file}?t=${Date.now()}`);
             const data = await res.json();
             const board = document.getElementById('board');
             board.innerHTML = '';
             
+            const jetzt = new Date();
+            const aktuelleSek = (jetzt.getHours() * 3600) + (jetzt.getMinutes() * 60) + jetzt.getSeconds();
+
             data.forEach(zug => {
+                const [h, m] = zug.echte_zeit.split(':').map(Number);
+                const [ph, pm] = zug.zeit.split(':').map(Number);
+                
+                const echteSek = (h * 3600) + (m * 60);
+                const planSek = (ph * 3600) + (pm * 60);
+
+                // FILTER: Züge werden erst 120 Sek nach der ECHTEN Abfahrtszeit entfernt
+                // So "verschluckt" die Verspätung den Zug nicht aus der Liste
+                if (echteSek < aktuelleSek - 120) return;
+
                 const isDelayed = zug.echte_zeit !== zug.zeit;
+                // Punkt signalisiert Abfahrt in den nächsten 3 Minuten (180 Sek)
+                const isAboutToDepart = (echteSek - aktuelleSek) <= 180 && (echteSek - aktuelleSek) >= 0;
+
                 board.innerHTML += `
                     <div class="departure-row">
+                        ${isAboutToDepart ? '<div class="depart-point"></div>' : ''}
                         <div class="time-box">
                             <span class="line-id">${zug.linie}</span>
                             <div class="time-wrapper">
@@ -196,19 +119,19 @@
                             </div>
                         </div>
                         <div class="dest-box">
-                            <div class="via-info">${zug.begruendung || ''}</div>
                             <div class="destination">${zug.ziel}</div>
                         </div>
                         <div class="track-box">${zug.gleis || ''}</div>
                     </div>`;
             });
-        } catch (e) { console.error("Update fehlgeschlagen"); }
+        } catch (e) { console.error("Datenfehler"); }
     }
 
     setInterval(() => { 
         document.getElementById('clock').innerText = new Date().toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'}); 
     }, 1000);
     setInterval(loadData, 30000);
+    loadData(); // Initialer Call
 </script>
 </body>
 </html>
