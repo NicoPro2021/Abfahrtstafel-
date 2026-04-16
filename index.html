@@ -45,23 +45,13 @@
             font-size: 1.1rem;
         }
 
-        /* Fullscreen Button Styling */
+        /* Fullscreen Button */
         .fs-toggle {
-            background: var(--db-dark);
-            color: white;
-            border: none;
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            font-weight: 800;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            background: var(--db-dark); color: white; border: none;
+            padding: 8px 14px; border-radius: 8px; font-size: 0.75rem;
+            font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 8px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            transition: all 0.2s;
         }
-        .fs-toggle:hover { background: #000; }
         .fs-toggle svg { width: 16px; height: 16px; fill: currentColor; }
 
         .status-indicator { display: flex; align-items: center; gap: 8px; font-size: 0.7rem; font-weight: 800; }
@@ -102,24 +92,42 @@
         #board { flex: 1; overflow-y: auto; padding-bottom: 40px; }
 
         .departure-row { 
-            display: grid; grid-template-columns: 85px 1fr 70px; 
-            padding: 20px; border-bottom: 1px solid #f0f0f0; align-items: center;
+            display: grid; 
+            grid-template-columns: 100px 1fr 60px; 
+            padding: 15px 20px; 
+            border-bottom: 1px solid #f0f0f0; 
+            align-items: center;
+            gap: 10px;
         }
 
-        .time-container { display: flex; flex-direction: column; }
+        .time-container { display: flex; flex-direction: column; line-height: 1.2; }
         .p-time { font-size: 1.25rem; font-weight: 800; color: var(--db-dark); }
-        .actual-time { color: var(--delay-red); font-size: 1.3rem; font-weight: 800; }
+        .actual-time { color: var(--delay-red); font-size: 1.25rem; font-weight: 800; }
         
-        .train-dest { font-size: 1.15rem; font-weight: 700; color: var(--db-dark); }
-        .train-id { font-size: 0.8rem; font-weight: 800; color: var(--db-red); background: rgba(226, 0, 26, 0.1); padding: 2px 6px; border-radius: 4px; }
-        .pl-value { font-size: 1.5rem; font-weight: 900; color: var(--db-dark); }
+        .train-dest { font-size: 1.2rem; font-weight: 700; color: var(--db-dark); display: block; }
+        .train-id { font-size: 0.75rem; font-weight: 800; color: var(--db-red); background: rgba(226, 0, 26, 0.1); padding: 2px 6px; border-radius: 4px; display: inline-block; margin-bottom: 4px; }
+        .pl-value { font-size: 1.6rem; font-weight: 900; color: var(--db-dark); text-align: right; }
 
-        /* Fullscreen-Modus Skalierung */
-        :fullscreen .station-name { font-size: 3.5rem; }
-        :fullscreen .departure-row { padding: 35px 45px; }
-        :fullscreen .p-time, :fullscreen .actual-time { font-size: 2.8rem; }
-        :fullscreen .train-dest { font-size: 3rem; }
-        :fullscreen .pl-value { font-size: 4.5rem; }
+        /* --- FULLSCREEN OPTIMIERUNG --- */
+        :fullscreen .station-name { font-size: 4rem; margin: 25px 0; }
+        
+        :fullscreen .departure-row { 
+            padding: 40px 60px; 
+            grid-template-columns: 280px 1fr 150px; /* Feste Spalten verhindern Überlagerung */
+            gap: 30px;
+        }
+
+        :fullscreen .p-time, :fullscreen .actual-time { font-size: 4rem; }
+        
+        :fullscreen .train-id { font-size: 1.8rem; padding: 8px 16px; margin-bottom: 12px; }
+        :fullscreen .train-dest { font-size: 3.8rem; line-height: 1.1; }
+        
+        :fullscreen .pl-value { font-size: 7rem; }
+        
+        :fullscreen .status-ontime, :fullscreen .status-delayed { font-size: 1.3rem; margin-top: 5px; }
+
+        /* Verhindert das Ineinanderrutschen von Linie und Ziel im Vollbild */
+        .train-info-col { display: flex; flex-direction: column; align-items: flex-start; }
 
         /* Search Overlay */
         #search-overlay { position: fixed; inset: 0; background: #fff; z-index: 4000; display: none; flex-direction: column; }
@@ -192,7 +200,6 @@
     let currentStation = null;
     let favorites = JSON.parse(localStorage.getItem('db_monitor_favs')) || [null, null, null, null];
 
-    // VOLLBILD LOGIK
     function toggleFullscreen() {
         const doc = document.documentElement;
         if (!document.fullscreenElement && !document.webkitFullscreenElement) {
@@ -204,12 +211,10 @@
         }
     }
 
-    // Icon Update bei Statuswechsel
     function updateFsUI() {
         const isFS = !!(document.fullscreenElement || document.webkitFullscreenElement);
         const svg = document.getElementById('fs-svg');
         const text = document.getElementById('fs-text');
-        
         if(isFS) {
             svg.innerHTML = '<path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>';
             text.innerText = 'BEENDEN';
@@ -221,7 +226,6 @@
     document.addEventListener('fullscreenchange', updateFsUI);
     document.addEventListener('webkitfullscreenchange', updateFsUI);
 
-    // FUNKTIONEN FÜR DATEN & NAVIGATION
     async function loadGlobalInfo() {
         try {
             const res = await fetch(`${BASE_URL}global_info.json?t=${Date.now()}`);
@@ -286,13 +290,15 @@
                     <div class="departure-row">
                         <div class="time-container">
                             <span class="${isDelayed ? 'actual-time' : 'p-time'}">${zug.echte_zeit}</span>
-                            <span style="font-size:0.7rem;">${isDelayed ? 'Statt '+zug.zeit : 'pünktlich'}</span>
+                            <span class="${isDelayed ? 'status-delayed' : 'status-ontime'}" style="font-size:0.7rem; font-weight:800;">
+                                ${isDelayed ? 'Statt '+zug.zeit : 'pünktlich'}
+                            </span>
                         </div>
-                        <div>
-                            <span class="train-id">${zug.linie}</span><br>
+                        <div class="train-info-col">
+                            <span class="train-id">${zug.linie}</span>
                             <span class="train-dest">${zug.ziel}</span>
                         </div>
-                        <div style="text-align:right;"><span class="pl-value">${zug.gleis || '—'}</span></div>
+                        <div class="pl-value">${zug.gleis || '—'}</div>
                     </div>`;
             });
         } catch (e) { document.getElementById('status-dot').className = 'dot offline'; }
