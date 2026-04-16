@@ -3,183 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>DB Monitor Pro | Live Dashboard</title>
+    <title>DB Abfahrtstafel | Live</title>
     <style>
         :root {
             --db-red: #e2001a;
-            --db-gray-bg: #f4f7f9;
-            --db-dark: #212d40;
-            --text-main: #2d3436;
-            --text-secondary: #636e72;
+            --db-blue-dark: #000066; /* Typisches DB-Blau für Monitore */
+            --db-gray-bg: #f0f0f0;
+            --db-border: #dcdcdc;
+            --text-main: #000000;
             --ontime-green: #008754;
             --delay-red: #d50000;
-            --info-yellow: #ffea00;
-            --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            --glass-bg: rgba(255, 255, 255, 0.9);
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         html, body { 
             height: 100%; margin: 0; padding: 0; 
-            background: var(--db-gray-bg); 
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
+            background: #ffffff; 
+            font-family: Arial, Helvetica, sans-serif; /* DB nutzt ähnliche Grotesk-Schriften */
             overflow: hidden; 
             color: var(--text-main);
         }
 
-        /* Navbar */
+        /* Navbar im DB-Stil */
         .db-navbar {
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            padding: 12px 20px;
+            background: #ffffff;
+            padding: 10px 20px;
             display: flex; align-items: center; justify-content: space-between;
-            border-bottom: 1px solid rgba(0,0,0,0.1);
+            border-bottom: 4px solid var(--db-red);
             position: sticky; top: 0; z-index: 1000;
         }
 
         .db-logo { 
             background: var(--db-red); color: white; 
-            font-weight: 900; padding: 4px 10px; 
-            border-radius: 4px; letter-spacing: -1px;
-            font-size: 1.1rem;
+            font-weight: bold; padding: 5px 12px; 
+            border-radius: 2px; font-size: 1.4rem;
         }
 
-        /* Fullscreen Button */
         .fs-toggle {
-            background: var(--db-dark); color: white; border: none;
-            padding: 8px 14px; border-radius: 8px; font-size: 0.75rem;
-            font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-        .fs-toggle svg { width: 16px; height: 16px; fill: currentColor; }
-
-        .status-indicator { display: flex; align-items: center; gap: 8px; font-size: 0.7rem; font-weight: 800; }
-        .dot { width: 10px; height: 10px; border-radius: 50%; background-color: #b2bec3; }
-        .dot.online { background-color: var(--ontime-green); box-shadow: 0 0 8px var(--ontime-green); }
-        .dot.offline { background-color: var(--delay-red); box-shadow: 0 0 8px var(--delay-red); }
-
-        /* Welcome Screen */
-        #welcome-screen { 
-            position: fixed; inset: 0; background: var(--db-gray-bg); z-index: 3000; 
-            display: flex; flex-direction: column; align-items: center; padding: 20px 0;
-            overflow-y: auto;
-        }
-        #welcome-screen.hidden { display: none; }
-
-        .global-info-banner {
-            width: 92%; max-width: 600px; background: #fff; border-radius: 12px; padding: 20px;
-            margin-bottom: 25px; border-left: 6px solid var(--db-red); box-shadow: var(--card-shadow);
+            background: var(--db-blue-dark); color: white; border: none;
+            padding: 8px 15px; border-radius: 0; font-size: 0.8rem;
+            font-weight: bold; cursor: pointer; text-transform: uppercase;
         }
 
-        .search-box { 
-            background: #fff; padding: 20px; border-radius: 12px; 
-            width: 92%; max-width: 600px; border: 1px solid rgba(0,0,0,0.1); 
-            margin-bottom: 30px; cursor: pointer; box-shadow: var(--card-shadow);
-            display: flex; align-items: center; gap: 10px; color: var(--text-secondary); font-weight: 600;
-        }
-
-        .fav-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 92%; max-width: 600px; }
-        .fav-item { background: #fff; padding: 18px; border-radius: 12px; box-shadow: var(--card-shadow); cursor: pointer; }
-
-        /* Monitor Ansicht */
-        .monitor { display: none; flex-direction: column; height: 100%; background: #fff; }
+        /* Monitor Ansicht - RIS Design */
+        .monitor { display: none; flex-direction: column; height: 100%; }
         .monitor.active { display: flex; }
 
-        .station-header { padding: 20px; border-bottom: 3px solid var(--db-red); background: #fff; }
-        .station-name { font-size: 1.6rem; font-weight: 900; color: var(--db-dark); margin: 8px 0; }
+        .station-header { 
+            padding: 15px 25px; 
+            background: var(--db-blue-dark); 
+            color: white;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        
+        .station-name { font-size: 2.2rem; font-weight: bold; margin: 0; letter-spacing: -0.5px; }
 
-        #board { flex: 1; overflow-y: auto; padding-bottom: 40px; }
+        #clock { font-size: 1.8rem; font-weight: bold; font-variant-numeric: tabular-nums; }
+
+        /* Abfahrtstafel Header */
+        .board-header {
+            display: grid;
+            grid-template-columns: 120px 1fr 100px;
+            padding: 10px 25px;
+            background: #eeeeee;
+            border-bottom: 2px solid var(--db-border);
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #555;
+            text-transform: uppercase;
+        }
+
+        #board { flex: 1; overflow-y: auto; background: white; }
 
         .departure-row { 
             display: grid; 
-            grid-template-columns: 100px 1fr 60px; 
-            padding: 15px 20px; 
-            border-bottom: 1px solid #f0f0f0; 
+            grid-template-columns: 120px 1fr 100px; 
+            padding: 20px 25px; 
+            border-bottom: 1px solid var(--db-border); 
             align-items: center;
-            gap: 10px;
         }
 
-        .time-container { display: flex; flex-direction: column; line-height: 1.2; }
-        .p-time { font-size: 1.25rem; font-weight: 800; color: var(--db-dark); }
-        .actual-time { color: var(--delay-red); font-size: 1.25rem; font-weight: 800; }
-        
-        .train-dest { font-size: 1.2rem; font-weight: 700; color: var(--db-dark); display: block; }
-        .train-id { font-size: 0.75rem; font-weight: 800; color: var(--db-red); background: rgba(226, 0, 26, 0.1); padding: 2px 6px; border-radius: 4px; display: inline-block; margin-bottom: 4px; }
-        .pl-value { font-size: 1.6rem; font-weight: 900; color: var(--db-dark); text-align: right; }
+        /* Zeit-Spalte */
+        .time-col { 
+            border-right: 2px solid var(--db-border);
+            padding-right: 15px;
+        }
+        .p-time { font-size: 1.8rem; font-weight: bold; }
+        .actual-time { color: var(--delay-red); font-size: 1.8rem; font-weight: bold; }
+        .status-info { font-size: 0.85rem; font-weight: bold; margin-top: 2px; }
 
-        /* --- FULLSCREEN OPTIMIERUNG --- */
-        :fullscreen .station-name { font-size: 4rem; margin: 25px 0; }
+        /* Zug-Spalte */
+        .train-col { 
+            padding: 0 25px; 
+            display: flex;
+            flex-direction: column;
+        }
+        .train-id { font-size: 1rem; font-weight: bold; color: var(--db-red); margin-bottom: 4px; }
+        .train-dest { font-size: 1.8rem; font-weight: bold; color: var(--db-blue-dark); }
+
+        /* Gleis-Spalte */
+        .gl-col { 
+            border-left: 2px solid var(--db-border);
+            text-align: center;
+            padding-left: 15px;
+        }
+        .pl-label { font-size: 0.8rem; font-weight: bold; display: block; color: #666; }
+        .pl-value { font-size: 2.5rem; font-weight: bold; color: var(--db-blue-dark); }
+
+        /* FULLSCREEN MODUS */
+        :fullscreen .station-header { padding: 30px 50px; }
+        :fullscreen .station-name { font-size: 4.5rem; }
+        :fullscreen #clock { font-size: 3.5rem; }
+        
+        :fullscreen .board-header { font-size: 1.5rem; padding: 20px 50px; grid-template-columns: 300px 1fr 200px; }
         
         :fullscreen .departure-row { 
-            padding: 40px 60px; 
-            grid-template-columns: 280px 1fr 150px; /* Feste Spalten verhindern Überlagerung */
-            gap: 30px;
+            padding: 50px 50px; 
+            grid-template-columns: 300px 1fr 200px; 
+            gap: 20px;
         }
 
-        :fullscreen .p-time, :fullscreen .actual-time { font-size: 4rem; }
-        
-        :fullscreen .train-id { font-size: 1.8rem; padding: 8px 16px; margin-bottom: 12px; }
-        :fullscreen .train-dest { font-size: 3.8rem; line-height: 1.1; }
-        
-        :fullscreen .pl-value { font-size: 7rem; }
-        
-        :fullscreen .status-ontime, :fullscreen .status-delayed { font-size: 1.3rem; margin-top: 5px; }
+        :fullscreen .p-time, :fullscreen .actual-time { font-size: 5rem; }
+        :fullscreen .train-id { font-size: 2.2rem; }
+        :fullscreen .train-dest { font-size: 5rem; }
+        :fullscreen .pl-value { font-size: 8rem; }
+        :fullscreen .status-info { font-size: 1.5rem; }
 
-        /* Verhindert das Ineinanderrutschen von Linie und Ziel im Vollbild */
-        .train-info-col { display: flex; flex-direction: column; align-items: flex-start; }
-
-        /* Search Overlay */
-        #search-overlay { position: fixed; inset: 0; background: #fff; z-index: 4000; display: none; flex-direction: column; }
-        .search-nav { padding: 15px; background: var(--db-dark); display: flex; gap: 15px; }
-        .search-input { flex: 1; border: none; padding: 14px; border-radius: 8px; font-size: 1.1rem; outline: none; }
-        .search-res-item { padding: 18px 25px; border-bottom: 1px solid #f1f2f6; font-weight: 700; }
+        /* Welcome & Search - schlichter Look */
+        #welcome-screen { position: fixed; inset: 0; background: var(--db-gray-bg); z-index: 3000; padding: 40px; display: flex; flex-direction: column; align-items: center; }
+        #welcome-screen.hidden { display: none; }
+        .search-box { background: white; width: 100%; max-width: 600px; padding: 20px; border: 2px solid var(--db-red); font-size: 1.2rem; cursor: pointer; font-weight: bold; text-align: center; }
+        .fav-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%; max-width: 600px; margin-top: 20px; }
+        .fav-item { background: white; padding: 20px; border: 1px solid var(--db-border); font-weight: bold; text-align: center; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <div class="db-navbar">
-    <div style="display: flex; align-items: center; gap: 15px;">
+    <div style="display: flex; align-items: center; gap: 20px;">
         <div class="db-logo">DB</div>
-        <button class="fs-toggle" onclick="toggleFullscreen()">
-            <svg id="fs-svg" viewBox="0 0 24 24"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
-            <span id="fs-text">VOLLBILD</span>
-        </button>
+        <button class="fs-toggle" onclick="toggleFullscreen()">Vollbild</button>
     </div>
-    <div class="status-indicator">
-        <div id="status-dot" class="dot"></div>
-        <span id="status-text" style="color: var(--text-secondary);">PRÜFE...</span>
-    </div>
-    <div id="weather-small" style="font-weight: 800; font-size: 0.85rem;">--°C</div>
+    <div id="status-text" style="font-weight: bold; color: var(--ontime-green);">● LIVE</div>
+    <div id="weather-small" style="font-weight: bold;">--°C</div>
 </div>
 
 <div id="welcome-screen">
-    <div class="global-info-banner">
-        <b id="g-title">Lade...</b>
-        <div id="g-msg" style="font-size: 0.95rem; margin-top: 5px;">Daten werden geladen...</div>
-    </div>
-    <div class="search-box" onclick="openSearch()">🔍 Bahnhof suchen...</div>
+    <div style="font-size: 2rem; font-weight: bold; margin-bottom: 30px; color: var(--db-blue-dark);">Abfahrtstafel</div>
+    <div class="search-box" onclick="openSearch()">Station wählen ...</div>
     <div class="fav-grid" id="fav-bar"></div>
-</div>
-
-<div id="search-overlay">
-    <div class="search-nav">
-        <button onclick="closeSearch()" style="color:white; background:none; border:none; font-size:1.8rem;">✕</button>
-        <input type="text" class="search-input" id="station-query" placeholder="Suchen..." oninput="filterStations()">
-    </div>
-    <div id="search-results"></div>
 </div>
 
 <div class="monitor" id="monitor-app">
     <div class="station-header">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <button onclick="goHome()" style="background:#f5f6fa; border:none; width:40px; height:40px; border-radius:50%; cursor:pointer;">←</button>
-            <div id="clock" style="font-weight: 800; font-size: 1.2rem; background: var(--db-dark); color: white; padding: 4px 12px; border-radius: 20px;">00:00</div>
-            <button id="star" onclick="toggleFavorite()" style="background:none; border:none; font-size:1.8rem; color:#ccc;">☆</button>
-        </div>
         <h1 id="display-station" class="station-name">Bahnhof</h1>
+        <div id="clock">00:00</div>
+    </div>
+    <div class="board-header">
+        <div>Zeit</div>
+        <div>Fahrt / Ziel</div>
+        <div style="text-align: center;">Gleis</div>
     </div>
     <div id="board"></div>
+    <button onclick="goHome()" style="position:fixed; bottom:20px; right:20px; padding:15px; background:var(--db-red); color:white; border:none; font-weight:bold; cursor:pointer;">Zurück</button>
+</div>
+
+<div id="search-overlay" style="display:none; position:fixed; inset:0; background:white; z-index:4000; padding:20px;">
+    <input type="text" id="station-query" placeholder="Suchen..." oninput="filterStations()" style="width:100%; padding:20px; font-size:1.5rem; border:2px solid var(--db-red); outline:none;">
+    <div id="search-results" style="margin-top:20px; overflow-y:auto; max-height:80vh;"></div>
+    <button onclick="closeSearch()" style="margin-top:20px; width:100%; padding:15px; background:var(--db-blue-dark); color:white; border:none; font-weight:bold;">Schließen</button>
 </div>
 
 <script>
@@ -202,77 +195,29 @@
 
     function toggleFullscreen() {
         const doc = document.documentElement;
-        if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        if (!document.fullscreenElement) {
             if (doc.requestFullscreen) doc.requestFullscreen();
-            else if (doc.webkitRequestFullscreen) doc.webkitRequestFullscreen();
         } else {
             if (document.exitFullscreen) document.exitFullscreen();
-            else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
         }
     }
 
-    function updateFsUI() {
-        const isFS = !!(document.fullscreenElement || document.webkitFullscreenElement);
-        const svg = document.getElementById('fs-svg');
-        const text = document.getElementById('fs-text');
-        if(isFS) {
-            svg.innerHTML = '<path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>';
-            text.innerText = 'BEENDEN';
-        } else {
-            svg.innerHTML = '<path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>';
-            text.innerText = 'VOLLBILD';
-        }
-    }
-    document.addEventListener('fullscreenchange', updateFsUI);
-    document.addEventListener('webkitfullscreenchange', updateFsUI);
-
-    async function loadGlobalInfo() {
-        try {
-            const res = await fetch(`${BASE_URL}global_info.json?t=${Date.now()}`);
-            const data = await res.json();
-            document.getElementById('g-title').innerText = data.title || "DB Monitor";
-            document.getElementById('g-msg').innerText = data.nachricht || "Willkommen.";
-            document.getElementById('weather-small').innerText = data.wetter || "--°C";
-        } catch(e) {}
-    }
-
-    function openSearch() { document.getElementById('search-overlay').style.display = 'flex'; document.getElementById('station-query').focus(); filterStations(); }
+    function openSearch() { document.getElementById('search-overlay').style.display = 'block'; document.getElementById('station-query').focus(); filterStations(); }
     function closeSearch() { document.getElementById('search-overlay').style.display = 'none'; }
-    function goHome() { document.getElementById('welcome-screen').classList.remove('hidden'); document.getElementById('monitor-app').classList.remove('active'); updateFavUI(); }
+    function goHome() { document.getElementById('welcome-screen').classList.remove('hidden'); document.getElementById('monitor-app').classList.remove('active'); }
 
     function selectStation(station) {
         currentStation = station;
         document.getElementById('display-station').innerText = station.name;
         document.getElementById('welcome-screen').classList.add('hidden');
         document.getElementById('monitor-app').classList.add('active');
-        closeSearch(); updateStar(); loadData();
+        closeSearch(); loadData();
     }
 
     function filterStations() {
         const q = document.getElementById('station-query').value.toLowerCase();
         document.getElementById('search-results').innerHTML = STATIONS_DB.filter(s => s.name.toLowerCase().includes(q))
-            .map(s => `<div class="search-res-item" onclick='selectStation(${JSON.stringify(s)})'>${s.name}</div>`).join('');
-    }
-
-    function updateFavUI() {
-        document.getElementById('fav-bar').innerHTML = favorites.map((f, i) => `
-            <div class="fav-item" onclick="fClick(${i})"><b>${f ? f.name : 'Platz '+(i+1)}</b></div>`).join('');
-    }
-
-    function fClick(i) { if(favorites[i]) selectStation(favorites[i]); else openSearch(); }
-
-    function toggleFavorite() {
-        const idx = favorites.findIndex(f => f && f.file === currentStation.file);
-        if (idx > -1) favorites[idx] = null;
-        else { const empty = favorites.indexOf(null); if (empty > -1) favorites[empty] = currentStation; else favorites[0] = currentStation; }
-        localStorage.setItem('db_monitor_favs', JSON.stringify(favorites));
-        updateStar();
-    }
-
-    function updateStar() {
-        const isFav = favorites.some(f => f && f.file === currentStation.file);
-        document.getElementById('star').innerText = isFav ? '★' : '☆';
-        document.getElementById('star').style.color = isFav ? 'var(--db-red)' : '#ccc';
+            .map(s => `<div onclick='selectStation(${JSON.stringify(s)})' style="padding:15px; border-bottom:1px solid #ddd; font-weight:bold; cursor:pointer;">${s.name}</div>`).join('');
     }
 
     async function loadData() {
@@ -280,33 +225,43 @@
         try {
             const res = await fetch(`${BASE_URL}${currentStation.file}?t=${Date.now()}`);
             const data = await res.json();
-            document.getElementById('status-dot').className = 'dot online';
-            document.getElementById('status-text').innerText = 'LIVE';
             const board = document.getElementById('board');
             board.innerHTML = '';
+            
             data.forEach(zug => {
                 const isDelayed = zug.echte_zeit !== zug.zeit;
                 board.innerHTML += `
                     <div class="departure-row">
-                        <div class="time-container">
-                            <span class="${isDelayed ? 'actual-time' : 'p-time'}">${zug.echte_zeit}</span>
-                            <span class="${isDelayed ? 'status-delayed' : 'status-ontime'}" style="font-size:0.7rem; font-weight:800;">
+                        <div class="time-col">
+                            <div class="${isDelayed ? 'actual-time' : 'p-time'}">${zug.echte_zeit}</div>
+                            <div class="status-info" style="color:${isDelayed ? 'var(--delay-red)' : 'var(--ontime-green)'}">
                                 ${isDelayed ? 'Statt '+zug.zeit : 'pünktlich'}
-                            </span>
+                            </div>
                         </div>
-                        <div class="train-info-col">
+                        <div class="train-col">
                             <span class="train-id">${zug.linie}</span>
                             <span class="train-dest">${zug.ziel}</span>
                         </div>
-                        <div class="pl-value">${zug.gleis || '—'}</div>
+                        <div class="gl-col">
+                            <span class="pl-label">Gleis</span>
+                            <span class="pl-value">${zug.gleis || '—'}</span>
+                        </div>
                     </div>`;
             });
-        } catch (e) { document.getElementById('status-dot').className = 'dot offline'; }
+        } catch (e) { console.error("Fehler beim Laden"); }
     }
 
-    setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'}); }, 1000);
+    function updateFavUI() {
+        document.getElementById('fav-bar').innerHTML = favorites.map((f, i) => `
+            <div class="fav-item" onclick="fClick(${i})">${f ? f.name : 'Platz '+(i+1)}</div>`).join('');
+    }
+    function fClick(i) { if(favorites[i]) selectStation(favorites[i]); else openSearch(); }
+
+    setInterval(() => { 
+        document.getElementById('clock').innerText = new Date().toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'}); 
+    }, 1000);
+
     setInterval(loadData, 30000);
-    loadGlobalInfo();
     updateFavUI();
 </script>
 </body>
