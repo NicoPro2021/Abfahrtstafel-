@@ -1,36 +1,66 @@
-name: DB Monitor Update
+name: Bahn Monitor Loop
 
 on:
+  workflow_dispatch:
   schedule:
-    - cron: '*/5 * * * *' # Alle 5 Minuten
-  workflow_dispatch: # Erlaubt manuelles Starten
+    - cron: '*/45 * * * *'
 
 jobs:
-  update-data:
+  run:
     runs-on: ubuntu-latest
+    # Verhindert, dass sich Workflows überschneiden
+    concurrency:
+      group: bahn-monitor
+      cancel-in-progress: false # Auf false, damit ein laufender Loop sauber zu Ende schreibt
     permissions:
-      contents: write # Ganz wichtig für den Push-Befehl!
-    
+      contents: write
+      actions: write
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
         with:
-          python-version: '3.10'
+          fetch-depth: 0 # Wichtig für Rebase
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
 
-      - name: Install Dependencies
+      - name: Install Requests
+        run: pip install requests
+
+      - name: Main Loop
         run: |
-          pip install requests
+          # Git Identität lokal setzen
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          for i in {1..15}
+          do
+            echo "Runde $i startet..."
+            python fetch_all_stations.py
+            
+            # Prüfen, ob JSON-Dateien geändert wurden
+            git add *.json
+            if ! git diff --cached --quiet; then
+              git commit -m "Live Update Runde $i ($(date +'%H:%M'))"
+              
+              # Rebase, falls sich das Repo während des Loops geändert hat
+              git pull --rebase origin main
+              git push origin main
+              echo "Runde $i erfolgreich hochgeladen."
+            else
+              echo "Keine Änderungen in Runde $i."
+            fi
+            
+            # 150 Sekunden warten (entspricht ca. 40 Min Gesamtlaufzeit bei 15 Runden)
+            sleep 150
+          done
 
-      - name: Run Update Script
-        run: python update_stations.py # Name deiner Python-Datei prüfen!
-
-      - name: Commit and Push
+      - name: Restart Workflow
+        if: always() # Startet den nächsten Loop auch, wenn der vorherige fehlschlug
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          git config --global user.name "GitHub Action Bot"
-          git config --global user.email "actions@github.com"
-          git add .
-          git commit -m "Live-Daten Update: $(date +'%d.%m.%Y %H:%M')" || exit 0
-          git push
+          # Achte darauf, dass der Dateiname hier exakt deiner YAML-Datei entspricht!
+          # Wenn diese Datei 'bahn_monitor.yml' heißt, muss das hier stehen:
+          gh workflow run "Bahn Monitor Loop"
