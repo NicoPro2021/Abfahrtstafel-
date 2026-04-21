@@ -3,22 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>DB Monitor Pro | FIA Live</title>
+    <title>DB Monitor Pro | Live FIA</title>
     <style>
         :root {
             --fia-blue: #0000cc;
             --db-red: #e2001a;
         }
 
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         html, body { 
             height: 100%; margin: 0; padding: 0; 
             background: #000; 
-            font-family: Arial, sans-serif; 
+            font-family: Arial, Helvetica, sans-serif; 
             overflow: hidden; 
         }
 
+        /* Navbar */
         .db-navbar {
             background: #fff; padding: 10px 20px;
             display: flex; align-items: center; justify-content: space-between;
@@ -26,6 +27,7 @@
         }
         :fullscreen .db-navbar { display: none; }
 
+        /* Welcome Screen */
         #welcome-screen { 
             position: fixed; inset: 0; background: #f4f7f9; z-index: 3000; 
             display: flex; flex-direction: column; align-items: center; padding: 20px 0;
@@ -33,6 +35,19 @@
         }
         #welcome-screen.hidden { display: none; }
 
+        .search-box { 
+            background: #fff; padding: 20px; border-radius: 12px; 
+            width: 92%; max-width: 600px; border: 1px solid #ddd; 
+            margin: 20px 0; cursor: pointer; text-align: center; font-weight: bold;
+        }
+
+        .fav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 92%; max-width: 600px; }
+        .fav-item { 
+            background: #fff; padding: 18px; border-radius: 12px; text-align: center; 
+            cursor: pointer; font-weight: bold; border: 1px solid #eee;
+        }
+
+        /* Monitor Ansicht */
         .monitor { display: none; flex-direction: column; height: 100%; background: var(--fia-blue); color: #fff; }
         .monitor.active { display: flex; }
 
@@ -45,10 +60,10 @@
 
         #board { flex: 1; overflow-y: auto; }
 
-        /* Das neue Layout-Gitter */
+        /* Das fixierte Layout-Gitter */
         .departure-row { 
             display: grid; 
-            grid-template-columns: 18% 67% 15%; /* Zeit | Ziel | Gleis */
+            grid-template-columns: 20% 65% 15%; 
             padding: 2vh 2vw; 
             border-bottom: 2px solid rgba(255,255,255,0.25); 
             align-items: center; 
@@ -57,63 +72,65 @@
             overflow: hidden;
         }
 
-        /* Zeit-Sektion */
-        .time-box { display: flex; flex-direction: column; z-index: 5; background: var(--fia-blue); }
+        /* Zeit & Linie */
+        .time-box { display: flex; flex-direction: column; z-index: 10; background: var(--fia-blue); padding-right: 10px; }
         .line-id { font-size: 1.4vw; font-weight: bold; opacity: 0.8; }
-        .plan-time { font-size: 4.2vw; font-weight: bold; line-height: 1; }
+        .plan-time { font-size: 4.5vw; font-weight: bold; line-height: 1; }
         .delay-box { 
             background: #fff; color: var(--fia-blue); 
             padding: 1px 6px; margin-top: 4px;
-            font-size: 2.2vw; font-weight: bold; border-radius: 3px;
+            font-size: 2.5vw; font-weight: bold; border-radius: 3px;
             width: fit-content;
         }
 
-        /* Rolltext / Ticker Sektion */
+        /* Ziel-Bereich mit Rolltext-Logik */
         .dest-box { 
             overflow: hidden; 
             white-space: nowrap; 
             position: relative;
-            padding: 0 20px;
         }
         
-        /* Die Animation für den Ticker */
         .destination { 
             display: inline-block;
             font-size: 6vw; 
             font-weight: bold; 
             letter-spacing: -1px;
+            padding-right: 50px;
         }
 
-        .scroll-text {
+        /* Die Animation für lange Namen */
+        .scroll-active {
             display: inline-block;
-            padding-left: 100%;
-            animation: ticker 15s linear infinite;
+            animation: fia-ticker 12s linear infinite;
         }
 
-        @keyframes ticker {
-            0% { transform: translate3d(0, 0, 0); }
-            100% { transform: translate3d(-100%, 0, 0); }
+        @keyframes fia-ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
 
-        /* Gleis-Sektion */
+        /* Gleis-Bereich */
         .track-box { 
             text-align: right; 
             display: flex; 
             flex-direction: column; 
             align-items: flex-end;
-            z-index: 5;
+            z-index: 10;
             background: var(--fia-blue);
+            padding-left: 10px;
         }
-        .track-num { font-size: 7vw; font-weight: bold; line-height: 0.9; }
-        .track-section { font-size: 3vw; font-weight: bold; opacity: 0.9; margin-top: -5px; }
+        .track-num { font-size: 7vw; font-weight: bold; line-height: 0.85; }
+        .track-sec { font-size: 3.2vw; font-weight: bold; opacity: 0.9; margin-top: 2px; }
 
-        /* Fullscreen-Anpassung */
+        /* Vollbild-Anpassungen */
         :fullscreen .station-name { font-size: 3.5vw; }
-        :fullscreen .plan-time { font-size: 7vw; }
-        :fullscreen .destination { font-size: 9vw; }
-        :fullscreen .track-num { font-size: 11vw; }
-        :fullscreen .track-section { font-size: 5vw; }
+        :fullscreen .plan-time { font-size: 8vw; }
+        :fullscreen .destination { font-size: 10vw; }
+        :fullscreen .track-num { font-size: 12vw; }
+        :fullscreen .track-sec { font-size: 5vw; }
+        :fullscreen .delay-box { font-size: 4vw; }
 
+        /* Suche */
         #search-overlay { position: fixed; inset: 0; background: #fff; z-index: 4000; display: none; flex-direction: column; }
         .search-nav { padding: 15px; background: #111; display: flex; gap: 15px; }
         .search-input { flex: 1; border: none; padding: 14px; border-radius: 8px; font-size: 1.2rem; outline: none; }
@@ -130,15 +147,16 @@
 </div>
 
 <div id="welcome-screen">
-    <div style="margin: 30px 0; font-weight: 900; font-size: 1.8rem;">DB MONITOR <span style="color:var(--db-red)">PRO</span></div>
-    <div onclick="openSearch()" style="background:#fff; padding:20px; border-radius:12px; width:92%; max-width:600px; border:1px solid #ddd; margin:20px 0; cursor:pointer; text-align:center; font-weight:bold;">🔍 BAHNHOF SUCHEN...</div>
-    <div id="fav-bar" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 92%; max-width: 600px;"></div>
+    <div style="margin: 30px 0; font-weight: 900; font-size: 1.8rem; letter-spacing: -1px;">DB MONITOR <span style="color:var(--db-red)">PRO</span></div>
+    <div class="search-box" onclick="openSearch()">🔍 BAHNHOF SUCHEN...</div>
+    <div style="width: 92%; max-width: 600px; margin: 20px 0 10px; font-weight: 800; color: #666; font-size: 0.8rem; text-transform: uppercase;">Favoriten</div>
+    <div class="fav-grid" id="fav-bar"></div>
 </div>
 
 <div id="search-overlay">
     <div class="search-nav">
         <button onclick="closeSearch()" style="color:white; background:none; border:none; font-size:2rem; cursor:pointer;">✕</button>
-        <input type="text" id="station-query" class="search-input" placeholder="Bahnhof eingeben..." oninput="filterStations()">
+        <input type="text" id="station-query" class="search-input" placeholder="Wohin solls gehen?" oninput="filterStations()">
     </div>
     <div id="search-results" style="overflow-y: auto;"></div>
 </div>
@@ -155,10 +173,19 @@
 </div>
 
 <script>
+    // Vollständige Datenbank wiederhergestellt
     const STATIONS_DB = [
         { name: "Bad Belzig", file: "bad_belzig.json" }, { name: "Berlin Hbf", file: "berlin_hbf.json" },
-        { name: "Magdeburg Hbf", file: "magdeburg_hbf.json" }, { name: "Leipzig Hbf", file: "leipzig_hbf.json" }
-    ];
+        { name: "Biederitz", file: "biederitz.json" }, { name: "Bitterfeld", file: "bitterfeld.json" },
+        { name: "Brandenburg Hbf", file: "brandenburg_hbf.json" }, { name: "Dessau Hbf", file: "dessau_hbf.json" },
+        { name: "Dessau Süd", file: "dessau_sued.json" }, { name: "Gommern", file: "gommern.json" },
+        { name: "Güterglück", file: "gueterglueck.json" }, { name: "Leipzig Hbf", file: "leipzig_hbf.json" },
+        { name: "Leipzig Hbf (tief)", file: "leipzig_hbf_tief.json" }, { name: "Magdeburg Hbf", file: "magdeburg_hbf.json" },
+        { name: "Magdeburg Herrenkrug", file: "magdeburg_herrenkrug.json" }, { name: "Magdeburg Neustadt", file: "magdeburg_neustadt.json" },
+        { name: "Pretzier (Altm)", file: "pretzier_altm.json" }, { name: "Rodleben", file: "rodleben.json" },
+        { name: "Roßlau (Elbe)", file: "rosslau.json" }, { name: "Wolfen", file: "wolfen.json" },
+        { name: "Wusterwitz", file: "wusterwitz.json" }, { name: "Zerbst/Anhalt", file: "zerbst.json" }
+    ].sort((a, b) => a.name.localeCompare(b.name));
 
     const BASE_URL = 'https://raw.githubusercontent.com/nicopro2021/Abfahrtstafel-/main/';
     let currentStation = null;
@@ -196,16 +223,16 @@
             board.innerHTML = '';
             
             data.forEach(zug => {
-                // Ticker-Logik: Nur scrollen, wenn Text zu lang (hier simuliert durch Klasse)
-                const needsScroll = zug.ziel.length > 15;
-                const destHtml = needsScroll 
-                    ? `<div class="destination scroll-text">${zug.ziel} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${zug.ziel}</div>` 
-                    : `<div class="destination">${zug.ziel}</div>`;
+                // Ticker-Logik: Text wird verdoppelt für nahtlosen Scroll
+                const isLong = zug.ziel.length > 12;
+                const destContent = isLong ? `${zug.ziel} +++ ${zug.ziel} +++ ` : zug.ziel;
+                const scrollClass = isLong ? 'scroll-active' : '';
 
-                // Gleis und Abschnitte trennen (Annahme: "3 A-C" wird zu Gleis 3, Abschnitt A-C)
-                const gleisTeile = (zug.gleis || "").split(" ");
-                const gNum = gleisTeile[0] || "";
-                const gSec = gleisTeile[1] || "";
+                // Gleis-Parsing (Trennt Nummer und Abschnitt)
+                const gleisStr = zug.gleis || "";
+                const match = gleisStr.match(/^(\d+)\s*(.*)$/);
+                const gNum = match ? match[1] : gleisStr;
+                const gSec = match ? match[2] : "";
 
                 board.innerHTML += `
                     <div class="departure-row">
@@ -217,11 +244,11 @@
                             </div>
                         </div>
                         <div class="dest-box">
-                            ${destHtml}
+                            <div class="destination ${scrollClass}">${destContent}</div>
                         </div>
                         <div class="track-box">
                             <span class="track-num">${gNum}</span>
-                            <span class="track-section">${gSec}</span>
+                            <span class="track-sec">${gSec}</span>
                         </div>
                     </div>`;
             });
@@ -230,7 +257,7 @@
 
     function updateFavUI() {
         document.getElementById('fav-bar').innerHTML = favorites.map((f, i) => `
-            <div style="background:#fff; padding:18px; border-radius:12px; text-align:center; cursor:pointer; font-weight:bold; border:1px solid #eee;" onclick="fClick(${i})">${f ? f.name : '— LEER —'}</div>`).join('');
+            <div class="fav-item" onclick="fClick(${i})">${f ? f.name : '— LEER —'}</div>`).join('');
     }
     function fClick(i) { if(favorites[i]) selectStation(favorites[i]); else openSearch(); }
     function updateStar() {
