@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>DB Monitor Pro | Live FIA</title>
+    <title>DB Monitor Pro | Live FIA & Routen</title>
     <style>
         :root {
             --fia-blue: #0000cc;
@@ -35,10 +35,20 @@
         }
         #welcome-screen.hidden { display: none; }
 
-        .search-box { 
+        .route-container {
             background: #fff; padding: 20px; border-radius: 12px; 
             width: 92%; max-width: 600px; border: 1px solid #ddd; 
-            margin: 20px 0; cursor: pointer; text-align: center; font-weight: bold;
+            margin: 20px 0; display: flex; flex-direction: column; gap: 10px;
+        }
+
+        .search-trigger {
+            background: #f0f0f0; padding: 15px; border-radius: 8px;
+            text-align: left; font-weight: bold; cursor: pointer; border: 1px solid #ccc;
+        }
+
+        .route-btn {
+            background: var(--db-red); color: white; border: none; padding: 15px;
+            border-radius: 8px; font-weight: bold; font-size: 1.1rem; cursor: pointer;
         }
 
         .fav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 92%; max-width: 600px; }
@@ -84,41 +94,14 @@
         }
 
         /* Ziel-Bereich mit Rolltext-Logik */
-        .dest-box { 
-            overflow: hidden; 
-            white-space: nowrap; 
-            position: relative;
-        }
-        
-        .destination { 
-            display: inline-block;
-            font-size: 6vw; 
-            font-weight: bold; 
-            letter-spacing: -1px;
-            padding-right: 50px;
-        }
+        .dest-box { overflow: hidden; white-space: nowrap; position: relative; }
+        .destination { display: inline-block; font-size: 6vw; font-weight: bold; letter-spacing: -1px; padding-right: 50px; }
 
-        /* Die Animation für lange Namen */
-        .scroll-active {
-            display: inline-block;
-            animation: fia-ticker 12s linear infinite;
-        }
-
-        @keyframes fia-ticker {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
+        .scroll-active { display: inline-block; animation: fia-ticker 12s linear infinite; }
+        @keyframes fia-ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* Gleis-Bereich */
-        .track-box { 
-            text-align: right; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: flex-end;
-            z-index: 10;
-            background: var(--fia-blue);
-            padding-left: 10px;
-        }
+        .track-box { text-align: right; display: flex; flex-direction: column; align-items: flex-end; z-index: 10; background: var(--fia-blue); padding-left: 10px; }
         .track-num { font-size: 7vw; font-weight: bold; line-height: 0.85; }
         .track-sec { font-size: 3.2vw; font-weight: bold; opacity: 0.9; margin-top: 2px; }
 
@@ -147,153 +130,188 @@
 </div>
 
 <div id="welcome-screen">
-    <div style="margin: 30px 0; font-weight: 900; font-size: 1.8rem; letter-spacing: -1px;">DB MONITOR <span style="color:var(--db-red)">PRO</span></div>
-    <div class="search-box" onclick="openSearch()">🔍 BAHNHOF ODER VERBINDUNG SUCHEN...</div>
-    <div style="width: 92%; max-width: 600px; margin: 20px 0 10px; font-weight: 800; color: #666; font-size: 0.8rem; text-transform: uppercase;">Favoriten</div>
+    <div style="margin: 20px 0 10px; font-weight: 900; font-size: 1.8rem; letter-spacing: -1px;">DB MONITOR <span style="color:var(--db-red)">PRO</span></div>
+    
+    <div class="route-container">
+        <div style="font-weight: 800; font-size: 0.9rem; color: #551212;">LIVE-ABFRAGE PLANEN</div>
+        <div id="start-trigger" class="search-trigger" onclick="openSearch('start')">🛫 Start: Station wählen...</div>
+        <div id="ziel-trigger" class="search-trigger" onclick="openSearch('ziel')">🛬 Ziel: Optionale Verbindung...</div>
+        <button class="route-btn" onclick="starteAnzeige()">LIVE MONITOR STARTEN</button>
+    </div>
+
+    <div style="width: 92%; max-width: 600px; margin: 10px 0; font-weight: 800; color: #666; font-size: 0.8rem; text-transform: uppercase;">Schnellauswahl (Deine JSONs)</div>
     <div class="fav-grid" id="fav-bar"></div>
 </div>
 
 <div id="search-overlay">
     <div class="search-nav">
         <button onclick="closeSearch()" style="color:white; background:none; border:none; font-size:2rem; cursor:pointer;">✕</button>
-        <input type="text" id="station-query" class="search-input" placeholder="Wohin solls gehen?" oninput="filterStations()">
+        <input type="text" id="station-query" class="search-input" placeholder="Station suchen..." oninput="filterStations()">
     </div>
     <div id="search-results" style="overflow-y: auto;"></div>
 </div>
 
 <div class="monitor" id="monitor-app">
     <div class="fia-header">
-        <h1 id="display-station" class="station-name">MAGDEBURG HBF</h1>
+        <h1 id="display-station" class="station-name">ABFAHRTEN</h1>
         <div style="display: flex; gap: 10px;">
-            <button id="star-btn" onclick="toggleFavorite()" style="background:none; border:1.5px solid #fff; color:#fff; padding:6px 15px; cursor:pointer; font-weight:bold; border-radius:4px;">★ FAV</button>
-            <button onclick="goHome()" style="background:#fff; border:none; color:var(--fia-blue); padding:6px 15px; cursor:pointer; font-weight:bold; border-radius:4px;">HOME</button>
+            <button onclick="goHome()" style="background:#fff; border:none; color:var(--fia-blue); padding:6px 15px; cursor:pointer; font-weight:bold; border-radius:4px;">ZURÜCK</button>
         </div>
     </div>
     <div id="board"></div>
 </div>
 
 <script>
-    // Datenbank erweitert um die neuen Routing-JSON-Dateien vom Python-Server
-    const STATIONS_DB = [
-        { name: "Bad Belzig", file: "bad_belzig.json", isRoute: false }, 
-        { name: "Berlin Hbf", file: "berlin_hbf.json", isRoute: false },
-        { name: "Biederitz", file: "biederitz.json", isRoute: false }, 
-        { name: "Bitterfeld", file: "bitterfeld.json", isRoute: false },
-        { name: "Brandenburg Hbf", file: "brandenburg_hbf.json", isRoute: false }, 
-        { name: "Dessau Hbf", file: "dessau_hbf.json", isRoute: false },
-        { name: "Dessau Süd", file: "dessau_sued.json", isRoute: false }, 
-        { name: "Gommern", file: "gommern.json", isRoute: false },
-        { name: "Güterglück", file: "gueterglueck.json", isRoute: false }, 
-        { name: "Leipzig Hbf", file: "leipzig_hbf.json", isRoute: false },
-        { name: "Leipzig Hbf (tief)", file: "leipzig_hbf_tief.json", isRoute: false }, 
-        { name: "Magdeburg Hbf", file: "magdeburg_hbf.json", isRoute: false },
-        { name: "Magdeburg Herrenkrug", file: "magdeburg_herrenkrug.json", isRoute: false }, 
-        { name: "Magdeburg Neustadt", file: "magdeburg_neustadt.json", isRoute: false },
-        { name: "Pretzier (Altm)", file: "pretzier_altm.json", isRoute: false }, 
-        { name: "Rodleben", file: "rodleben.json", isRoute: false },
-        { name: "Roßlau (Elbe)", file: "rosslau.json", isRoute: false }, 
-        { name: "Wolfen", file: "wolfen.json", isRoute: false },
-        { name: "Wusterwitz", file: "wusterwitz.json", isRoute: false }, 
-        { name: "Zerbst/Anhalt", file: "zerbst.json", isRoute: false },
-        
-        // HIER SIND DIE NEUEN ROUTEN-EINTRÄGE
-        { name: "➡️ V: Bauhof -> Bahnhof", file: "verbindungen_bauhof_bahnhof.json", isRoute: true },
-        { name: "➡️ V: Bauhof -> Magdeburg", file: "verbindungen_bauhof_magdeburg.json", isRoute: true }
+    // Deine JSON-Datenbank für die reine Bahnhofs-Schnellauswahl
+    const LOCAL_STATIONS = [
+        { name: "Bad Belzig", file: "bad_belzig.json" }, { name: "Berlin Hbf", file: "berlin_hbf.json" },
+        { name: "Biederitz", file: "biederitz.json" }, { name: "Bitterfeld", file: "bitterfeld.json" },
+        { name: "Brandenburg Hbf", file: "brandenburg_hbf.json" }, { name: "Dessau Hbf", file: "dessau_hbf.json" },
+        { name: "Dessau Süd", file: "dessau_sued.json" }, { name: "Gommern", file: "gommern.json" },
+        { name: "Güterglück", file: "gueterglueck.json" }, { name: "Leipzig Hbf", file: "leipzig_hbf.json" },
+        { name: "Leipzig Hbf (tief)", file: "leipzig_hbf_tief.json" }, { name: "Magdeburg Hbf", file: "magdeburg_hbf.json" },
+        { name: "Magdeburg Herrenkrug", file: "magdeburg_herrenkrug.json" }, { name: "Magdeburg Neustadt", file: "magdeburg_neustadt.json" },
+        { name: "Pretzier (Altm)", file: "pretzier_altm.json" }, { name: "Rodleben", file: "rodleben.json" },
+        { name: "Roßlau (Elbe)", file: "rosslau.json" }, { name: "Wolfen", file: "wolfen.json" },
+        { name: "Wusterwitz", file: "wusterwitz.json" }, { name: "Zerbst/Anhalt", file: "zerbst.json" }
+    ];
+
+    // Eine kleine Liste von echten DB-Stationen mit ihren IDs für die Live-Suche von A nach B
+    const DB_STATIONS_LIVE = [
+        { name: "Zerbst/Anhalt", id: "8013389" }, { name: "Magdeburg Hbf", id: "8010224" },
+        { name: "Dessau Hbf", id: "8010077" }, { name: "Leipzig Hbf", id: "8010205" },
+        { name: "Berlin Hbf", id: "8011160" }, { name: "Bitterfeld", id: "8010050" },
+        { name: "Roßlau (Elbe)", id: "8010302" }, { name: "Gommern", id: "8011673" },
+        { name: "Bad Belzig", id: "8010031" }, { name: "Brandenburg Hbf", id: "8010060" }
     ].sort((a, b) => a.name.localeCompare(b.name));
 
     const BASE_URL = 'https://raw.githubusercontent.com/nicopro2021/Abfahrtstafel-/main/';
-    let currentStation = null;
-    let favorites = JSON.parse(localStorage.getItem('db_monitor_favs')) || [null, null, null, null];
+    
+    let searchMode = 'start'; // 'start' oder 'ziel'
+    let selectedStart = null;
+    let selectedZiel = null;
+    let isLiveRouteMode = false;
+    let updateInterval = null;
 
     function toggleFullscreen() {
         if (!document.fullscreenElement) document.documentElement.requestFullscreen();
         else document.exitFullscreen();
     }
 
-    function openSearch() { document.getElementById('search-overlay').style.display = 'flex'; filterStations(); }
+    function openSearch(mode) { 
+        searchMode = mode;
+        document.getElementById('search-overlay').style.display = 'flex'; 
+        document.getElementById('station-query').value = '';
+        filterStations(); 
+    }
+    
     function closeSearch() { document.getElementById('search-overlay').style.display = 'none'; }
-    function goHome() { document.getElementById('welcome-screen').classList.remove('hidden'); document.getElementById('monitor-app').classList.remove('active'); updateFavUI(); }
+    
+    function goHome() { 
+        clearInterval(updateInterval);
+        document.getElementById('welcome-screen').classList.remove('hidden'); 
+        document.getElementById('monitor-app').classList.remove('active'); 
+    }
 
     function selectStation(station) {
-        currentStation = station;
-        document.getElementById('display-station').innerText = station.name.toUpperCase();
-        document.getElementById('welcome-screen').classList.add('hidden');
-        document.getElementById('monitor-app').classList.add('active');
-        closeSearch(); updateStar(); loadData();
+        if (searchMode === 'start') {
+            selectedStart = station;
+            document.getElementById('start-trigger').innerText = `🛫 Start: ${station.name}`;
+        } else {
+            selectedZiel = station;
+            document.getElementById('ziel-trigger').innerText = `🛬 Ziel: ${station.name}`;
+        }
+        closeSearch();
     }
 
     function filterStations() {
         const q = document.getElementById('station-query').value.toLowerCase();
-        document.getElementById('search-results').innerHTML = STATIONS_DB.filter(s => s.name.toLowerCase().includes(q))
+        // Zeige für die Live-Suche die DB_STATIONS_LIVE Liste
+        const filtered = DB_STATIONS_LIVE.filter(s => s.name.toLowerCase().includes(q));
+        document.getElementById('search-results').innerHTML = filtered
             .map(s => `<div style="padding:20px; border-bottom:1px solid #eee; cursor:pointer; font-weight:bold; color:#111;" onclick='selectStation(${JSON.stringify(s)})'>${s.name}</div>`).join('');
     }
 
+    function starteAnzeige() {
+        if (!selectedStart) { alert("Bitte wähle mindestens einen Startbahnhof aus!"); return; }
+        
+        if (selectedStart && selectedZiel) {
+            // Echte Routenabfrage von A nach B via transport.rest API
+            isLiveRouteMode = true;
+            document.getElementById('display-station').innerText = `${selectedStart.name} -> ${selectedZiel.name}`;
+        } else {
+            // Nur Startbahnhof gewählt -> Wir fallen zurück auf deine vorgefertigten GitHub-Dateien
+            isLiveRouteMode = false;
+            document.getElementById('display-station').innerText = selectedStart.name.toUpperCase();
+        }
+
+        document.getElementById('welcome-screen').classList.add('hidden');
+        document.getElementById('monitor-app').classList.add('active');
+        
+        loadData();
+        updateInterval = setInterval(loadData, 20000); // Automatisch alle 20 Sek aktualisieren
+    }
+
     async function loadData() {
-        if(!currentStation) return;
+        const board = document.getElementById('board');
         try {
-            const res = await fetch(`${BASE_URL}${currentStation.file}?t=${Date.now()}`);
-            const data = await res.json();
-            const board = document.getElementById('board');
-            board.innerHTML = '';
-            
-            data.forEach(item => {
-                let zielText = "";
-                let planZeit = "";
-                let infoZeit = "";
-                let linie = "";
-                let gleisStr = "";
+            let abfahrten = [];
 
-                // Unterscheidung: Handelt es sich um ein Routing-JSON oder ein Bahnhofs-JSON?
-                if (currentStation.isRoute) {
-                    // Struktur für Verbindungen (Routing)
-                    planZeit = item.abfahrt;
-                    infoZeit = item.ankunft; // Bei Routen zeigen wir die Ankunftszeit im gelben Kasten
-                    zielText = `nach Ziel (Ankunft ${item.ankunft})`; 
-                    linie = item.linie;
-                    gleisStr = item.gleis || "-";
+            if (isLiveRouteMode) {
+                // LIVE ROUTE DIREKT AUS DEM INTERNET LADEN
+                const response = await fetch(`https://v5.db.transport.rest/journeys?from=${selectedStart.id}&to=${selectedZiel.id}&results=5`);
+                const data = await response.json();
+                
+                abfahrten = data.journeys.map(j => {
+                    const firstLeg = j.legs[0];
+                    const lastLeg = j.legs[j.legs.length - 1];
                     
-                    // Wenn es eine Buslinie ist, bauen wir den Text schick um
-                    if(item.umstiege > 0) {
-                        zielText = `Über Umstiege (${item.umstiege}x)`;
-                    } else {
-                        zielText = "Direktverbindung";
-                    }
-                } else {
-                    // Klassische Struktur für reine Bahnhofsabfahrten
-                    planZeit = item.zeit;
-                    infoZeit = item.echte_zeit;
-                    zielText = item.ziel;
-                    linie = item.linie;
-                    gleisStr = item.gleis || "";
-                }
+                    const formatTime = (iso) => iso ? iso.substring(11, 16) : "--:--";
+                    const delay = firstLeg.departureDelay ? `+${Math.round(firstLeg.departureDelay/60)}` : "pünktlich";
+                    
+                    return {
+                        zeit: formatTime(firstLeg.departure),
+                        echte_zeit: formatTime(firstLeg.plannedDeparture || firstLeg.departure),
+                        linie: firstLeg.line ? firstLeg.line.name : "Zug",
+                        ziel: `Ankunft ${formatTime(lastLeg.arrival)} (${j.legs.length - 1} Umst.)`,
+                        gleis: firstLeg.departurePlatform || "-",
+                        info: delay
+                    };
+                });
+            } else {
+                // KLASSISCH DEINE JSON-DATEI AUS GITHUB PAGES LADEN
+                // Sucht die passende Datei aus der lokalen Liste
+                const localFile = LOCAL_STATIONS.find(s => s.name.toLowerCase().includes(selectedStart.name.toLowerCase()))?.file || "zerbst.json";
+                const res = await fetch(`${BASE_URL}${localFile}?t=${Date.now()}`);
+                abfahrten = await res.json();
+            }
 
-                // Ticker-Logik: Text wird verdoppelt für nahtlosen Scroll
-                const isLong = zielText.length > 12;
-                const destContent = isLong ? `${zielText} +++ ${zielText} +++ ` : zielText;
+            board.innerHTML = '';
+            abfahrten.forEach(zug => {
+                const isLong = zug.ziel.length > 12;
+                const destContent = isLong ? `${zug.ziel} +++ ${zug.ziel} +++ ` : zug.ziel;
                 const scrollClass = isLong ? 'scroll-active' : '';
 
-                // Gleis-Parsing (Trennt Nummer und Abschnitt)
+                const gleisStr = zug.gleis || "";
                 const match = gleisStr.match(/^(\d+)\s*(.*)$/);
                 const gNum = match ? match[1] : gleisStr;
                 const gSec = match ? match[2] : "";
 
-                // Anzeige-Logik für den Kasten unter der Uhrzeit
-                let infoBoxHTML = '';
-                if (currentStation.isRoute) {
-                    // Zeige Linie/Status oder "Ankunftzeit" im weißen Kasten bei Routen
-                    infoBoxHTML = `<div class="delay-box" style="color:#000; background:#ffcc00;">Ank. ${item.ankunft}</div>`;
-                } else if (infoZeit !== planZeit) {
-                    // Klassische Verspätungsanzeige bei Bahnhöfen
-                    infoBoxHTML = `<div class="delay-box">${infoZeit}</div>`;
+                // Verspätungsbox-Styling
+                let delayHTML = '';
+                if(zug.info && zug.info !== "pünktlich") {
+                    delayHTML = `<div class="delay-box">${zug.info}</div>`;
+                } else if(zug.echte_zeit && zug.echte_zeit !== zug.zeit) {
+                    delayHTML = `<div class="delay-box">${zug.echte_zeit}</div>`;
                 }
 
                 board.innerHTML += `
                     <div class="departure-row">
                         <div class="time-box">
-                            <span class="line-id">${linie}</span>
+                            <span class="line-id">${zug.linie}</span>
                             <div class="time-wrapper">
-                                <span class="plan-time">${planZeit}</span>
-                                ${infoBoxHTML}
+                                <span class="plan-time">${zug.zeit}</span>
+                                ${delayHTML}
                             </div>
                         </div>
                         <div class="dest-box">
@@ -305,30 +323,29 @@
                         </div>
                     </div>`;
             });
-        } catch (e) { console.error("Datenfehler", e); }
+        } catch (e) { 
+            board.innerHTML = `<div style="padding:20px; font-weight:bold; color:red;">Fehler beim Laden der Live-Daten.</div>`;
+            console.error(e); 
+        }
     }
 
-    function updateFavUI() {
-        document.getElementById('fav-bar').innerHTML = favorites.map((f, i) => `
-            <div class="fav-item" onclick="fClick(${i})">${f ? f.name : '— LEER —'}</div>`).join('');
-    }
-    function fClick(i) { if(favorites[i]) selectStation(favorites[i]); else openSearch(); }
-    function updateStar() {
-        const isFav = currentStation && favorites.some(f => f && f.file === currentStation.file);
-        document.getElementById('star-btn').style.background = isFav ? '#ffcc00' : 'none';
-        document.getElementById('star-btn').style.color = isFav ? '#000' : '#fff';
-    }
-    function toggleFavorite() {
-        const idx = favorites.findIndex(f => f && f.file === currentStation.file);
-        if (idx > -1) favorites[idx] = null;
-        else { const empty = favorites.indexOf(null); if (empty > -1) favorites[empty] = currentStation; else favorites[0] = currentStation; }
-        localStorage.setItem('db_monitor_favs', JSON.stringify(favorites));
-        updateStar();
+    // Erstellt die Klick-Favoritenbar auf der Startseite aus deinen lokalen JSONs
+    function initFavBar() {
+        const bar = document.getElementById('fav-bar');
+        // Zeige 4 Standardbahnhöfe direkt als Kachel an
+        const quickStations = [
+            { name: "Zerbst", id: "8013389" },
+            { name: "Magdeburg Hbf", id: "8010224" },
+            { name: "Dessau Hbf", id: "8010077" },
+            { name: "Leipzig Hbf", id: "8010205" }
+        ];
+        bar.innerHTML = quickStations.map(s => `
+            <div class="fav-item" onclick='selectedStart=${JSON.stringify(s)}; selectedZiel=null; starteAnzeige();'>${s.name} (Lokales JSON)</div>
+        `).join('');
     }
 
     setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'}); }, 1000);
-    setInterval(loadData, 15000);
-    updateFavUI();
+    initFavBar();
 </script>
 </body>
 </html>
