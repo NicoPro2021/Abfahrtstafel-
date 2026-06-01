@@ -148,7 +148,7 @@
 
 <div id="welcome-screen">
     <div style="margin: 30px 0; font-weight: 900; font-size: 1.8rem; letter-spacing: -1px;">DB MONITOR <span style="color:var(--db-red)">PRO</span></div>
-    <div class="search-box" onclick="openSearch()">🔍 BAHNHOF SUCHEN...</div>
+    <div class="search-box" onclick="openSearch()">🔍 BAHNHOF ODER VERBINDUNG SUCHEN...</div>
     <div style="width: 92%; max-width: 600px; margin: 20px 0 10px; font-weight: 800; color: #666; font-size: 0.8rem; text-transform: uppercase;">Favoriten</div>
     <div class="fav-grid" id="fav-bar"></div>
 </div>
@@ -173,18 +173,32 @@
 </div>
 
 <script>
-    // Vollständige Datenbank wiederhergestellt
+    // Datenbank erweitert um die neuen Routing-JSON-Dateien vom Python-Server
     const STATIONS_DB = [
-        { name: "Bad Belzig", file: "bad_belzig.json" }, { name: "Berlin Hbf", file: "berlin_hbf.json" },
-        { name: "Biederitz", file: "biederitz.json" }, { name: "Bitterfeld", file: "bitterfeld.json" },
-        { name: "Brandenburg Hbf", file: "brandenburg_hbf.json" }, { name: "Dessau Hbf", file: "dessau_hbf.json" },
-        { name: "Dessau Süd", file: "dessau_sued.json" }, { name: "Gommern", file: "gommern.json" },
-        { name: "Güterglück", file: "gueterglueck.json" }, { name: "Leipzig Hbf", file: "leipzig_hbf.json" },
-        { name: "Leipzig Hbf (tief)", file: "leipzig_hbf_tief.json" }, { name: "Magdeburg Hbf", file: "magdeburg_hbf.json" },
-        { name: "Magdeburg Herrenkrug", file: "magdeburg_herrenkrug.json" }, { name: "Magdeburg Neustadt", file: "magdeburg_neustadt.json" },
-        { name: "Pretzier (Altm)", file: "pretzier_altm.json" }, { name: "Rodleben", file: "rodleben.json" },
-        { name: "Roßlau (Elbe)", file: "rosslau.json" }, { name: "Wolfen", file: "wolfen.json" },
-        { name: "Wusterwitz", file: "wusterwitz.json" }, { name: "Zerbst/Anhalt", file: "zerbst.json" }
+        { name: "Bad Belzig", file: "bad_belzig.json", isRoute: false }, 
+        { name: "Berlin Hbf", file: "berlin_hbf.json", isRoute: false },
+        { name: "Biederitz", file: "biederitz.json", isRoute: false }, 
+        { name: "Bitterfeld", file: "bitterfeld.json", isRoute: false },
+        { name: "Brandenburg Hbf", file: "brandenburg_hbf.json", isRoute: false }, 
+        { name: "Dessau Hbf", file: "dessau_hbf.json", isRoute: false },
+        { name: "Dessau Süd", file: "dessau_sued.json", isRoute: false }, 
+        { name: "Gommern", file: "gommern.json", isRoute: false },
+        { name: "Güterglück", file: "gueterglueck.json", isRoute: false }, 
+        { name: "Leipzig Hbf", file: "leipzig_hbf.json", isRoute: false },
+        { name: "Leipzig Hbf (tief)", file: "leipzig_hbf_tief.json", isRoute: false }, 
+        { name: "Magdeburg Hbf", file: "magdeburg_hbf.json", isRoute: false },
+        { name: "Magdeburg Herrenkrug", file: "magdeburg_herrenkrug.json", isRoute: false }, 
+        { name: "Magdeburg Neustadt", file: "magdeburg_neustadt.json", isRoute: false },
+        { name: "Pretzier (Altm)", file: "pretzier_altm.json", isRoute: false }, 
+        { name: "Rodleben", file: "rodleben.json", isRoute: false },
+        { name: "Roßlau (Elbe)", file: "rosslau.json", isRoute: false }, 
+        { name: "Wolfen", file: "wolfen.json", isRoute: false },
+        { name: "Wusterwitz", file: "wusterwitz.json", isRoute: false }, 
+        { name: "Zerbst/Anhalt", file: "zerbst.json", isRoute: false },
+        
+        // HIER SIND DIE NEUEN ROUTEN-EINTRÄGE
+        { name: "➡️ V: Bauhof -> Bahnhof", file: "verbindungen_bauhof_bahnhof.json", isRoute: true },
+        { name: "➡️ V: Bauhof -> Magdeburg", file: "verbindungen_bauhof_magdeburg.json", isRoute: true }
     ].sort((a, b) => a.name.localeCompare(b.name));
 
     const BASE_URL = 'https://raw.githubusercontent.com/nicopro2021/Abfahrtstafel-/main/';
@@ -222,25 +236,64 @@
             const board = document.getElementById('board');
             board.innerHTML = '';
             
-            data.forEach(zug => {
+            data.forEach(item => {
+                let zielText = "";
+                let planZeit = "";
+                let infoZeit = "";
+                let linie = "";
+                let gleisStr = "";
+
+                // Unterscheidung: Handelt es sich um ein Routing-JSON oder ein Bahnhofs-JSON?
+                if (currentStation.isRoute) {
+                    // Struktur für Verbindungen (Routing)
+                    planZeit = item.abfahrt;
+                    infoZeit = item.ankunft; // Bei Routen zeigen wir die Ankunftszeit im gelben Kasten
+                    zielText = `nach Ziel (Ankunft ${item.ankunft})`; 
+                    linie = item.linie;
+                    gleisStr = item.gleis || "-";
+                    
+                    // Wenn es eine Buslinie ist, bauen wir den Text schick um
+                    if(item.umstiege > 0) {
+                        zielText = `Über Umstiege (${item.umstiege}x)`;
+                    } else {
+                        zielText = "Direktverbindung";
+                    }
+                } else {
+                    // Klassische Struktur für reine Bahnhofsabfahrten
+                    planZeit = item.zeit;
+                    infoZeit = item.echte_zeit;
+                    zielText = item.ziel;
+                    linie = item.linie;
+                    gleisStr = item.gleis || "";
+                }
+
                 // Ticker-Logik: Text wird verdoppelt für nahtlosen Scroll
-                const isLong = zug.ziel.length > 12;
-                const destContent = isLong ? `${zug.ziel} +++ ${zug.ziel} +++ ` : zug.ziel;
+                const isLong = zielText.length > 12;
+                const destContent = isLong ? `${zielText} +++ ${zielText} +++ ` : zielText;
                 const scrollClass = isLong ? 'scroll-active' : '';
 
                 // Gleis-Parsing (Trennt Nummer und Abschnitt)
-                const gleisStr = zug.gleis || "";
                 const match = gleisStr.match(/^(\d+)\s*(.*)$/);
                 const gNum = match ? match[1] : gleisStr;
                 const gSec = match ? match[2] : "";
 
+                // Anzeige-Logik für den Kasten unter der Uhrzeit
+                let infoBoxHTML = '';
+                if (currentStation.isRoute) {
+                    // Zeige Linie/Status oder "Ankunftzeit" im weißen Kasten bei Routen
+                    infoBoxHTML = `<div class="delay-box" style="color:#000; background:#ffcc00;">Ank. ${item.ankunft}</div>`;
+                } else if (infoZeit !== planZeit) {
+                    // Klassische Verspätungsanzeige bei Bahnhöfen
+                    infoBoxHTML = `<div class="delay-box">${infoZeit}</div>`;
+                }
+
                 board.innerHTML += `
                     <div class="departure-row">
                         <div class="time-box">
-                            <span class="line-id">${zug.linie}</span>
+                            <span class="line-id">${linie}</span>
                             <div class="time-wrapper">
-                                <span class="plan-time">${zug.zeit}</span>
-                                ${zug.echte_zeit !== zug.zeit ? `<div class="delay-box">${zug.echte_zeit}</div>` : ''}
+                                <span class="plan-time">${planZeit}</span>
+                                ${infoBoxHTML}
                             </div>
                         </div>
                         <div class="dest-box">
@@ -252,7 +305,7 @@
                         </div>
                     </div>`;
             });
-        } catch (e) { console.error("Datenfehler"); }
+        } catch (e) { console.error("Datenfehler", e); }
     }
 
     function updateFavUI() {
