@@ -22,11 +22,16 @@ DB_CODES = {
 }
 
 STATIONS = {
-    "magdeburg_hbf": "8010224", "leipzig_hbf": "8010205", "leipzig_hbf_tief": "8098205", "zerbst": "8013389",
-    "dessau_hbf": "8010077", "rosslau": "8010302", "rodleben": "8012777",
-    "bitterfeld": "8010050", "wolfen": "8013335", "magdeburg_herrenkrug": "8013455", "bad_belzig": "8010031", "berlin_hbf": "8011160", "brandenburg_hbf": "8010060",
-    "biederitz": "8010047", "dessau_sued": "8011361", "gommern": "8011673", "magdeburg_neustadt": "8010226", "pretzier_altm": "8012673", "wusterwitz": "8013365", 
-    "gueterglueck": "8010154", "wittenberge": "8010382"
+    { name: "Bad Belzig", file: "bad_belzig.json" }, { name: "Berlin Hbf", file: "berlin_hbf.json" },
+        { name: "Biederitz", file: "biederitz.json" }, { name: "Bitterfeld", file: "bitterfeld.json" },
+        { name: "Brandenburg Hbf", file: "brandenburg_hbf.json" }, { name: "Dessau Hbf", file: "dessau_hbf.json" },
+        { name: "Dessau Süd", file: "dessau_sued.json" }, { name: "Gommern", file: "gommern.json" },
+        { name: "Güterglück", file: "gueterglueck.json" }, { name: "Leipzig Hbf", file: "leipzig_hbf.json" },
+        { name: "Leipzig Hbf (tief)", file: "leipzig_hbf_tief.json" }, { name: "Magdeburg Hbf", file: "magdeburg_hbf.json" },
+        { name: "Magdeburg Herrenkrug", file: "magdeburg_herrenkrug.json" }, { name: "Magdeburg Neustadt", file: "magdeburg_neustadt.json" },
+        { name: "Pretzier (Altm)", file: "pretzier_altm.json" }, { name: "Rodleben", file: "rodleben.json" },
+        { name: "Roßlau (Elbe)", file: "rosslau.json" }, { name: "Wittenberge", file: "wittenberge.json" }, { name: "Wolfen", file: "wolfen.json" },
+        { name: "Wusterwitz", file: "wusterwitz.json" }, { name: "Zerbst/Anhalt", file: "zerbst.json" }
 }
 
 HEADERS = {'DB-Client-Id': CLIENT_ID, 'DB-Api-Key': CLIENT_SECRET, 'accept': 'application/xml'}
@@ -45,6 +50,7 @@ def hole_daten_fuer_stunde(eva_id, datum, stunde, changes, tz):
                 p_time_str = dp.get('pt')
                 chg = changes.get(trip_id, {})
                 
+                # Hier liegt der Hund begraben: ct (changed time) muss Vorrang haben
                 e_time_str = chg.get('ct') or p_time_str
                 
                 p_time = datetime.strptime(p_time_str, "%y%m%d%H%M").replace(tzinfo=tz)
@@ -71,6 +77,7 @@ def hole_station_daten(eva_id):
     jetzt = datetime.now(tz)
     changes = {}
     try:
+        # Wir nutzen fchg für den vollen Abgleich
         c_res = requests.get(f"https://apis.deutschebahn.com/db-api-marketplace/apis/timetables/v1/fchg/{eva_id}", headers=HEADERS, timeout=10)
         if c_res.status_code == 200:
             for s in ET.fromstring(c_res.content).findall('s'):
@@ -86,6 +93,7 @@ def hole_station_daten(eva_id):
     
     datum_j = jetzt.strftime("%y%m%d")
     liste = hole_daten_fuer_stunde(eva_id, datum_j, jetzt.strftime("%H"), changes, tz)
+    # Auch die nächste Stunde prüfen, falls Züge Verspätung in die neue Stunde ziehen
     naechste = jetzt + timedelta(hours=1)
     liste += hole_daten_fuer_stunde(eva_id, naechste.strftime("%y%m%d"), naechste.strftime("%H"), changes, tz)
     
@@ -99,72 +107,7 @@ def verarbeite_station(item):
     with open(f"{name}.json", 'w', encoding='utf-8') as f:
         json.dump(daten, f, ensure_ascii=False, indent=4)
 
-# --- NEUE FUNKTION FÜR ROUTING (BAUHOF VERBINDUNGEN) ---
-def hole_routing_verbindungen(start_id, ziel_id, dateiname):
-    tz = ZoneInfo("Europe/Berlin")
-    jetzt = datetime.now(tz)
-    url = "https://v5.vbb.transport.rest/journeys"
-    params = {
-        "from": start_id,
-        "to": ziel_id,
-        "results": 4,          # Die nächsten 4 Verbindungen holen
-        "language": "de"
-    }
-    try:
-        res = requests.get(url, params=params, timeout=10)
-        if res.status_code != 200: return
-        
-        data = res.json()
-        verbindungs_liste = []
-        
-        for journey in data.get("journeys", []):
-            legs = journey.get("legs", [])
-            if not legs: continue
-            
-            first_leg = legs[0]
-            last_leg = legs[-1]
-            
-            def format_iso_time(iso_str):
-                if not iso_str: return "--:--"
-                clean_str = iso_str.split("+")[0].split("Z")[0]
-                dt = datetime.strptime(clean_str[:16], "%Y-%m-%dT%H:%M")
-                return dt.strftime("%H:%M")
-
-            abfahrt = format_iso_time(first_leg.get("departure"))
-            ankunft = format_iso_time(last_leg.get("arrival"))
-            
-            delay = first_leg.get("departureDelay")
-            delay_str = f"+{int(delay/60)}" if delay and delay > 0 else "pünktlich"
-            
-            linie = "Fussweg"
-            if "line" in first_leg and first_leg["line"]:
-                linie = first_leg["line"].get("name", "Nahverkehr")
-            
-            verbindungs_liste.append({
-                "abfahrt": abfahrt,
-                "ankunft": ankunft,
-                "linie": linie,
-                "gleis": first_leg.get("departurePlatform") or "-",
-                "info": delay_str,
-                "umstiege": len(legs) - 1,
-                "update": jetzt.strftime("%H:%M")
-            })
-            
-        with open(f"{dateiname}.json", 'w', encoding='utf-8') as f:
-            json.dump(verbindungs_liste, f, ensure_ascii=False, indent=4)
-        print(f"Routing-Daten für {dateiname} erfolgreich aktualisiert.")
-    except Exception as e:
-        print(f"Fehler beim Routing für {dateiname}: {e}")
-
 if __name__ == "__main__":
-    # 1. Bestehende Bahnhofsabfragen parallel ausführen
     with ThreadPoolExecutor(max_workers=5) as executor:
         executor.map(verarbeite_station, STATIONS.items())
         
-    # 2. Neue Verbindungsabfragen vom Bauhof anhängen
-    # Route A: Zerbst, Bauhof -> Zerbst, Bahnhof
-    hole_routing_verbindungen("733238", "8013389", "verbindungen_bauhof_bahnhof")
-    
-    # Route B: Zerbst, Bauhof -> Magdeburg Hbf
-    hole_routing_verbindungen("733238", "8010224", "verbindungen_bauhof_magdeburg")
-                
