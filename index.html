@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>DB Monitor Pro | Live FIA & Routen</title>
+    <title>DB Monitor Pro | Live Dashboard</title>
     <style>
         :root {
             --fia-blue: #0000cc;
+            --fia-white: #ffffff;
             --db-red: #e2001a;
+            --db-dark: #111111;
+            --db-gray-bg: #f4f7f9;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -21,149 +24,133 @@
 
         /* Navbar */
         .db-navbar {
-            background: #fff; padding: 10px 20px;
+            background: #fff;
+            padding: 10px 20px;
             display: flex; align-items: center; justify-content: space-between;
             border-bottom: 3px solid var(--db-red);
+            position: sticky; top: 0; z-index: 1000;
         }
-        :fullscreen .db-navbar { display: none; }
+        .db-logo { background: var(--db-red); color: white; font-weight: 900; padding: 4px 10px; border-radius: 4px; }
 
         /* Welcome Screen */
         #welcome-screen { 
-            position: fixed; inset: 0; background: #f4f7f9; z-index: 3000; 
+            position: fixed; inset: 0; background: var(--db-gray-bg); z-index: 3000; 
             display: flex; flex-direction: column; align-items: center; padding: 20px 0;
             overflow-y: auto; color: #111;
         }
         #welcome-screen.hidden { display: none; }
 
-        .route-container {
+        .search-box { 
             background: #fff; padding: 20px; border-radius: 12px; 
             width: 92%; max-width: 600px; border: 1px solid #ddd; 
-            margin: 20px 0; display: flex; flex-direction: column; gap: 10px;
-        }
-
-        .search-trigger {
-            background: #f0f0f0; padding: 15px; border-radius: 8px;
-            text-align: left; font-weight: bold; cursor: pointer; border: 1px solid #ccc;
-        }
-
-        .route-btn {
-            background: var(--db-red); color: white; border: none; padding: 15px;
-            border-radius: 8px; font-weight: bold; font-size: 1.1rem; cursor: pointer;
+            margin: 20px 0; cursor: pointer; text-align: center; font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
         .fav-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 92%; max-width: 600px; }
         .fav-item { 
             background: #fff; padding: 18px; border-radius: 12px; text-align: center; 
-            cursor: pointer; font-weight: bold; border: 1px solid #eee;
+            cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.05); font-weight: bold;
         }
 
-        /* Monitor Ansicht */
+        /* Monitor / FIA Design */
         .monitor { display: none; flex-direction: column; height: 100%; background: var(--fia-blue); color: #fff; }
         .monitor.active { display: flex; }
 
         .fia-header { 
-            padding: 1vh 2vw; background: var(--fia-blue); 
-            border-bottom: 2px solid rgba(255,255,255,0.4);
+            padding: 15px 25px; background: var(--fia-blue); border-bottom: 3px solid rgba(255,255,255,0.4);
             display: flex; justify-content: space-between; align-items: center;
         }
-        .station-name { font-size: 2vw; font-weight: bold; text-transform: uppercase; margin: 0; }
+        .station-name { font-size: 1.8rem; font-weight: bold; text-transform: uppercase; margin: 0; }
 
         #board { flex: 1; overflow-y: auto; }
 
-        /* Das fixierte Layout-Gitter */
         .departure-row { 
-            display: grid; 
-            grid-template-columns: 20% 65% 15%; 
-            padding: 2vh 2vw; 
-            border-bottom: 2px solid rgba(255,255,255,0.25); 
-            align-items: center; 
-            position: relative;
-            min-height: 14vh;
-            overflow: hidden;
+            display: grid; grid-template-columns: 280px 1fr 100px; 
+            padding: 20px 25px; border-bottom: 2px solid rgba(255,255,255,0.2); 
+            align-items: center; position: relative;
+            min-height: 140px;
         }
 
-        /* Zeit & Linie */
-        .time-box { display: flex; flex-direction: column; z-index: 10; background: var(--fia-blue); padding-right: 10px; }
-        .line-id { font-size: 1.4vw; font-weight: bold; opacity: 0.8; }
-        .plan-time { font-size: 4.5vw; font-weight: bold; line-height: 1; }
+        /* Zeit-Sektion & Blinkpunkt */
+        .time-box { display: flex; flex-direction: column; }
+        .line-id { font-size: 1.3rem; font-weight: bold; margin-bottom: 5px; opacity: 0.8; }
+        .time-wrapper { display: flex; align-items: center; gap: 12px; }
+        .plan-time { font-size: 3.2rem; font-weight: bold; line-height: 1; }
+        
         .delay-box { 
-            background: #fff; color: var(--fia-blue); 
-            padding: 1px 6px; margin-top: 4px;
-            font-size: 2.5vw; font-weight: bold; border-radius: 3px;
-            width: fit-content;
+            background: #fff; color: var(--fia-blue); padding: 2px 10px; 
+            font-size: 2rem; font-weight: bold; border-radius: 3px;
+            animation: delay-blink 1.5s step-end infinite;
         }
+        @keyframes delay-blink { 50% { opacity: 0.2; } }
 
-        /* Ziel-Bereich mit Rolltext-Logik */
-        .dest-box { overflow: hidden; white-space: nowrap; position: relative; }
-        .destination { display: inline-block; font-size: 6vw; font-weight: bold; letter-spacing: -1px; padding-right: 50px; }
+        /* Der weiße Punkt 3 Min vor Abfahrt */
+        .depart-point {
+            width: 15px; height: 15px; background: #fff; border-radius: 50%;
+            position: absolute; left: 8px; top: 50%; transform: translateY(-50%);
+            animation: fia-blink 1.2s infinite;
+        }
+        @keyframes fia-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-        .scroll-active { display: inline-block; animation: fia-ticker 12s linear infinite; }
-        @keyframes fia-ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        /* Ziel & Gleis */
+        .dest-box { padding-left: 20px; }
+        .destination { font-size: 3.5rem; font-weight: bold; letter-spacing: -1px; line-height: 1; }
+        .track-box { text-align: right; font-size: 4.5rem; font-weight: bold; }
 
-        /* Gleis-Bereich */
-        .track-box { text-align: right; display: flex; flex-direction: column; align-items: flex-end; z-index: 10; background: var(--fia-blue); padding-left: 10px; }
-        .track-num { font-size: 7vw; font-weight: bold; line-height: 0.85; }
-        .track-sec { font-size: 3.2vw; font-weight: bold; opacity: 0.9; margin-top: 2px; }
+        /* Fullscreen */
+        :fullscreen .departure-row { grid-template-columns: 550px 1fr 200px; padding: 40px 60px; min-height: 250px; }
+        :fullscreen .plan-time { font-size: 9rem; }
+        :fullscreen .delay-box { font-size: 5rem; }
+        :fullscreen .destination { font-size: 9rem; }
+        :fullscreen .track-box { font-size: 11rem; }
+        :fullscreen .station-name { font-size: 4rem; }
 
-        /* Vollbild-Anpassungen */
-        :fullscreen .station-name { font-size: 3.5vw; }
-        :fullscreen .plan-time { font-size: 8vw; }
-        :fullscreen .destination { font-size: 10vw; }
-        :fullscreen .track-num { font-size: 12vw; }
-        :fullscreen .track-sec { font-size: 5vw; }
-        :fullscreen .delay-box { font-size: 4vw; }
-
-        /* Suche */
+        /* Search Overlay */
         #search-overlay { position: fixed; inset: 0; background: #fff; z-index: 4000; display: none; flex-direction: column; }
-        .search-nav { padding: 15px; background: #111; display: flex; gap: 15px; }
+        .search-nav { padding: 15px; background: var(--db-dark); display: flex; gap: 15px; }
         .search-input { flex: 1; border: none; padding: 14px; border-radius: 8px; font-size: 1.2rem; outline: none; }
     </style>
 </head>
 <body>
 
 <div class="db-navbar">
-    <div style="font-weight: 900; background: var(--db-red); color: #fff; padding: 4px 10px; border-radius: 4px;">DB</div>
-    <div style="display: flex; gap: 20px; align-items: center;">
-        <div id="clock" style="font-weight: 900; font-size: 1.3rem;">00:00</div>
-        <button onclick="toggleFullscreen()" style="padding: 6px 15px; cursor:pointer; font-weight: bold; border: 2px solid #333; background: #fff;">VOLLBILD</button>
+    <div class="db-logo">DB</div>
+    <div style="display: flex; gap: 15px; align-items: center; color: #000;">
+        <div id="clock" style="font-weight: 900; font-size: 1.2rem;">00:00</div>
+        <button onclick="toggleFullscreen()" style="padding: 5px 12px; cursor:pointer; font-weight: bold; border: 1px solid #ccc; background: #fff;">VOLLBILD</button>
     </div>
 </div>
 
 <div id="welcome-screen">
-    <div style="margin: 20px 0 10px; font-weight: 900; font-size: 1.8rem; letter-spacing: -1px;">DB MONITOR <span style="color:var(--db-red)">PRO</span></div>
-    
-    <div class="route-container">
-        <div style="font-weight: 800; font-size: 0.9rem; color: #551212;">LIVE-ABFRAGE PLANEN</div>
-        <div id="start-trigger" class="search-trigger" onclick="openSearch('start')">🛫 Start: Station wählen...</div>
-        <div id="ziel-trigger" class="search-trigger" onclick="openSearch('ziel')">🛬 Ziel: Optionale Verbindung...</div>
-        <button class="route-btn" onclick="starteAnzeige()">LIVE MONITOR STARTEN</button>
-    </div>
-
-    <div style="width: 92%; max-width: 600px; margin: 10px 0; font-weight: 800; color: #666; font-size: 0.8rem; text-transform: uppercase;">Schnellauswahl (Deine JSONs)</div>
+    <div style="margin: 20px 0; font-weight: 900; color: #111; font-size: 1.4rem;">DB MONITOR PRO</div>
+    <div class="search-box" onclick="openSearch()">🔍 BAHNHOF SUCHEN...</div>
+    <div style="width: 92%; max-width: 600px; margin-bottom: 10px; font-weight: 800; color: #666; text-transform: uppercase; font-size: 0.8rem;">Favoriten</div>
     <div class="fav-grid" id="fav-bar"></div>
 </div>
 
 <div id="search-overlay">
     <div class="search-nav">
-        <button onclick="closeSearch()" style="color:white; background:none; border:none; font-size:2rem; cursor:pointer;">✕</button>
-        <input type="text" id="station-query" class="search-input" placeholder="Station suchen..." oninput="filterStations()">
+        <button onclick="closeSearch()" style="color:white; background:none; border:none; font-size:1.8rem; cursor:pointer;">✕</button>
+        <input type="text" id="station-query" class="search-input" placeholder="Bahnhof suchen..." oninput="filterStations()">
     </div>
-    <div id="search-results" style="overflow-y: auto;"></div>
+    <div id="search-results" style="overflow-y: auto; color: #111;"></div>
 </div>
 
 <div class="monitor" id="monitor-app">
     <div class="fia-header">
-        <h1 id="display-station" class="station-name">ABFAHRTEN</h1>
+        <h1 id="display-station" class="station-name">BITTE WÄHLEN</h1>
         <div style="display: flex; gap: 10px;">
-            <button onclick="goHome()" style="background:#fff; border:none; color:var(--fia-blue); padding:6px 15px; cursor:pointer; font-weight:bold; border-radius:4px;">ZURÜCK</button>
+            <button id="star-btn" onclick="toggleFavorite()" style="background:none; border:1px solid #fff; color:#fff; padding:5px 15px; cursor:pointer; font-weight:bold;">★ FAV</button>
+            <button onclick="goHome()" style="background:none; border:1px solid #fff; color:#fff; padding:5px 15px; cursor:pointer; font-weight:bold;">HOME</button>
         </div>
     </div>
     <div id="board"></div>
 </div>
 
 <script>
-    // Deine JSON-Datenbank für die reine Bahnhofs-Schnellauswahl
-    const LOCAL_STATIONS = [
+    // Deine Server-Konfiguration
+    const STATIONS_DB = [
         { name: "Bad Belzig", file: "bad_belzig.json" }, { name: "Berlin Hbf", file: "berlin_hbf.json" },
         { name: "Biederitz", file: "biederitz.json" }, { name: "Bitterfeld", file: "bitterfeld.json" },
         { name: "Brandenburg Hbf", file: "brandenburg_hbf.json" }, { name: "Dessau Hbf", file: "dessau_hbf.json" },
@@ -174,178 +161,104 @@
         { name: "Pretzier (Altm)", file: "pretzier_altm.json" }, { name: "Rodleben", file: "rodleben.json" },
         { name: "Roßlau (Elbe)", file: "rosslau.json" }, { name: "Wittenberge", file: "wittenberge.json" }, { name: "Wolfen", file: "wolfen.json" },
         { name: "Wusterwitz", file: "wusterwitz.json" }, { name: "Zerbst/Anhalt", file: "zerbst.json" }
-    ];
-
-    // Eine kleine Liste von echten DB-Stationen mit ihren IDs für die Live-Suche von A nach B
-    const DB_STATIONS_LIVE = [
-        { name: "Zerbst/Anhalt", id: "8013389" }, { name: "Magdeburg Hbf", id: "8010224" },
-        { name: "Dessau Hbf", id: "8010077" }, { name: "Leipzig Hbf", id: "8010205" },
-        { name: "Berlin Hbf", id: "8011160" }, { name: "Bitterfeld", id: "8010050" },
-        { name: "Roßlau (Elbe)", id: "8010302" }, { name: "Gommern", id: "8011673" },
-        { name: "Bad Belzig", id: "8010031" }, { name: "Brandenburg Hbf", id: "8010060" }
     ].sort((a, b) => a.name.localeCompare(b.name));
 
     const BASE_URL = 'https://raw.githubusercontent.com/nicopro2021/Abfahrtstafel-/main/';
-    
-    let searchMode = 'start'; // 'start' oder 'ziel'
-    let selectedStart = null;
-    let selectedZiel = null;
-    let isLiveRouteMode = false;
-    let updateInterval = null;
+    let currentStation = null;
+    let favorites = JSON.parse(localStorage.getItem('db_monitor_favs')) || [null, null, null, null];
 
     function toggleFullscreen() {
         if (!document.fullscreenElement) document.documentElement.requestFullscreen();
         else document.exitFullscreen();
     }
 
-    function openSearch(mode) { 
-        searchMode = mode;
-        document.getElementById('search-overlay').style.display = 'flex'; 
-        document.getElementById('station-query').value = '';
-        filterStations(); 
-    }
-    
+    function openSearch() { document.getElementById('search-overlay').style.display = 'flex'; document.getElementById('station-query').focus(); filterStations(); }
     function closeSearch() { document.getElementById('search-overlay').style.display = 'none'; }
-    
     function goHome() { 
-        clearInterval(updateInterval);
         document.getElementById('welcome-screen').classList.remove('hidden'); 
         document.getElementById('monitor-app').classList.remove('active'); 
+        updateFavUI(); 
     }
 
     function selectStation(station) {
-        if (searchMode === 'start') {
-            selectedStart = station;
-            document.getElementById('start-trigger').innerText = `🛫 Start: ${station.name}`;
-        } else {
-            selectedZiel = station;
-            document.getElementById('ziel-trigger').innerText = `🛬 Ziel: ${station.name}`;
-        }
-        closeSearch();
+        currentStation = station;
+        document.getElementById('display-station').innerText = station.name.toUpperCase();
+        document.getElementById('welcome-screen').classList.add('hidden');
+        document.getElementById('monitor-app').classList.add('active');
+        closeSearch(); updateStar(); loadData();
     }
 
     function filterStations() {
         const q = document.getElementById('station-query').value.toLowerCase();
-        // Zeige für die Live-Suche die DB_STATIONS_LIVE Liste
-        const filtered = DB_STATIONS_LIVE.filter(s => s.name.toLowerCase().includes(q));
-        document.getElementById('search-results').innerHTML = filtered
-            .map(s => `<div style="padding:20px; border-bottom:1px solid #eee; cursor:pointer; font-weight:bold; color:#111;" onclick='selectStation(${JSON.stringify(s)})'>${s.name}</div>`).join('');
-    }
-
-    function starteAnzeige() {
-        if (!selectedStart) { alert("Bitte wähle mindestens einen Startbahnhof aus!"); return; }
-        
-        if (selectedStart && selectedZiel) {
-            // Echte Routenabfrage von A nach B via transport.rest API
-            isLiveRouteMode = true;
-            document.getElementById('display-station').innerText = `${selectedStart.name} -> ${selectedZiel.name}`;
-        } else {
-            // Nur Startbahnhof gewählt -> Wir fallen zurück auf deine vorgefertigten GitHub-Dateien
-            isLiveRouteMode = false;
-            document.getElementById('display-station').innerText = selectedStart.name.toUpperCase();
-        }
-
-        document.getElementById('welcome-screen').classList.add('hidden');
-        document.getElementById('monitor-app').classList.add('active');
-        
-        loadData();
-        updateInterval = setInterval(loadData, 20000); // Automatisch alle 20 Sek aktualisieren
+        document.getElementById('search-results').innerHTML = STATIONS_DB.filter(s => s.name.toLowerCase().includes(q))
+            .map(s => `<div style="padding:18px; border-bottom:1px solid #eee; cursor:pointer; font-weight:bold;" onclick='selectStation(${JSON.stringify(s)})'>${s.name}</div>`).join('');
     }
 
     async function loadData() {
-        const board = document.getElementById('board');
+        if(!currentStation) return;
         try {
-            let abfahrten = [];
-
-            if (isLiveRouteMode) {
-                // LIVE ROUTE DIREKT AUS DEM INTERNET LADEN
-                const response = await fetch(`https://v5.db.transport.rest/journeys?from=${selectedStart.id}&to=${selectedZiel.id}&results=5`);
-                const data = await response.json();
-                
-                abfahrten = data.journeys.map(j => {
-                    const firstLeg = j.legs[0];
-                    const lastLeg = j.legs[j.legs.length - 1];
-                    
-                    const formatTime = (iso) => iso ? iso.substring(11, 16) : "--:--";
-                    const delay = firstLeg.departureDelay ? `+${Math.round(firstLeg.departureDelay/60)}` : "pünktlich";
-                    
-                    return {
-                        zeit: formatTime(firstLeg.departure),
-                        echte_zeit: formatTime(firstLeg.plannedDeparture || firstLeg.departure),
-                        linie: firstLeg.line ? firstLeg.line.name : "Zug",
-                        ziel: `Ankunft ${formatTime(lastLeg.arrival)} (${j.legs.length - 1} Umst.)`,
-                        gleis: firstLeg.departurePlatform || "-",
-                        info: delay
-                    };
-                });
-            } else {
-                // KLASSISCH DEINE JSON-DATEI AUS GITHUB PAGES LADEN
-                // Sucht die passende Datei aus der lokalen Liste
-                const localFile = LOCAL_STATIONS.find(s => s.name.toLowerCase().includes(selectedStart.name.toLowerCase()))?.file || "zerbst.json";
-                const res = await fetch(`${BASE_URL}${localFile}?t=${Date.now()}`);
-                abfahrten = await res.json();
-            }
-
+            const res = await fetch(`${BASE_URL}${currentStation.file}?t=${Date.now()}`);
+            const data = await res.json();
+            const board = document.getElementById('board');
             board.innerHTML = '';
-            abfahrten.forEach(zug => {
-                const isLong = zug.ziel.length > 12;
-                const destContent = isLong ? `${zug.ziel} +++ ${zug.ziel} +++ ` : zug.ziel;
-                const scrollClass = isLong ? 'scroll-active' : '';
+            
+            const jetzt = new Date();
+            const aktuelleSek = (jetzt.getHours() * 3600) + (jetzt.getMinutes() * 60) + jetzt.getSeconds();
 
-                const gleisStr = zug.gleis || "";
-                const match = gleisStr.match(/^(\d+)\s*(.*)$/);
-                const gNum = match ? match[1] : gleisStr;
-                const gSec = match ? match[2] : "";
+            data.forEach(zug => {
+                const [h, m] = zug.echte_zeit.split(':').map(Number);
+                const echteSek = (h * 3600) + (m * 60);
 
-                // Verspätungsbox-Styling
-                let delayHTML = '';
-                if(zug.info && zug.info !== "pünktlich") {
-                    delayHTML = `<div class="delay-box">${zug.info}</div>`;
-                } else if(zug.echte_zeit && zug.echte_zeit !== zug.zeit) {
-                    delayHTML = `<div class="delay-box">${zug.echte_zeit}</div>`;
-                }
+                // Filter: Zug bleibt bis 120 Sek nach ECHTER Abfahrt sichtbar
+                if (echteSek < aktuelleSek - 120) return;
+
+                const isDelayed = zug.echte_zeit !== zug.zeit;
+                // Weißer Punkt 3 Min (180s) vor echter Abfahrt
+                const isAboutToDepart = (echteSek - aktuelleSek) <= 180 && (echteSek - aktuelleSek) >= 0;
 
                 board.innerHTML += `
                     <div class="departure-row">
+                        ${isAboutToDepart ? '<div class="depart-point"></div>' : ''}
                         <div class="time-box">
                             <span class="line-id">${zug.linie}</span>
                             <div class="time-wrapper">
                                 <span class="plan-time">${zug.zeit}</span>
-                                ${delayHTML}
+                                ${isDelayed ? `<div class="delay-box">${zug.echte_zeit}</div>` : ''}
                             </div>
                         </div>
                         <div class="dest-box">
-                            <div class="destination ${scrollClass}">${destContent}</div>
+                            <div class="destination">${zug.ziel}</div>
                         </div>
-                        <div class="track-box">
-                            <span class="track-num">${gNum}</span>
-                            <span class="track-sec">${gSec}</span>
-                        </div>
+                        <div class="track-box">${zug.gleis || ''}</div>
                     </div>`;
             });
-        } catch (e) { 
-            board.innerHTML = `<div style="padding:20px; font-weight:bold; color:red;">Fehler beim Laden der Live-Daten.</div>`;
-            console.error(e); 
-        }
+        } catch (e) { console.error("Server-Fehler"); }
     }
 
-    // Erstellt die Klick-Favoritenbar auf der Startseite aus deinen lokalen JSONs
-    function initFavBar() {
-        const bar = document.getElementById('fav-bar');
-        // Zeige 4 Standardbahnhöfe direkt als Kachel an
-        const quickStations = [
-            { name: "Zerbst", id: "8013389" },
-            { name: "Magdeburg Hbf", id: "8010224" },
-            { name: "Dessau Hbf", id: "8010077" },
-            { name: "Leipzig Hbf", id: "8010205" }
-        ];
-        bar.innerHTML = quickStations.map(s => `
-            <div class="fav-item" onclick='selectedStart=${JSON.stringify(s)}; selectedZiel=null; starteAnzeige();'>${s.name} (Lokales JSON)</div>
-        `).join('');
+    function toggleFavorite() {
+        const idx = favorites.findIndex(f => f && f.file === currentStation.file);
+        if (idx > -1) favorites[idx] = null;
+        else { const empty = favorites.indexOf(null); if (empty > -1) favorites[empty] = currentStation; else favorites[0] = currentStation; }
+        localStorage.setItem('db_monitor_favs', JSON.stringify(favorites));
+        updateStar();
     }
 
-    setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'}); }, 1000);
-    initFavBar();
+    function updateStar() {
+        const isFav = currentStation && favorites.some(f => f && f.file === currentStation.file);
+        document.getElementById('star-btn').style.color = isFav ? '#ffcc00' : '#fff';
+    }
+
+    function updateFavUI() {
+        document.getElementById('fav-bar').innerHTML = favorites.map((f, i) => `
+            <div class="fav-item" onclick="fClick(${i})">${f ? f.name : 'PLATZ '+(i+1)}</div>`).join('');
+    }
+    function fClick(i) { if(favorites[i]) selectStation(favorites[i]); else openSearch(); }
+
+    setInterval(() => { 
+        document.getElementById('clock').innerText = new Date().toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'}); 
+    }, 1000);
+    setInterval(loadData, 20000); // Alle 20s Update
+    updateFavUI();
 </script>
 </body>
 </html>
