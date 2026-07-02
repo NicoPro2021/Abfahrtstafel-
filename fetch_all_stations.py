@@ -124,3 +124,4 @@ if __name__ == "__main__":
     with ThreadPoolExecutor(max_workers=5) as executor:
         # Verarbeitet die Einträge parallel über .items() (Name, ID)
         executor.map(verarbeite_station, STATIONS.items())
+
