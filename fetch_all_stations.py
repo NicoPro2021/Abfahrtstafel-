@@ -21,29 +21,12 @@ DB_CODES = {
     "90": "Kein Halt an diesem Bahnhof", "92": "Technische Störung am Zug"
 }
 
-# EXAKT DAS ALTE FORMAT: JEDER STATION WIRD HIER DIREKT IHRE ID UND IHRE JSON-DATEI ZUGEWIESEN
 STATIONS = {
-    "Bad Belzig": {"id": "8010031", "file": "bad_belzig.json"},
-    "Berlin Hbf": {"id": "8011160", "file": "berlin_hbf.json"},
-    "Biederitz": {"id": "8011195", "file": "biederitz.json"},
-    "Bitterfeld": {"id": "8010050", "file": "bitterfeld.json"},
-    "Brandenburg Hbf": {"id": "8010060", "file": "brandenburg_hbf.json"},
-    "Dessau Hbf": {"id": "8010077", "file": "dessau_hbf.json"},
-    "Dessau Süd": {"id": "8011403", "file": "dessau_sued.json"},
-    "Gommern": {"id": "8011673", "file": "gommern.json"},
-    "Güterglück": {"id": "8011705", "file": "gueterglueck.json"},  # Hier hartcodiert als gueterglueck.json
-    "Leipzig Hbf": {"id": "8010205", "file": "leipzig_hbf.json"},
-    "Leipzig Hbf (tief)": {"id": "8011037", "file": "leipzig_hbf_tief.json"},
-    "Magdeburg Hbf": {"id": "8010224", "file": "magdeburg_hbf.json"},
-    "Magdeburg Herrenkrug": {"id": "8012301", "file": "magdeburg_herrenkrug.json"},
-    "Magdeburg Neustadt": {"id": "8012302", "file": "magdeburg_neustadt.json"},
-    "Pretzier (Altm)": {"id": "8012683", "file": "pretzier_altm.json"},
-    "Rodleben": {"id": "8012818", "file": "rodleben.json"},
-    "Roßlau (Elbe)": {"id": "8010302", "file": "rosslau.json"},
-    "Wittenberge": {"id": "8010386", "file": "wittenberge.json"},
-    "Wolfen": {"id": "8013444", "file": "wolfen.json"},
-    "Wusterwitz": {"id": "8013467", "file": "wusterwitz.json"},
-    "Zerbst/Anhalt": {"id": "8013389", "file": "zerbst.json"}  # Hier hartcodiert als zerbst.json
+    "magdeburg_hbf": "8010224", "leipzig_hbf": "8010205", "leipzig_hbf_tief": "8098205", "zerbst": "8013389",
+    "dessau_hbf": "8010077", "rosslau": "8010302", "rodleben": "8012777",
+    "bitterfeld": "8010050", "wolfen": "8013335", "magdeburg_herrenkrug": "8013455", "bad_belzig": "8010031", "berlin_hbf": "8011160", "brandenburg_hbf": "8010060",
+    "biederitz": "8010047", "dessau_sued": "8011361", "gommern": "8011673", "magdeburg_neustadt": "8010226", "pretzier_altm": "8012673", "wusterwitz": "8013365", 
+    "gueterglueck": "8010154", "wittenberge": "8010382"
 }
 
 HEADERS = {'DB-Client-Id': CLIENT_ID, 'DB-Api-Key': CLIENT_SECRET, 'accept': 'application/xml'}
@@ -111,15 +94,77 @@ def hole_station_daten(eva_id):
     return liste
 
 def verarbeite_station(item):
-    name, info = item
-    eva_id = info["id"]
-    dateiname = info["file"]  # Nutzt jetzt exakt den Dateinamen aus dem Dictionary oben!
-    
+    name, eva_id = item
     daten = hole_station_daten(eva_id)
-    with open(dateiname, 'w', encoding='utf-8') as f:
+    with open(f"{name}.json", 'w', encoding='utf-8') as f:
         json.dump(daten, f, ensure_ascii=False, indent=4)
 
+# --- NEUE FUNKTION FÜR ROUTING (BAUHOF VERBINDUNGEN) ---
+def hole_routing_verbindungen(start_id, ziel_id, dateiname):
+    tz = ZoneInfo("Europe/Berlin")
+    jetzt = datetime.now(tz)
+    url = "https://v5.vbb.transport.rest/journeys"
+    params = {
+        "from": start_id,
+        "to": ziel_id,
+        "results": 4,          # Die nächsten 4 Verbindungen holen
+        "language": "de"
+    }
+    try:
+        res = requests.get(url, params=params, timeout=10)
+        if res.status_code != 200: return
+        
+        data = res.json()
+        verbindungs_liste = []
+        
+        for journey in data.get("journeys", []):
+            legs = journey.get("legs", [])
+            if not legs: continue
+            
+            first_leg = legs[0]
+            last_leg = legs[-1]
+            
+            def format_iso_time(iso_str):
+                if not iso_str: return "--:--"
+                clean_str = iso_str.split("+")[0].split("Z")[0]
+                dt = datetime.strptime(clean_str[:16], "%Y-%m-%dT%H:%M")
+                return dt.strftime("%H:%M")
+
+            abfahrt = format_iso_time(first_leg.get("departure"))
+            ankunft = format_iso_time(last_leg.get("arrival"))
+            
+            delay = first_leg.get("departureDelay")
+            delay_str = f"+{int(delay/60)}" if delay and delay > 0 else "pünktlich"
+            
+            linie = "Fussweg"
+            if "line" in first_leg and first_leg["line"]:
+                linie = first_leg["line"].get("name", "Nahverkehr")
+            
+            verbindungs_liste.append({
+                "abfahrt": abfahrt,
+                "ankunft": ankunft,
+                "linie": linie,
+                "gleis": first_leg.get("departurePlatform") or "-",
+                "info": delay_str,
+                "umstiege": len(legs) - 1,
+                "update": jetzt.strftime("%H:%M")
+            })
+            
+        with open(f"{dateiname}.json", 'w', encoding='utf-8') as f:
+            json.dump(verbindungs_liste, f, ensure_ascii=False, indent=4)
+        print(f"Routing-Daten für {dateiname} erfolgreich aktualisiert.")
+    except Exception as e:
+        print(f"Fehler beim Routing für {dateiname}: {e}")
+
 if __name__ == "__main__":
+    # 1. Bestehende Bahnhofsabfragen parallel ausführen
     with ThreadPoolExecutor(max_workers=5) as executor:
         executor.map(verarbeite_station, STATIONS.items())
         
+    # 2. Neue Verbindungsabfragen vom Bauhof anhängen
+    # Route A: Zerbst, Bauhof -> Zerbst, Bahnhof
+    hole_routing_verbindungen("733238", "8013389", "verbindungen_bauhof_bahnhof")
+    
+    # Route B: Zerbst, Bauhof -> Magdeburg Hbf
+    hole_routing_verbindungen("733238", "8010224", "verbindungen_bauhof_magdeburg")
+                
