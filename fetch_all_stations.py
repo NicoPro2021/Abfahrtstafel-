@@ -21,17 +21,29 @@ DB_CODES = {
     "90": "Kein Halt an diesem Bahnhof", "92": "Technische Störung am Zug"
 }
 
+# SAUBERES PYTHON DICTIONARY MIT DEN ERFORDERLICHEN EVA-IDs
 STATIONS = {
-    { name: "Bad Belzig", file: "bad_belzig.json" }, { name: "Berlin Hbf", file: "berlin_hbf.json" },
-        { name: "Biederitz", file: "biederitz.json" }, { name: "Bitterfeld", file: "bitterfeld.json" },
-        { name: "Brandenburg Hbf", file: "brandenburg_hbf.json" }, { name: "Dessau Hbf", file: "dessau_hbf.json" },
-        { name: "Dessau Süd", file: "dessau_sued.json" }, { name: "Gommern", file: "gommern.json" },
-        { name: "Güterglück", file: "gueterglueck.json" }, { name: "Leipzig Hbf", file: "leipzig_hbf.json" },
-        { name: "Leipzig Hbf (tief)", file: "leipzig_hbf_tief.json" }, { name: "Magdeburg Hbf", file: "magdeburg_hbf.json" },
-        { name: "Magdeburg Herrenkrug", file: "magdeburg_herrenkrug.json" }, { name: "Magdeburg Neustadt", file: "magdeburg_neustadt.json" },
-        { name: "Pretzier (Altm)", file: "pretzier_altm.json" }, { name: "Rodleben", file: "rodleben.json" },
-        { name: "Roßlau (Elbe)", file: "rosslau.json" }, { name: "Wittenberge", file: "wittenberge.json" }, { name: "Wolfen", file: "wolfen.json" },
-        { name: "Wusterwitz", file: "wusterwitz.json" }, { name: "Zerbst/Anhalt", file: "zerbst.json" }
+    "Bad Belzig": "8010031",
+    "Berlin Hbf": "8011160",
+    "Biederitz": "8011195",
+    "Bitterfeld": "8010050",
+    "Brandenburg Hbf": "8010060",
+    "Dessau Hbf": "8010077",
+    "Dessau Süd": "8011403",
+    "Gommern": "8011673",
+    "Güterglück": "8011705",
+    "Leipzig Hbf": "8010205",
+    "Leipzig Hbf (tief)": "8011037",
+    "Magdeburg Hbf": "8010224",
+    "Magdeburg Herrenkrug": "8012301",
+    "Magdeburg Neustadt": "8012302",
+    "Pretzier (Altm)": "8012683",
+    "Rodleben": "8012818",
+    "Roßlau (Elbe)": "8010302",
+    "Wittenberge": "8010386",
+    "Wolfen": "8013444",
+    "Wusterwitz": "8013467",
+    "Zerbst/Anhalt": "8013389"
 }
 
 HEADERS = {'DB-Client-Id': CLIENT_ID, 'DB-Api-Key': CLIENT_SECRET, 'accept': 'application/xml'}
@@ -104,10 +116,11 @@ def hole_station_daten(eva_id):
 def verarbeite_station(item):
     name, eva_id = item
     daten = hole_station_daten(eva_id)
+    # Macht automatisch aus z.B. "Bad Belzig" -> "Bad Belzig.json"
     with open(f"{name}.json", 'w', encoding='utf-8') as f:
         json.dump(daten, f, ensure_ascii=False, indent=4)
 
 if __name__ == "__main__":
     with ThreadPoolExecutor(max_workers=5) as executor:
+        # Verarbeitet die Einträge parallel über .items() (Name, ID)
         executor.map(verarbeite_station, STATIONS.items())
-        
