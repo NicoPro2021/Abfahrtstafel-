@@ -21,29 +21,29 @@ DB_CODES = {
     "90": "Kein Halt an diesem Bahnhof", "92": "Technische Störung am Zug"
 }
 
-# JETZT SIND WIRKLICH ALLE DEINE STATIONEN HINTERLEGT!
+# EXAKT DAS ALTE FORMAT: JEDER STATION WIRD HIER DIREKT IHRE ID UND IHRE JSON-DATEI ZUGEWIESEN
 STATIONS = {
-    "Bad Belzig": "8010031",
-    "Berlin Hbf": "8011160",
-    "Biederitz": "8011195",
-    "Bitterfeld": "8010050",
-    "Brandenburg Hbf": "8010060",
-    "Dessau Hbf": "8010077",
-    "Dessau Süd": "8011403",
-    "Gommern": "8011673",
-    "Güterglück": "8011705",
-    "Leipzig Hbf": "8010205",
-    "Leipzig Hbf (tief)": "8011037",
-    "Magdeburg Hbf": "8010224",
-    "Magdeburg Herrenkrug": "8012301",
-    "Magdeburg Neustadt": "8012302",
-    "Pretzier (Altm)": "8012683",
-    "Rodleben": "8012818",
-    "Roßlau (Elbe)": "8010302",
-    "Wittenberge": "8010386",
-    "Wolfen": "8013444",
-    "Wusterwitz": "8013467",
-    "Zerbst/Anhalt": "8013389"
+    "Bad Belzig": {"id": "8010031", "file": "bad_belzig.json"},
+    "Berlin Hbf": {"id": "8011160", "file": "berlin_hbf.json"},
+    "Biederitz": {"id": "8011195", "file": "biederitz.json"},
+    "Bitterfeld": {"id": "8010050", "file": "bitterfeld.json"},
+    "Brandenburg Hbf": {"id": "8010060", "file": "brandenburg_hbf.json"},
+    "Dessau Hbf": {"id": "8010077", "file": "dessau_hbf.json"},
+    "Dessau Süd": {"id": "8011403", "file": "dessau_sued.json"},
+    "Gommern": {"id": "8011673", "file": "gommern.json"},
+    "Güterglück": {"id": "8011705", "file": "gueterglueck.json"},  # Hier hartcodiert als gueterglueck.json
+    "Leipzig Hbf": {"id": "8010205", "file": "leipzig_hbf.json"},
+    "Leipzig Hbf (tief)": {"id": "8011037", "file": "leipzig_hbf_tief.json"},
+    "Magdeburg Hbf": {"id": "8010224", "file": "magdeburg_hbf.json"},
+    "Magdeburg Herrenkrug": {"id": "8012301", "file": "magdeburg_herrenkrug.json"},
+    "Magdeburg Neustadt": {"id": "8012302", "file": "magdeburg_neustadt.json"},
+    "Pretzier (Altm)": {"id": "8012683", "file": "pretzier_altm.json"},
+    "Rodleben": {"id": "8012818", "file": "rodleben.json"},
+    "Roßlau (Elbe)": {"id": "8010302", "file": "rosslau.json"},
+    "Wittenberge": {"id": "8010386", "file": "wittenberge.json"},
+    "Wolfen": {"id": "8013444", "file": "wolfen.json"},
+    "Wusterwitz": {"id": "8013467", "file": "wusterwitz.json"},
+    "Zerbst/Anhalt": {"id": "8013389", "file": "zerbst.json"}  # Hier hartcodiert als zerbst.json
 }
 
 HEADERS = {'DB-Client-Id': CLIENT_ID, 'DB-Api-Key': CLIENT_SECRET, 'accept': 'application/xml'}
@@ -111,15 +111,12 @@ def hole_station_daten(eva_id):
     return liste
 
 def verarbeite_station(item):
-    name, eva_id = item
+    name, info = item
+    eva_id = info["id"]
+    dateiname = info["file"]  # Nutzt jetzt exakt den Dateinamen aus dem Dictionary oben!
+    
     daten = hole_station_daten(eva_id)
-    
-    # Hier machen wir den Dateinamen fit für GitHub (kleingeschrieben mit Unterstrichen):
-    # Aus "Bad Belzig" wird "bad_belzig.json"
-    # Aus "Zerbst/Anhalt" wird "zerbst_anhalt.json"
-    dateiname = name.lower().replace(" ", "_").replace("/", "_")
-    
-    with open(f"{dateiname}.json", 'w', encoding='utf-8') as f:
+    with open(dateiname, 'w', encoding='utf-8') as f:
         json.dump(daten, f, ensure_ascii=False, indent=4)
 
 if __name__ == "__main__":
