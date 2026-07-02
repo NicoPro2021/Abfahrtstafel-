@@ -21,7 +21,7 @@ DB_CODES = {
     "90": "Kein Halt an diesem Bahnhof", "92": "Technische Störung am Zug"
 }
 
-# SAUBERES PYTHON DICTIONARY MIT DEN ERFORDERLICHEN EVA-IDs
+# JETZT SIND WIRKLICH ALLE DEINE STATIONEN HINTERLEGT!
 STATIONS = {
     "Bad Belzig": "8010031",
     "Berlin Hbf": "8011160",
@@ -62,7 +62,6 @@ def hole_daten_fuer_stunde(eva_id, datum, stunde, changes, tz):
                 p_time_str = dp.get('pt')
                 chg = changes.get(trip_id, {})
                 
-                # Hier liegt der Hund begraben: ct (changed time) muss Vorrang haben
                 e_time_str = chg.get('ct') or p_time_str
                 
                 p_time = datetime.strptime(p_time_str, "%y%m%d%H%M").replace(tzinfo=tz)
@@ -89,7 +88,6 @@ def hole_station_daten(eva_id):
     jetzt = datetime.now(tz)
     changes = {}
     try:
-        # Wir nutzen fchg für den vollen Abgleich
         c_res = requests.get(f"https://apis.deutschebahn.com/db-api-marketplace/apis/timetables/v1/fchg/{eva_id}", headers=HEADERS, timeout=10)
         if c_res.status_code == 200:
             for s in ET.fromstring(c_res.content).findall('s'):
@@ -105,7 +103,6 @@ def hole_station_daten(eva_id):
     
     datum_j = jetzt.strftime("%y%m%d")
     liste = hole_daten_fuer_stunde(eva_id, datum_j, jetzt.strftime("%H"), changes, tz)
-    # Auch die nächste Stunde prüfen, falls Züge Verspätung in die neue Stunde ziehen
     naechste = jetzt + timedelta(hours=1)
     liste += hole_daten_fuer_stunde(eva_id, naechste.strftime("%y%m%d"), naechste.strftime("%H"), changes, tz)
     
@@ -116,12 +113,16 @@ def hole_station_daten(eva_id):
 def verarbeite_station(item):
     name, eva_id = item
     daten = hole_station_daten(eva_id)
-    # Macht automatisch aus z.B. "Bad Belzig" -> "Bad Belzig.json"
-    with open(f"{name}.json", 'w', encoding='utf-8') as f:
+    
+    # Hier machen wir den Dateinamen fit für GitHub (kleingeschrieben mit Unterstrichen):
+    # Aus "Bad Belzig" wird "bad_belzig.json"
+    # Aus "Zerbst/Anhalt" wird "zerbst_anhalt.json"
+    dateiname = name.lower().replace(" ", "_").replace("/", "_")
+    
+    with open(f"{dateiname}.json", 'w', encoding='utf-8') as f:
         json.dump(daten, f, ensure_ascii=False, indent=4)
 
 if __name__ == "__main__":
     with ThreadPoolExecutor(max_workers=5) as executor:
-        # Verarbeitet die Einträge parallel über .items() (Name, ID)
         executor.map(verarbeite_station, STATIONS.items())
-
+        
