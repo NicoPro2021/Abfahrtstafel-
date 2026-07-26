@@ -4,7 +4,7 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 from concurrent.futures import ThreadPoolExecutor
 
-# DEINE ZUGANGSDATEN (Für transport.rest eigentlich nicht mehr nötig, aber ich lasse sie für dich drin)
+# DEINE ZUGANGSDATEN
 CLIENT_ID = "647fddb98582bec8984c65e1256eb617"
 CLIENT_SECRET = "6af72e24106f2250967364fac780bbe6"
 
@@ -15,6 +15,37 @@ STATIONS = {
     "biederitz": "8010047", "dessau_sued": "8011361", "gommern": "8011673", "magdeburg_neustadt": "8010226", "pretzier_altm": "8012673", "wusterwitz": "8013365", 
     "gueterglueck": "8010154", "wittenberge": "8010382", "berlin_hbf-tief": "8098160"
 }
+
+def extrahiere_zusatzinfos(remarks):
+    """Filtert aus den API-Remarks wichtige Hinweise wie Störungen oder fehlende Fahrradmitnahme."""
+    stoerungen = []
+    fahrrad_infos = []
+    
+    for r in remarks:
+        text = r.get("summary") or r.get("text") or ""
+        r_type = r.get("type", "")
+        
+        if not text:
+            continue
+            
+        text_lower = text.lower()
+        
+        # 1. Fahrradmitnahme prüfen
+        if "fahrrad" in text_lower:
+            if text not in fahrrad_infos:
+                fahrrad_infos.append(text)
+        
+        # 2. Bahnhofstörungen / Zugausfälle / Statusmeldungen (Warning, Disruption, Status)
+        elif r_type in ["status", "warning", "disruption", "hint"]:
+            # Standard-Hinweise wie "Barrierefreier Einstieg" filtern wir hier aus, 
+            # wenn wir nur Störungen wollen. Wir nehmen aber alles Wichtige mit:
+            if text not in stoerungen:
+                stoerungen.append(text)
+    
+    # Listen zusammenführen
+    alle_infos = fahrrad_infos + stoerungen
+    return " | ".join(alle_infos)
+
 
 def hole_station_daten(eva_id):
     tz = ZoneInfo("Europe/Berlin")
@@ -75,8 +106,9 @@ def hole_station_daten(eva_id):
                 ziel = dep.get("direction", "Unbekannt")[:20]
                 gleis = dep.get("platform") or dep.get("plannedPlatform") or "-"
                 
+                # Zusatzinformationen und Störungen verarbeiten
                 remarks = dep.get("remarks", [])
-                begruendung = " | ".join([r.get("summary", "") for r in remarks if r.get("type") == "status" and r.get("summary")])
+                begruendung = extrahiere_zusatzinfos(remarks)
                 
                 verbindungen.append({
                     "zeit": p_time,
@@ -90,7 +122,7 @@ def hole_station_daten(eva_id):
                 })
                 
     except Exception as e:
-        pass
+        print(f"Fehler bei EVA {eva_id}: {e}")
         
     verbindungen.sort(key=lambda x: x['zeit'])
     return verbindungen
@@ -100,8 +132,8 @@ def verarbeite_station(item):
     daten = hole_station_daten(eva_id)
     with open(f"{name}.json", 'w', encoding='utf-8') as f:
         json.dump(daten, f, ensure_ascii=False, indent=4)
+    print(f"Daten für {name} aktualisiert.")
 
-# --- NEUE FUNKTION FÜR ROUTING (BAUHOF VERBINDUNGEN) ---
 def hole_routing_verbindungen(start_id, ziel_id, dateiname):
     tz = ZoneInfo("Europe/Berlin")
     jetzt = datetime.now(tz)
@@ -114,7 +146,8 @@ def hole_routing_verbindungen(start_id, ziel_id, dateiname):
     }
     try:
         res = requests.get(url, params=params, timeout=10)
-        if res.status_code != 200: return
+        if res.status_code != 200: 
+            return
 
         data = res.json()
         verbindungs_liste = []
@@ -142,6 +175,10 @@ def hole_routing_verbindungen(start_id, ziel_id, dateiname):
             if "line" in first_leg and first_leg["line"]:
                 linie = first_leg["line"].get("name", "Nahverkehr")
 
+            # Störungen und Infos aus den Legs ziehen
+            leg_remarks = first_leg.get("remarks", [])
+            begruendung = extrahiere_zusatzinfos(leg_remarks)
+
             verbindungs_liste.append({
                 "abfahrt": abfahrt,
                 "ankunft": ankunft,
@@ -149,17 +186,22 @@ def hole_routing_verbindungen(start_id, ziel_id, dateiname):
                 "gleis": first_leg.get("departurePlatform") or "-",
                 "info": delay_str,
                 "umstiege": len(legs) - 1,
+                "begruendung": begruendung,
                 "update": jetzt.strftime("%H:%M")
             })
 
         with open(f"{dateiname}.json", 'w', encoding='utf-8') as f:
             json.dump(verbindungs_liste, f, ensure_ascii=False, indent=4)
         print(f"Routing-Daten für {dateiname} erfolgreich aktualisiert.")
+        
     except Exception as e:
         print(f"Fehler beim Routing für {dateiname}: {e}")
 
+
 if __name__ == "__main__":
-    # 1. Bestehende Bahnhofsabfragen parallel ausführen (inkl. SEV-Fix für alle Stationen)
+    print("Starte Datenabruf...")
+    
+    # 1. Bestehende Bahnhofsabfragen parallel ausführen
     with ThreadPoolExecutor(max_workers=5) as executor:
         executor.map(verarbeite_station, STATIONS.items())
 
@@ -170,3 +212,4 @@ if __name__ == "__main__":
     # Route B: Zerbst, Bauhof -> Magdeburg Hbf
     hole_routing_verbindungen("733238", "8010224", "verbindungen_bauhof_magdeburg")
     
+    print("✅ Alle JSON-Dateien wurden erfolgreich generiert und aktualisiert.")
