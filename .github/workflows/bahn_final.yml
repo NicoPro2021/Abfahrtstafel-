@@ -8,17 +8,17 @@ on:
 jobs:
   run:
     runs-on: ubuntu-latest
-    # Verhindert, dass mehrere Bots gleichzeitig laufen und sich gegenseitig blockieren
+    # Verhindert, dass sich Workflows überschneiden
     concurrency:
       group: bahn-monitor
-      cancel-in-progress: true
+      cancel-in-progress: false # Auf false, damit ein laufender Loop sauber zu Ende schreibt
     permissions:
       contents: write
       actions: write
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # Wichtig für Rebase
       
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -30,30 +30,37 @@ jobs:
 
       - name: Main Loop
         run: |
-          git config --global user.name "Bahn-Bot"
-          git config --global user.email "bot@github.com"
+          # Git Identität lokal setzen
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
           for i in {1..15}
           do
             echo "Runde $i startet..."
             python fetch_all_stations.py
             
+            # Prüfen, ob JSON-Dateien geändert wurden
             git add *.json
             if ! git diff --cached --quiet; then
-              git commit -m "Live Update Runde $i ($(date +%H:%M))"
-              # Erst pullen, dann pushen - das ist der sicherste Weg
+              git commit -m "Live Update Runde $i ($(date +'%H:%M'))"
+              
+              # Rebase, falls sich das Repo während des Loops geändert hat
               git pull --rebase origin main
               git push origin main
-              echo "Update hochgeladen."
+              echo "Runde $i erfolgreich hochgeladen."
             else
-              echo "Keine Änderungen gefunden."
+              echo "Keine Änderungen in Runde $i."
             fi
             
+            # 150 Sekunden warten (entspricht ca. 40 Min Gesamtlaufzeit bei 15 Runden)
             sleep 150
           done
 
-      - name: Restart
-        if: always()
+      - name: Restart Workflow
+        if: always() # Startet den nächsten Loop auch, wenn der vorherige fehlschlug
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh workflow run bahn_final.yml
+        run: |
+          # Achte darauf, dass der Dateiname hier exakt deiner YAML-Datei entspricht!
+          # Wenn diese Datei 'bahn_monitor.yml' heißt, muss das hier stehen:
+          gh workflow run "Bahn Monitor Loop"
