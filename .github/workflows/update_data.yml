@@ -8,17 +8,16 @@ on:
 jobs:
   run:
     runs-on: ubuntu-latest
-    # Verhindert, dass sich Workflows überschneiden
     concurrency:
       group: bahn-monitor
-      cancel-in-progress: false # Auf false, damit ein laufender Loop sauber zu Ende schreibt
+      cancel-in-progress: false
     permissions:
       contents: write
       actions: write
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Wichtig für Rebase
+          fetch-depth: 0
       
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -39,15 +38,16 @@ jobs:
           for i in {1..15}
           do
             echo "Runde $i startet..."
-            # Hier rufen wir unser Skript auf
-            python main.py
+            
+            # EXAKT DEIN ALTER DATEINAME:
+            python fetch_all_stations.py
             
             # Prüfen, ob JSON-Dateien geändert wurden
             git add *.json
             if ! git diff --cached --quiet; then
               git commit -m "Live Update Runde $i ($(date +'%H:%M'))"
               
-              # Rebase, falls sich das Repo während des Loops geändert hat
+              # Rebase und Push
               git pull --rebase origin main
               git push origin main
               echo "Runde $i erfolgreich hochgeladen."
@@ -55,14 +55,13 @@ jobs:
               echo "Keine Änderungen in Runde $i."
             fi
             
-            # 150 Sekunden warten (entspricht ca. 40 Min Gesamtlaufzeit bei 15 Runden)
+            # 150 Sekunden warten
             sleep 150
           done
 
       - name: Restart Workflow
-        if: always() # Startet den nächsten Loop auch, wenn der vorherige fehlschlug
+        if: always()
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          # Startet diesen Workflow nach Ablauf der 45 Minuten direkt wieder neu
           gh workflow run "Bahn Monitor Loop"
