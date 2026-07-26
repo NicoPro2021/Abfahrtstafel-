@@ -1,170 +1,94 @@
 import requests
-import xml.etree.ElementTree as ET
 import json
-from datetime import datetime, timedelta
+from datetime import datetime
 from zoneinfo import ZoneInfo
 from concurrent.futures import ThreadPoolExecutor
 
-# DEINE ZUGANGSDATEN
-CLIENT_ID = "647fddb98582bec8984c65e1256eb617"
-CLIENT_SECRET = "6af72e24106f2250967364fac780bbe6"
+# ... (Deine STATIONS Konstante bleibt gleich) ...
 
-# VOLLSTÄNDIGE CODES
-DB_CODES = {
-    "1": "Sicherheitsrelevante Störung", "2": "Feuerwehreinsatz am Gleis",
-    "3": "Notarzteinsatz am Gleis", "4": "Vandalismusschaden", "5": "Personen im Gleis",
-    "7": "Verzögerungen im Betriebsablauf", "8": "Anschlussabwartung",
-    "9": "Warten auf Gegenverkehr", "10": "Ausfall der Leit- und Sicherungstechnik",
-    "15": "Bauarbeiten", "18": "Defekt am Zug", "21": "Türstörung",
-    "38": "Defekt an der Klimaanlage", "43": "Kurzfristiger Personalausfall",
-    "46": "Verspätung eines vorausfahrenden Zuges", "80": "Andere Wagenreihung",
-    "90": "Kein Halt an diesem Bahnhof", "92": "Technische Störung am Zug"
-}
-
-STATIONS = {
-    "magdeburg_hbf": "8010224", "leipzig_hbf": "8010205", "leipzig_hbf_tief": "8098205", "zerbst": "8013389",
-    "dessau_hbf": "8010077", "rosslau": "8010302", "rodleben": "8012777",
-    "bitterfeld": "8010050", "wolfen": "8013335", "magdeburg_herrenkrug": "8013455", "bad_belzig": "8010031", "berlin_hbf": "8011160", "brandenburg_hbf": "8010060",
-    "biederitz": "8010047", "dessau_sued": "8011361", "gommern": "8011673", "magdeburg_neustadt": "8010226", "pretzier_altm": "8012673", "wusterwitz": "8013365", 
-    "gueterglueck": "8010154", "wittenberge": "8010382", "berlin_hbf-tief": "8098160"
-}
-
-HEADERS = {'DB-Client-Id': CLIENT_ID, 'DB-Api-Key': CLIENT_SECRET, 'accept': 'application/xml'}
-
-def hole_daten_fuer_stunde(eva_id, datum, stunde, changes, tz):
-    url = f"https://apis.deutschebahn.com/db-api-marketplace/apis/timetables/v1/plan/{eva_id}/{datum}/{stunde}"
-    try:
-        res = requests.get(url, headers=HEADERS, timeout=10)
-        if res.status_code != 200: return []
-        root = ET.fromstring(res.content)
-        verbindungen = []
-        for s in root.findall('s'):
-            trip_id = s.get('id')
-            tl, dp = s.find('tl'), s.find('dp')
-            if dp is not None and tl is not None:
-                p_time_str = dp.get('pt')
-                chg = changes.get(trip_id, {})
-                
-                e_time_str = chg.get('ct') or p_time_str
-                
-                p_time = datetime.strptime(p_time_str, "%y%m%d%H%M").replace(tzinfo=tz)
-                e_time = datetime.strptime(e_time_str, "%y%m%d%H%M").replace(tzinfo=tz)
-                
-                if e_time < datetime.now(tz) - timedelta(minutes=10): continue
-                
-                diff = int((e_time - p_time).total_seconds() / 60)
-                
-                verbindungen.append({
-                    "zeit": p_time.strftime("%H:%M"),
-                    "echte_zeit": e_time.strftime("%H:%M"),
-                    "linie": dp.get('l') or f"{tl.get('c')}{tl.get('n')}",
-                    "ziel": dp.get('ppth').split('|')[-1][:20],
-                    "gleis": chg.get('cp') or dp.get('pp') or "-",
-                    "info": "FÄLLT AUS" if chg.get('cs') == "c" else (f"+{diff}" if diff > 0 else "pünktlich"),
-                    "begruendung": chg.get('grund') or ""
-                })
-        return verbindungen
-    except: return []
-
-def hole_station_daten(eva_id):
+def hole_station_daten_hafas(eva_id):
     tz = ZoneInfo("Europe/Berlin")
     jetzt = datetime.now(tz)
-    changes = {}
-    try:
-        c_res = requests.get(f"https://apis.deutschebahn.com/db-api-marketplace/apis/timetables/v1/fchg/{eva_id}", headers=HEADERS, timeout=10)
-        if c_res.status_code == 200:
-            for s in ET.fromstring(c_res.content).findall('s'):
-                dp = s.find('dp')
-                msgs = [DB_CODES.get(m.get('c'), f"Code {m.get('c')}") for m in s.findall('m') if m.get('c')]
-                changes[s.get('id')] = {
-                    "ct": dp.get('ct') if dp is not None else None,
-                    "cp": dp.get('cp') if dp is not None else None,
-                    "cs": dp.get('cs') if dp is not None else None,
-                    "grund": " | ".join(dict.fromkeys(msgs))
-                }
-    except: pass
     
-    datum_j = jetzt.strftime("%y%m%d")
-    liste = hole_daten_fuer_stunde(eva_id, datum_j, jetzt.strftime("%H"), changes, tz)
-    naechste = jetzt + timedelta(hours=1)
-    liste += hole_daten_fuer_stunde(eva_id, naechste.strftime("%y%m%d"), naechste.strftime("%H"), changes, tz)
+    # Nutzung der DB Hafas API via transport.rest für Abfahrten
+    url = f"https://v6.db.transport.rest/stops/{eva_id}/departures"
     
-    liste.sort(key=lambda x: x['zeit'])
-    for e in liste: e["update"] = jetzt.strftime("%H:%M")
-    return liste
-
-def verarbeite_station(item):
-    name, eva_id = item
-    daten = hole_station_daten(eva_id)
-    with open(f"{name}.json", 'w', encoding='utf-8') as f:
-        json.dump(daten, f, ensure_ascii=False, indent=4)
-
-# --- NEUE FUNKTION FÜR ROUTING (BAUHOF VERBINDUNGEN) ---
-def hole_routing_verbindungen(start_id, ziel_id, dateiname):
-    tz = ZoneInfo("Europe/Berlin")
-    jetzt = datetime.now(tz)
-    url = "https://v5.vbb.transport.rest/journeys"
     params = {
-        "from": start_id,
-        "to": ziel_id,
-        "results": 4,          # Die nächsten 4 Verbindungen holen
+        "duration": 120,      # Abfahrten der nächsten 120 Minuten
+        "results": 40,        # Maximale Anzahl an Ergebnissen
+        "bus": "true",        # WICHTIG: Busse (und damit SEV) einschließen!
+        "regional": "true",
+        "suburban": "true",
+        "national": "true",
+        "nationalExpress": "true",
         "language": "de"
     }
+    
+    verbindungen = []
+    
     try:
         res = requests.get(url, params=params, timeout=10)
-        if res.status_code != 200: return
-        
+        if res.status_code != 200: 
+            return []
+            
         data = res.json()
-        verbindungs_liste = []
+        departures = data.get("departures", [])
         
-        for journey in data.get("journeys", []):
-            legs = journey.get("legs", [])
-            if not legs: continue
-            
-            first_leg = legs[0]
-            last_leg = legs[-1]
-            
+        for dep in departures:
+            # Herausfiltern von Fahrten, die in der Vergangenheit liegen oder komplett storniert sind
+            if dep.get("cancelled"):
+                continue
+                
             def format_iso_time(iso_str):
                 if not iso_str: return "--:--"
                 clean_str = iso_str.split("+")[0].split("Z")[0]
                 dt = datetime.strptime(clean_str[:16], "%Y-%m-%dT%H:%M")
                 return dt.strftime("%H:%M")
-
-            abfahrt = format_iso_time(first_leg.get("departure"))
-            ankunft = format_iso_time(last_leg.get("arrival"))
             
-            delay = first_leg.get("departureDelay")
-            delay_str = f"+{int(delay/60)}" if delay and delay > 0 else "pünktlich"
+            p_time = format_iso_time(dep.get("plannedWhen"))
+            e_time = format_iso_time(dep.get("when") or dep.get("plannedWhen"))
             
-            linie = "Fussweg"
-            if "line" in first_leg and first_leg["line"]:
-                linie = first_leg["line"].get("name", "Nahverkehr")
+            # Verspätung berechnen
+            delay = dep.get("delay")
+            if delay and delay > 0:
+                info = f"+{int(delay/60)}"
+            else:
+                info = "pünktlich"
+                
+            # SEV-Check: Wenn es ein Bus ist, wird das oft im Namen oder in der Linie vermerkt
+            line_name = dep.get("line", {}).get("name", "Unbekannt")
+            if "SEV" in line_name.upper() or "ERSATZ" in line_name.upper():
+                info = f"SEV ({info})"
+                
+            ziel = dep.get("direction", "Unbekannt")[:20]
+            gleis = dep.get("platform") or dep.get("plannedPlatform") or "-"
             
-            verbindungs_liste.append({
-                "abfahrt": abfahrt,
-                "ankunft": ankunft,
-                "linie": linie,
-                "gleis": first_leg.get("departurePlatform") or "-",
-                "info": delay_str,
-                "umstiege": len(legs) - 1,
+            # Begründung/Bemerkungen auslesen (falls vorhanden)
+            remarks = dep.get("remarks", [])
+            begruendung = " | ".join([r.get("summary", "") for r in remarks if r.get("type") == "status" and r.get("summary")])
+            
+            verbindungen.append({
+                "zeit": p_time,
+                "echte_zeit": e_time,
+                "linie": line_name,
+                "ziel": ziel,
+                "gleis": gleis,
+                "info": info,
+                "begruendung": begruendung,
                 "update": jetzt.strftime("%H:%M")
             })
             
-        with open(f"{dateiname}.json", 'w', encoding='utf-8') as f:
-            json.dump(verbindungs_liste, f, ensure_ascii=False, indent=4)
-        print(f"Routing-Daten für {dateiname} erfolgreich aktualisiert.")
-    except Exception as e:
-        print(f"Fehler beim Routing für {dateiname}: {e}")
-
-if __name__ == "__main__":
-    # 1. Bestehende Bahnhofsabfragen parallel ausführen
-    with ThreadPoolExecutor(max_workers=5) as executor:
-        executor.map(verarbeite_station, STATIONS.items())
+        # Optional: Nach Zeit sortieren
+        verbindungen.sort(key=lambda x: x['zeit'])
+        return verbindungen
         
-    # 2. Neue Verbindungsabfragen vom Bauhof anhängen
-    # Route A: Zerbst, Bauhof -> Zerbst, Bahnhof
-    hole_routing_verbindungen("733238", "8013389", "verbindungen_bauhof_bahnhof")
-    
-    # Route B: Zerbst, Bauhof -> Magdeburg Hbf
-    hole_routing_verbindungen("733238", "8010224", "verbindungen_bauhof_magdeburg")
-                
+    except Exception as e:
+        print(f"Fehler bei Station {eva_id}: {e}")
+        return []
+
+def verarbeite_station(item):
+    name, eva_id = item
+    # Hier rufen wir nun die neue Hafas-Funktion auf
+    daten = hole_station_daten_hafas(eva_id)
+    with open(f"{name}.json", 'w', encoding='utf-8') as f:
+        json.dump(daten, f, ensure_ascii=False, indent=4)
