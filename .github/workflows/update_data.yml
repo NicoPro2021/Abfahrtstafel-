@@ -35,14 +35,23 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
+          # SICHERHEITS-CHECK: Existiert die Datei überhaupt?
+          if [ ! -f "fetch_all_stations.py" ]; then
+            echo "❌ FEHLER: Die Datei 'fetch_all_stations.py' wurde nicht gefunden!"
+            echo "Heißt deine Datei im Repository vielleicht 'main.py' oder ganz anders?"
+            exit 1
+          fi
+
           for i in {1..15}
           do
             echo "Runde $i startet..."
             
-            # EXAKT DEIN ALTER DATEINAME:
-            python fetch_all_stations.py
+            # Skript ausführen. Wenn es hier crasht, bricht der Workflow ab!
+            python fetch_all_stations.py || exit 1
             
-            # Prüfen, ob JSON-Dateien geändert wurden
+            # Prüfen, ob JSON-Dateien generiert wurden
+            ls -la *.json || echo "Keine JSON Dateien im Ordner!"
+            
             git add *.json
             if ! git diff --cached --quiet; then
               git commit -m "Live Update Runde $i ($(date +'%H:%M'))"
@@ -50,9 +59,9 @@ jobs:
               # Rebase und Push
               git pull --rebase origin main
               git push origin main
-              echo "Runde $i erfolgreich hochgeladen."
+              echo "✅ Runde $i erfolgreich hochgeladen."
             else
-              echo "Keine Änderungen in Runde $i."
+              echo "⚠️ Keine Änderungen in Runde $i."
             fi
             
             # 150 Sekunden warten
