@@ -1,5 +1,6 @@
 import requests
 import json
+import time
 from datetime import datetime
 from zoneinfo import ZoneInfo
 from concurrent.futures import ThreadPoolExecutor
@@ -15,37 +16,6 @@ STATIONS = {
     "biederitz": "8010047", "dessau_sued": "8011361", "gommern": "8011673", "magdeburg_neustadt": "8010226", "pretzier_altm": "8012673", "wusterwitz": "8013365", 
     "gueterglueck": "8010154", "wittenberge": "8010382", "berlin_hbf-tief": "8098160"
 }
-
-def extrahiere_zusatzinfos(remarks):
-    """Filtert aus den API-Remarks wichtige Hinweise wie Störungen oder fehlende Fahrradmitnahme."""
-    stoerungen = []
-    fahrrad_infos = []
-    
-    for r in remarks:
-        text = r.get("summary") or r.get("text") or ""
-        r_type = r.get("type", "")
-        
-        if not text:
-            continue
-            
-        text_lower = text.lower()
-        
-        # 1. Fahrradmitnahme prüfen
-        if "fahrrad" in text_lower:
-            if text not in fahrrad_infos:
-                fahrrad_infos.append(text)
-        
-        # 2. Bahnhofstörungen / Zugausfälle / Statusmeldungen (Warning, Disruption, Status)
-        elif r_type in ["status", "warning", "disruption", "hint"]:
-            # Standard-Hinweise wie "Barrierefreier Einstieg" filtern wir hier aus, 
-            # wenn wir nur Störungen wollen. Wir nehmen aber alles Wichtige mit:
-            if text not in stoerungen:
-                stoerungen.append(text)
-    
-    # Listen zusammenführen
-    alle_infos = fahrrad_infos + stoerungen
-    return " | ".join(alle_infos)
-
 
 def hole_station_daten(eva_id):
     tz = ZoneInfo("Europe/Berlin")
@@ -67,7 +37,10 @@ def hole_station_daten(eva_id):
     verbindungen = []
     
     try:
-        res = requests.get(url, params=params, timeout=10)
+        # Timeout auf 30 Sekunden gegen Abbrüche
+        res = requests.get(url, params=params, timeout=30)
+        res.raise_for_status()
+        
         if res.status_code == 200:
             departures = res.json().get("departures", [])
             
@@ -106,9 +79,21 @@ def hole_station_daten(eva_id):
                 ziel = dep.get("direction", "Unbekannt")[:20]
                 gleis = dep.get("platform") or dep.get("plannedPlatform") or "-"
                 
-                # Zusatzinformationen und Störungen verarbeiten
+                # +++ NEUE LOGIK FÜR ALLE BAHNHOFSINFOS +++
                 remarks = dep.get("remarks", [])
-                begruendung = extrahiere_zusatzinfos(remarks)
+                alle_infos = []
+                
+                for r in remarks:
+                    # Greift 'summary' oder 'text' ab, je nachdem, was die API liefert
+                    meldung = r.get("summary") or r.get("text")
+                    
+                    if meldung and meldung not in alle_infos:
+                        # Bereinigt mögliche HTML-Tags
+                        meldung = meldung.replace("<br />", " ").replace("<a>", "").replace("</a>", "")
+                        alle_infos.append(meldung)
+                
+                begruendung = " | ".join(alle_infos)
+                # +++++++++++++++++++++++++++++++++++++++++
                 
                 verbindungen.append({
                     "zeit": p_time,
@@ -121,19 +106,24 @@ def hole_station_daten(eva_id):
                     "update": jetzt.strftime("%H:%M")
                 })
                 
+    except requests.exceptions.Timeout:
+        print(f"Timeout-Fehler bei EVA {eva_id}: Server braucht zu lange.")
     except Exception as e:
-        print(f"Fehler bei EVA {eva_id}: {e}")
+        print(f"Netzwerkfehler bei EVA {eva_id}: {e}")
         
     verbindungen.sort(key=lambda x: x['zeit'])
     return verbindungen
 
 def verarbeite_station(item):
     name, eva_id = item
+    print(f"Rufe Daten für {name} ab...")
     daten = hole_station_daten(eva_id)
     with open(f"{name}.json", 'w', encoding='utf-8') as f:
         json.dump(daten, f, ensure_ascii=False, indent=4)
-    print(f"Daten für {name} aktualisiert.")
+    # WICHTIG: Kurze Pause, um Rate-Limiting zu vermeiden
+    time.sleep(2)
 
+# --- NEUE FUNKTION FÜR ROUTING (BAUHOF VERBINDUNGEN) ---
 def hole_routing_verbindungen(start_id, ziel_id, dateiname):
     tz = ZoneInfo("Europe/Berlin")
     jetzt = datetime.now(tz)
@@ -141,13 +131,12 @@ def hole_routing_verbindungen(start_id, ziel_id, dateiname):
     params = {
         "from": start_id,
         "to": ziel_id,
-        "results": 4,          # Die nächsten 4 Verbindungen holen
+        "results": 4,
         "language": "de"
     }
     try:
-        res = requests.get(url, params=params, timeout=10)
-        if res.status_code != 200: 
-            return
+        res = requests.get(url, params=params, timeout=30)
+        res.raise_for_status()
 
         data = res.json()
         verbindungs_liste = []
@@ -175,10 +164,6 @@ def hole_routing_verbindungen(start_id, ziel_id, dateiname):
             if "line" in first_leg and first_leg["line"]:
                 linie = first_leg["line"].get("name", "Nahverkehr")
 
-            # Störungen und Infos aus den Legs ziehen
-            leg_remarks = first_leg.get("remarks", [])
-            begruendung = extrahiere_zusatzinfos(leg_remarks)
-
             verbindungs_liste.append({
                 "abfahrt": abfahrt,
                 "ankunft": ankunft,
@@ -186,7 +171,6 @@ def hole_routing_verbindungen(start_id, ziel_id, dateiname):
                 "gleis": first_leg.get("departurePlatform") or "-",
                 "info": delay_str,
                 "umstiege": len(legs) - 1,
-                "begruendung": begruendung,
                 "update": jetzt.strftime("%H:%M")
             })
 
@@ -194,22 +178,23 @@ def hole_routing_verbindungen(start_id, ziel_id, dateiname):
             json.dump(verbindungs_liste, f, ensure_ascii=False, indent=4)
         print(f"Routing-Daten für {dateiname} erfolgreich aktualisiert.")
         
+    except requests.exceptions.Timeout:
+        print(f"Timeout beim Routing für {dateiname}.")
     except Exception as e:
         print(f"Fehler beim Routing für {dateiname}: {e}")
-
+    finally:
+        time.sleep(2)
 
 if __name__ == "__main__":
     print("Starte Datenabruf...")
     
     # 1. Bestehende Bahnhofsabfragen parallel ausführen
-    with ThreadPoolExecutor(max_workers=5) as executor:
+    # Max Workers auf 2, damit die DB API uns nicht blockiert
+    with ThreadPoolExecutor(max_workers=2) as executor:
         executor.map(verarbeite_station, STATIONS.items())
 
     # 2. Neue Verbindungsabfragen vom Bauhof anhängen
-    # Route A: Zerbst, Bauhof -> Zerbst, Bahnhof
     hole_routing_verbindungen("733238", "8013389", "verbindungen_bauhof_bahnhof")
-
-    # Route B: Zerbst, Bauhof -> Magdeburg Hbf
     hole_routing_verbindungen("733238", "8010224", "verbindungen_bauhof_magdeburg")
     
-    print("✅ Alle JSON-Dateien wurden erfolgreich generiert und aktualisiert.")
+    print("Fertig! Alle JSON-Dateien sind auf dem neuesten Stand.")
