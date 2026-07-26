@@ -8,24 +8,24 @@ on:
 jobs:
   run:
     runs-on: ubuntu-latest
+    # Verhindert, dass sich Workflows überschneiden
     concurrency:
       group: bahn-monitor
-      cancel-in-progress: false
+      cancel-in-progress: false # Auf false, damit ein laufender Loop sauber zu Ende schreibt
     permissions:
       contents: write
       actions: write
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # Wichtig für Rebase
       
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.x'
 
-      - name: Install Dependencies
+      - name: Install Requests
         run: pip install requests
 
       - name: Main Loop
@@ -37,7 +37,7 @@ jobs:
           for i in {1..15}
           do
             echo "Runde $i startet..."
-            python fetch_all_stations.py
+            python fetch_all_stations1.py
             
             # Prüfen, ob JSON-Dateien geändert wurden
             git add *.json
@@ -52,14 +52,15 @@ jobs:
               echo "Keine Änderungen in Runde $i."
             fi
             
-            # 150 Sekunden warten
+            # 150 Sekunden warten (entspricht ca. 40 Min Gesamtlaufzeit bei 15 Runden)
             sleep 150
           done
 
       - name: Restart Workflow
-        if: always()
+        if: always() # Startet den nächsten Loop auch, wenn der vorherige fehlschlug
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          # Achte darauf, dass der Dateiname hier exakt deiner YAML-Datei entspricht!
+          # Wenn diese Datei 'bahn_monitor.yml' heißt, muss das hier stehen:
           gh workflow run "Bahn Monitor Loop"
-          
