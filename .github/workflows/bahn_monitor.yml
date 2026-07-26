@@ -1,0 +1,58 @@
+name: Bahn Monitor Loop
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/45 * * * *'
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: bahn-monitor
+      cancel-in-progress: false
+    permissions:
+      contents: write
+      actions: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: pip install requests tzdata
+
+      - name: Main Loop
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          for i in {1..15}
+          do
+            # Dateiname ist hier hartkodiert auf abfahrtstafel.py!
+            python abfahrtstafel.py
+            
+            git add *.json
+            if ! git diff --cached --quiet; then
+              git commit -m "Live Update Runde $i ($(date +'%H:%M'))"
+              
+              # Pusht automatisch auf den richtigen Branch
+              git pull --rebase origin HEAD
+              git push origin HEAD
+            fi
+            
+            sleep 150
+          done
+
+      - name: Restart Workflow
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run "Bahn Monitor Loop"
+        
