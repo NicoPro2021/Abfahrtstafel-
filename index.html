@@ -9,14 +9,16 @@
             --db-red: #e2001a;
             --db-red-hover: #c50016;
             --db-gray-bg: #f4f7f9;
-            --db-dark: #212d40;
+            --db-dark: #1a2536;
+            --db-zza-blue: #0b1d51;
             --text-main: #2d3436;
             --text-secondary: #636e72;
             --ontime-green: #008754;
             --delay-red: #d50000;
             --info-yellow: #ffea00;
+            --construction-orange: #ff9800;
             --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            --glass-bg: rgba(255, 255, 255, 0.9);
+            --glass-bg: rgba(255, 255, 255, 0.92);
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -29,7 +31,6 @@
             color: var(--text-main);
         }
 
-        /* Navbar mit modernem Blur-Effekt */
         .db-navbar {
             background: var(--glass-bg);
             backdrop-filter: blur(10px);
@@ -46,15 +47,13 @@
             font-size: 1.1rem;
         }
 
-        /* Status Lampe */
         .status-indicator { display: flex; align-items: center; gap: 8px; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.5px; }
         .dot { width: 10px; height: 10px; border-radius: 50%; background-color: #b2bec3; transition: 0.3s; }
         .dot.online { background-color: var(--ontime-green); box-shadow: 0 0 8px var(--ontime-green); }
         .dot.offline { background-color: var(--delay-red); box-shadow: 0 0 8px var(--delay-red); }
 
-        /* Welcome Screen Optimierung */
         #welcome-screen { 
-            position: fixed; inset: 0; background: var(--db-gray-bg); z-index: 3000; 
+            position: fixed; inset: 53px 0 0 0; background: var(--db-gray-bg); z-index: 3000; 
             display: flex; flex-direction: column; align-items: center; padding: 20px 0;
             overflow-y: auto;
         }
@@ -62,21 +61,27 @@
 
         .global-info-banner {
             width: 92%; max-width: 600px; background: #fff; border-radius: 12px; padding: 20px;
-            margin-bottom: 25px; border-left: 6px solid var(--db-red);
+            margin-bottom: 18px; border-left: 6px solid var(--db-red);
+            box-shadow: var(--card-shadow);
+        }
+
+        .alcohol-notice-card {
+            width: 92%; max-width: 600px; background: var(--db-zza-blue); color: #fff;
+            border-radius: 12px; padding: 14px 18px; margin-bottom: 22px;
+            font-size: 0.85rem; line-height: 1.4; display: flex; align-items: center; gap: 12px;
             box-shadow: var(--card-shadow);
         }
 
         .search-box { 
-            background: #fff; padding: 20px; border-radius: 12px; 
+            background: #fff; padding: 18px 20px; border-radius: 12px; 
             width: 92%; max-width: 600px; border: 1px solid rgba(0,0,0,0.1); 
-            margin-bottom: 30px; cursor: pointer;
+            margin-bottom: 25px; cursor: pointer;
             box-shadow: var(--card-shadow);
             transition: transform 0.2s; display: flex; align-items: center; gap: 10px;
             color: var(--text-secondary); font-weight: 600;
         }
         .search-box:active { transform: scale(0.98); }
 
-        /* Favoriten Grid */
         .fav-grid { 
             display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; 
             width: 92%; max-width: 600px; margin-bottom: 40px;
@@ -89,68 +94,108 @@
         .fav-item:active { background: #f1f2f6; }
         .fav-item b { font-size: 1rem; color: var(--db-dark); }
 
-        /* Monitor Ansicht */
-        .monitor { display: none; flex-direction: column; height: 100%; background: #fff; }
+        .monitor { display: none; flex-direction: column; height: calc(100% - 53px); background: #fff; }
         .monitor.active { display: flex; }
 
         .station-header { 
-            padding: 20px; border-bottom: 3px solid var(--db-red); 
+            padding: 16px 20px 12px 20px; border-bottom: 3px solid var(--db-red); 
             background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-        .station-name { font-size: 1.6rem; font-weight: 900; color: var(--db-dark); margin: 8px 0; }
+        .station-name { font-size: 1.5rem; font-weight: 900; color: var(--db-dark); margin: 8px 0 4px 0; }
 
-        #board { flex: 1; overflow-y: auto; padding-bottom: 40px; }
+        /* Echter DB-Bahnhofs-Lauftext (ZZA-Ticker für Bauarbeiten, Sperrungen & Alkoholverbot) */
+        .station-ticker-bar {
+            background: var(--db-zza-blue);
+            color: #ffffff;
+            overflow: hidden;
+            white-space: nowrap;
+            padding: 8px 0;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border-bottom: 2px solid #000;
+            position: relative;
+        }
+        .station-ticker-bar.warning {
+            background: #fff3cd;
+            color: #1a2536;
+            border-bottom: 2px solid var(--construction-orange);
+        }
+        .ticker-content {
+            display: inline-block;
+            padding-left: 100%;
+            animation: ticker-scroll 28s linear infinite;
+        }
+        @keyframes ticker-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        #board { flex: 1; overflow-y: auto; padding-bottom: 60px; }
 
         .departure-row { 
-            display: grid; grid-template-columns: 85px 1fr 70px; 
-            padding: 20px; border-bottom: 1px solid #f0f0f0; align-items: center;
+            display: grid; grid-template-columns: 85px 1fr 75px; 
+            padding: 16px 20px; border-bottom: 1px solid #eaeaea; align-items: center;
             position: relative; transition: background 0.2s;
         }
         .departure-row:active { background: #f9f9f9; }
-        .departure-row.cancelled { background: #fff5f5; opacity: 0.7; }
+        .departure-row.cancelled { background: #fff5f5; }
 
         .time-container { display: flex; flex-direction: column; gap: 2px; }
         .p-time { font-size: 1.25rem; font-weight: 800; color: var(--db-dark); }
         .p-time.delayed { text-decoration: line-through; color: var(--text-secondary); font-size: 0.9rem; font-weight: 600; }
         .actual-time { color: var(--delay-red); font-size: 1.3rem; font-weight: 800; }
         
-        .status-ontime { color: var(--ontime-green); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; }
-        .status-delayed { color: var(--delay-red); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; }
+        .status-ontime { color: var(--ontime-green); font-size: 0.72rem; font-weight: 800; text-transform: uppercase; }
+        .status-delayed { color: var(--delay-red); font-size: 0.72rem; font-weight: 800; text-transform: uppercase; }
 
-        .train-dest { font-size: 1.15rem; font-weight: 700; color: var(--db-dark); margin-top: 3px; display: block; }
+        .train-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
         .train-id { font-size: 0.8rem; font-weight: 800; color: var(--db-red); text-transform: uppercase; background: rgba(226, 0, 26, 0.1); padding: 2px 6px; border-radius: 4px; }
+        .train-nr { font-size: 0.72rem; color: var(--text-secondary); font-weight: 600; }
+        .train-dest { font-size: 1.15rem; font-weight: 800; color: var(--db-dark); margin-top: 3px; display: block; }
+        .train-via { font-size: 0.78rem; color: var(--text-secondary); margin-top: 2px; display: block; }
+        .train-cancelled-stops { font-size: 0.78rem; color: var(--delay-red); font-weight: 700; margin-top: 2px; display: block; }
         
-        .pl-label { font-size: 0.65rem; color: var(--text-secondary); font-weight: 800; text-transform: uppercase; }
-        .pl-value { font-size: 1.5rem; font-weight: 900; color: var(--db-dark); }
+        .pl-label { font-size: 0.65rem; color: var(--text-secondary); font-weight: 800; text-transform: uppercase; display: block; }
+        .pl-value { font-size: 1.45rem; font-weight: 900; color: var(--db-dark); padding: 2px 8px; border-radius: 6px; display: inline-block; }
+        .pl-value.changed { background: var(--info-yellow); color: #000; box-shadow: 0 0 0 2px #000; }
+        .pl-old { font-size: 0.75rem; text-decoration: line-through; color: var(--text-secondary); display: block; }
 
-        /* Info-Balken Styling */
+        /* Gelber Verspätungs- & Oranger Bauarbeiten-Balken */
         .delay-reason { 
             grid-column: 1 / 4; 
             background: var(--info-yellow); 
-            color: #2d3436; 
-            font-size: 0.85rem; 
+            color: #1a2536; 
+            font-size: 0.82rem; 
             font-weight: 700; 
-            margin-top: 12px; 
-            padding: 10px 14px; 
+            margin-top: 10px; 
+            padding: 9px 12px; 
             border-radius: 8px;
-            display: flex; align-items: center; gap: 10px;
-            box-shadow: inset 0 -2px 0 rgba(0,0,0,0.1);
+            display: flex; align-items: center; gap: 8px;
+            box-shadow: inset 0 -2px 0 rgba(0,0,0,0.12);
+        }
+        .delay-reason.construction {
+            background: #ffe0b2;
+            border-left: 4px solid var(--construction-orange);
+        }
+        .delay-reason.cancelled-banner {
+            background: #ffebee;
+            color: var(--delay-red);
+            border-left: 4px solid var(--delay-red);
         }
 
         .blink-dot {
             width: 10px; height: 10px; background: var(--db-red); border-radius: 50%;
-            position: absolute; left: 8px; top: 50%; transform: translateY(-50%); 
+            position: absolute; left: 6px; top: 38px;
             animation: blink 1.2s infinite ease-in-out;
         }
 
-        @keyframes blink { 0%, 100% { opacity: 1; transform: translateY(-50%) scale(1); } 50% { opacity: 0.3; transform: translateY(-50%) scale(0.8); } }
+        @keyframes blink { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.25; transform: scale(0.8); } }
 
-        /* Search Overlay Modern */
         #search-overlay { position: fixed; inset: 0; background: #fff; z-index: 4000; display: none; flex-direction: column; }
         .search-nav { padding: 15px; background: var(--db-dark); display: flex; gap: 15px; align-items: center; }
         .search-input { flex: 1; border: none; padding: 14px; border-radius: 8px; font-size: 1.1rem; outline: none; background: #f5f6fa; }
 
-        .search-res-item { padding: 18px 25px; border-bottom: 1px solid #f1f2f6; font-weight: 700; font-size: 1.1rem; display: flex; justify-content: space-between; }
+        .search-res-item { padding: 18px 25px; border-bottom: 1px solid #f1f2f6; font-weight: 700; font-size: 1.1rem; display: flex; justify-content: space-between; cursor: pointer; }
         .search-res-item:active { background: #f1f2f6; }
     </style>
 </head>
@@ -168,10 +213,18 @@
 <div id="welcome-screen">
     <div class="global-info-banner" id="global-info">
         <div style="display: flex; justify-content: space-between; align-items: center;">
-            <b id="g-title" style="font-size: 1.1rem;">Lade Infos...</b>
+            <b id="g-title" style="font-size: 1.05rem;">Lade Betriebslage...</b>
             <span id="g-wetter" style="background: var(--db-gray-bg); padding: 4px 8px; border-radius: 6px; font-weight: 800;">☀️ --°C</span>
         </div>
-        <div id="g-msg" style="font-size: 0.95rem; color: var(--text-secondary); margin-top: 8px; line-height: 1.4;">Bitte wählen Sie einen Bahnhof aus der Liste oder den Favoriten.</div>
+        <div id="g-msg" style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 8px; line-height: 1.4;">Bitte wählen Sie einen Bahnhof aus der Liste oder den Favoriten.</div>
+    </div>
+
+    <div class="alcohol-notice-card">
+        <span style="font-size: 1.5rem;">🚭🍺</span>
+        <div>
+            <b>Bahnhofsinformation & Hausrecht:</b><br>
+            An den Bahnhöfen gilt Rauchverbot außerhalb gekennzeichneter Zonen sowie an ausgewählten Stationen und in den Zügen des Regionalverkehrs ein striktes Alkoholverbot.
+        </div>
     </div>
 
     <div class="search-box" onclick="openSearch()">
@@ -200,33 +253,42 @@
         </div>
         <h1 id="display-station" class="station-name" onclick="loadData()">Lade...</h1>
     </div>
+
+    <!-- Live-Ticker wie am echten Bahnsteig -->
+    <div class="station-ticker-bar" id="station-ticker-box">
+        <div class="ticker-content" id="station-ticker-text">
+            ℹ️ Bitte beachten Sie die Ansagen und Hinweise am Bahnsteig sowie das Rauch- und Alkoholverbot im Bahnhofsbereich.
+        </div>
+    </div>
+
     <div id="board"></div>
 </div>
 
 <script>
-    // Liste der Stationen
     const STATIONS_DB = [
-        { name: "Bad Belzig", file: "bad_belzig.json" },
-        { name: "Berlin Hbf", file: "berlin_hbf.json" },
-        { name: "Biederitz", file: "biederitz.json" },
-        { name: "Bitterfeld", file: "bitterfeld.json" },
-        { name: "Brandenburg Hbf", file: "brandenburg_hbf.json" },
-        { name: "Delitzsch unt Bf", file: "delitzsch_unt_bf.json" },
-        { name: "Dessau Hbf", file: "dessau_hbf.json" },
-        { name: "Dessau Süd", file: "dessau_sued.json" },
-        { name: "Gommern", file: "gommern.json" },
-        { name: "Leipzig Hbf", file: "leipzig_hbf.json" },
-        { name: "Leipzig Hbf (tief)", file: "leipzig_hbf_tief.json" },
-        { name: "Magdeburg Hbf", file: "magdeburg_hbf.json" },
-        { name: "Magdeburg Herrenkrug", file: "magdeburg_herrenkrug.json" },
-        { name: "Magdeburg Neustadt", file: "magdeburg_neustadt.json" },
-        { name: "Pretzier (Altm)", file: "pretzier_altm.json" },
-        { name: "Rodleben", file: "rodleben.json" },
-        { name: "Roßlau (Elbe)", file: "rosslau.json" },
-        { name: "Wittenberge", file: "wittenberge.json" },
-        { name: "Wolfen", file: "wolfen.json" },
-        { name: "Wusterwitz", file: "wusterwitz.json" },
-        { name: "Zerbst/Anhalt", file: "zerbst.json" }
+        { name: "Bad Belzig", file: "bad_belzig.json", eva: "8010031" },
+        { name: "Berlin Hbf", file: "berlin_hbf.json", eva: "8011160" },
+        { name: "Berlin Hbf (tief)", file: "berlin_hbf-tief.json", eva: "8098160" },
+        { name: "Biederitz", file: "biederitz.json", eva: "8010047" },
+        { name: "Bitterfeld", file: "bitterfeld.json", eva: "8010050" },
+        { name: "Brandenburg Hbf", file: "brandenburg_hbf.json", eva: "8010060" },
+        { name: "Delitzsch unt Bf", file: "delitzsch_unt_bf.json", eva: "8010076" },
+        { name: "Dessau Hbf", file: "dessau_hbf.json", eva: "8010077" },
+        { name: "Dessau Süd", file: "dessau_sued.json", eva: "8011361" },
+        { name: "Gommern", file: "gommern.json", eva: "8011673" },
+        { name: "Güterglück", file: "gueterglueck.json", eva: "8010154" },
+        { name: "Leipzig Hbf", file: "leipzig_hbf.json", eva: "8010205" },
+        { name: "Leipzig Hbf (tief)", file: "leipzig_hbf_tief.json", eva: "8098205" },
+        { name: "Magdeburg Hbf", file: "magdeburg_hbf.json", eva: "8010224" },
+        { name: "Magdeburg Herrenkrug", file: "magdeburg_herrenkrug.json", eva: "8013455" },
+        { name: "Magdeburg Neustadt", file: "magdeburg_neustadt.json", eva: "8010226" },
+        { name: "Pretzier (Altm)", file: "pretzier_altm.json", eva: "8012673" },
+        { name: "Rodleben", file: "rodleben.json", eva: "8012777" },
+        { name: "Roßlau (Elbe)", file: "rosslau.json", eva: "8010302" },
+        { name: "Wittenberge", file: "wittenberge.json", eva: "8010382" },
+        { name: "Wolfen", file: "wolfen.json", eva: "8013335" },
+        { name: "Wusterwitz", file: "wusterwitz.json", eva: "8013365" },
+        { name: "Zerbst/Anhalt", file: "zerbst.json", eva: "8013389" }
     ].sort((a, b) => a.name.localeCompare(b.name));
 
     const BASE_URL = 'https://raw.githubusercontent.com/nicopro2021/Abfahrtstafel-/main/';
@@ -244,7 +306,11 @@
         } catch(e) { console.log("Info-Fehler"); }
     }
 
-    function openSearch() { document.getElementById('search-overlay').style.display = 'flex'; document.getElementById('station-query').focus(); filterStations(); }
+    function openSearch() {
+        document.getElementById('search-overlay').style.display = 'flex';
+        document.getElementById('station-query').focus();
+        filterStations();
+    }
     function closeSearch() { document.getElementById('search-overlay').style.display = 'none'; }
     function goHome() { 
         document.getElementById('welcome-screen').classList.remove('hidden'); 
@@ -258,7 +324,9 @@
         document.getElementById('display-station').innerText = station.name;
         document.getElementById('welcome-screen').classList.add('hidden');
         document.getElementById('monitor-app').classList.add('active');
-        closeSearch(); updateStar(); loadData();
+        closeSearch();
+        updateStar();
+        loadData();
     }
 
     function filterStations() {
@@ -282,7 +350,11 @@
     function toggleFavorite() {
         const idx = favorites.findIndex(f => f && f.file === currentStation.file);
         if (idx > -1) favorites[idx] = null;
-        else { const empty = favorites.indexOf(null); if (empty > -1) favorites[empty] = currentStation; else favorites[0] = currentStation; }
+        else {
+            const empty = favorites.indexOf(null);
+            if (empty > -1) favorites[empty] = currentStation;
+            else favorites[0] = currentStation;
+        }
         localStorage.setItem('db_monitor_favs', JSON.stringify(favorites));
         updateStar();
     }
@@ -299,15 +371,17 @@
             const res = await fetch(`${BASE_URL}${currentStation.file}?t=${Date.now()}`);
             const data = await res.json();
             
-            // STATUS LAMPEN LOGIK
             if (data && data.length > 0) {
+                // Status-Lampe prüfen
                 const lastUpdateStr = data[0].update || "00:00";
                 const [upH, upM] = lastUpdateStr.split(':').map(Number);
                 const jetzt = new Date();
                 const updateDate = new Date();
                 updateDate.setHours(upH, upM, 0);
 
-                const diffMin = Math.round((jetzt - updateDate) / 60000);
+                let diffMin = Math.round((jetzt - updateDate) / 60000);
+                if (diffMin < -700) diffMin += 1440; // Tageswechsel-Korrektur
+
                 const dot = document.getElementById('status-dot');
                 const txt = document.getElementById('status-text');
 
@@ -320,26 +394,58 @@
                     txt.innerText = 'VERALTET ('+diffMin+'m)';
                     txt.style.color = 'var(--delay-red)';
                 }
+
+                // Bahnhofs-Lauftext (Bauarbeiten, Sperrungen & Alkoholverbot) aktualisieren
+                if (data[0].station_ticker) {
+                    const tickerEl = document.getElementById('station-ticker-text');
+                    const tickerBox = document.getElementById('station-ticker-box');
+                    tickerEl.innerText = data[0].station_ticker;
+                    if (data.some(z => z.bauarbeiten)) {
+                        tickerBox.classList.add('warning');
+                    } else {
+                        tickerBox.classList.remove('warning');
+                    }
+                }
             }
 
             const board = document.getElementById('board');
             board.innerHTML = '';
             const jetzt = new Date();
-            const aktuelleSekunden = (jetzt.getHours() * 3600) + (jetzt.getMinutes() * 60) + jetzt.getSeconds();
+            const aktuelleMinuten = (jetzt.getHours() * 60) + jetzt.getMinutes();
 
             data.filter(zug => {
-                const [h, m] = zug.echte_zeit.split(':').map(Number);
-                const zugSekunden = (h * 3600) + (m * 60);
-                return zugSekunden >= (aktuelleSekunden - 300); // Zeige Züge bis 5 Min nach Abfahrt
+                const [h, m] = (zug.echte_zeit || zug.zeit).split(':').map(Number);
+                let zugMinuten = (h * 60) + m;
+                // Wenn es nach 22 Uhr ist und der Zug um 00:xx fährt, 24h (1440 Min) addieren
+                if (aktuelleMinuten > 1320 && zugMinuten < 180) {
+                    zugMinuten += 1440;
+                }
+                return zugMinuten >= (aktuelleMinuten - 5);
             })
             .forEach(zug => {
                 const isCancelled = (zug.info || "").includes("FÄLLT AUS");
-                const [h, m] = zug.echte_zeit.split(':').map(Number);
-                const zugSekunden = (h * 3600) + (m * 60);
-                const diffSekunden = zugSekunden - aktuelleSekunden;
-                const isAboutToDepart = diffSekunden <= 180 && diffSekunden >= 0;
+                const [h, m] = (zug.echte_zeit || zug.zeit).split(':').map(Number);
+                let zugMinuten = (h * 60) + m;
+                if (aktuelleMinuten > 1320 && zugMinuten < 180) zugMinuten += 1440;
+
+                const diffMinuten = zugMinuten - aktuelleMinuten;
+                const isAboutToDepart = diffMinuten <= 3 && diffMinuten >= 0;
                 const isDelayed = zug.echte_zeit !== zug.zeit && !isCancelled;
+                const viaStr = (zug.via && zug.via.length > 0) ? `über ${zug.via.join(' – ')}` : '';
+                const nrStr = (zug.zug_nr && zug.zug_nr !== zug.linie) ? zug.zug_nr : '';
                 
+                let bannerClass = 'delay-reason';
+                let bannerIcon = 'ℹ️';
+                if (isCancelled) {
+                    bannerClass += ' cancelled-banner';
+                    bannerIcon = '❌';
+                } else if (zug.bauarbeiten) {
+                    bannerClass += ' construction';
+                    bannerIcon = '🚧';
+                } else {
+                    bannerIcon = '⚠️';
+                }
+
                 board.innerHTML += `
                     <div class="departure-row ${isCancelled ? 'cancelled' : ''}">
                         ${isAboutToDepart && !isCancelled ? '<div class="blink-dot"></div>' : ''}
@@ -347,36 +453,41 @@
                             ${isDelayed ? `
                                 <span class="actual-time">${zug.echte_zeit}</span>
                                 <span class="p-time delayed">${zug.zeit}</span>
+                                <span class="status-delayed">${zug.info}</span>
                             ` : `
                                 <span class="p-time">${zug.zeit}</span>
-                                <span class="status-ontime">pünktlich</span>
+                                ${!isCancelled ? '<span class="status-ontime">pünktlich</span>' : ''}
                             `}
                             ${isCancelled ? '<span class="status-delayed">Fällt aus</span>' : ''}
                         </div>
                         <div style="padding-left: 10px;">
-                            <span class="train-id">${zug.linie}</span>
-                            <span class="train-dest">${zug.ziel}</span>
+                            <div class="train-meta">
+                                <span class="train-id">${zug.linie}</span>
+                                ${nrStr ? `<span class="train-nr">(${nrStr})</span>` : ''}
+                            </div>
+                            <span class="train-dest" style="${isCancelled ? 'text-decoration:line-through;' : ''}">${zug.ziel}</span>
+                            ${viaStr ? `<span class="train-via">${viaStr}</span>` : ''}
+                            ${zug.entfallende_halte && zug.entfallende_halte.length > 0 ? `<span class="train-cancelled-stops">⛔ Ohne Halt in: ${zug.entfallende_halte.slice(0,3).join(', ')}</span>` : ''}
                         </div>
                         <div class="platform-group" style="text-align:right;">
                             <span class="pl-label">Gleis</span>
-                            <span class="pl-value" style="${isCancelled ? 'text-decoration:line-through; color:#ccc;' : ''}">${zug.gleis || '—'}</span>
+                            <span class="pl-value ${zug.gleiswechsel ? 'changed' : ''}" style="${isCancelled ? 'text-decoration:line-through; color:#ccc;' : ''}">${zug.gleis || '—'}</span>
+                            ${zug.gleiswechsel ? `<span class="pl-old">statt ${zug.gleis_geplant}</span>` : ''}
                         </div>
-                        ${zug.begruendung ? `<div class="delay-reason">⚠️ ${zug.begruendung}</div>` : ''}
+                        ${zug.begruendung ? `<div class="${bannerClass}">${bannerIcon} <span>${zug.begruendung}</span></div>` : ''}
                     </div>`;
             });
         } catch (e) { console.error(e); }
     }
 
-    // Uhrzeit Update
     setInterval(() => { 
         document.getElementById('clock').innerText = new Date().toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'}); 
     }, 1000);
     
-    // Auto-Refresh alle 30 Sekunden
     setInterval(() => {
         loadData();
         loadGlobalInfo();
-    }, 10000);
+    }, 15000);
 
     loadGlobalInfo();
     updateFavUI();
