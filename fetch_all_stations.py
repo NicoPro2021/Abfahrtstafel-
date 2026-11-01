@@ -518,3 +518,4 @@ if __name__ == "__main__":
     # 3. Verbindungsabfragen vom Bauhof anhängen
     hole_routing_verbindungen("733238", "8013389", "verbindungen_bauhof_bahnhof")
     hole_routing_verbindungen("733238", "8010224", "verbindungen_bauhof_magdeburg")
+
