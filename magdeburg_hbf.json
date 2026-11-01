@@ -1,152 +1,347 @@
 [
     {
-        "zeit": "00:01",
-        "echte_zeit": "00:01",
-        "linie": "S1",
-        "ziel": "Schönebeck-Bad Salze",
-        "gleis": "4",
-        "info": "pünktlich",
-        "begruendung": "",
-        "update": "22:37"
-    },
-    {
-        "zeit": "22:04",
-        "echte_zeit": "23:12",
-        "linie": "ICE955",
-        "ziel": "Berlin Südkreuz",
-        "gleis": "7",
-        "info": "+68",
-        "begruendung": "",
-        "update": "22:37"
-    },
-    {
-        "zeit": "22:04",
-        "echte_zeit": "23:12",
-        "linie": "ICE945",
-        "ziel": "Berlin Südkreuz",
-        "gleis": "7",
-        "info": "+68",
-        "begruendung": "",
-        "update": "22:37"
-    },
-    {
         "zeit": "22:56",
         "echte_zeit": "22:56",
-        "linie": "ICE655",
+        "linie": "ICE 655",
+        "zug_nr": "ICE 655",
         "ziel": "Berlin Gesundbrunnen",
+        "ziel_geplant": "Berlin Gesundbrunnen",
+        "via": [
+            "Berlin Hbf"
+        ],
+        "entfallende_halte": [
+            "Berlin Südkreuz"
+        ],
         "gleis": "7",
+        "gleis_geplant": "7",
+        "gleiswechsel": false,
         "info": "FÄLLT AUS",
-        "begruendung": "",
-        "update": "22:37"
+        "begruendung": "Personen im Gleis",
+        "meldungen": [
+            "Personen im Gleis"
+        ],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
     },
     {
         "zeit": "22:56",
         "echte_zeit": "22:56",
-        "linie": "RB41",
+        "linie": "RB RB41",
+        "zug_nr": "RB 80413",
         "ziel": "Aschersleben",
+        "ziel_geplant": "Aschersleben",
+        "via": [
+            "Magdeburg-Buckau",
+            "Magdeburg SKET Industriepark",
+            "Magdeburg-Salbke",
+            "Magdeburg Südost"
+        ],
+        "entfallende_halte": [],
         "gleis": "6",
+        "gleis_geplant": "6",
+        "gleiswechsel": false,
         "info": "pünktlich",
         "begruendung": "",
-        "update": "22:37"
-    },
-    {
-        "zeit": "23:00",
-        "echte_zeit": "23:10",
-        "linie": "ICE648",
-        "ziel": "Hannover Hbf",
-        "gleis": "8",
-        "info": "+10",
-        "begruendung": "",
-        "update": "22:37"
-    },
-    {
-        "zeit": "23:00",
-        "echte_zeit": "23:10",
-        "linie": "ICE648",
-        "ziel": "Hannover Hbf",
-        "gleis": "8",
-        "info": "+10",
-        "begruendung": "",
-        "update": "22:37"
+        "meldungen": [],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
     },
     {
         "zeit": "23:10",
         "echte_zeit": "23:10",
-        "linie": "S1",
+        "linie": "S S1",
+        "zug_nr": "S 39036",
         "ziel": "Stendal Hbf",
+        "ziel_geplant": "Stendal Hbf",
+        "via": [
+            "Magdeburg-Neustadt",
+            "Magdeburg-Eichenweiler",
+            "Magdeburg-Rothensee",
+            "Wolmirstedt"
+        ],
+        "entfallende_halte": [],
         "gleis": "3",
+        "gleis_geplant": "3",
+        "gleiswechsel": false,
         "info": "pünktlich",
         "begruendung": "",
-        "update": "22:37"
+        "meldungen": [],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
     },
     {
         "zeit": "23:14",
         "echte_zeit": "23:14",
-        "linie": "RB40",
+        "linie": "RB RB40",
+        "zug_nr": "RB 16438",
         "ziel": "Helmstedt",
+        "ziel_geplant": "Helmstedt",
+        "via": [
+            "Magdeburg-Sudenburg",
+            "Niederndodeleben",
+            "Wellen(Magdeburg)",
+            "Ochtmersleben"
+        ],
+        "entfallende_halte": [],
         "gleis": "9",
+        "gleis_geplant": "9",
+        "gleiswechsel": false,
         "info": "pünktlich",
         "begruendung": "",
-        "update": "22:37"
+        "meldungen": [],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
     },
     {
-        "zeit": "23:16",
-        "echte_zeit": "23:16",
-        "linie": "RE13",
-        "ziel": "Dessau Hbf",
+        "zeit": "22:04",
+        "echte_zeit": "23:15",
+        "linie": "ICE 955",
+        "zug_nr": "ICE 955",
+        "ziel": "Berlin Südkreuz",
+        "ziel_geplant": "Berlin Südkreuz",
+        "via": [
+            "Potsdam Hbf",
+            "Berlin Hbf"
+        ],
+        "entfallende_halte": [],
         "gleis": "7",
-        "info": "pünktlich",
-        "begruendung": "",
-        "update": "22:37"
+        "gleis_geplant": "7",
+        "gleiswechsel": false,
+        "info": "+71",
+        "begruendung": "Bereitstellung weiterer Wagen +++ Störung (Code 0)",
+        "meldungen": [
+            "Bereitstellung weiterer Wagen",
+            "Störung (Code 0)"
+        ],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
+    },
+    {
+        "zeit": "22:04",
+        "echte_zeit": "23:15",
+        "linie": "ICE 945",
+        "zug_nr": "ICE 945",
+        "ziel": "Berlin Südkreuz",
+        "ziel_geplant": "Berlin Südkreuz",
+        "via": [
+            "Potsdam Hbf",
+            "Berlin Hbf"
+        ],
+        "entfallende_halte": [],
+        "gleis": "7",
+        "gleis_geplant": "7",
+        "gleiswechsel": false,
+        "info": "+71",
+        "begruendung": "Bereitstellung weiterer Wagen +++ Störung (Code 0)",
+        "meldungen": [
+            "Bereitstellung weiterer Wagen",
+            "Störung (Code 0)"
+        ],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
     },
     {
         "zeit": "23:16",
         "echte_zeit": "23:16",
-        "linie": "RE30",
+        "linie": "RE RE13",
+        "zug_nr": "RE 16139",
+        "ziel": "Dessau Hbf",
+        "ziel_geplant": "Dessau Hbf",
+        "via": [
+            "Magdeburg-Neustadt",
+            "Magdeburg Herrenkrug",
+            "Biederitz",
+            "Königsborn"
+        ],
+        "entfallende_halte": [],
+        "gleis": "7",
+        "gleis_geplant": "7",
+        "gleiswechsel": false,
+        "info": "pünktlich",
+        "begruendung": "",
+        "meldungen": [],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
+    },
+    {
+        "zeit": "23:16",
+        "echte_zeit": "23:16",
+        "linie": "RE RE30",
+        "zug_nr": "RE 16341",
         "ziel": "Halle(Saale)Hbf",
+        "ziel_geplant": "Halle(Saale)Hbf",
+        "via": [
+            "Magdeburg-Buckau",
+            "Magdeburg Südost",
+            "Schönebeck(Elbe)",
+            "Schönebeck-Felgeleben"
+        ],
+        "entfallende_halte": [],
         "gleis": "3",
+        "gleis_geplant": "3",
+        "gleiswechsel": false,
         "info": "pünktlich",
-        "begruendung": "",
-        "update": "22:37"
+        "begruendung": "Warten auf Anschlussreisende +++ Störung (Code 0)",
+        "meldungen": [
+            "Warten auf Anschlussreisende",
+            "Störung (Code 0)"
+        ],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
+    },
+    {
+        "zeit": "23:00",
+        "echte_zeit": "23:20",
+        "linie": "ICE 648",
+        "zug_nr": "ICE 648",
+        "ziel": "Hannover Hbf",
+        "ziel_geplant": "Hannover Hbf",
+        "via": [
+            "Braunschweig Hbf"
+        ],
+        "entfallende_halte": [],
+        "gleis": "8",
+        "gleis_geplant": "8",
+        "gleiswechsel": false,
+        "info": "+20",
+        "begruendung": "Überholung durch anderen Zug +++ Störung (Code 51) +++ Störung (Code 0)",
+        "meldungen": [
+            "Überholung durch anderen Zug",
+            "Störung (Code 51)",
+            "Störung (Code 0)"
+        ],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
     },
     {
         "zeit": "23:20",
         "echte_zeit": "23:20",
-        "linie": "HBX",
+        "linie": "RE HBX",
+        "zug_nr": "RE 80428",
         "ziel": "Thale Hbf",
+        "ziel_geplant": "Thale Hbf",
+        "via": [
+            "Magdeburg-Buckau",
+            "Magdeburg SKET Industriepark",
+            "Beyendorf",
+            "Dodendorf"
+        ],
+        "entfallende_halte": [],
         "gleis": "6",
+        "gleis_geplant": "6",
+        "gleiswechsel": false,
         "info": "pünktlich",
-        "begruendung": "",
-        "update": "22:37"
+        "begruendung": "Störung (Code 0)",
+        "meldungen": [
+            "Störung (Code 0)"
+        ],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
     },
     {
         "zeit": "23:20",
         "echte_zeit": "23:20",
-        "linie": "HBX",
+        "linie": "RE HBX",
+        "zug_nr": "RE 80438",
         "ziel": "Ilsenburg",
+        "ziel_geplant": "Ilsenburg",
+        "via": [
+            "Magdeburg-Buckau",
+            "Magdeburg SKET Industriepark",
+            "Beyendorf",
+            "Dodendorf"
+        ],
+        "entfallende_halte": [],
         "gleis": "6",
+        "gleis_geplant": "6",
+        "gleiswechsel": false,
         "info": "pünktlich",
         "begruendung": "",
-        "update": "22:37"
+        "meldungen": [],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
     },
     {
         "zeit": "23:21",
         "echte_zeit": "23:21",
-        "linie": "RE1",
+        "linie": "OE RE1",
+        "zug_nr": "OE 73791",
         "ziel": "Berlin-Wannsee",
+        "ziel_geplant": "Berlin-Wannsee",
+        "via": [
+            "Magdeburg-Neustadt",
+            "Magdeburg Herrenkrug",
+            "Biederitz",
+            "Gerwisch"
+        ],
+        "entfallende_halte": [],
         "gleis": "4 D-G",
+        "gleis_geplant": "4 D-G",
+        "gleiswechsel": false,
         "info": "pünktlich",
         "begruendung": "",
-        "update": "22:37"
+        "meldungen": [],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
     },
     {
         "zeit": "23:28",
         "echte_zeit": "23:28",
-        "linie": "RB36",
+        "linie": "RB RB36",
+        "zug_nr": "RB 80384",
         "ziel": "Haldensleben",
+        "ziel_geplant": "Haldensleben",
+        "via": [
+            "Magdeburg-Neustadt",
+            "Magdeburg-Eichenweiler",
+            "Barleben",
+            "Meitzendorf"
+        ],
+        "entfallende_halte": [],
         "gleis": "2",
+        "gleis_geplant": "2",
+        "gleiswechsel": false,
         "info": "pünktlich",
         "begruendung": "",
-        "update": "22:37"
+        "meldungen": [],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
+    },
+    {
+        "zeit": "00:01",
+        "echte_zeit": "00:01",
+        "linie": "S S1",
+        "zug_nr": "S 39041",
+        "ziel": "Schönebeck-Bad Salzelmen",
+        "ziel_geplant": "Schönebeck-Bad Salzelmen",
+        "via": [
+            "Magdeburg-Buckau",
+            "Magdeburg SKET Industriepark",
+            "Magdeburg-Salbke",
+            "Magdeburg Südost"
+        ],
+        "entfallende_halte": [],
+        "gleis": "4",
+        "gleis_geplant": "4",
+        "gleiswechsel": false,
+        "info": "pünktlich",
+        "begruendung": "",
+        "meldungen": [],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
     }
 ]

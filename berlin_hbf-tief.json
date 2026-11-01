@@ -1,262 +1,427 @@
 [
     {
-        "zeit": "00:00",
-        "echte_zeit": "00:28",
-        "linie": "ICE1000",
-        "ziel": "Berlin Gesundbrunnen",
-        "gleis": "5",
-        "info": "+28",
-        "begruendung": "",
-        "update": "22:37"
-    },
-    {
-        "zeit": "22:20",
-        "echte_zeit": "22:28",
-        "linie": "ICE653",
-        "ziel": "Berlin Gesundbrunnen",
-        "gleis": "5",
-        "info": "+8",
-        "begruendung": "",
-        "update": "22:37"
-    },
-    {
-        "zeit": "22:29",
-        "echte_zeit": "22:41",
-        "linie": "ICE609",
-        "ziel": "Leipzig Hbf",
-        "gleis": "3",
-        "info": "+12",
-        "begruendung": "",
-        "update": "22:37"
-    },
-    {
-        "zeit": "22:32",
-        "echte_zeit": "22:32",
-        "linie": "ICE1970",
-        "ziel": "Berlin Gesundbrunnen",
-        "gleis": "6",
-        "info": "pünktlich",
-        "begruendung": "",
-        "update": "22:37"
-    },
-    {
-        "zeit": "22:37",
-        "echte_zeit": "22:41",
-        "linie": "ICE594",
-        "ziel": "Berlin Gesundbrunnen",
-        "gleis": "6",
-        "info": "+4",
-        "begruendung": "",
-        "update": "22:37"
-    },
-    {
         "zeit": "22:37",
         "echte_zeit": "22:37",
-        "linie": "FEX",
+        "linie": "RE FEX",
+        "zug_nr": "RE 21955",
         "ziel": "Flughafen BER",
+        "ziel_geplant": "Flughafen BER",
+        "via": [
+            "Berlin Potsdamer Platz",
+            "Berlin Südkreuz"
+        ],
+        "entfallende_halte": [],
         "gleis": "1",
+        "gleis_geplant": "1",
+        "gleiswechsel": false,
         "info": "pünktlich",
         "begruendung": "",
-        "update": "22:37"
+        "meldungen": [],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
     },
     {
         "zeit": "22:40",
         "echte_zeit": "22:40",
-        "linie": "RE3",
-        "ziel": "Lutherstadt Wittenbe",
+        "linie": "RE RE3",
+        "zug_nr": "RE 3317",
+        "ziel": "Lutherstadt Wittenberg Hb",
+        "ziel_geplant": "Lutherstadt Wittenberg Hb",
+        "via": [
+            "Berlin Potsdamer Platz",
+            "Berlin Südkreuz",
+            "Berlin-Lichterfelde Ost",
+            "Teltow"
+        ],
+        "entfallende_halte": [],
         "gleis": "2",
+        "gleis_geplant": "2",
+        "gleiswechsel": false,
         "info": "pünktlich",
-        "begruendung": "",
-        "update": "22:37"
+        "begruendung": "Universal-WC fehlt +++ Verzögerung beim Ein-/Ausstieg",
+        "meldungen": [
+            "Universal-WC fehlt",
+            "Verzögerung beim Ein-/Ausstieg"
+        ],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
     },
     {
-        "zeit": "22:45",
-        "echte_zeit": "22:54",
-        "linie": "30",
-        "ziel": "Berlin Südkreuz",
-        "gleis": "4",
-        "info": "+9",
-        "begruendung": "",
-        "update": "22:37"
+        "zeit": "22:29",
+        "echte_zeit": "22:41",
+        "linie": "ICE 609",
+        "zug_nr": "ICE 609",
+        "ziel": "Leipzig Hbf",
+        "ziel_geplant": "Leipzig Hbf",
+        "via": [
+            "Berlin Südkreuz",
+            "Lutherstadt Wittenberg Hbf",
+            "Bitterfeld"
+        ],
+        "entfallende_halte": [],
+        "gleis": "3",
+        "gleis_geplant": "3",
+        "gleiswechsel": false,
+        "info": "+12",
+        "begruendung": "Störung (Code 0)",
+        "meldungen": [
+            "Störung (Code 0)"
+        ],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
     },
     {
         "zeit": "22:48",
         "echte_zeit": "22:48",
-        "linie": "RB10",
+        "linie": "OE RB10",
+        "zug_nr": "OE 62084",
         "ziel": "Nauen",
+        "ziel_geplant": "Nauen",
+        "via": [
+            "Berlin Jungfernheide",
+            "Berlin-Spandau",
+            "Albrechtshof",
+            "Seegefeld"
+        ],
+        "entfallende_halte": [],
         "gleis": "7",
+        "gleis_geplant": "7",
+        "gleiswechsel": false,
         "info": "pünktlich",
         "begruendung": "",
-        "update": "22:37"
+        "meldungen": [],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
+    },
+    {
+        "zeit": "22:45",
+        "echte_zeit": "22:51",
+        "linie": "FLX 30",
+        "zug_nr": "FLX 1327",
+        "ziel": "Berlin Südkreuz",
+        "ziel_geplant": "Berlin Südkreuz",
+        "via": [],
+        "entfallende_halte": [],
+        "gleis": "4",
+        "gleis_geplant": "4",
+        "gleiswechsel": false,
+        "info": "+6",
+        "begruendung": "Störung (Code 1000) +++ Überholung durch anderen Zug",
+        "meldungen": [
+            "Störung (Code 1000)",
+            "Überholung durch anderen Zug"
+        ],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
     },
     {
         "zeit": "22:52",
         "echte_zeit": "22:52",
-        "linie": "FEX",
+        "linie": "RE FEX",
+        "zug_nr": "RE 21957",
         "ziel": "Flughafen BER",
+        "ziel_geplant": "Flughafen BER",
+        "via": [
+            "Berlin Potsdamer Platz",
+            "Berlin Südkreuz"
+        ],
+        "entfallende_halte": [],
         "gleis": "1",
+        "gleis_geplant": "1",
+        "gleiswechsel": false,
         "info": "pünktlich",
         "begruendung": "",
-        "update": "22:37"
-    },
-    {
-        "zeit": "22:54",
-        "echte_zeit": "23:01",
-        "linie": "ICE241",
-        "ziel": "Berlin Südkreuz",
-        "gleis": "3",
-        "info": "+7",
-        "begruendung": "",
-        "update": "22:37"
+        "meldungen": [],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
     },
     {
         "zeit": "23:05",
-        "echte_zeit": "23:08",
-        "linie": "RE4",
+        "echte_zeit": "23:07",
+        "linie": "RE RE4",
+        "zug_nr": "RE 3185",
         "ziel": "Berlin-Spandau",
+        "ziel_geplant": "Berlin-Spandau",
+        "via": [
+            "Berlin Jungfernheide"
+        ],
+        "entfallende_halte": [],
         "gleis": "7",
-        "info": "+3",
-        "begruendung": "",
-        "update": "22:37"
+        "gleis_geplant": "7",
+        "gleiswechsel": false,
+        "info": "+2",
+        "begruendung": "Verspätung eines vorausfahrenden Zuges",
+        "meldungen": [
+            "Verspätung eines vorausfahrenden Zuges"
+        ],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
     },
     {
         "zeit": "23:07",
         "echte_zeit": "23:07",
-        "linie": "FEX",
+        "linie": "RE FEX",
+        "zug_nr": "RE 21959",
         "ziel": "Flughafen BER",
+        "ziel_geplant": "Flughafen BER",
+        "via": [
+            "Berlin Potsdamer Platz",
+            "Berlin Südkreuz"
+        ],
+        "entfallende_halte": [],
         "gleis": "1",
+        "gleis_geplant": "1",
+        "gleiswechsel": false,
         "info": "pünktlich",
         "begruendung": "",
-        "update": "22:37"
+        "meldungen": [],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
     },
     {
         "zeit": "23:14",
         "echte_zeit": "23:14",
-        "linie": "RB10",
+        "linie": "OE RB10",
+        "zug_nr": "OE 62085",
         "ziel": "Berlin Südkreuz",
+        "ziel_geplant": "Berlin Südkreuz",
+        "via": [
+            "Berlin Potsdamer Platz"
+        ],
+        "entfallende_halte": [],
         "gleis": "1",
+        "gleis_geplant": "1",
+        "gleiswechsel": false,
         "info": "pünktlich",
         "begruendung": "",
-        "update": "22:37"
+        "meldungen": [],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
     },
     {
         "zeit": "23:20",
         "echte_zeit": "23:20",
-        "linie": "RE8",
+        "linie": "OE RE8",
+        "zug_nr": "OE 62039",
         "ziel": "Wittenberge",
+        "ziel_geplant": "Wittenberge",
+        "via": [
+            "Berlin Jungfernheide",
+            "Berlin-Spandau",
+            "Albrechtshof",
+            "Seegefeld"
+        ],
+        "entfallende_halte": [],
         "gleis": "5",
+        "gleis_geplant": "5",
+        "gleiswechsel": false,
         "info": "pünktlich",
         "begruendung": "",
-        "update": "22:37"
+        "meldungen": [],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
     },
     {
         "zeit": "23:22",
         "echte_zeit": "23:22",
-        "linie": "FEX",
+        "linie": "RE FEX",
+        "zug_nr": "RE 21961",
         "ziel": "Flughafen BER",
+        "ziel_geplant": "Flughafen BER",
+        "via": [
+            "Berlin Potsdamer Platz",
+            "Berlin Südkreuz"
+        ],
+        "entfallende_halte": [],
         "gleis": "1",
+        "gleis_geplant": "1",
+        "gleiswechsel": false,
         "info": "pünktlich",
         "begruendung": "",
-        "update": "22:37"
+        "meldungen": [],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
     },
     {
         "zeit": "23:24",
         "echte_zeit": "23:24",
-        "linie": "RE3",
+        "linie": "RE RE3",
+        "zug_nr": "RE 3320",
         "ziel": "Eberswalde Hbf",
+        "ziel_geplant": "Eberswalde Hbf",
+        "via": [
+            "Berlin Gesundbrunnen",
+            "Bernau(b Berlin)",
+            "Rüdnitz",
+            "Biesenthal"
+        ],
+        "entfallende_halte": [],
         "gleis": "6",
+        "gleis_geplant": "6",
+        "gleiswechsel": false,
         "info": "pünktlich",
         "begruendung": "",
-        "update": "22:37"
-    },
-    {
-        "zeit": "23:28",
-        "echte_zeit": "00:38",
-        "linie": "ICE955",
-        "ziel": "Berlin Südkreuz",
-        "gleis": "1",
-        "info": "+70",
-        "begruendung": "",
-        "update": "22:37"
-    },
-    {
-        "zeit": "23:28",
-        "echte_zeit": "00:38",
-        "linie": "ICE945",
-        "ziel": "Berlin Südkreuz",
-        "gleis": "1",
-        "info": "+70",
-        "begruendung": "",
-        "update": "22:37"
+        "meldungen": [],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
     },
     {
         "zeit": "23:29",
         "echte_zeit": "23:29",
-        "linie": "ICE905",
+        "linie": "ICE 905",
+        "zug_nr": "ICE 905",
         "ziel": "München Hbf",
+        "ziel_geplant": "München Hbf",
+        "via": [
+            "Berlin Südkreuz",
+            "Lutherstadt Wittenberg Hbf",
+            "Bitterfeld",
+            "Leipzig Hbf"
+        ],
+        "entfallende_halte": [],
         "gleis": "2",
+        "gleis_geplant": "2",
+        "gleiswechsel": false,
         "info": "pünktlich",
         "begruendung": "",
-        "update": "22:37"
+        "meldungen": [],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
     },
     {
         "zeit": "23:35",
         "echte_zeit": "23:35",
-        "linie": "RE3",
+        "linie": "RE RE3",
+        "zug_nr": "RE 3359",
         "ziel": "Jüterbog",
+        "ziel_geplant": "Jüterbog",
+        "via": [
+            "Berlin Potsdamer Platz",
+            "Berlin Südkreuz",
+            "Berlin-Lichterfelde Ost",
+            "Teltow"
+        ],
+        "entfallende_halte": [],
         "gleis": "4",
+        "gleis_geplant": "4",
+        "gleiswechsel": false,
         "info": "pünktlich",
-        "begruendung": "",
-        "update": "22:37"
+        "begruendung": "Warten auf Anschlussreisende",
+        "meldungen": [
+            "Warten auf Anschlussreisende"
+        ],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
     },
     {
         "zeit": "23:37",
         "echte_zeit": "23:37",
-        "linie": "FEX",
+        "linie": "RE FEX",
+        "zug_nr": "RE 21963",
         "ziel": "Flughafen BER",
+        "ziel_geplant": "Flughafen BER",
+        "via": [
+            "Berlin Potsdamer Platz",
+            "Berlin Südkreuz"
+        ],
+        "entfallende_halte": [],
         "gleis": "1",
+        "gleis_geplant": "1",
+        "gleiswechsel": false,
         "info": "pünktlich",
-        "begruendung": "",
-        "update": "22:37"
+        "begruendung": "Universal-WC fehlt +++ Sonstige Qualitätsmängel",
+        "meldungen": [
+            "Universal-WC fehlt",
+            "Sonstige Qualitätsmängel"
+        ],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
     },
     {
         "zeit": "23:43",
         "echte_zeit": "23:43",
-        "linie": "RE8",
+        "linie": "OE RE8",
+        "zug_nr": "OE 62036",
         "ziel": "Baruth(Mark)",
+        "ziel_geplant": "Baruth(Mark)",
+        "via": [
+            "Berlin Potsdamer Platz",
+            "Berlin Südkreuz",
+            "Blankenfelde(Teltow-Fläming)",
+            "Dahlewitz"
+        ],
+        "entfallende_halte": [],
         "gleis": "2",
+        "gleis_geplant": "2",
+        "gleiswechsel": false,
         "info": "pünktlich",
-        "begruendung": "",
-        "update": "22:37"
+        "begruendung": "Warten auf einen entgegenkommenden Zug",
+        "meldungen": [
+            "Warten auf einen entgegenkommenden Zug"
+        ],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
     },
     {
         "zeit": "23:51",
         "echte_zeit": "23:51",
-        "linie": "ICE1540",
+        "linie": "ICE 1540",
+        "zug_nr": "ICE 1540",
         "ziel": "Köln Hbf",
+        "ziel_geplant": "Köln Hbf",
+        "via": [
+            "Berlin-Wannsee",
+            "Potsdam Hbf",
+            "Brandenburg Hbf",
+            "Magdeburg Hbf"
+        ],
+        "entfallende_halte": [],
         "gleis": "7",
+        "gleis_geplant": "7",
+        "gleiswechsel": false,
         "info": "pünktlich",
         "begruendung": "",
-        "update": "22:37"
+        "meldungen": [],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
     },
     {
         "zeit": "23:52",
         "echte_zeit": "23:52",
-        "linie": "FEX",
+        "linie": "RE FEX",
+        "zug_nr": "RE 21965",
         "ziel": "Flughafen BER",
+        "ziel_geplant": "Flughafen BER",
+        "via": [
+            "Berlin Potsdamer Platz",
+            "Berlin Südkreuz"
+        ],
+        "entfallende_halte": [],
         "gleis": "1",
+        "gleis_geplant": "1",
+        "gleiswechsel": false,
         "info": "pünktlich",
         "begruendung": "",
-        "update": "22:37"
-    },
-    {
-        "zeit": "23:55",
-        "echte_zeit": "23:55",
-        "linie": "ICE809",
-        "ziel": "Berlin Südkreuz",
-        "gleis": "3",
-        "info": "pünktlich",
-        "begruendung": "",
-        "update": "22:37"
+        "meldungen": [],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "22:40"
     }
 ]
