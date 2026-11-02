@@ -1,84 +1,5 @@
 [
     {
-        "zeit": "21:27",
-        "echte_zeit": "21:27",
-        "linie": "ICE 699",
-        "zug_nr": "ICE 699",
-        "kategorie": "ICE",
-        "ziel": "München Hbf",
-        "ziel_geplant": "München Hbf",
-        "via": [
-            "Berlin Südkreuz",
-            "Lutherstadt Wittenberg Hbf",
-            "Bitterfeld",
-            "Leipzig Hbf"
-        ],
-        "entfallende_halte": [],
-        "gleis": "4",
-        "gleis_geplant": "4",
-        "gleiswechsel": false,
-        "sektoren": "A–F",
-        "zug_modell": "ICE Triebzug",
-        "wagenreihung": [
-            {
-                "wagen": "1",
-                "klasse": "1",
-                "sektor": "A",
-                "fahrrad": false
-            },
-            {
-                "wagen": "2",
-                "klasse": "1",
-                "sektor": "A",
-                "fahrrad": false
-            },
-            {
-                "wagen": "3",
-                "klasse": "Bistro",
-                "sektor": "B",
-                "fahrrad": false
-            },
-            {
-                "wagen": "4",
-                "klasse": "2",
-                "sektor": "C",
-                "fahrrad": false
-            },
-            {
-                "wagen": "5",
-                "klasse": "2",
-                "sektor": "D",
-                "fahrrad": false
-            },
-            {
-                "wagen": "6",
-                "klasse": "2",
-                "sektor": "E",
-                "fahrrad": false
-            },
-            {
-                "wagen": "7",
-                "klasse": "2",
-                "sektor": "F",
-                "fahrrad": true
-            }
-        ],
-        "wagenreihung_text": "ICE Triebzug • Sektor A–F",
-        "info": "pünktlich",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [
-            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
-            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5)",
-            "🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12)",
-            "🛗 Rolltreppe außer Betrieb (zu Gleis 7/8)",
-            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
-        ],
-        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:36"
-    },
-    {
         "zeit": "21:32",
         "echte_zeit": "21:32",
         "linie": "RE 3",
@@ -96,41 +17,131 @@
         "gleis": "2",
         "gleis_geplant": "2",
         "gleiswechsel": false,
-        "sektoren": "A–D",
-        "zug_modell": "DB Regio Twindexx Vario (Dosto)",
-        "wagenreihung": [
+        "sektoren": "",
+        "zug_modell": "Regionaltriebzug • 5-Teiler",
+        "formation": "5-Teiler",
+        "zugteile": [
             {
-                "wagen": "Wg.1",
-                "klasse": "1",
-                "sektor": "A",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.2",
-                "klasse": "2",
-                "sektor": "A",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.3",
-                "klasse": "2",
-                "sektor": "B",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.4",
-                "klasse": "2",
-                "sektor": "C",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.5",
-                "klasse": "2",
-                "sektor": "D",
-                "fahrrad": true
+                "teil_nr": 1,
+                "bezeichnung": "5-Teiler",
+                "ziel": "",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "mehrzweck": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": true,
+                        "wc": true,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "mehrzweck": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": false,
+                        "wc": true,
+                        "zugteil": 1
+                    }
+                ]
             }
         ],
-        "wagenreihung_text": "DB Regio Twindexx Vario (Dosto) • Sektor A–D",
+        "wagenreihung": [
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "mehrzweck": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": true,
+                "wc": true,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "mehrzweck": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": false,
+                "wc": true,
+                "zugteil": 1
+            }
+        ],
+        "wagenreihung_text": "Regionaltriebzug • 5-Teiler",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
@@ -143,7 +154,7 @@
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:36"
+        "update": "21:40"
     },
     {
         "zeit": "21:37",
@@ -162,40 +173,130 @@
         "gleis_geplant": "1",
         "gleiswechsel": false,
         "sektoren": "A–D",
-        "zug_modell": "DB Regio Twindexx Vario (Dosto)",
-        "wagenreihung": [
+        "zug_modell": "Regionaltriebzug • 5-Teiler",
+        "formation": "5-Teiler",
+        "zugteile": [
             {
-                "wagen": "Wg.1",
-                "klasse": "1",
-                "sektor": "A",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.2",
-                "klasse": "2",
-                "sektor": "A",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.3",
-                "klasse": "2",
-                "sektor": "B",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.4",
-                "klasse": "2",
-                "sektor": "C",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.5",
-                "klasse": "2",
-                "sektor": "D",
-                "fahrrad": true
+                "teil_nr": 1,
+                "bezeichnung": "5-Teiler",
+                "ziel": "",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "mehrzweck": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": true,
+                        "wc": true,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "mehrzweck": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": false,
+                        "wc": true,
+                        "zugteil": 1
+                    }
+                ]
             }
         ],
-        "wagenreihung_text": "DB Regio Twindexx Vario (Dosto) • Sektor A–D",
+        "wagenreihung": [
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "mehrzweck": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": true,
+                "wc": true,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "mehrzweck": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": false,
+                "wc": true,
+                "zugteil": 1
+            }
+        ],
+        "wagenreihung_text": "Regionaltriebzug • 5-Teiler • Sektor A–D",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
@@ -208,7 +309,7 @@
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:36"
+        "update": "21:40"
     },
     {
         "zeit": "21:32",
@@ -227,53 +328,133 @@
         "gleis": "8",
         "gleis_geplant": "7",
         "gleiswechsel": true,
-        "sektoren": "A–F",
-        "zug_modell": "ICE Triebzug",
+        "sektoren": "",
+        "zug_modell": "ICE Triebzug • 7 Wagen",
+        "formation": "7 Wagen",
+        "zugteile": [
+            {
+                "teil_nr": 1,
+                "bezeichnung": "7 Wagen",
+                "ziel": "",
+                "wagen": [
+                    {
+                        "wagen": "1",
+                        "klasse": "1",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "2",
+                        "klasse": "1",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "3",
+                        "klasse": "Bistro",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "4",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "5",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "6",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "7",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "zugteil": 1
+                    }
+                ]
+            }
+        ],
         "wagenreihung": [
             {
                 "wagen": "1",
                 "klasse": "1",
-                "sektor": "A",
-                "fahrrad": false
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
             },
             {
                 "wagen": "2",
                 "klasse": "1",
-                "sektor": "A",
-                "fahrrad": false
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
             },
             {
                 "wagen": "3",
                 "klasse": "Bistro",
-                "sektor": "B",
-                "fahrrad": false
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
             },
             {
                 "wagen": "4",
                 "klasse": "2",
-                "sektor": "C",
-                "fahrrad": false
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
             },
             {
                 "wagen": "5",
                 "klasse": "2",
-                "sektor": "D",
-                "fahrrad": false
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
             },
             {
                 "wagen": "6",
                 "klasse": "2",
-                "sektor": "E",
-                "fahrrad": false
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
             },
             {
                 "wagen": "7",
                 "klasse": "2",
-                "sektor": "F",
-                "fahrrad": true
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "zugteil": 1
             }
         ],
-        "wagenreihung_text": "ICE Triebzug • Sektor A–F",
+        "wagenreihung_text": "ICE Triebzug • 7 Wagen",
         "info": "+7",
         "begruendung": "Heute von Gleis 8 (statt Gleis 7) +++ Verspätung eines vorausfahrenden Zuges",
         "meldungen": [
@@ -289,11 +470,11 @@
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:36"
+        "update": "21:40"
     },
     {
         "zeit": "21:20",
-        "echte_zeit": "21:40",
+        "echte_zeit": "21:41",
         "linie": "OE RE8",
         "zug_nr": "OE 62035",
         "kategorie": "OE",
@@ -310,35 +491,85 @@
         "gleis_geplant": "5",
         "gleiswechsel": true,
         "sektoren": "D–G",
-        "zug_modell": "ODEG Stadler KISS (Doppelstock)",
-        "wagenreihung": [
+        "zug_modell": "ODEG Stadler KISS • 4-Teiler",
+        "formation": "4-Teiler",
+        "zugteile": [
             {
-                "wagen": "Wg.1",
-                "klasse": "1",
-                "sektor": "D",
-                "fahrrad": true
-            },
-            {
-                "wagen": "Wg.2",
-                "klasse": "2",
-                "sektor": "E",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.3",
-                "klasse": "2",
-                "sektor": "F",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.4",
-                "klasse": "2",
-                "sektor": "G",
-                "fahrrad": true
+                "teil_nr": 1,
+                "bezeichnung": "4-Teiler",
+                "ziel": "",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "zugteil": 1
+                    }
+                ]
             }
         ],
-        "wagenreihung_text": "ODEG Stadler KISS (Doppelstock) • Sektor D–G",
-        "info": "+20",
+        "wagenreihung": [
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "zugteil": 1
+            }
+        ],
+        "wagenreihung_text": "ODEG Stadler KISS • 4-Teiler • Sektor D–G",
+        "info": "+21",
         "begruendung": "Heute von Gleis 7 (statt Gleis 5)",
         "meldungen": [
             "Heute von Gleis 7 (statt Gleis 5)"
@@ -352,7 +583,7 @@
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:36"
+        "update": "21:40"
     },
     {
         "zeit": "21:43",
@@ -373,34 +604,84 @@
         "gleis_geplant": "1",
         "gleiswechsel": true,
         "sektoren": "D–G",
-        "zug_modell": "ODEG Stadler KISS (Doppelstock)",
-        "wagenreihung": [
+        "zug_modell": "ODEG Stadler KISS • 4-Teiler",
+        "formation": "4-Teiler",
+        "zugteile": [
             {
-                "wagen": "Wg.1",
-                "klasse": "1",
-                "sektor": "D",
-                "fahrrad": true
-            },
-            {
-                "wagen": "Wg.2",
-                "klasse": "2",
-                "sektor": "E",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.3",
-                "klasse": "2",
-                "sektor": "F",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.4",
-                "klasse": "2",
-                "sektor": "G",
-                "fahrrad": true
+                "teil_nr": 1,
+                "bezeichnung": "4-Teiler",
+                "ziel": "",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "zugteil": 1
+                    }
+                ]
             }
         ],
-        "wagenreihung_text": "ODEG Stadler KISS (Doppelstock) • Sektor D–G",
+        "wagenreihung": [
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "zugteil": 1
+            }
+        ],
+        "wagenreihung_text": "ODEG Stadler KISS • 4-Teiler • Sektor D–G",
         "info": "pünktlich",
         "begruendung": "Heute von Gleis 2 (statt Gleis 1)",
         "meldungen": [
@@ -415,7 +696,7 @@
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:36"
+        "update": "21:40"
     },
     {
         "zeit": "21:48",
@@ -435,35 +716,85 @@
         "gleis": "7",
         "gleis_geplant": "7",
         "gleiswechsel": false,
-        "sektoren": "A–D",
-        "zug_modell": "ODEG Stadler KISS (Doppelstock)",
-        "wagenreihung": [
+        "sektoren": "",
+        "zug_modell": "ODEG Stadler KISS • 4-Teiler",
+        "formation": "4-Teiler",
+        "zugteile": [
             {
-                "wagen": "Wg.1",
-                "klasse": "1",
-                "sektor": "A",
-                "fahrrad": true
-            },
-            {
-                "wagen": "Wg.2",
-                "klasse": "2",
-                "sektor": "B",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.3",
-                "klasse": "2",
-                "sektor": "C",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.4",
-                "klasse": "2",
-                "sektor": "D",
-                "fahrrad": true
+                "teil_nr": 1,
+                "bezeichnung": "4-Teiler",
+                "ziel": "",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "zugteil": 1
+                    }
+                ]
             }
         ],
-        "wagenreihung_text": "ODEG Stadler KISS (Doppelstock) • Sektor A–D",
+        "wagenreihung": [
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "zugteil": 1
+            }
+        ],
+        "wagenreihung_text": "ODEG Stadler KISS • 4-Teiler",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
@@ -476,7 +807,7 @@
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:36"
+        "update": "21:40"
     },
     {
         "zeit": "21:52",
@@ -494,41 +825,131 @@
         "gleis": "1",
         "gleis_geplant": "1",
         "gleiswechsel": false,
-        "sektoren": "A–D",
-        "zug_modell": "DB Regio Twindexx Vario (Dosto)",
-        "wagenreihung": [
+        "sektoren": "",
+        "zug_modell": "Regionaltriebzug • 5-Teiler",
+        "formation": "5-Teiler",
+        "zugteile": [
             {
-                "wagen": "Wg.1",
-                "klasse": "1",
-                "sektor": "A",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.2",
-                "klasse": "2",
-                "sektor": "A",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.3",
-                "klasse": "2",
-                "sektor": "B",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.4",
-                "klasse": "2",
-                "sektor": "C",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.5",
-                "klasse": "2",
-                "sektor": "D",
-                "fahrrad": true
+                "teil_nr": 1,
+                "bezeichnung": "5-Teiler",
+                "ziel": "",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "mehrzweck": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": true,
+                        "wc": true,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "mehrzweck": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": false,
+                        "wc": true,
+                        "zugteil": 1
+                    }
+                ]
             }
         ],
-        "wagenreihung_text": "DB Regio Twindexx Vario (Dosto) • Sektor A–D",
+        "wagenreihung": [
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "mehrzweck": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": true,
+                "wc": true,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "mehrzweck": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": false,
+                "wc": true,
+                "zugteil": 1
+            }
+        ],
+        "wagenreihung_text": "Regionaltriebzug • 5-Teiler",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
@@ -541,11 +962,11 @@
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:36"
+        "update": "21:40"
     },
     {
         "zeit": "21:55",
-        "echte_zeit": "22:00",
+        "echte_zeit": "21:59",
         "linie": "RE 4",
         "zug_nr": "RE 3183",
         "kategorie": "RE",
@@ -558,42 +979,132 @@
         "gleis": "7",
         "gleis_geplant": "7",
         "gleiswechsel": false,
-        "sektoren": "A–D",
-        "zug_modell": "DB Regio Twindexx Vario (Dosto)",
-        "wagenreihung": [
+        "sektoren": "",
+        "zug_modell": "Regionaltriebzug • 5-Teiler",
+        "formation": "5-Teiler",
+        "zugteile": [
             {
-                "wagen": "Wg.1",
-                "klasse": "2",
-                "sektor": "A",
-                "fahrrad": true
-            },
-            {
-                "wagen": "Wg.2",
-                "klasse": "2",
-                "sektor": "A",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.3",
-                "klasse": "2",
-                "sektor": "B",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.4",
-                "klasse": "2",
-                "sektor": "C",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.5",
-                "klasse": "1",
-                "sektor": "D",
-                "fahrrad": false
+                "teil_nr": 1,
+                "bezeichnung": "5-Teiler",
+                "ziel": "",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "mehrzweck": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": true,
+                        "wc": true,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "mehrzweck": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": false,
+                        "wc": true,
+                        "zugteil": 1
+                    }
+                ]
             }
         ],
-        "wagenreihung_text": "DB Regio Twindexx Vario (Dosto) • Sektor A–D • Mehrzweckabteil vorne",
-        "info": "+5",
+        "wagenreihung": [
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "mehrzweck": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": true,
+                "wc": true,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "mehrzweck": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": false,
+                "wc": true,
+                "zugteil": 1
+            }
+        ],
+        "wagenreihung_text": "Regionaltriebzug • 5-Teiler",
+        "info": "+4",
         "begruendung": "Heute: Mehrzweckabteil vorne",
         "meldungen": [
             "Heute: Mehrzweckabteil vorne"
@@ -607,7 +1118,7 @@
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:36"
+        "update": "21:40"
     },
     {
         "zeit": "22:07",
@@ -625,41 +1136,131 @@
         "gleis": "1",
         "gleis_geplant": "1",
         "gleiswechsel": false,
-        "sektoren": "A–D",
-        "zug_modell": "DB Regio Twindexx Vario (Dosto)",
-        "wagenreihung": [
+        "sektoren": "",
+        "zug_modell": "Regionaltriebzug • 5-Teiler",
+        "formation": "5-Teiler",
+        "zugteile": [
             {
-                "wagen": "Wg.1",
-                "klasse": "1",
-                "sektor": "A",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.2",
-                "klasse": "2",
-                "sektor": "A",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.3",
-                "klasse": "2",
-                "sektor": "B",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.4",
-                "klasse": "2",
-                "sektor": "C",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.5",
-                "klasse": "2",
-                "sektor": "D",
-                "fahrrad": true
+                "teil_nr": 1,
+                "bezeichnung": "5-Teiler",
+                "ziel": "",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "mehrzweck": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": true,
+                        "wc": true,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "mehrzweck": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": false,
+                        "wc": true,
+                        "zugteil": 1
+                    }
+                ]
             }
         ],
-        "wagenreihung_text": "DB Regio Twindexx Vario (Dosto) • Sektor A–D",
+        "wagenreihung": [
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "mehrzweck": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": true,
+                "wc": true,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "mehrzweck": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": false,
+                "wc": true,
+                "zugteil": 1
+            }
+        ],
+        "wagenreihung_text": "Regionaltriebzug • 5-Teiler",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
@@ -672,7 +1273,7 @@
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:36"
+        "update": "21:40"
     },
     {
         "zeit": "22:14",
@@ -689,35 +1290,85 @@
         "gleis": "1",
         "gleis_geplant": "1",
         "gleiswechsel": false,
-        "sektoren": "A–D",
-        "zug_modell": "ODEG Stadler KISS (Doppelstock)",
-        "wagenreihung": [
+        "sektoren": "",
+        "zug_modell": "ODEG Stadler KISS • 4-Teiler",
+        "formation": "4-Teiler",
+        "zugteile": [
             {
-                "wagen": "Wg.1",
-                "klasse": "1",
-                "sektor": "A",
-                "fahrrad": true
-            },
-            {
-                "wagen": "Wg.2",
-                "klasse": "2",
-                "sektor": "B",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.3",
-                "klasse": "2",
-                "sektor": "C",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.4",
-                "klasse": "2",
-                "sektor": "D",
-                "fahrrad": true
+                "teil_nr": 1,
+                "bezeichnung": "4-Teiler",
+                "ziel": "",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "zugteil": 1
+                    }
+                ]
             }
         ],
-        "wagenreihung_text": "ODEG Stadler KISS (Doppelstock) • Sektor A–D",
+        "wagenreihung": [
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "zugteil": 1
+            }
+        ],
+        "wagenreihung_text": "ODEG Stadler KISS • 4-Teiler",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
@@ -730,7 +1381,7 @@
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:36"
+        "update": "21:40"
     },
     {
         "zeit": "22:09",
@@ -750,53 +1401,133 @@
         "gleis": "7",
         "gleis_geplant": "7",
         "gleiswechsel": false,
-        "sektoren": "A–F",
-        "zug_modell": "ICE Triebzug",
+        "sektoren": "",
+        "zug_modell": "ICE Triebzug • 7 Wagen",
+        "formation": "7 Wagen",
+        "zugteile": [
+            {
+                "teil_nr": 1,
+                "bezeichnung": "7 Wagen",
+                "ziel": "",
+                "wagen": [
+                    {
+                        "wagen": "1",
+                        "klasse": "1",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "2",
+                        "klasse": "1",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "3",
+                        "klasse": "Bistro",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "4",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "5",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "6",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "7",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "zugteil": 1
+                    }
+                ]
+            }
+        ],
         "wagenreihung": [
             {
                 "wagen": "1",
                 "klasse": "1",
-                "sektor": "A",
-                "fahrrad": false
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
             },
             {
                 "wagen": "2",
                 "klasse": "1",
-                "sektor": "A",
-                "fahrrad": false
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
             },
             {
                 "wagen": "3",
                 "klasse": "Bistro",
-                "sektor": "B",
-                "fahrrad": false
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
             },
             {
                 "wagen": "4",
                 "klasse": "2",
-                "sektor": "C",
-                "fahrrad": false
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
             },
             {
                 "wagen": "5",
                 "klasse": "2",
-                "sektor": "D",
-                "fahrrad": false
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
             },
             {
                 "wagen": "6",
                 "klasse": "2",
-                "sektor": "E",
-                "fahrrad": false
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
             },
             {
                 "wagen": "7",
                 "klasse": "2",
-                "sektor": "F",
-                "fahrrad": true
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "zugteil": 1
             }
         ],
-        "wagenreihung_text": "ICE Triebzug • Sektor A–F",
+        "wagenreihung_text": "ICE Triebzug • 7 Wagen",
         "info": "+6",
         "begruendung": "Technischer Defekt an einem anderen Zug",
         "meldungen": [
@@ -811,7 +1542,7 @@
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:36"
+        "update": "21:40"
     },
     {
         "zeit": "22:21",
@@ -829,41 +1560,131 @@
         "gleis": "1",
         "gleis_geplant": "1",
         "gleiswechsel": false,
-        "sektoren": "A–D",
-        "zug_modell": "DB Regio Twindexx Vario (Dosto)",
-        "wagenreihung": [
+        "sektoren": "",
+        "zug_modell": "Regionaltriebzug • 5-Teiler",
+        "formation": "5-Teiler",
+        "zugteile": [
             {
-                "wagen": "Wg.1",
-                "klasse": "1",
-                "sektor": "A",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.2",
-                "klasse": "2",
-                "sektor": "A",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.3",
-                "klasse": "2",
-                "sektor": "B",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.4",
-                "klasse": "2",
-                "sektor": "C",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.5",
-                "klasse": "2",
-                "sektor": "D",
-                "fahrrad": true
+                "teil_nr": 1,
+                "bezeichnung": "5-Teiler",
+                "ziel": "",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "mehrzweck": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": true,
+                        "wc": true,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "mehrzweck": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": false,
+                        "wc": true,
+                        "zugteil": 1
+                    }
+                ]
             }
         ],
-        "wagenreihung_text": "DB Regio Twindexx Vario (Dosto) • Sektor A–D",
+        "wagenreihung": [
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "mehrzweck": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": true,
+                "wc": true,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "mehrzweck": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": false,
+                "wc": true,
+                "zugteil": 1
+            }
+        ],
+        "wagenreihung_text": "Regionaltriebzug • 5-Teiler",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
@@ -876,7 +1697,7 @@
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:36"
+        "update": "21:40"
     },
     {
         "zeit": "22:23",
@@ -896,41 +1717,131 @@
         "gleis": "6",
         "gleis_geplant": "6",
         "gleiswechsel": false,
-        "sektoren": "A–D",
-        "zug_modell": "DB Regio Twindexx Vario (Dosto)",
-        "wagenreihung": [
+        "sektoren": "",
+        "zug_modell": "Regionaltriebzug • 5-Teiler",
+        "formation": "5-Teiler",
+        "zugteile": [
             {
-                "wagen": "Wg.1",
-                "klasse": "1",
-                "sektor": "A",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.2",
-                "klasse": "2",
-                "sektor": "A",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.3",
-                "klasse": "2",
-                "sektor": "B",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.4",
-                "klasse": "2",
-                "sektor": "C",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.5",
-                "klasse": "2",
-                "sektor": "D",
-                "fahrrad": true
+                "teil_nr": 1,
+                "bezeichnung": "5-Teiler",
+                "ziel": "",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "mehrzweck": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": true,
+                        "wc": true,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "mehrzweck": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": false,
+                        "wc": true,
+                        "zugteil": 1
+                    }
+                ]
             }
         ],
-        "wagenreihung_text": "DB Regio Twindexx Vario (Dosto) • Sektor A–D",
+        "wagenreihung": [
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "mehrzweck": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": true,
+                "wc": true,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "mehrzweck": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": false,
+                "wc": true,
+                "zugteil": 1
+            }
+        ],
+        "wagenreihung_text": "Regionaltriebzug • 5-Teiler",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
@@ -943,7 +1854,7 @@
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:36"
+        "update": "21:40"
     },
     {
         "zeit": "22:25",
@@ -963,35 +1874,85 @@
         "gleis": "7",
         "gleis_geplant": "7",
         "gleiswechsel": false,
-        "sektoren": "A–D",
-        "zug_modell": "ODEG Stadler KISS (Doppelstock)",
-        "wagenreihung": [
+        "sektoren": "",
+        "zug_modell": "ODEG Stadler KISS • 4-Teiler",
+        "formation": "4-Teiler",
+        "zugteile": [
             {
-                "wagen": "Wg.1",
-                "klasse": "1",
-                "sektor": "A",
-                "fahrrad": true
-            },
-            {
-                "wagen": "Wg.2",
-                "klasse": "2",
-                "sektor": "B",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.3",
-                "klasse": "2",
-                "sektor": "C",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.4",
-                "klasse": "2",
-                "sektor": "D",
-                "fahrrad": true
+                "teil_nr": 1,
+                "bezeichnung": "4-Teiler",
+                "ziel": "",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "zugteil": 1
+                    }
+                ]
             }
         ],
-        "wagenreihung_text": "ODEG Stadler KISS (Doppelstock) • Sektor A–D",
+        "wagenreihung": [
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "zugteil": 1
+            }
+        ],
+        "wagenreihung_text": "ODEG Stadler KISS • 4-Teiler",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
@@ -1004,7 +1965,7 @@
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:36"
+        "update": "21:40"
     },
     {
         "zeit": "22:37",
@@ -1022,41 +1983,131 @@
         "gleis": "1",
         "gleis_geplant": "1",
         "gleiswechsel": false,
-        "sektoren": "A–D",
-        "zug_modell": "DB Regio Twindexx Vario (Dosto)",
-        "wagenreihung": [
+        "sektoren": "",
+        "zug_modell": "Regionaltriebzug • 5-Teiler",
+        "formation": "5-Teiler",
+        "zugteile": [
             {
-                "wagen": "Wg.1",
-                "klasse": "1",
-                "sektor": "A",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.2",
-                "klasse": "2",
-                "sektor": "A",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.3",
-                "klasse": "2",
-                "sektor": "B",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.4",
-                "klasse": "2",
-                "sektor": "C",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.5",
-                "klasse": "2",
-                "sektor": "D",
-                "fahrrad": true
+                "teil_nr": 1,
+                "bezeichnung": "5-Teiler",
+                "ziel": "",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "mehrzweck": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": true,
+                        "wc": true,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "mehrzweck": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": false,
+                        "wc": true,
+                        "zugteil": 1
+                    }
+                ]
             }
         ],
-        "wagenreihung_text": "DB Regio Twindexx Vario (Dosto) • Sektor A–D",
+        "wagenreihung": [
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "mehrzweck": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": true,
+                "wc": true,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "mehrzweck": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": false,
+                "wc": true,
+                "zugteil": 1
+            }
+        ],
+        "wagenreihung_text": "Regionaltriebzug • 5-Teiler",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
@@ -1069,7 +2120,7 @@
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:36"
+        "update": "21:40"
     },
     {
         "zeit": "22:40",
@@ -1090,40 +2141,130 @@
         "gleis_geplant": "2",
         "gleiswechsel": false,
         "sektoren": "A–D",
-        "zug_modell": "DB Regio Twindexx Vario (Dosto)",
-        "wagenreihung": [
+        "zug_modell": "Regionaltriebzug • 5-Teiler",
+        "formation": "5-Teiler",
+        "zugteile": [
             {
-                "wagen": "Wg.1",
-                "klasse": "1",
-                "sektor": "A",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.2",
-                "klasse": "2",
-                "sektor": "A",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.3",
-                "klasse": "2",
-                "sektor": "B",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.4",
-                "klasse": "2",
-                "sektor": "C",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.5",
-                "klasse": "2",
-                "sektor": "D",
-                "fahrrad": true
+                "teil_nr": 1,
+                "bezeichnung": "5-Teiler",
+                "ziel": "",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "mehrzweck": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": true,
+                        "wc": true,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "mehrzweck": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": false,
+                        "wc": true,
+                        "zugteil": 1
+                    }
+                ]
             }
         ],
-        "wagenreihung_text": "DB Regio Twindexx Vario (Dosto) • Sektor A–D",
+        "wagenreihung": [
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "mehrzweck": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": true,
+                "wc": true,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "mehrzweck": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": false,
+                "wc": true,
+                "zugteil": 1
+            }
+        ],
+        "wagenreihung_text": "Regionaltriebzug • 5-Teiler • Sektor A–D",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
@@ -1136,7 +2277,7 @@
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:36"
+        "update": "21:40"
     },
     {
         "zeit": "22:44",
@@ -1157,34 +2298,84 @@
         "gleis_geplant": "2",
         "gleiswechsel": false,
         "sektoren": "D–G",
-        "zug_modell": "ODEG Stadler KISS (Doppelstock)",
-        "wagenreihung": [
+        "zug_modell": "ODEG Stadler KISS • 4-Teiler",
+        "formation": "4-Teiler",
+        "zugteile": [
             {
-                "wagen": "Wg.1",
-                "klasse": "1",
-                "sektor": "D",
-                "fahrrad": true
-            },
-            {
-                "wagen": "Wg.2",
-                "klasse": "2",
-                "sektor": "E",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.3",
-                "klasse": "2",
-                "sektor": "F",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.4",
-                "klasse": "2",
-                "sektor": "G",
-                "fahrrad": true
+                "teil_nr": 1,
+                "bezeichnung": "4-Teiler",
+                "ziel": "",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "zugteil": 1
+                    }
+                ]
             }
         ],
-        "wagenreihung_text": "ODEG Stadler KISS (Doppelstock) • Sektor D–G",
+        "wagenreihung": [
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "zugteil": 1
+            }
+        ],
+        "wagenreihung_text": "ODEG Stadler KISS • 4-Teiler • Sektor D–G",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
@@ -1197,7 +2388,7 @@
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:36"
+        "update": "21:40"
     },
     {
         "zeit": "22:45",
@@ -1212,47 +2403,87 @@
         "gleis": "4",
         "gleis_geplant": "4",
         "gleiswechsel": false,
-        "sektoren": "A–F",
-        "zug_modell": "FlixTrain Schnellzug",
-        "wagenreihung": [
+        "sektoren": "",
+        "zug_modell": "Regionaltriebzug • 3-Teiler",
+        "formation": "3-Teiler",
+        "zugteile": [
             {
-                "wagen": "1",
-                "klasse": "2",
-                "sektor": "A",
-                "fahrrad": false
-            },
-            {
-                "wagen": "2",
-                "klasse": "2",
-                "sektor": "B",
-                "fahrrad": false
-            },
-            {
-                "wagen": "3",
-                "klasse": "2",
-                "sektor": "C",
-                "fahrrad": false
-            },
-            {
-                "wagen": "4",
-                "klasse": "2",
-                "sektor": "D",
-                "fahrrad": false
-            },
-            {
-                "wagen": "5",
-                "klasse": "2",
-                "sektor": "E",
-                "fahrrad": false
-            },
-            {
-                "wagen": "6",
-                "klasse": "2",
-                "sektor": "F",
-                "fahrrad": true
+                "teil_nr": 1,
+                "bezeichnung": "3-Teiler",
+                "ziel": "",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": true,
+                        "wc": true,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "mehrzweck": false,
+                        "rollstuhl": false,
+                        "wc": true,
+                        "zugteil": 1
+                    }
+                ]
             }
         ],
-        "wagenreihung_text": "FlixTrain Schnellzug • Sektor A–F",
+        "wagenreihung": [
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": true,
+                "wc": true,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "mehrzweck": false,
+                "rollstuhl": false,
+                "wc": true,
+                "zugteil": 1
+            }
+        ],
+        "wagenreihung_text": "Regionaltriebzug • 3-Teiler",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
@@ -1265,7 +2496,7 @@
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:36"
+        "update": "21:40"
     },
     {
         "zeit": "22:48",
@@ -1285,35 +2516,85 @@
         "gleis": "7",
         "gleis_geplant": "7",
         "gleiswechsel": false,
-        "sektoren": "A–D",
-        "zug_modell": "ODEG Stadler KISS (Doppelstock)",
-        "wagenreihung": [
+        "sektoren": "",
+        "zug_modell": "ODEG Stadler KISS • 4-Teiler",
+        "formation": "4-Teiler",
+        "zugteile": [
             {
-                "wagen": "Wg.1",
-                "klasse": "1",
-                "sektor": "A",
-                "fahrrad": true
-            },
-            {
-                "wagen": "Wg.2",
-                "klasse": "2",
-                "sektor": "B",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.3",
-                "klasse": "2",
-                "sektor": "C",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.4",
-                "klasse": "2",
-                "sektor": "D",
-                "fahrrad": true
+                "teil_nr": 1,
+                "bezeichnung": "4-Teiler",
+                "ziel": "",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "zugteil": 1
+                    }
+                ]
             }
         ],
-        "wagenreihung_text": "ODEG Stadler KISS (Doppelstock) • Sektor A–D",
+        "wagenreihung": [
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "zugteil": 1
+            }
+        ],
+        "wagenreihung_text": "ODEG Stadler KISS • 4-Teiler",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
@@ -1326,7 +2607,7 @@
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:36"
+        "update": "21:40"
     },
     {
         "zeit": "22:52",
@@ -1344,41 +2625,131 @@
         "gleis": "1",
         "gleis_geplant": "1",
         "gleiswechsel": false,
-        "sektoren": "A–D",
-        "zug_modell": "DB Regio Twindexx Vario (Dosto)",
-        "wagenreihung": [
+        "sektoren": "",
+        "zug_modell": "Regionaltriebzug • 5-Teiler",
+        "formation": "5-Teiler",
+        "zugteile": [
             {
-                "wagen": "Wg.1",
-                "klasse": "1",
-                "sektor": "A",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.2",
-                "klasse": "2",
-                "sektor": "A",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.3",
-                "klasse": "2",
-                "sektor": "B",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.4",
-                "klasse": "2",
-                "sektor": "C",
-                "fahrrad": false
-            },
-            {
-                "wagen": "Wg.5",
-                "klasse": "2",
-                "sektor": "D",
-                "fahrrad": true
+                "teil_nr": 1,
+                "bezeichnung": "5-Teiler",
+                "ziel": "",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "mehrzweck": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": true,
+                        "wc": true,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "mehrzweck": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "mehrzweck": true,
+                        "rollstuhl": false,
+                        "wc": true,
+                        "zugteil": 1
+                    }
+                ]
             }
         ],
-        "wagenreihung_text": "DB Regio Twindexx Vario (Dosto) • Sektor A–D",
+        "wagenreihung": [
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "mehrzweck": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": true,
+                "wc": true,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "mehrzweck": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "mehrzweck": true,
+                "rollstuhl": false,
+                "wc": true,
+                "zugteil": 1
+            }
+        ],
+        "wagenreihung_text": "Regionaltriebzug • 5-Teiler",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
@@ -1391,7 +2762,7 @@
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:36"
+        "update": "21:40"
     },
     {
         "zeit": "22:29",
@@ -1410,53 +2781,133 @@
         "gleis": "3",
         "gleis_geplant": "3",
         "gleiswechsel": false,
-        "sektoren": "A–F",
-        "zug_modell": "ICE Triebzug",
+        "sektoren": "",
+        "zug_modell": "ICE Triebzug • 7 Wagen",
+        "formation": "7 Wagen",
+        "zugteile": [
+            {
+                "teil_nr": 1,
+                "bezeichnung": "7 Wagen",
+                "ziel": "",
+                "wagen": [
+                    {
+                        "wagen": "1",
+                        "klasse": "1",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "2",
+                        "klasse": "1",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "3",
+                        "klasse": "Bistro",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "4",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "5",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "6",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "7",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "zugteil": 1
+                    }
+                ]
+            }
+        ],
         "wagenreihung": [
             {
                 "wagen": "1",
                 "klasse": "1",
-                "sektor": "A",
-                "fahrrad": false
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
             },
             {
                 "wagen": "2",
                 "klasse": "1",
-                "sektor": "A",
-                "fahrrad": false
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
             },
             {
                 "wagen": "3",
                 "klasse": "Bistro",
-                "sektor": "B",
-                "fahrrad": false
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
             },
             {
                 "wagen": "4",
                 "klasse": "2",
-                "sektor": "C",
-                "fahrrad": false
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
             },
             {
                 "wagen": "5",
                 "klasse": "2",
-                "sektor": "D",
-                "fahrrad": false
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
             },
             {
                 "wagen": "6",
                 "klasse": "2",
-                "sektor": "E",
-                "fahrrad": false
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "zugteil": 1
             },
             {
                 "wagen": "7",
                 "klasse": "2",
-                "sektor": "F",
-                "fahrrad": true
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "zugteil": 1
             }
         ],
-        "wagenreihung_text": "ICE Triebzug • Sektor A–F",
+        "wagenreihung_text": "ICE Triebzug • 7 Wagen",
         "info": "+25",
         "begruendung": "Verspätung aus vorheriger Fahrt",
         "meldungen": [
@@ -1471,6 +2922,6 @@
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:36"
+        "update": "21:40"
     }
 ]
