@@ -1,29 +1,5 @@
 [
     {
-        "zeit": "20:28",
-        "echte_zeit": "20:28",
-        "linie": "RB36",
-        "zug_nr": "RB 80380",
-        "ziel": "Oebisfelde",
-        "ziel_geplant": "Oebisfelde",
-        "via": [
-            "Magdeburg-Neustadt",
-            "Magdeburg-Eichenweiler",
-            "Barleben",
-            "Meitzendorf"
-        ],
-        "entfallende_halte": [],
-        "gleis": "4 D-G",
-        "gleis_geplant": "4 D-G",
-        "gleiswechsel": false,
-        "info": "pünktlich",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:35"
-    },
-    {
         "zeit": "20:31",
         "echte_zeit": "20:32",
         "linie": "RB40",
@@ -45,7 +21,34 @@
         "meldungen": [],
         "bauarbeiten": false,
         "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:35"
+        "update": "20:39"
+    },
+    {
+        "zeit": "20:00",
+        "echte_zeit": "20:35",
+        "linie": "ICE 842",
+        "zug_nr": "ICE 842",
+        "ziel": "Köln Hbf",
+        "ziel_geplant": "Köln Hbf",
+        "via": [
+            "Braunschweig Hbf",
+            "Hannover Hbf",
+            "Bielefeld Hbf",
+            "Hamm(Westf)Hbf"
+        ],
+        "entfallende_halte": [],
+        "gleis": "8",
+        "gleis_geplant": "7",
+        "gleiswechsel": true,
+        "info": "+35",
+        "begruendung": "Heute von Gleis 8 (statt Gleis 7) +++ Verspätung aus vorheriger Fahrt",
+        "meldungen": [
+            "Heute von Gleis 8 (statt Gleis 7)",
+            "Verspätung aus vorheriger Fahrt"
+        ],
+        "bauarbeiten": false,
+        "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
+        "update": "20:39"
     },
     {
         "zeit": "20:35",
@@ -71,34 +74,33 @@
         ],
         "bauarbeiten": false,
         "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:35"
+        "update": "20:39"
     },
     {
-        "zeit": "20:00",
-        "echte_zeit": "20:36",
-        "linie": "ICE 842",
-        "zug_nr": "ICE 842",
-        "ziel": "Köln Hbf",
-        "ziel_geplant": "Köln Hbf",
+        "zeit": "20:33",
+        "echte_zeit": "20:41",
+        "linie": "RB40",
+        "zug_nr": "RB 16432",
+        "ziel": "Braunschweig Hbf",
+        "ziel_geplant": "Braunschweig Hbf",
         "via": [
-            "Braunschweig Hbf",
-            "Hannover Hbf",
-            "Bielefeld Hbf",
-            "Hamm(Westf)Hbf"
+            "Magdeburg-Sudenburg",
+            "Niederndodeleben",
+            "Wellen(Magdeburg)",
+            "Ochtmersleben"
         ],
         "entfallende_halte": [],
         "gleis": "8",
-        "gleis_geplant": "7",
-        "gleiswechsel": true,
-        "info": "+36",
-        "begruendung": "Heute von Gleis 8 (statt Gleis 7) +++ Verspätung aus vorheriger Fahrt",
+        "gleis_geplant": "8",
+        "gleiswechsel": false,
+        "info": "+8",
+        "begruendung": "Verspätung aus vorheriger Fahrt",
         "meldungen": [
-            "Heute von Gleis 8 (statt Gleis 7)",
             "Verspätung aus vorheriger Fahrt"
         ],
         "bauarbeiten": false,
         "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:35"
+        "update": "20:39"
     },
     {
         "zeit": "20:41",
@@ -122,33 +124,7 @@
         "meldungen": [],
         "bauarbeiten": false,
         "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:35"
-    },
-    {
-        "zeit": "20:33",
-        "echte_zeit": "20:42",
-        "linie": "RB40",
-        "zug_nr": "RB 16432",
-        "ziel": "Braunschweig Hbf",
-        "ziel_geplant": "Braunschweig Hbf",
-        "via": [
-            "Magdeburg-Sudenburg",
-            "Niederndodeleben",
-            "Wellen(Magdeburg)",
-            "Ochtmersleben"
-        ],
-        "entfallende_halte": [],
-        "gleis": "8",
-        "gleis_geplant": "8",
-        "gleiswechsel": false,
-        "info": "+9",
-        "begruendung": "Verspätung aus vorheriger Fahrt",
-        "meldungen": [
-            "Verspätung aus vorheriger Fahrt"
-        ],
-        "bauarbeiten": false,
-        "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:35"
+        "update": "20:39"
     },
     {
         "zeit": "20:47",
@@ -172,11 +148,11 @@
         "meldungen": [],
         "bauarbeiten": false,
         "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:35"
+        "update": "20:39"
     },
     {
         "zeit": "20:14",
-        "echte_zeit": "20:52",
+        "echte_zeit": "20:53",
         "linie": "IC 2045",
         "zug_nr": "IC 2045",
         "ziel": "Dresden Hbf",
@@ -191,7 +167,7 @@
         "gleis": "7",
         "gleis_geplant": "7",
         "gleiswechsel": false,
-        "info": "+38",
+        "info": "+39",
         "begruendung": "Reparatur an der Strecke +++ Reparatur am Zug +++ Verspätung eines vorausfahrenden Zuges",
         "meldungen": [
             "Reparatur an der Strecke",
@@ -200,11 +176,11 @@
         ],
         "bauarbeiten": true,
         "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:35"
+        "update": "20:39"
     },
     {
         "zeit": "20:59",
-        "echte_zeit": "21:06",
+        "echte_zeit": "21:07",
         "linie": "ICE 540",
         "zug_nr": "ICE 540",
         "ziel": "Hannover Hbf",
@@ -216,14 +192,14 @@
         "gleis": "7",
         "gleis_geplant": "7",
         "gleiswechsel": false,
-        "info": "+7",
+        "info": "+8",
         "begruendung": "Verspätetes Personal aus vorheriger Fahrt",
         "meldungen": [
             "Verspätetes Personal aus vorheriger Fahrt"
         ],
         "bauarbeiten": false,
         "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:35"
+        "update": "20:39"
     },
     {
         "zeit": "21:07",
@@ -247,7 +223,7 @@
         "meldungen": [],
         "bauarbeiten": false,
         "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:35"
+        "update": "20:39"
     },
     {
         "zeit": "21:08",
@@ -271,7 +247,7 @@
         "meldungen": [],
         "bauarbeiten": false,
         "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:35"
+        "update": "20:39"
     },
     {
         "zeit": "21:08",
@@ -295,11 +271,11 @@
         "meldungen": [],
         "bauarbeiten": false,
         "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:35"
+        "update": "20:39"
     },
     {
         "zeit": "21:10",
-        "echte_zeit": "21:10",
+        "echte_zeit": "21:11",
         "linie": "S1",
         "zug_nr": "S 39032",
         "ziel": "Wittenberge",
@@ -314,12 +290,12 @@
         "gleis": "3",
         "gleis_geplant": "3",
         "gleiswechsel": false,
-        "info": "pünktlich",
+        "info": "+1",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:35"
+        "update": "20:39"
     },
     {
         "zeit": "21:11",
@@ -343,7 +319,7 @@
         "meldungen": [],
         "bauarbeiten": false,
         "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:35"
+        "update": "20:39"
     },
     {
         "zeit": "21:11",
@@ -367,7 +343,7 @@
         "meldungen": [],
         "bauarbeiten": false,
         "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:35"
+        "update": "20:39"
     },
     {
         "zeit": "20:56",
@@ -391,7 +367,7 @@
         ],
         "bauarbeiten": false,
         "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:35"
+        "update": "20:39"
     },
     {
         "zeit": "21:03",
@@ -412,7 +388,7 @@
         ],
         "bauarbeiten": false,
         "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:35"
+        "update": "20:39"
     },
     {
         "zeit": "21:17",
@@ -436,7 +412,7 @@
         "meldungen": [],
         "bauarbeiten": false,
         "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:35"
+        "update": "20:39"
     },
     {
         "zeit": "21:30",
@@ -460,11 +436,11 @@
         "meldungen": [],
         "bauarbeiten": false,
         "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:35"
+        "update": "20:39"
     },
     {
         "zeit": "21:31",
-        "echte_zeit": "21:31",
+        "echte_zeit": "21:33",
         "linie": "RB40",
         "zug_nr": "RB 16437",
         "ziel": "Burg(Magdeburg)",
@@ -479,12 +455,12 @@
         "gleis": "7",
         "gleis_geplant": "7",
         "gleiswechsel": false,
-        "info": "pünktlich",
+        "info": "+2",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:35"
+        "update": "20:39"
     },
     {
         "zeit": "21:41",
@@ -508,7 +484,7 @@
         "meldungen": [],
         "bauarbeiten": false,
         "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:35"
+        "update": "20:39"
     },
     {
         "zeit": "21:47",
@@ -532,7 +508,7 @@
         "meldungen": [],
         "bauarbeiten": false,
         "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:35"
+        "update": "20:39"
     },
     {
         "zeit": "21:47",
@@ -553,7 +529,7 @@
         "meldungen": [],
         "bauarbeiten": false,
         "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:35"
+        "update": "20:39"
     },
     {
         "zeit": "22:01",
@@ -574,6 +550,6 @@
         "meldungen": [],
         "bauarbeiten": false,
         "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:35"
+        "update": "20:39"
     }
 ]
