@@ -126,8 +126,8 @@ BAU_KEYWORDS = ("bauarbeit", "sperrung", "ersatzverkehr", "sev", "umleitung", "o
 
 STATIONS = {
     "zerbst": "8013389",
-    "magdeburg_hbf": "8010224",
     "dessau_hbf": "8010077",
+    "magdeburg_hbf": "8010224",
     "bitterfeld": "8010050",
     "leipzig_hbf": "8010205",
     "leipzig_hbf_tief": "8098205",
@@ -168,6 +168,8 @@ BAUREIHEN_NAMEN = {
     "1842": "Talent 2 (BR 442)",
     "2842": "Talent 2 (BR 442)",
     "3842": "Talent 2 (BR 442)",
+    "0443": "Talent 2 (BR 442)",
+    "1443": "Talent 2 (BR 442)",
     "0445": "Twindexx / KISS (BR 445)",
     "0446": "Twindexx Vario (BR 446)",
     "4445": "Twindexx / KISS (BR 445)",
@@ -213,15 +215,10 @@ ZUG_FORMATION_CACHE = {}
 AUFZUG_CACHE = {}
 
 HAFAS_TIMEOUT_COUNT = 0
-BAHN_DE_DIRECT_BLOCKED = False
-RELAY_DIAGNOSE_LOGGED = False
+EXP_DIAGNOSE_COUNT = 0
 
 
 def get_thread_cffi_session():
-    """
-    Erstellt pro Thread eine native curl_cffi Session OHNE den User-Agent manuell zu überschreiben
-    (damit TLS-Fingerprint und Client-Hints konsistent bleiben).
-    """
     if not hasattr(THREAD_LOCAL, "cffi_session"):
         try:
             s = cffi_requests.Session(impersonate="chrome")
@@ -303,35 +300,18 @@ def ermittle_baureihe(vehicles, grp_obj=None, fallback_desc=""):
     return ""
 
 
-def teile_gekuppelte_triebzuege_auf(gruppe_wagen):
-    """Erkennt gekuppelte Triebzüge (z.B. 2x 3-Teiler) anhand aufeinanderfolgender Steuerwagen/Endwagen."""
-    if len(gruppe_wagen) < 4:
-        return [gruppe_wagen]
-
-    teile = []
-    aktueller_teil = []
-
-    for idx, w in enumerate(gruppe_wagen):
-        aktueller_teil.append(w)
-        if 1 <= idx < len(gruppe_wagen) - 1:
-            if w.get("ist_steuerwagen") and gruppe_wagen[idx + 1].get("ist_steuerwagen") and len(aktueller_teil) >= 2:
-                teile.append(aktueller_teil)
-                aktueller_teil = []
-
-    if aktueller_teil:
-        teile.append(aktueller_teil)
-
-    return teile
-
-
 def parse_wagenreihung_json(data, cat=""):
+    """
+    Wertet das JSON von bahn.expert (/rpc/coachSequence.sequence) oder bahn.de aus.
+    Jedes Element in 'groups' entspricht exakt einem echten Zugteil (z.B. 1x 3-Teiler, 2x 3-Teiler, 1x 5-Teiler).
+    """
     if isinstance(data, list) and len(data) > 0:
         data = data[0]
     if not isinstance(data, dict):
         return None
 
     if "result" in data and isinstance(data["result"], dict):
-        data = data["result"].get("data", {})
+        data = data["result"].get("data")
         if isinstance(data, dict) and "json" in data:
             data = data["json"]
 
@@ -381,7 +361,9 @@ def parse_wagenreihung_json(data, cat=""):
             if bool(vehicle.get("closed")) or str(vehicle.get("status") or "").upper() in ("CLOSED", "GESCHLOSSEN"):
                 continue
 
-            v_type = vehicle.get("type") if isinstance(vehicle.get("type"), dict) else {}
+            v_type_raw = vehicle.get("type")
+            v_type = v_type_raw if isinstance(v_type_raw, dict) else {}
+            gattungs_str = str(v_type_raw or "").upper() if isinstance(v_type_raw, str) else ""
             cat_type = str(v_type.get("category") or vehicle.get("category") or vehicle.get("kategorie") or "").upper()
 
             sektor = (
@@ -401,6 +383,7 @@ def parse_wagenreihung_json(data, cat=""):
                 or coach_cls_num in (1, 12)
                 or "FIRST" in cat_type
                 or "ERSTE" in cat_type
+                or gattungs_str.startswith(("A", "DAB"))
             )
             has_2 = bool(
                 v_type.get("hasEconomyClass")
@@ -408,6 +391,7 @@ def parse_wagenreihung_json(data, cat=""):
                 or "ECONOMY" in cat_type
                 or "SECOND" in cat_type
                 or "ZWEITE" in cat_type
+                or gattungs_str.startswith(("B", "AB", "DB", "DAB"))
             )
             has_bistro = bool(
                 v_type.get("hasBistro")
@@ -416,6 +400,8 @@ def parse_wagenreihung_json(data, cat=""):
                 or "DINING" in cat_type
                 or "BISTRO" in cat_type
                 or "SPEISE" in cat_type
+                or "WR" in gattungs_str
+                or "AR" in gattungs_str
             )
 
             if not has_1 and not has_2 and not has_bistro and any(k in cat_type for k in ("LOCOMOTIVE", "LOK", "POWERCAR", "TRIEBKOPF")):
@@ -428,17 +414,12 @@ def parse_wagenreihung_json(data, cat=""):
                 or ""
             )
 
-            # Prüfen, ob Steuerwagen/Endwagen (auch über UIC-Endwagen-Kennung 0442/1442 vs. Mittelwagen 0842/1842)
-            raw_vid = re.sub(r"\D", "", str(vehicle.get("vehicleID") or vehicle.get("uic") or ""))
-            ist_uic_endwagen = len(raw_vid) == 12 and raw_vid[4:8] in ("0442", "1442", "2442", "3442", "0462", "1462", "0463", "1463")
-            ist_steuerwagen = ist_uic_endwagen or any(k in cat_type for k in ("CONTROLCAR", "CONTROL_CAR", "STEUERWAGEN", "POWERCAR", "TRIEBWAGEN"))
-
             amenities = vehicle.get("amenities") or vehicle.get("ausstattung") or []
             am_types = {str(a.get("type") or a.get("art") or "").upper() for a in amenities if isinstance(a, dict)}
 
             if features:
                 hat_klima = bool(features.get("airConditioning", True))
-                hat_fahrrad = bool(features.get("bike"))
+                hat_fahrrad = bool(features.get("bike") or features.get("multiPurpose"))
                 hat_rollstuhl = bool(features.get("wheelchair"))
                 hat_wc = bool(features.get("toilet"))
             else:
@@ -457,7 +438,7 @@ def parse_wagenreihung_json(data, cat=""):
 
             if has_bistro and not has_1 and not has_2:
                 klasse = "Bistro"
-            elif coach_cls_num == 12 or (has_1 and has_2) or ("FIRST" in cat_type and "ECONOMY" in cat_type) or (has_1 and ist_regio):
+            elif coach_cls_num == 12 or (has_1 and has_2) or (has_1 and ist_regio):
                 klasse = "2+1"
             elif has_1:
                 klasse = "1"
@@ -473,14 +454,11 @@ def parse_wagenreihung_json(data, cat=""):
                 "klima": hat_klima,
                 "fahrrad": hat_fahrrad,
                 "rollstuhl": hat_rollstuhl,
-                "wc": hat_wc,
-                "ist_steuerwagen": ist_steuerwagen
+                "wc": hat_wc
             })
 
         if gruppe_wagen:
-            aufgeteilte_einheiten = teile_gekuppelte_triebzuege_auf(gruppe_wagen)
-            for einheit in aufgeteilte_einheiten:
-                raw_units.append((einheit, ziel_grp))
+            raw_units.append((gruppe_wagen, ziel_grp))
 
     if not raw_units:
         return None
@@ -489,7 +467,6 @@ def parse_wagenreihung_json(data, cat=""):
     for idx, (einheit_wagen, ziel_grp) in enumerate(raw_units):
         teil_nr = idx + 1
         for w in einheit_wagen:
-            w.pop("ist_steuerwagen", None)
             w["zugteil"] = teil_nr
             flache_wagen_liste.append(w)
 
@@ -564,43 +541,11 @@ def kopiere_formation_fuer_unterwegsbahnhof(cached_reihung, sektoren_aus_gleis):
     }
 
 
-def hole_wagenreihung_ueber_relay(bahn_url, test_cat, linie, fahrt_nr):
-    """
-    Ruft die offizielle bahn.de URL über freie Proxy-Relays ab,
-    wenn die GitHub-Actions-Server-IP von Akamai mit HTTP 403 blockiert wird.
-    """
-    global RELAY_DIAGNOSE_LOGGED
-    encoded_url = urllib.parse.quote(bahn_url, safe="")
-
-    relays = [
-        ("codetabs", f"https://api.codetabs.com/v1/proxy?quest={encoded_url}"),
-        ("allorigins", f"https://api.allorigins.win/raw?url={encoded_url}"),
-        ("corsproxy", f"https://corsproxy.io/?url={encoded_url}")
-    ]
-
-    session = get_thread_cffi_session()
-    for r_name, r_url in relays:
-        try:
-            res = session.get(r_url, timeout=5)
-            if not RELAY_DIAGNOSE_LOGGED:
-                print(f"[Diagnose Relay {r_name}] {linie} ({fahrt_nr}): HTTP {res.status_code}")
-            if res.status_code == 200:
-                txt = res.text.strip()
-                if txt.startswith("{"):
-                    parsed = parse_wagenreihung_json(json.loads(txt), test_cat)
-                    if parsed:
-                        RELAY_DIAGNOSE_LOGGED = True
-                        return parsed
-        except Exception as e:
-            if not RELAY_DIAGNOSE_LOGGED:
-                print(f"[Diagnose Relay {r_name} Fehler]: {e}")
-
-    RELAY_DIAGNOSE_LOGGED = True
-    return None
-
-
 def hole_wagenreihung(cat, fahrt_nr, linie, eva_id, p_time_berlin, trip_id, sektoren_aus_gleis, tz):
-    global BAHN_DE_DIRECT_BLOCKED
+    """
+    Ruft die Live-Wagenreihung direkt über bahn.expert (/rpc/coachSequence.sequence) ab.
+    """
+    global EXP_DIAGNOSE_COUNT
 
     if not fahrt_nr:
         return None, ""
@@ -617,6 +562,8 @@ def hole_wagenreihung(cat, fahrt_nr, linie, eva_id, p_time_berlin, trip_id, sekt
 
     utc_time = p_time_berlin.astimezone(timezone.utc)
     iso_time = utc_time.strftime("%Y-%m-%dT%H:%M:00.000Z")
+    init_utc_time = init_time_berlin.astimezone(timezone.utc)
+    init_iso_time = init_utc_time.strftime("%Y-%m-%dT%H:%M:00.000Z")
     date_str = p_time_berlin.strftime("%Y-%m-%d")
 
     lookup_eva = MAIN_EVA_MAP.get(str(eva_id), str(eva_id))
@@ -636,63 +583,66 @@ def hole_wagenreihung(cat, fahrt_nr, linie, eva_id, p_time_berlin, trip_id, sekt
         f"&time={iso_time}"
     )
 
-    # Wenn dieser Zug heute schon erfolgreich geladen wurde -> sofort aus dem Zug-Cache übernehmen!
     with CACHE_LOCK:
         if zug_tag_key in ZUG_FORMATION_CACHE:
             reused = kopiere_formation_fuer_unterwegsbahnhof(ZUG_FORMATION_CACHE[zug_tag_key], sektoren_aus_gleis)
             return reused, primary_bahn_url
 
+    if not str(fahrt_nr).isdigit():
+        return None, primary_bahn_url
+
     session = get_thread_cffi_session()
 
-    # STUFE 1: Direkter Abruf bei bahn.de (mit konsistentem Chrome-Fingerprint)
-    if not BAHN_DE_DIRECT_BLOCKED:
+    # Beide tRPC-Serialisierungsvarianten (Plain JSON & SuperJSON) prüfen
+    candidates = [
+        ("plain", json.dumps({
+            "trainNumber": int(fahrt_nr),
+            "departure": iso_time,
+            "evaNumber": str(lookup_eva)
+        }, separators=(',', ':'))),
+        ("superjson", json.dumps({
+            "json": {
+                "trainNumber": int(fahrt_nr),
+                "departure": iso_time,
+                "evaNumber": str(lookup_eva),
+                "initialDeparture": init_iso_time,
+                "category": str(primary_cat)
+            },
+            "meta": {
+                "values": {
+                    "departure": ["Date"],
+                    "initialDeparture": ["Date"]
+                }
+            }
+        }, separators=(',', ':')))
+    ]
+
+    for mode_name, payload_str in candidates:
+        exp_url = f"https://bahn.expert/rpc/coachSequence.sequence?input={urllib.parse.quote(payload_str)}"
         try:
             res = session.get(
-                primary_bahn_url,
-                headers={"Accept": "application/json", "Referer": "https://www.bahn.de/"},
-                timeout=3.5
+                exp_url,
+                headers={"Accept": "application/json", "Referer": "https://bahn.expert/"},
+                timeout=4
             )
-            if res.status_code == 200:
+            if EXP_DIAGNOSE_COUNT < 4:
+                EXP_DIAGNOSE_COUNT += 1
+                preview = res.text[:140].replace("\n", " ") if res.text else "leer"
+                print(f"[Diagnose bahn.expert {mode_name}] {linie} ({fahrt_nr}) @ {lookup_eva}: HTTP {res.status_code} -> {preview}")
+
+            if res.status_code == 200 and res.text.strip().startswith("{"):
                 parsed = parse_wagenreihung_json(res.json(), primary_cat)
                 if parsed:
                     if not parsed["sektoren"] and sektoren_aus_gleis:
                         parsed["sektoren"] = sektoren_aus_gleis
                     with CACHE_LOCK:
                         ZUG_FORMATION_CACHE[zug_tag_key] = parsed
-                    print(f"  -> [Wagenreihung OK - Direkt] {linie} ({fahrt_nr}): {parsed['modell']}")
+                    print(f"  -> [Wagenreihung OK] {linie} ({fahrt_nr}): {parsed['modell']}")
                     return parsed, primary_bahn_url
-            elif res.status_code == 403:
-                print(f"[Info] GitHub-Server-IP wird von bahn.de blockiert (HTTP 403) -> Schalte um auf Relay-Abruf.")
-                BAHN_DE_DIRECT_BLOCKED = True
-        except Exception:
-            pass
-
-    # STUFE 2: Abruf der bahn.de URL über Proxy-Relays (umgeht die GitHub-IP-Sperre)
-    parsed_relay = hole_wagenreihung_ueber_relay(primary_bahn_url, primary_cat, linie, fahrt_nr)
-    if parsed_relay:
-        if not parsed_relay["sektoren"] and sektoren_aus_gleis:
-            parsed_relay["sektoren"] = sektoren_aus_gleis
-        with CACHE_LOCK:
-            ZUG_FORMATION_CACHE[zug_tag_key] = parsed_relay
-        print(f"  -> [Wagenreihung OK - Relay] {linie} ({fahrt_nr}): {parsed_relay['modell']}")
-        return parsed_relay, primary_bahn_url
-
-    # STUFE 3: bahn.expert REST-Endpunkt als weiteres Backup
-    if str(fahrt_nr).isdigit():
-        try:
-            exp_url = f"https://bahn.expert/api/reihung/v4/wagen/{fahrt_nr}?departure={iso_time}&evaNumber={lookup_eva}"
-            res_exp = session.get(exp_url, headers={"Accept": "application/json"}, timeout=3.5)
-            if res_exp.status_code == 200 and res_exp.text.strip().startswith("{"):
-                parsed_exp = parse_wagenreihung_json(res_exp.json(), primary_cat)
-                if parsed_exp:
-                    if not parsed_exp["sektoren"] and sektoren_aus_gleis:
-                        parsed_exp["sektoren"] = sektoren_aus_gleis
-                    with CACHE_LOCK:
-                        ZUG_FORMATION_CACHE[zug_tag_key] = parsed_exp
-                    print(f"  -> [Wagenreihung OK - bahn.expert] {linie} ({fahrt_nr}): {parsed_exp['modell']}")
-                    return parsed_exp, primary_bahn_url
-        except Exception:
-            pass
+        except Exception as e:
+            if EXP_DIAGNOSE_COUNT < 4:
+                EXP_DIAGNOSE_COUNT += 1
+                print(f"[Diagnose bahn.expert {mode_name} Fehler]: {e}")
 
     return None, primary_bahn_url
 
@@ -1186,7 +1136,6 @@ def hole_routing_verbindungen(start_id, ziel_id, dateiname):
 
 if __name__ == "__main__":
     station_items = list(STATIONS.items())
-    # 2 Worker-Threads schonen die Relay-Rate-Limits und teilen Ergebnisse über ZUG_FORMATION_CACHE
     with ThreadPoolExecutor(max_workers=2) as executor:
         executor.map(verarbeite_station, station_items)
 
@@ -1194,4 +1143,3 @@ if __name__ == "__main__":
 
     hole_routing_verbindungen("733238", "8013389", "verbindungen_bauhof_bahnhof")
     hole_routing_verbindungen("733238", "8010224", "verbindungen_bauhof_magdeburg")
-    
