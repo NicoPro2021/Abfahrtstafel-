@@ -1,196 +1,7 @@
 [
     {
-        "zeit": "00:08",
-        "echte_zeit": "00:08",
-        "linie": "ICE 273",
-        "zug_nr": "ICE 273",
-        "fahrt_nr": "273",
-        "kategorie": "ICE",
-        "ziel": "Zürich HB",
-        "ziel_geplant": "Zürich HB",
-        "via": [
-            "Berlin Südkreuz",
-            "Halle(Saale)Hbf",
-            "Erfurt Hbf",
-            "Eisenach Hbf"
-        ],
-        "entfallende_halte": [],
-        "gleis": "1",
-        "gleis_geplant": "1",
-        "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "ICE 4 (BR 412) • 7 Wagen",
-        "formation": "7 Wagen",
-        "zugteile": [
-            {
-                "teil_nr": 1,
-                "bezeichnung": "7 Wagen",
-                "ziel": "",
-                "wagen": [
-                    {
-                        "wagen": "1",
-                        "klasse": "1",
-                        "sektor": "",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": true,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "2",
-                        "klasse": "1",
-                        "sektor": "",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": true,
-                        "wc": true,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "3",
-                        "klasse": "Bistro",
-                        "sektor": "",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": true,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "4",
-                        "klasse": "2",
-                        "sektor": "",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": true,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "5",
-                        "klasse": "2",
-                        "sektor": "",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": true,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "6",
-                        "klasse": "2",
-                        "sektor": "",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": true,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "7",
-                        "klasse": "2",
-                        "sektor": "",
-                        "klima": true,
-                        "fahrrad": true,
-                        "rollstuhl": false,
-                        "wc": true,
-                        "zugteil": 1
-                    }
-                ]
-            }
-        ],
-        "wagenreihung": [
-            {
-                "wagen": "1",
-                "klasse": "1",
-                "sektor": "",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": true,
-                "zugteil": 1
-            },
-            {
-                "wagen": "2",
-                "klasse": "1",
-                "sektor": "",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": true,
-                "wc": true,
-                "zugteil": 1
-            },
-            {
-                "wagen": "3",
-                "klasse": "Bistro",
-                "sektor": "",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": true,
-                "zugteil": 1
-            },
-            {
-                "wagen": "4",
-                "klasse": "2",
-                "sektor": "",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": true,
-                "zugteil": 1
-            },
-            {
-                "wagen": "5",
-                "klasse": "2",
-                "sektor": "",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": true,
-                "zugteil": 1
-            },
-            {
-                "wagen": "6",
-                "klasse": "2",
-                "sektor": "",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": true,
-                "zugteil": 1
-            },
-            {
-                "wagen": "7",
-                "klasse": "2",
-                "sektor": "",
-                "klima": true,
-                "fahrrad": true,
-                "rollstuhl": false,
-                "wc": true,
-                "zugteil": 1
-            }
-        ],
-        "wagenreihung_text": "ICE 4 (BR 412) • 7 Wagen",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-03&evaNumber=8011160&number=273&time=2026-11-02T23:08:00.000Z",
-        "info": "pünktlich",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [
-            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
-            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5)",
-            "🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12)",
-            "🛗 Rolltreppe außer Betrieb (zu Gleis 7/8)",
-            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
-        ],
-        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "00:17"
-    },
-    {
         "zeit": "00:19",
-        "echte_zeit": "00:19",
+        "echte_zeit": "00:20",
         "linie": "RE 3",
         "zug_nr": "RE 3360",
         "fahrt_nr": "3360",
@@ -323,7 +134,7 @@
         ],
         "wagenreihung_text": "Twindexx Vario (BR 445) • 5-Teiler",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-03&evaNumber=8011160&number=3360&time=2026-11-02T23:19:00.000Z",
-        "info": "pünktlich",
+        "info": "+1",
         "begruendung": "Universal-WC fehlt",
         "meldungen": [
             "Universal-WC fehlt"
@@ -337,7 +148,7 @@
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "00:17"
+        "update": "00:21"
     },
     {
         "zeit": "00:40",
@@ -358,7 +169,7 @@
         "gleis": "1",
         "gleis_geplant": "1",
         "gleiswechsel": false,
-        "sektoren": "",
+        "sektoren": "A–D",
         "zug_modell": "Twindexx Vario (BR 445) • 5-Teiler",
         "formation": "5-Teiler",
         "zugteile": [
@@ -472,7 +283,7 @@
                 "zugteil": 1
             }
         ],
-        "wagenreihung_text": "Twindexx Vario (BR 445) • 5-Teiler",
+        "wagenreihung_text": "Twindexx Vario (BR 445) • 5-Teiler • Sektor A–D",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-03&evaNumber=8011160&number=3363&time=2026-11-02T23:40:00.000Z",
         "info": "pünktlich",
         "begruendung": "",
@@ -486,7 +297,7 @@
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "00:17"
+        "update": "00:21"
     },
     {
         "zeit": "00:52",
@@ -613,7 +424,7 @@
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "00:17"
+        "update": "00:21"
     },
     {
         "zeit": "01:52",
@@ -740,6 +551,6 @@
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "00:17"
+        "update": "00:21"
     }
 ]
