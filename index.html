@@ -98,19 +98,33 @@
         .monitor.active { display: flex; }
 
         .station-header { 
-            padding: 16px 20px 12px 20px; border-bottom: 3px solid var(--db-red); 
+            padding: 14px 20px 10px 20px; border-bottom: 3px solid var(--db-red); 
             background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
-        .station-name { font-size: 1.5rem; font-weight: 900; color: var(--db-dark); margin: 8px 0 4px 0; }
+        .station-name { font-size: 1.45rem; font-weight: 900; color: var(--db-dark); margin: 6px 0; }
 
-        /* Echter DB-Bahnhofs-Lauftext (ZZA-Ticker für Bauarbeiten, Sperrungen & Alkoholverbot) */
+        /* Filter-Leiste (Alle / Fernverkehr / Regional / S-Bahn) */
+        .filter-bar {
+            display: flex; gap: 8px; overflow-x: auto; padding-top: 6px; scrollbar-width: none;
+        }
+        .filter-bar::-webkit-scrollbar { display: none; }
+        .filter-btn {
+            border: 1px solid #dfe6e9; background: #f8f9fa; color: var(--text-secondary);
+            padding: 6px 14px; border-radius: 18px; font-size: 0.78rem; font-weight: 800;
+            cursor: pointer; white-space: nowrap; transition: 0.2s;
+        }
+        .filter-btn.active {
+            background: var(--db-red); color: #fff; border-color: var(--db-red);
+        }
+
+        /* Echter DB-Bahnhofs-Lauftext (ZZA-Ticker) */
         .station-ticker-bar {
             background: var(--db-zza-blue);
             color: #ffffff;
             overflow: hidden;
             white-space: nowrap;
             padding: 8px 0;
-            font-size: 0.85rem;
+            font-size: 0.84rem;
             font-weight: 700;
             border-bottom: 2px solid #000;
             position: relative;
@@ -123,17 +137,24 @@
         .ticker-content {
             display: inline-block;
             padding-left: 100%;
-            animation: ticker-scroll 28s linear infinite;
+            animation: ticker-scroll 30s linear infinite;
         }
         @keyframes ticker-scroll {
             0% { transform: translateX(0); }
             100% { transform: translateX(-100%); }
         }
 
+        /* Aufzugsstörungs-Leiste */
+        .elevator-alert-bar {
+            background: #ffebee; color: #b71c1c; padding: 7px 16px;
+            font-size: 0.78rem; font-weight: 800; border-bottom: 1px solid #ffcdd2;
+            display: none; align-items: center; gap: 8px;
+        }
+
         #board { flex: 1; overflow-y: auto; padding-bottom: 60px; }
 
         .departure-row { 
-            display: grid; grid-template-columns: 85px 1fr 75px; 
+            display: grid; grid-template-columns: 85px 1fr 82px; 
             padding: 16px 20px; border-bottom: 1px solid #eaeaea; align-items: center;
             position: relative; transition: background 0.2s;
         }
@@ -150,7 +171,9 @@
 
         .train-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
         .train-id { font-size: 0.8rem; font-weight: 800; color: var(--db-red); text-transform: uppercase; background: rgba(226, 0, 26, 0.1); padding: 2px 6px; border-radius: 4px; }
-        .train-nr { font-size: 0.72rem; color: var(--text-secondary); font-weight: 600; }
+        .train-id.ice { background: #fff; border: 1.5px solid var(--db-red); color: var(--db-red); font-style: italic; }
+        .train-id.sbahn { background: #008754; color: #fff; border-radius: 12px; padding: 2px 8px; }
+        .train-model-badge { font-size: 0.7rem; background: #eef2f5; color: var(--db-dark); padding: 2px 6px; border-radius: 4px; font-weight: 700; }
         .train-dest { font-size: 1.15rem; font-weight: 800; color: var(--db-dark); margin-top: 3px; display: block; }
         .train-via { font-size: 0.78rem; color: var(--text-secondary); margin-top: 2px; display: block; }
         .train-cancelled-stops { font-size: 0.78rem; color: var(--delay-red); font-weight: 700; margin-top: 2px; display: block; }
@@ -158,7 +181,34 @@
         .pl-label { font-size: 0.65rem; color: var(--text-secondary); font-weight: 800; text-transform: uppercase; display: block; }
         .pl-value { font-size: 1.45rem; font-weight: 900; color: var(--db-dark); padding: 2px 8px; border-radius: 6px; display: inline-block; }
         .pl-value.changed { background: var(--info-yellow); color: #000; box-shadow: 0 0 0 2px #000; }
-        .pl-old { font-size: 0.75rem; text-decoration: line-through; color: var(--text-secondary); display: block; }
+        .pl-old { font-size: 0.72rem; text-decoration: line-through; color: var(--text-secondary); display: block; }
+        .pl-sector { font-size: 0.72rem; font-weight: 800; color: var(--db-zza-blue); background: #e8eef5; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-top: 3px; }
+
+        /* Grafische Wagenreihung */
+        .coach-sequence-box {
+            grid-column: 1 / 4;
+            margin-top: 10px;
+            background: #f8f9fb;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 8px 10px;
+        }
+        .coach-header {
+            font-size: 0.72rem; font-weight: 800; color: var(--text-secondary);
+            margin-bottom: 6px; display: flex; justify-content: space-between;
+        }
+        .coach-strip {
+            display: flex; gap: 4px; overflow-x: auto; padding-bottom: 2px;
+        }
+        .coach-item {
+            min-width: 38px; padding: 4px 5px; border-radius: 5px;
+            background: #212d40; color: #fff; text-align: center;
+            font-size: 0.7rem; font-weight: 800; display: flex; flex-direction: column;
+            border-bottom: 3px solid #636e72;
+        }
+        .coach-item.first-class { background: #3d3512; border-bottom-color: #ffd700; }
+        .coach-item.bistro { background: #5c131b; border-bottom-color: var(--db-red); }
+        .coach-sec { font-size: 0.6rem; color: #b2bec3; font-weight: 700; }
 
         /* Gelber Verspätungs- & Oranger Bauarbeiten-Balken */
         .delay-reason { 
@@ -252,6 +302,12 @@
             <button id="star" onclick="toggleFavorite()" style="background:none; border:none; font-size:1.8rem; color:#ccc; cursor:pointer;">★</button>
         </div>
         <h1 id="display-station" class="station-name" onclick="loadData()">Lade...</h1>
+        <div class="filter-bar">
+            <button class="filter-btn active" onclick="setFilter('ALL', this)">Alle</button>
+            <button class="filter-btn" onclick="setFilter('FV', this)">Fernverkehr</button>
+            <button class="filter-btn" onclick="setFilter('REGIO', this)">Regional</button>
+            <button class="filter-btn" onclick="setFilter('SBAHN', this)">S-Bahn</button>
+        </div>
     </div>
 
     <!-- Live-Ticker wie am echten Bahnsteig -->
@@ -260,6 +316,9 @@
             ℹ️ Bitte beachten Sie die Ansagen und Hinweise am Bahnsteig sowie das Rauch- und Alkoholverbot im Bahnhofsbereich.
         </div>
     </div>
+
+    <!-- Anzeige für defekte Aufzüge / Rolltreppen -->
+    <div class="elevator-alert-bar" id="elevator-alert"></div>
 
     <div id="board"></div>
 </div>
@@ -293,7 +352,15 @@
 
     const BASE_URL = 'https://raw.githubusercontent.com/nicopro2021/Abfahrtstafel-/main/';
     let currentStation = null;
+    let currentFilter = 'ALL';
     let favorites = JSON.parse(localStorage.getItem('db_monitor_favs')) || [null, null, null, null];
+
+    function setFilter(filterType, btnEl) {
+        currentFilter = filterType;
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btnEl.classList.add('active');
+        loadData();
+    }
 
     async function loadGlobalInfo() {
         try {
@@ -365,6 +432,28 @@
         document.getElementById('star').innerText = isFav ? '★' : '☆';
     }
 
+    function renderCoachSequence(zug) {
+        if (!zug.wagenreihung || zug.wagenreihung.length === 0) return '';
+        const itemsHtml = zug.wagenreihung.map(w => {
+            const cls = w.klasse === '1' ? 'first-class' : (w.klasse === 'Bistro' ? 'bistro' : '');
+            const label = w.klasse === 'Bistro' ? '🍴' : (w.wagen || (w.klasse + '.Kl'));
+            return `
+                <div class="coach-item ${cls}">
+                    <span>${label}</span>
+                    <span class="coach-sec">${w.sektor || ''}</span>
+                </div>`;
+        }).join('');
+
+        return `
+            <div class="coach-sequence-box">
+                <div class="coach-header">
+                    <span>🚄 ${zug.wagenreihung_text || 'Wagenreihung'}</span>
+                    <span>🟡 1.Kl &nbsp; 🔴 Bistro &nbsp; ⚫ 2.Kl</span>
+                </div>
+                <div class="coach-strip">${itemsHtml}</div>
+            </div>`;
+    }
+
     async function loadData() {
         if(!currentStation) return;
         try {
@@ -372,7 +461,6 @@
             const data = await res.json();
             
             if (data && data.length > 0) {
-                // Status-Lampe prüfen
                 const lastUpdateStr = data[0].update || "00:00";
                 const [upH, upM] = lastUpdateStr.split(':').map(Number);
                 const jetzt = new Date();
@@ -380,7 +468,7 @@
                 updateDate.setHours(upH, upM, 0);
 
                 let diffMin = Math.round((jetzt - updateDate) / 60000);
-                if (diffMin < -700) diffMin += 1440; // Tageswechsel-Korrektur
+                if (diffMin < -700) diffMin += 1440;
 
                 const dot = document.getElementById('status-dot');
                 const txt = document.getElementById('status-text');
@@ -395,7 +483,6 @@
                     txt.style.color = 'var(--delay-red)';
                 }
 
-                // Bahnhofs-Lauftext (Bauarbeiten, Sperrungen & Alkoholverbot) aktualisieren
                 if (data[0].station_ticker) {
                     const tickerEl = document.getElementById('station-ticker-text');
                     const tickerBox = document.getElementById('station-ticker-box');
@@ -405,6 +492,16 @@
                     } else {
                         tickerBox.classList.remove('warning');
                     }
+                }
+
+                // Aufzugsstörungen anzeigen
+                const elBar = document.getElementById('elevator-alert');
+                const defekte = data[0].defekte_aufzuege || [];
+                if (defekte.length > 0) {
+                    elBar.style.display = 'flex';
+                    elBar.innerText = defekte.join(' +++ ');
+                } else {
+                    elBar.style.display = 'none';
                 }
             }
 
@@ -416,11 +513,17 @@
             data.filter(zug => {
                 const [h, m] = (zug.echte_zeit || zug.zeit).split(':').map(Number);
                 let zugMinuten = (h * 60) + m;
-                // Wenn es nach 22 Uhr ist und der Zug um 00:xx fährt, 24h (1440 Min) addieren
-                if (aktuelleMinuten > 1320 && zugMinuten < 180) {
-                    zugMinuten += 1440;
-                }
-                return zugMinuten >= (aktuelleMinuten - 5);
+                if (aktuelleMinuten > 1320 && zugMinuten < 180) zugMinuten += 1440;
+                if (zugMinuten < (aktuelleMinuten - 5)) return false;
+
+                // Kategorie-Filter anwenden
+                const l = (zug.linie || "").toUpperCase();
+                const isFV = l.startsWith("ICE") || l.startsWith("IC") || l.startsWith("EC") || l.startsWith("FLX") || l.startsWith("NJ");
+                const isSBahn = l.startsWith("S ") || /^S\d/.test(l);
+                if (currentFilter === 'FV') return isFV;
+                if (currentFilter === 'SBAHN') return isSBahn;
+                if (currentFilter === 'REGIO') return !isFV && !isSBahn;
+                return true;
             })
             .forEach(zug => {
                 const isCancelled = (zug.info || "").includes("FÄLLT AUS");
@@ -432,8 +535,12 @@
                 const isAboutToDepart = diffMinuten <= 3 && diffMinuten >= 0;
                 const isDelayed = zug.echte_zeit !== zug.zeit && !isCancelled;
                 const viaStr = (zug.via && zug.via.length > 0) ? `über ${zug.via.join(' – ')}` : '';
-                const nrStr = (zug.zug_nr && zug.zug_nr !== zug.linie) ? zug.zug_nr : '';
                 
+                const lUpper = (zug.linie || "").toUpperCase();
+                let badgeClass = 'train-id';
+                if (lUpper.startsWith("ICE") || lUpper.startsWith("IC") || lUpper.startsWith("FLX")) badgeClass += ' ice';
+                else if (lUpper.startsWith("S ") || /^S\d/.test(lUpper)) badgeClass += ' sbahn';
+
                 let bannerClass = 'delay-reason';
                 let bannerIcon = 'ℹ️';
                 if (isCancelled) {
@@ -462,8 +569,8 @@
                         </div>
                         <div style="padding-left: 10px;">
                             <div class="train-meta">
-                                <span class="train-id">${zug.linie}</span>
-                                ${nrStr ? `<span class="train-nr">(${nrStr})</span>` : ''}
+                                <span class="${badgeClass}">${zug.linie}</span>
+                                ${zug.zug_modell ? `<span class="train-model-badge">${zug.zug_modell}</span>` : ''}
                             </div>
                             <span class="train-dest" style="${isCancelled ? 'text-decoration:line-through;' : ''}">${zug.ziel}</span>
                             ${viaStr ? `<span class="train-via">${viaStr}</span>` : ''}
@@ -473,7 +580,9 @@
                             <span class="pl-label">Gleis</span>
                             <span class="pl-value ${zug.gleiswechsel ? 'changed' : ''}" style="${isCancelled ? 'text-decoration:line-through; color:#ccc;' : ''}">${zug.gleis || '—'}</span>
                             ${zug.gleiswechsel ? `<span class="pl-old">statt ${zug.gleis_geplant}</span>` : ''}
+                            ${zug.sektoren ? `<span class="pl-sector">Sektor ${zug.sektoren}</span>` : ''}
                         </div>
+                        ${renderCoachSequence(zug)}
                         ${zug.begruendung ? `<div class="${bannerClass}">${bannerIcon} <span>${zug.begruendung}</span></div>` : ''}
                     </div>`;
             });
