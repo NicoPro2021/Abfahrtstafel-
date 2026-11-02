@@ -1,7 +1,7 @@
 import requests
 import xml.etree.ElementTree as ET
 import json
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 from concurrent.futures import ThreadPoolExecutor
 
@@ -108,10 +108,9 @@ DB_CODES = {
     "99": "Verzögerungen im Betriebsablauf"
 }
 
-# Codes, die ignoriert werden müssen (Platzhalter wie 0/1000 oder interne "Alles OK"-Codes)
+# Codes, die ignoriert werden (0 & 1000 sind leere Container-Codes, 62/84/88/89 sind Entwarnungen)
 IGNORIERTE_CODES = {"0", "62", "84", "88", "89", "1000"}
 
-# Codes, die auf Bauarbeiten oder Streckensperrungen hinweisen
 BAU_SPERR_CODES = {"16", "17", "18", "29", "31", "33", "34", "35", "38", "40", "42", "54", "58", "64", "65", "66", "78"}
 BAU_KEYWORDS = ("bauarbeit", "sperrung", "ersatzverkehr", "sev", "umleitung", "oberleitung", "stellwerk", "gleiswechsel", "weichenstörung")
 
@@ -125,8 +124,16 @@ STATIONS = {
     "gueterglueck": "8010154", "wittenberge": "8010382", "berlin_hbf-tief": "8098160"
 }
 
-HEADERS = {'DB-Client-Id': CLIENT_ID, 'DB-Api-Key': CLIENT_SECRET, 'accept': 'application/xml'}
+# Bahnhöfe mit striktem Alkoholverbot / Hausrechts-Fokus
+ALKOHOLVERBOT_STATIONEN = {
+    "8010224", "8010205", "8098205", "8011160", "8098160", "8010077", "8010050", "8010060", "8010382"
+}
+
+HEADERS_XML = {'DB-Client-Id': CLIENT_ID, 'DB-Api-Key': CLIENT_SECRET, 'accept': 'application/xml'}
+HEADERS_JSON = {'DB-Client-Id': CLIENT_ID, 'DB-Api-Key': CLIENT_SECRET, 'accept': 'application/json'}
+
 GLOBAL_STATION_INFOS = {}
+WAGENREIHUNG_CACHE = {}
 
 
 def format_linienname(cat, line_attr, num):
@@ -136,26 +143,173 @@ def format_linienname(cat, line_attr, num):
     num = (num or "").strip()
 
     if line_attr:
-        if line_attr.upper().startswith(cat.upper()):
-            return line_attr
+        up_line = line_attr.upper()
+        up_cat = cat.upper()
+        if up_line.startswith(up_cat):
+            rest = line_attr[len(cat):].strip()
+            return f"{cat} {rest}".strip() if rest else cat
         return f"{cat} {line_attr}".strip()
     return f"{cat} {num}".strip()
 
 
+def hole_defekte_aufzuege(eva_id):
+    """
+    Prüft über die DB StaDa v2 & FaSta v2 API (falls im Account aktiviert),
+    welche Aufzüge oder Rolltreppen am Bahnhof aktuell defekt (INACTIVE) sind.
+    """
+    defekte = []
+    try:
+        # 1. Bahnhofsnummer über StaDa v2 anhand der EVA-Nummer ermitteln
+        st_url = f"https://apis.deutschebahn.com/db-api-marketplace/apis/station-data/v2/stations?eva={eva_id}"
+        st_res = requests.get(st_url, headers=HEADERS_JSON, timeout=4)
+        if st_res.status_code == 200:
+            res_list = st_res.json().get("result", [])
+            if res_list:
+                station_nr = res_list[0].get("number")
+                if station_nr:
+                    # 2. Anlagenstatus über FaSta v2 abrufen
+                    fa_url = f"https://apis.deutschebahn.com/db-api-marketplace/apis/fasta/v2/stations/{station_nr}"
+                    fa_res = requests.get(fa_url, headers=HEADERS_JSON, timeout=4)
+                    if fa_res.status_code == 200:
+                        for fac in fa_res.json().get("facilities", []):
+                            if fac.get("state") == "INACTIVE":
+                                f_type = "Aufzug" if fac.get("type") == "ELEVATOR" else "Rolltreppe"
+                                desc = fac.get("description") or f"Anlage {fac.get('equipmentnumber', '')}"
+                                defekte.append(f"🛗 {f_type} außer Betrieb ({desc})")
+    except Exception:
+        pass
+    return list(dict.fromkeys(defekte))
+
+
+def hole_wagenreihung(cat, fahrt_nr, eva_id, p_time_berlin):
+    """
+    Ruft kostenlos die Live-Wagenreihung & Bahnsteigsektoren direkt von der bahn.de Web-API ab.
+    """
+    if not cat or not fahrt_nr:
+        return None
+
+    cache_key = (cat, str(fahrt_nr), str(eva_id), p_time_berlin.strftime("%Y%m%d%H%M"))
+    if cache_key in WAGENREIHUNG_CACHE:
+        return WAGENREIHUNG_CACHE[cache_key]
+
+    utc_time = p_time_berlin.astimezone(timezone.utc)
+    date_str = p_time_berlin.strftime("%Y-%m-%d")
+    iso_time = utc_time.strftime("%Y-%m-%dT%H:%M:00.000Z")
+
+    url = "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence"
+    params = {
+        "administrationId": "80",
+        "category": cat,
+        "date": date_str,
+        "evaNumber": str(eva_id),
+        "number": str(fahrt_nr),
+        "time": iso_time
+    }
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+        "Accept": "application/json"
+    }
+
+    try:
+        res = requests.get(url, params=params, headers=headers, timeout=3.5)
+        if res.status_code != 200:
+            WAGENREIHUNG_CACHE[cache_key] = None
+            return None
+
+        data = res.json()
+        groups = data.get("groups", [])
+        if not groups:
+            WAGENREIHUNG_CACHE[cache_key] = None
+            return None
+
+        wagen_liste = []
+        sektoren_alle = []
+        sektoren_1kl = []
+        sektoren_bistro = []
+        zug_modell = ""
+
+        for grp in groups:
+            bez = grp.get("transport", {}).get("description", "")
+            if bez and not zug_modell:
+                zug_modell = bez
+
+            for vehicle in grp.get("vehicles", []):
+                if vehicle.get("status") == "CLOSED":
+                    continue
+                w_nr = vehicle.get("wagonIdentificationNumber")
+                sektor = vehicle.get("platformPosition", {}).get("sector", "")
+                v_type = vehicle.get("type", {})
+                cat_type = v_type.get("category", "")
+
+                # Triebköpfe/Loks ohne Fahrgastbereich überspringen, außer für Sektor-Berechnung
+                if sektor and sektor not in sektoren_alle:
+                    sektoren_alle.append(sektor)
+
+                if "POWERCAR" in cat_type or "LOCOMOTIVE" in cat_type:
+                    continue
+
+                ist_1kl = bool(v_type.get("hasFirstClass") or "FIRST" in cat_type)
+                ist_bistro = bool(v_type.get("hasBistro") or "DINING" in cat_type or "BISTRO" in cat_type)
+                ist_fahrrad = bool(v_type.get("hasBikeSpace"))
+
+                klasse = "Bistro" if ist_bistro else ("1" if ist_1kl else "2")
+
+                if ist_1kl and sektor and sektor not in sektoren_1kl:
+                    sektoren_1kl.append(sektor)
+                if ist_bistro and sektor and sektor not in sektoren_bistro:
+                    sektoren_bistro.append(sektor)
+
+                wagen_liste.append({
+                    "wagen": str(w_nr) if w_nr else "",
+                    "klasse": klasse,
+                    "sektor": sektor,
+                    "fahrrad": ist_fahrrad
+                })
+
+        sektor_str = ""
+        if len(sektoren_alle) > 1:
+            sektor_str = f"{sektoren_alle[0]}–{sektoren_alle[-1]}"
+        elif len(sektoren_alle) == 1:
+            sektor_str = sektoren_alle[0]
+
+        info_parts = []
+        if zug_modell:
+            info_parts.append(zug_modell)
+        if sektor_str:
+            info_parts.append(f"Hält in Sektor {sektor_str}")
+        if sektoren_1kl:
+            info_parts.append(f"1. Kl. in {'/'.join(sektoren_1kl)}")
+        if sektoren_bistro:
+            info_parts.append(f"Bistro in {'/'.join(sektoren_bistro)}")
+
+        result = {
+            "modell": zug_modell,
+            "sektoren": sektor_str,
+            "wagen": wagen_liste,
+            "text": " • ".join(info_parts)
+        }
+        WAGENREIHUNG_CACHE[cache_key] = result
+        return result
+    except Exception:
+        WAGENREIHUNG_CACHE[cache_key] = None
+        return None
+
+
 def hole_live_hafas_meldungen(eva_id):
     """
-    Ruft echte Live-Freitextmeldungen (Bauarbeiten, Sperrungen, Bahnhofshinweise, Alkoholverbot)
-    direkt vom HAFAS-Server ab – komplett ohne fest einprogrammierte Texte.
+    Ruft echte Live-Freitextmeldungen (Bauarbeiten, Sperrungen, Aufzugsstörungen, Zug-Infos)
+    vom HAFAS-Server ab.
     """
     zug_freitexte = {}
     bahnhof_ticker = []
+    defekte_hafas = []
 
     try:
         url = f"https://v5.vbb.transport.rest/stops/{eva_id}/departures"
         params = {"duration": 90, "remarks": "true", "language": "de"}
         res = requests.get(url, params=params, timeout=8)
         if res.status_code != 200:
-            return zug_freitexte, bahnhof_ticker
+            return zug_freitexte, bahnhof_ticker, defekte_hafas
 
         data = res.json()
         departures = data.get("departures", data) if isinstance(data, dict) else data
@@ -174,15 +328,19 @@ def hole_live_hafas_meldungen(eva_id):
                     continue
                 clean_text = " ".join(text.split())
 
-                # Unwichtige Standard-Metadaten (wie reine Fahrrad-Erlaubnis) überspringen
-                if code in ("bf", "fb", "eh") or clean_text.lower() in ("fahrradmitnahme begrenzt möglich", "fahrzeuggebundene einstiegshilfe vorhanden"):
+                if code in ("bf", "fb", "eh") or clean_text.lower() in (
+                    "fahrradmitnahme begrenzt möglich",
+                    "fahrzeuggebundene einstiegshilfe vorhanden",
+                    "pflicht zur mund-nasen-bedeckung"
+                ):
                     continue
 
-                # 1. Bahnhofsweite Infos, Bauarbeiten, Sperrungen oder Alkoholverbot für den Ticker
-                if r_type in ("warning", "status") or any(k in clean_text.lower() for k in ("bauarbeit", "sperrung", "ersatzverkehr", "alkohol", "rauchverbot", "hausrecht", "aufzug")):
+                if any(k in clean_text.lower() for k in ("aufzug", "fahrstuhl", "rolltreppe")):
+                    defekte_hafas.append(f"🛗 {clean_text}")
+
+                if r_type in ("warning", "status") or any(k in clean_text.lower() for k in ("bauarbeit", "sperrung", "ersatzverkehr", "alkohol", "rauchverbot", "hausrecht")):
                     bahnhof_ticker.append(clean_text)
 
-                # 2. Zugspezifische Störungs- und Freitextmeldungen
                 if r_type in ("warning", "status"):
                     zug_hints.append(clean_text)
 
@@ -192,7 +350,7 @@ def hole_live_hafas_meldungen(eva_id):
     except Exception as e:
         print(f"HAFAS Live-Info Hinweis für {eva_id}: {e}")
 
-    return zug_freitexte, list(dict.fromkeys(bahnhof_ticker))
+    return zug_freitexte, list(dict.fromkeys(bahnhof_ticker)), list(dict.fromkeys(defekte_hafas))
 
 
 def extrahiere_meldungen(element):
@@ -226,14 +384,46 @@ def extrahiere_meldungen(element):
     return list(dict.fromkeys(meldungen)), ist_bau_oder_sperrung
 
 
-def hole_daten_fuer_stunde(eva_id, datum, stunde, changes, zug_freitexte, station_ticker, tz):
+def baue_kompletten_ticker(eva_id, station_msgs, aktive_baumeldungen, defekte_anlagen):
+    """
+    Kombiniert Live-Störungen, Bauarbeiten und defekte Aufzüge vom Server
+    mit den offiziellen DB-Bahnhofshinweisen (Alkoholverbot, Rauchverbot & Gepäck).
+    """
+    ticker = []
+
+    for d in defekte_anlagen:
+        ticker.append(d)
+
+    for m in station_msgs[:4]:
+        ticker.append(f"⚠️ {m}" if not m.startswith(("⚠️", "🚧", "🛗")) else m)
+
+    for b in aktive_baumeldungen[:3]:
+        if b not in station_msgs:
+            ticker.append(f"🚧 {b}")
+
+    if eva_id in ALKOHOLVERBOT_STATIONEN:
+        ticker.append(
+            "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. "
+            "Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt."
+        )
+    else:
+        ticker.append(
+            "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen."
+        )
+
+    ticker.append("🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.")
+    return list(dict.fromkeys(ticker))
+
+
+def hole_daten_fuer_stunde(eva_id, datum, stunde, changes, zug_freitexte, station_ticker, defekte_anlagen, tz):
     url = f"https://apis.deutschebahn.com/db-api-marketplace/apis/timetables/v1/plan/{eva_id}/{datum}/{stunde}"
     try:
-        res = requests.get(url, headers=HEADERS, timeout=10)
+        res = requests.get(url, headers=HEADERS_XML, timeout=10)
         if res.status_code != 200:
             return []
         root = ET.fromstring(res.content)
         verbindungen = []
+        jetzt = datetime.now(tz)
 
         for s in root.findall('s'):
             trip_id = s.get('id')
@@ -251,7 +441,7 @@ def hole_daten_fuer_stunde(eva_id, datum, stunde, changes, zug_freitexte, statio
             p_time = datetime.strptime(p_time_str, "%y%m%d%H%M").replace(tzinfo=tz)
             e_time = datetime.strptime(e_time_str, "%y%m%d%H%M").replace(tzinfo=tz)
 
-            if e_time < datetime.now(tz) - timedelta(minutes=10):
+            if e_time < jetzt - timedelta(minutes=10):
                 continue
 
             diff = int((e_time - p_time).total_seconds() / 60)
@@ -279,7 +469,6 @@ def hole_daten_fuer_stunde(eva_id, datum, stunde, changes, zug_freitexte, statio
             alle_meldungen = list(chg.get('meldungen', []))
             ist_bau = chg.get('bauarbeiten', False)
 
-            # Live-Freitexte aus HAFAS zuordnen (falls vorhanden)
             plan_hhmm = p_time.strftime("%H:%M")
             norm_line = linie.replace(" ", "").upper()
             norm_nr = zug_nr.replace(" ", "").upper()
@@ -289,6 +478,16 @@ def hole_daten_fuer_stunde(eva_id, datum, stunde, changes, zug_freitexte, statio
                     alle_meldungen.append(ht)
                     if any(k in ht.lower() for k in BAU_KEYWORDS):
                         ist_bau = True
+
+            # Live-Wagenreihung & Bahnsteigsektoren für Züge der nächsten 65 Minuten abrufen
+            reihung = None
+            if (e_time - jetzt).total_seconds() <= 3900 and chg.get('cs') != "c":
+                reihung = hole_wagenreihung(cat, num, eva_id, p_time)
+
+            sektoren_str = reihung.get("sektoren", "") if reihung else ""
+            zug_modell = reihung.get("modell", "") if reihung else ""
+            wagen_liste = reihung.get("wagen", []) if reihung else []
+            reihung_info_text = reihung.get("text", "") if reihung else ""
 
             if gleiswechsel:
                 alle_meldungen.insert(0, f"Heute von Gleis {gleis_aktuell} (statt Gleis {gleis_geplant})")
@@ -311,6 +510,7 @@ def hole_daten_fuer_stunde(eva_id, datum, stunde, changes, zug_freitexte, statio
                 "echte_zeit": e_time.strftime("%H:%M"),
                 "linie": linie,
                 "zug_nr": zug_nr,
+                "kategorie": cat,
                 "ziel": ziel_aktuell,
                 "ziel_geplant": ziel_geplant,
                 "via": via_halte,
@@ -318,11 +518,16 @@ def hole_daten_fuer_stunde(eva_id, datum, stunde, changes, zug_freitexte, statio
                 "gleis": gleis_aktuell,
                 "gleis_geplant": gleis_geplant,
                 "gleiswechsel": gleiswechsel,
+                "sektoren": sektoren_str,
+                "zug_modell": zug_modell,
+                "wagenreihung": wagen_liste,
+                "wagenreihung_text": reihung_info_text,
                 "info": "FÄLLT AUS" if is_cancelled else (f"+{diff}" if diff > 0 else "pünktlich"),
                 "begruendung": begruendung_str,
                 "meldungen": list(dict.fromkeys(alle_meldungen)),
                 "bauarbeiten": ist_bau,
-                "station_ticker": " +++ ".join(station_ticker) if station_ticker else ""
+                "defekte_aufzuege": defekte_anlagen,
+                "station_ticker": " +++ ".join(station_ticker)
             })
         return verbindungen
     except Exception as e:
@@ -337,21 +542,24 @@ def hole_station_daten(eva_id):
     station_msgs = []
     aktive_baumeldungen = []
 
-    # 1. Live-Freitexte (HAFAS) für Bahnhof & Züge vom Server holen
-    zug_freitexte, hafas_ticker = hole_live_hafas_meldungen(eva_id)
+    # 1. Live-Freitexte (HAFAS) & Aufzugsstörungen holen
+    zug_freitexte, hafas_ticker, defekte_hafas = hole_live_hafas_meldungen(eva_id)
     station_msgs.extend(hafas_ticker)
 
-    # 2. DB Timetables v1 XML-Änderungen holen
+    # 2. Defekte Aufzüge über DB FaSta/StaDa API prüfen
+    defekte_db = hole_defekte_aufzuege(eva_id)
+    alle_defekte = list(dict.fromkeys(defekte_db + defekte_hafas))
+
+    # 3. DB Timetables v1 XML-Änderungen holen
     try:
         c_res = requests.get(
             f"https://apis.deutschebahn.com/db-api-marketplace/apis/timetables/v1/fchg/{eva_id}",
-            headers=HEADERS,
+            headers=HEADERS_XML,
             timeout=10
         )
         if c_res.status_code == 200:
             root = ET.fromstring(c_res.content)
 
-            # Globale Bahnhofsmeldungen direkt unter <timetable>
             for m in root.findall('m'):
                 if m.get('del') == '1':
                     continue
@@ -359,7 +567,6 @@ def hole_station_daten(eva_id):
                 if ext:
                     station_msgs.append(" ".join(ext.split()))
 
-            # Zugspezifische Änderungen
             for s in root.findall('s'):
                 dp = s.find('dp')
                 msgs, ist_bau = extrahiere_meldungen(s)
@@ -382,21 +589,23 @@ def hole_station_daten(eva_id):
     except Exception as e:
         print(f"fchg Fehler für {eva_id}: {e}")
 
-    # Nur echte vom Server empfangene Meldungen in den Ticker packen
-    station_ticker = list(dict.fromkeys(station_msgs + aktive_baumeldungen))
+    aktive_baumeldungen = list(dict.fromkeys(aktive_baumeldungen))
+    station_ticker = baue_kompletten_ticker(eva_id, station_msgs, aktive_baumeldungen, alle_defekte)
 
     GLOBAL_STATION_INFOS[eva_id] = {
         "eva": eva_id,
         "ticker": station_ticker,
+        "defekte_aufzuege": alle_defekte,
         "bauarbeiten_aktiv": len(aktive_baumeldungen) > 0 or len(station_msgs) > 0,
-        "baumeldungen": list(dict.fromkeys(aktive_baumeldungen)),
+        "baumeldungen": aktive_baumeldungen,
+        "alkoholverbot": eva_id in ALKOHOLVERBOT_STATIONEN,
         "update": jetzt.strftime("%H:%M")
     }
 
     datum_j = jetzt.strftime("%y%m%d")
-    liste = hole_daten_fuer_stunde(eva_id, datum_j, jetzt.strftime("%H"), changes, zug_freitexte, station_ticker, tz)
+    liste = hole_daten_fuer_stunde(eva_id, datum_j, jetzt.strftime("%H"), changes, zug_freitexte, station_ticker, alle_defekte, tz)
     naechste = jetzt + timedelta(hours=1)
-    liste += hole_daten_fuer_stunde(eva_id, naechste.strftime("%y%m%d"), naechste.strftime("%H"), changes, zug_freitexte, station_ticker, tz)
+    liste += hole_daten_fuer_stunde(eva_id, naechste.strftime("%y%m%d"), naechste.strftime("%H"), changes, zug_freitexte, station_ticker, alle_defekte, tz)
 
     seen = set()
     unique_liste = []
@@ -444,19 +653,15 @@ def erzeuge_global_info():
     aktive_stationen = [v for v in GLOBAL_STATION_INFOS.values() if v.get("bauarbeiten_aktiv")]
     bau_count = len(aktive_stationen)
 
-    # Sammle echte Live-Meldungen über alle Bahnhöfe für die Startseite
-    live_texte = []
-    for st in aktive_stationen:
-        for t in st.get("ticker", []):
-            if t not in live_texte:
-                live_texte.append(t)
-
     if bau_count > 0:
-        title = f"Aktuelle Betriebsmeldungen ({bau_count} Bahnhöfe)"
-        msg = " +++ ".join(live_texte[:4]) if live_texte else f"An {bau_count} Stationen liegen aktuelle Meldungen vor."
+        title = f"Betriebsinformation ({bau_count} Bahnhöfe mit Meldungen)"
+        msg = (
+            f"Aktuell liegen an {bau_count} überwachten Stationen Meldungen zu Bauarbeiten, "
+            "Sperrungen oder Fahrplanänderungen vor. Bitte beachten Sie auch die Hinweise zur Wagenreihung."
+        )
     else:
         title = "Regelbetrieb im Streckennetz"
-        msg = "Aktuell liegen auf den überwachten Strecken keine Großstörungen vor."
+        msg = "Alle überwachten Bahnhöfe melden regulären Betrieb. Bitte beachten Sie das Rauch- und Alkoholverbot an den Stationen."
 
     global_data = {
         "title": title,
