@@ -1,58 +1,5 @@
 [
     {
-        "zeit": "20:00",
-        "echte_zeit": "20:35",
-        "linie": "ICE 842",
-        "zug_nr": "ICE 842",
-        "ziel": "Köln Hbf",
-        "ziel_geplant": "Köln Hbf",
-        "via": [
-            "Braunschweig Hbf",
-            "Hannover Hbf",
-            "Bielefeld Hbf",
-            "Hamm(Westf)Hbf"
-        ],
-        "entfallende_halte": [],
-        "gleis": "8",
-        "gleis_geplant": "7",
-        "gleiswechsel": true,
-        "info": "+35",
-        "begruendung": "Heute von Gleis 8 (statt Gleis 7) +++ Verspätung aus vorheriger Fahrt",
-        "meldungen": [
-            "Heute von Gleis 8 (statt Gleis 7)",
-            "Verspätung aus vorheriger Fahrt"
-        ],
-        "bauarbeiten": false,
-        "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:43"
-    },
-    {
-        "zeit": "20:35",
-        "echte_zeit": "20:35",
-        "linie": "RE30",
-        "zug_nr": "RE 16337",
-        "ziel": "Halle(Saale)Hbf",
-        "ziel_geplant": "Halle(Saale)Hbf",
-        "via": [
-            "Magdeburg-Buckau",
-            "Magdeburg Südost",
-            "Schönebeck(Elbe)",
-            "Schönebeck-Felgeleben"
-        ],
-        "entfallende_halte": [],
-        "gleis": "4 A-C",
-        "gleis_geplant": "5 A-C",
-        "gleiswechsel": true,
-        "info": "pünktlich",
-        "begruendung": "Heute von Gleis 4 A-C (statt Gleis 5 A-C)",
-        "meldungen": [
-            "Heute von Gleis 4 A-C (statt Gleis 5 A-C)"
-        ],
-        "bauarbeiten": false,
-        "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:43"
-    },
-    {
         "zeit": "20:41",
         "echte_zeit": "20:41",
         "linie": "RE20",
@@ -73,8 +20,8 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:43"
+        "station_ticker": "Defekte Oberleitung +++ Bauarbeiten +++ Umleitung des Zuges",
+        "update": "20:47"
     },
     {
         "zeit": "20:33",
@@ -99,12 +46,12 @@
             "Verspätung aus vorheriger Fahrt"
         ],
         "bauarbeiten": false,
-        "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:43"
+        "station_ticker": "Defekte Oberleitung +++ Bauarbeiten +++ Umleitung des Zuges",
+        "update": "20:47"
     },
     {
         "zeit": "20:47",
-        "echte_zeit": "20:48",
+        "echte_zeit": "20:47",
         "linie": "S1",
         "zug_nr": "S 39035",
         "ziel": "Schönebeck-Bad Salzelmen",
@@ -119,12 +66,12 @@
         "gleis": "3",
         "gleis_geplant": "3",
         "gleiswechsel": false,
-        "info": "+1",
+        "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:43"
+        "station_ticker": "Defekte Oberleitung +++ Bauarbeiten +++ Umleitung des Zuges",
+        "update": "20:47"
     },
     {
         "zeit": "20:14",
@@ -151,8 +98,8 @@
             "Verspätung eines vorausfahrenden Zuges"
         ],
         "bauarbeiten": true,
-        "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:43"
+        "station_ticker": "Defekte Oberleitung +++ Bauarbeiten +++ Umleitung des Zuges",
+        "update": "20:47"
     },
     {
         "zeit": "20:59",
@@ -174,8 +121,8 @@
             "Verspätetes Personal aus vorheriger Fahrt"
         ],
         "bauarbeiten": false,
-        "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:43"
+        "station_ticker": "Defekte Oberleitung +++ Bauarbeiten +++ Umleitung des Zuges",
+        "update": "20:47"
     },
     {
         "zeit": "21:07",
@@ -191,15 +138,17 @@
             "Genthin"
         ],
         "entfallende_halte": [],
-        "gleis": "5 D-G",
+        "gleis": "1",
         "gleis_geplant": "5 D-G",
-        "gleiswechsel": false,
+        "gleiswechsel": true,
         "info": "pünktlich",
-        "begruendung": "",
-        "meldungen": [],
+        "begruendung": "Heute von Gleis 1 (statt Gleis 5 D-G)",
+        "meldungen": [
+            "Heute von Gleis 1 (statt Gleis 5 D-G)"
+        ],
         "bauarbeiten": false,
-        "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:43"
+        "station_ticker": "Defekte Oberleitung +++ Bauarbeiten +++ Umleitung des Zuges",
+        "update": "20:47"
     },
     {
         "zeit": "21:08",
@@ -222,8 +171,8 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:43"
+        "station_ticker": "Defekte Oberleitung +++ Bauarbeiten +++ Umleitung des Zuges",
+        "update": "20:47"
     },
     {
         "zeit": "21:08",
@@ -246,8 +195,32 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:43"
+        "station_ticker": "Defekte Oberleitung +++ Bauarbeiten +++ Umleitung des Zuges",
+        "update": "20:47"
+    },
+    {
+        "zeit": "20:56",
+        "echte_zeit": "21:11",
+        "linie": "ICE 653",
+        "zug_nr": "ICE 653",
+        "ziel": "Berlin Gesundbrunnen",
+        "ziel_geplant": "Berlin Gesundbrunnen",
+        "via": [
+            "Berlin Hbf"
+        ],
+        "entfallende_halte": [],
+        "gleis": "6",
+        "gleis_geplant": "6",
+        "gleiswechsel": false,
+        "info": "+15",
+        "begruendung": "Vorfahrt eines anderen Zuges +++ Verspätetes Personal aus vorheriger Fahrt",
+        "meldungen": [
+            "Vorfahrt eines anderen Zuges",
+            "Verspätetes Personal aus vorheriger Fahrt"
+        ],
+        "bauarbeiten": false,
+        "station_ticker": "Defekte Oberleitung +++ Bauarbeiten +++ Umleitung des Zuges",
+        "update": "20:47"
     },
     {
         "zeit": "21:10",
@@ -270,8 +243,8 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:43"
+        "station_ticker": "Defekte Oberleitung +++ Bauarbeiten +++ Umleitung des Zuges",
+        "update": "20:47"
     },
     {
         "zeit": "21:11",
@@ -294,8 +267,8 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:43"
+        "station_ticker": "Defekte Oberleitung +++ Bauarbeiten +++ Umleitung des Zuges",
+        "update": "20:47"
     },
     {
         "zeit": "21:11",
@@ -318,36 +291,12 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:43"
-    },
-    {
-        "zeit": "20:56",
-        "echte_zeit": "21:12",
-        "linie": "ICE 653",
-        "zug_nr": "ICE 653",
-        "ziel": "Berlin Gesundbrunnen",
-        "ziel_geplant": "Berlin Gesundbrunnen",
-        "via": [
-            "Berlin Hbf"
-        ],
-        "entfallende_halte": [],
-        "gleis": "6",
-        "gleis_geplant": "6",
-        "gleiswechsel": false,
-        "info": "+16",
-        "begruendung": "Vorfahrt eines anderen Zuges +++ Verspätetes Personal aus vorheriger Fahrt",
-        "meldungen": [
-            "Vorfahrt eines anderen Zuges",
-            "Verspätetes Personal aus vorheriger Fahrt"
-        ],
-        "bauarbeiten": false,
-        "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:43"
+        "station_ticker": "Defekte Oberleitung +++ Bauarbeiten +++ Umleitung des Zuges",
+        "update": "20:47"
     },
     {
         "zeit": "21:03",
-        "echte_zeit": "21:14",
+        "echte_zeit": "21:17",
         "linie": "ICE 550",
         "zug_nr": "ICE 550",
         "ziel": "Hannover Hbf",
@@ -357,14 +306,14 @@
         "gleis": "7",
         "gleis_geplant": "7",
         "gleiswechsel": false,
-        "info": "+11",
+        "info": "+14",
         "begruendung": "Verspätung aus vorheriger Fahrt",
         "meldungen": [
             "Verspätung aus vorheriger Fahrt"
         ],
         "bauarbeiten": false,
-        "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:43"
+        "station_ticker": "Defekte Oberleitung +++ Bauarbeiten +++ Umleitung des Zuges",
+        "update": "20:47"
     },
     {
         "zeit": "21:17",
@@ -387,8 +336,8 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:43"
+        "station_ticker": "Defekte Oberleitung +++ Bauarbeiten +++ Umleitung des Zuges",
+        "update": "20:47"
     },
     {
         "zeit": "21:30",
@@ -411,12 +360,12 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:43"
+        "station_ticker": "Defekte Oberleitung +++ Bauarbeiten +++ Umleitung des Zuges",
+        "update": "20:47"
     },
     {
         "zeit": "21:31",
-        "echte_zeit": "21:36",
+        "echte_zeit": "21:37",
         "linie": "RB40",
         "zug_nr": "RB 16437",
         "ziel": "Burg(Magdeburg)",
@@ -431,12 +380,12 @@
         "gleis": "7",
         "gleis_geplant": "7",
         "gleiswechsel": false,
-        "info": "+5",
+        "info": "+6",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:43"
+        "station_ticker": "Defekte Oberleitung +++ Bauarbeiten +++ Umleitung des Zuges",
+        "update": "20:47"
     },
     {
         "zeit": "21:41",
@@ -459,8 +408,8 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:43"
+        "station_ticker": "Defekte Oberleitung +++ Bauarbeiten +++ Umleitung des Zuges",
+        "update": "20:47"
     },
     {
         "zeit": "21:47",
@@ -480,8 +429,8 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:43"
+        "station_ticker": "Defekte Oberleitung +++ Bauarbeiten +++ Umleitung des Zuges",
+        "update": "20:47"
     },
     {
         "zeit": "21:47",
@@ -504,12 +453,12 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:43"
+        "station_ticker": "Defekte Oberleitung +++ Bauarbeiten +++ Umleitung des Zuges",
+        "update": "20:47"
     },
     {
         "zeit": "22:01",
-        "echte_zeit": "22:10",
+        "echte_zeit": "22:11",
         "linie": "ICE 840",
         "zug_nr": "ICE 840",
         "ziel": "Hannover Hbf",
@@ -521,11 +470,11 @@
         "gleis": "8",
         "gleis_geplant": "8",
         "gleiswechsel": false,
-        "info": "+9",
+        "info": "+10",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "Bauarbeiten +++ Umleitung des Zuges",
-        "update": "20:43"
+        "station_ticker": "Defekte Oberleitung +++ Bauarbeiten +++ Umleitung des Zuges",
+        "update": "20:47"
     }
 ]
