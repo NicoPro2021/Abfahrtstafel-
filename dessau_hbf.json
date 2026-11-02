@@ -1,99 +1,5 @@
 [
     {
-        "zeit": "21:01",
-        "echte_zeit": "21:01",
-        "linie": "RE 13",
-        "zug_nr": "RE 16136",
-        "kategorie": "RE",
-        "ziel": "Magdeburg Hbf",
-        "ziel_geplant": "Magdeburg Hbf",
-        "via": [
-            "Roßlau(Elbe)",
-            "Rodleben",
-            "Zerbst/Anhalt",
-            "Güterglück"
-        ],
-        "entfallende_halte": [],
-        "gleis": "2",
-        "gleis_geplant": "2",
-        "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
-        "info": "pünktlich",
-        "begruendung": "Warten auf Anschlussreisende",
-        "meldungen": [
-            "Warten auf Anschlussreisende"
-        ],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:09"
-    },
-    {
-        "zeit": "21:02",
-        "echte_zeit": "21:03",
-        "linie": "RB 50",
-        "zug_nr": "RB 80484",
-        "kategorie": "RB",
-        "ziel": "Bernburg Hbf",
-        "ziel_geplant": "Bernburg Hbf",
-        "via": [
-            "Dessau-Alten",
-            "Dessau-Mosigkau",
-            "Elsnigk(Anh)",
-            "Köthen"
-        ],
-        "entfallende_halte": [],
-        "gleis": "7",
-        "gleis_geplant": "7",
-        "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
-        "info": "+1",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:09"
-    },
-    {
-        "zeit": "21:01",
-        "echte_zeit": "21:04",
-        "linie": "RE 13",
-        "zug_nr": "RE 16133",
-        "kategorie": "RE",
-        "ziel": "Leipzig Hbf",
-        "ziel_geplant": "Leipzig Hbf",
-        "via": [
-            "Wolfen(Bitterfeld)",
-            "Bitterfeld",
-            "Delitzsch unt Bf",
-            "Leipzig Messe"
-        ],
-        "entfallende_halte": [],
-        "gleis": "3",
-        "gleis_geplant": "3",
-        "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
-        "info": "+3",
-        "begruendung": "Verspätung aus vorheriger Fahrt",
-        "meldungen": [
-            "Verspätung aus vorheriger Fahrt"
-        ],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:09"
-    },
-    {
         "zeit": "21:10",
         "echte_zeit": "21:10",
         "linie": "RB 51",
@@ -111,17 +17,36 @@
         "gleis": "5",
         "gleis_geplant": "5",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–D",
+        "zug_modell": "Regionaltriebzug",
+        "wagenreihung": [
+            {
+                "wagen": "Wg.1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Regionaltriebzug • Sektor A–D",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:09"
+        "update": "21:18"
     },
     {
         "zeit": "21:11",
@@ -141,17 +66,36 @@
         "gleis": "4",
         "gleis_geplant": "4",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "B–C",
+        "zug_modell": "Bombardier Talent 2 (BR 442)",
+        "wagenreihung": [
+            {
+                "wagen": "Tz.1",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Tz.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Tz.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Bombardier Talent 2 (BR 442) • Sektor B–C",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:09"
+        "update": "21:18"
     },
     {
         "zeit": "21:52",
@@ -171,21 +115,40 @@
         "gleis": "2",
         "gleis_geplant": "2",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–D",
+        "zug_modell": "Regionaltriebzug",
+        "wagenreihung": [
+            {
+                "wagen": "Wg.1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Regionaltriebzug • Sektor A–D",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:09"
+        "update": "21:18"
     },
     {
         "zeit": "21:59",
-        "echte_zeit": "21:59",
+        "echte_zeit": "22:04",
         "linie": "RE 13",
         "zug_nr": "RE 16135",
         "kategorie": "RE",
@@ -201,17 +164,42 @@
         "gleis": "3",
         "gleis_geplant": "3",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
-        "info": "pünktlich",
+        "sektoren": "A–D",
+        "zug_modell": "Bombardier Talent 2 (BR 442)",
+        "wagenreihung": [
+            {
+                "wagen": "Tz.1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Tz.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Tz.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Tz.4",
+                "klasse": "2",
+                "sektor": "D",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Bombardier Talent 2 (BR 442) • Sektor A–D",
+        "info": "+5",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:09"
+        "update": "21:18"
     },
     {
         "zeit": "22:11",
@@ -231,17 +219,42 @@
         "gleis": "7",
         "gleis_geplant": "7",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–D",
+        "zug_modell": "Bombardier Talent 2 (BR 442)",
+        "wagenreihung": [
+            {
+                "wagen": "Tz.1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Tz.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Tz.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Tz.4",
+                "klasse": "2",
+                "sektor": "D",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Bombardier Talent 2 (BR 442) • Sektor A–D",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:09"
+        "update": "21:18"
     },
     {
         "zeit": "22:59",
@@ -261,16 +274,41 @@
         "gleis": "2",
         "gleis_geplant": "2",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–D",
+        "zug_modell": "Bombardier Talent 2 (BR 442)",
+        "wagenreihung": [
+            {
+                "wagen": "Tz.1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Tz.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Tz.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Tz.4",
+                "klasse": "2",
+                "sektor": "D",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Bombardier Talent 2 (BR 442) • Sektor A–D",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:09"
+        "update": "21:18"
     }
 ]

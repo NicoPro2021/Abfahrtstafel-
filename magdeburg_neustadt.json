@@ -1,39 +1,7 @@
 [
     {
-        "zeit": "21:10",
-        "echte_zeit": "21:14",
-        "linie": "OE RE1",
-        "zug_nr": "OE 73747",
-        "kategorie": "OE",
-        "ziel": "Berlin-Wannsee",
-        "ziel_geplant": "Berlin-Wannsee",
-        "via": [
-            "Burg(Magdeburg)",
-            "Güsen(b Genthin)",
-            "Genthin",
-            "Wusterwitz"
-        ],
-        "entfallende_halte": [],
-        "gleis": "3",
-        "gleis_geplant": "1",
-        "gleiswechsel": true,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
-        "info": "+4",
-        "begruendung": "Heute von Gleis 3 (statt Gleis 1)",
-        "meldungen": [
-            "Heute von Gleis 3 (statt Gleis 1)"
-        ],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "station_ticker": "🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:10"
-    },
-    {
         "zeit": "21:12",
-        "echte_zeit": "21:15",
+        "echte_zeit": "21:14",
         "linie": "RE 20",
         "zug_nr": "RE 16951",
         "kategorie": "RE",
@@ -49,11 +17,30 @@
         "gleis": "2",
         "gleis_geplant": "1",
         "gleiswechsel": true,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
-        "info": "+3",
+        "sektoren": "A–D",
+        "zug_modell": "Regionaltriebzug",
+        "wagenreihung": [
+            {
+                "wagen": "Wg.1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Regionaltriebzug • Sektor A–D",
+        "info": "+2",
         "begruendung": "Heute von Gleis 2 (statt Gleis 1)",
         "meldungen": [
             "Heute von Gleis 2 (statt Gleis 1)"
@@ -61,7 +48,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:10"
+        "update": "21:18"
     },
     {
         "zeit": "21:13",
@@ -81,21 +68,97 @@
         "gleis": "1",
         "gleis_geplant": "1",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "B–C",
+        "zug_modell": "Bombardier Talent 2 (BR 442)",
+        "wagenreihung": [
+            {
+                "wagen": "Tz.1",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Tz.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Tz.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Bombardier Talent 2 (BR 442) • Sektor B–C",
         "info": "+2",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:10"
+        "update": "21:18"
+    },
+    {
+        "zeit": "21:10",
+        "echte_zeit": "21:20",
+        "linie": "OE RE1",
+        "zug_nr": "OE 73747",
+        "kategorie": "OE",
+        "ziel": "Berlin-Wannsee",
+        "ziel_geplant": "Berlin-Wannsee",
+        "via": [
+            "Burg(Magdeburg)",
+            "Güsen(b Genthin)",
+            "Genthin",
+            "Wusterwitz"
+        ],
+        "entfallende_halte": [],
+        "gleis": "3",
+        "gleis_geplant": "1",
+        "gleiswechsel": true,
+        "sektoren": "A–D",
+        "zug_modell": "ODEG Stadler KISS (Doppelstock)",
+        "wagenreihung": [
+            {
+                "wagen": "Wg.1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": false
+            },
+            {
+                "wagen": "Wg.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": false
+            },
+            {
+                "wagen": "Wg.4",
+                "klasse": "2",
+                "sektor": "D",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "ODEG Stadler KISS (Doppelstock) • Sektor A–D",
+        "info": "+10",
+        "begruendung": "Heute von Gleis 3 (statt Gleis 1)",
+        "meldungen": [
+            "Heute von Gleis 3 (statt Gleis 1)"
+        ],
+        "bauarbeiten": false,
+        "defekte_aufzuege": [],
+        "station_ticker": "🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "21:18"
     },
     {
         "zeit": "21:15",
-        "echte_zeit": "21:15",
+        "echte_zeit": "21:22",
         "linie": "RE 13",
         "zug_nr": "RE 16135",
         "kategorie": "RE",
@@ -111,11 +174,36 @@
         "gleis": "3",
         "gleis_geplant": "1",
         "gleiswechsel": true,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
-        "info": "pünktlich",
+        "sektoren": "A–D",
+        "zug_modell": "Bombardier Talent 2 (BR 442)",
+        "wagenreihung": [
+            {
+                "wagen": "Tz.1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Tz.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Tz.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Tz.4",
+                "klasse": "2",
+                "sektor": "D",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Bombardier Talent 2 (BR 442) • Sektor A–D",
+        "info": "+7",
         "begruendung": "Heute von Gleis 3 (statt Gleis 1)",
         "meldungen": [
             "Heute von Gleis 3 (statt Gleis 1)"
@@ -123,7 +211,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:10"
+        "update": "21:18"
     },
     {
         "zeit": "21:26",
@@ -138,10 +226,29 @@
         "gleis": "4",
         "gleis_geplant": "1",
         "gleiswechsel": true,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–D",
+        "zug_modell": "Regionaltriebzug",
+        "wagenreihung": [
+            {
+                "wagen": "Wg.1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Regionaltriebzug • Sektor A–D",
         "info": "+3",
         "begruendung": "Heute von Gleis 4 (statt Gleis 1)",
         "meldungen": [
@@ -150,11 +257,11 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:10"
+        "update": "21:18"
     },
     {
         "zeit": "21:31",
-        "echte_zeit": "21:33",
+        "echte_zeit": "21:32",
         "linie": "RB 36",
         "zug_nr": "RB 80379",
         "kategorie": "RB",
@@ -165,17 +272,36 @@
         "gleis": "1",
         "gleis_geplant": "1",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
-        "info": "+2",
+        "sektoren": "A–D",
+        "zug_modell": "Regionaltriebzug",
+        "wagenreihung": [
+            {
+                "wagen": "Wg.1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Regionaltriebzug • Sektor A–D",
+        "info": "+1",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:10"
+        "update": "21:18"
     },
     {
         "zeit": "21:34",
@@ -195,21 +321,40 @@
         "gleis": "1",
         "gleis_geplant": "1",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–D",
+        "zug_modell": "Regionaltriebzug",
+        "wagenreihung": [
+            {
+                "wagen": "Wg.1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Regionaltriebzug • Sektor A–D",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:10"
+        "update": "21:18"
     },
     {
         "zeit": "21:35",
-        "echte_zeit": "21:40",
+        "echte_zeit": "21:39",
         "linie": "RB 40",
         "zug_nr": "RB 16437",
         "kategorie": "RB",
@@ -225,11 +370,30 @@
         "gleis": "3",
         "gleis_geplant": "1",
         "gleiswechsel": true,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
-        "info": "+5",
+        "sektoren": "A–D",
+        "zug_modell": "Regionaltriebzug",
+        "wagenreihung": [
+            {
+                "wagen": "Wg.1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Regionaltriebzug • Sektor A–D",
+        "info": "+4",
         "begruendung": "Heute von Gleis 3 (statt Gleis 1)",
         "meldungen": [
             "Heute von Gleis 3 (statt Gleis 1)"
@@ -237,7 +401,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:10"
+        "update": "21:18"
     },
     {
         "zeit": "21:41",
@@ -257,17 +421,36 @@
         "gleis": "1",
         "gleis_geplant": "1",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "B–C",
+        "zug_modell": "Bombardier Talent 2 (BR 442)",
+        "wagenreihung": [
+            {
+                "wagen": "Tz.1",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Tz.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Tz.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Bombardier Talent 2 (BR 442) • Sektor B–C",
         "info": "+2",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:10"
+        "update": "21:18"
     },
     {
         "zeit": "21:45",
@@ -287,17 +470,36 @@
         "gleis": "1",
         "gleis_geplant": "1",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–D",
+        "zug_modell": "Regionaltriebzug",
+        "wagenreihung": [
+            {
+                "wagen": "Wg.1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Regionaltriebzug • Sektor A–D",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:10"
+        "update": "21:18"
     },
     {
         "zeit": "21:46",
@@ -312,10 +514,35 @@
         "gleis": "4",
         "gleis_geplant": "1",
         "gleiswechsel": true,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–D",
+        "zug_modell": "ODEG Stadler KISS (Doppelstock)",
+        "wagenreihung": [
+            {
+                "wagen": "Wg.1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": false
+            },
+            {
+                "wagen": "Wg.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": false
+            },
+            {
+                "wagen": "Wg.4",
+                "klasse": "2",
+                "sektor": "D",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "ODEG Stadler KISS (Doppelstock) • Sektor A–D",
         "info": "pünktlich",
         "begruendung": "Heute von Gleis 4 (statt Gleis 1)",
         "meldungen": [
@@ -324,7 +551,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:10"
+        "update": "21:18"
     },
     {
         "zeit": "21:51",
@@ -339,10 +566,35 @@
         "gleis": "4",
         "gleis_geplant": "1",
         "gleiswechsel": true,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–D",
+        "zug_modell": "Bombardier Talent 2 (BR 442)",
+        "wagenreihung": [
+            {
+                "wagen": "Tz.1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Tz.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Tz.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Tz.4",
+                "klasse": "2",
+                "sektor": "D",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Bombardier Talent 2 (BR 442) • Sektor A–D",
         "info": "+3",
         "begruendung": "Heute von Gleis 4 (statt Gleis 1) +++ Warten auf Anschlussreisende",
         "meldungen": [
@@ -352,7 +604,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:10"
+        "update": "21:18"
     },
     {
         "zeit": "22:07",
@@ -372,10 +624,35 @@
         "gleis": "3",
         "gleis_geplant": "1",
         "gleiswechsel": true,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–D",
+        "zug_modell": "Bombardier Talent 2 (BR 442)",
+        "wagenreihung": [
+            {
+                "wagen": "Tz.1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Tz.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Tz.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Tz.4",
+                "klasse": "2",
+                "sektor": "D",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Bombardier Talent 2 (BR 442) • Sektor A–D",
         "info": "pünktlich",
         "begruendung": "Heute von Gleis 3 (statt Gleis 1)",
         "meldungen": [
@@ -384,7 +661,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:10"
+        "update": "21:18"
     },
     {
         "zeit": "22:11",
@@ -404,10 +681,35 @@
         "gleis": "3",
         "gleis_geplant": "1",
         "gleiswechsel": true,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–D",
+        "zug_modell": "ODEG Stadler KISS (Doppelstock)",
+        "wagenreihung": [
+            {
+                "wagen": "Wg.1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": false
+            },
+            {
+                "wagen": "Wg.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": false
+            },
+            {
+                "wagen": "Wg.4",
+                "klasse": "2",
+                "sektor": "D",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "ODEG Stadler KISS (Doppelstock) • Sektor A–D",
         "info": "pünktlich",
         "begruendung": "Heute von Gleis 3 (statt Gleis 1)",
         "meldungen": [
@@ -416,7 +718,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:10"
+        "update": "21:18"
     },
     {
         "zeit": "22:08",
@@ -431,17 +733,36 @@
         "gleis": "1",
         "gleis_geplant": "1",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–D",
+        "zug_modell": "Regionaltriebzug",
+        "wagenreihung": [
+            {
+                "wagen": "Wg.1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Regionaltriebzug • Sektor A–D",
         "info": "+4",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:10"
+        "update": "21:18"
     },
     {
         "zeit": "22:13",
@@ -461,17 +782,36 @@
         "gleis": "1",
         "gleis_geplant": "1",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "B–C",
+        "zug_modell": "Bombardier Talent 2 (BR 442)",
+        "wagenreihung": [
+            {
+                "wagen": "Tz.1",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Tz.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Tz.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Bombardier Talent 2 (BR 442) • Sektor B–C",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:10"
+        "update": "21:18"
     },
     {
         "zeit": "22:15",
@@ -486,10 +826,29 @@
         "gleis": "1",
         "gleis_geplant": "1",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–D",
+        "zug_modell": "Regionaltriebzug",
+        "wagenreihung": [
+            {
+                "wagen": "Wg.1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Regionaltriebzug • Sektor A–D",
         "info": "pünktlich",
         "begruendung": "Defekte Oberleitung",
         "meldungen": [
@@ -498,7 +857,7 @@
         "bauarbeiten": true,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:10"
+        "update": "21:18"
     },
     {
         "zeit": "22:35",
@@ -513,10 +872,29 @@
         "gleis": "4",
         "gleis_geplant": "1",
         "gleiswechsel": true,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–D",
+        "zug_modell": "Regionaltriebzug",
+        "wagenreihung": [
+            {
+                "wagen": "Wg.1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Regionaltriebzug • Sektor A–D",
         "info": "pünktlich",
         "begruendung": "Heute von Gleis 4 (statt Gleis 1)",
         "meldungen": [
@@ -525,7 +903,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:10"
+        "update": "21:18"
     },
     {
         "zeit": "22:41",
@@ -540,21 +918,40 @@
         "gleis": "1",
         "gleis_geplant": "1",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "B–C",
+        "zug_modell": "Bombardier Talent 2 (BR 442)",
+        "wagenreihung": [
+            {
+                "wagen": "Tz.1",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Tz.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Tz.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Bombardier Talent 2 (BR 442) • Sektor B–C",
         "info": "+2",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:10"
+        "update": "21:18"
     },
     {
         "zeit": "22:46",
-        "echte_zeit": "23:19",
+        "echte_zeit": "22:46",
         "linie": "OE RE1",
         "zug_nr": "OE 73748",
         "kategorie": "OE",
@@ -565,11 +962,36 @@
         "gleis": "4",
         "gleis_geplant": "1",
         "gleiswechsel": true,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
-        "info": "+33",
+        "sektoren": "A–D",
+        "zug_modell": "ODEG Stadler KISS (Doppelstock)",
+        "wagenreihung": [
+            {
+                "wagen": "Wg.1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": false
+            },
+            {
+                "wagen": "Wg.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": false
+            },
+            {
+                "wagen": "Wg.4",
+                "klasse": "2",
+                "sektor": "D",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "ODEG Stadler KISS (Doppelstock) • Sektor A–D",
+        "info": "pünktlich",
         "begruendung": "Heute von Gleis 4 (statt Gleis 1)",
         "meldungen": [
             "Heute von Gleis 4 (statt Gleis 1)"
@@ -577,6 +999,6 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:10"
+        "update": "21:18"
     }
 ]

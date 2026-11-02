@@ -1,65 +1,5 @@
 [
     {
-        "zeit": "21:02",
-        "echte_zeit": "21:03",
-        "linie": "ABR RE15",
-        "zug_nr": "ABR 74834",
-        "kategorie": "ABR",
-        "ziel": "Saalfeld(Saale)",
-        "ziel_geplant": "Saalfeld(Saale)",
-        "via": [
-            "Leipzig-Möckern",
-            "Markranstädt",
-            "Bad Dürrenberg",
-            "Weißenfels"
-        ],
-        "entfallende_halte": [],
-        "gleis": "9",
-        "gleis_geplant": "9",
-        "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
-        "info": "+1",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "station_ticker": "🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:09"
-    },
-    {
-        "zeit": "21:06",
-        "echte_zeit": "21:06",
-        "linie": "S 6",
-        "zug_nr": "S 37668",
-        "kategorie": "S",
-        "ziel": "Naumburg(Saale)Hbf",
-        "ziel_geplant": "Naumburg(Saale)Hbf",
-        "via": [
-            "Leipzig Coppiplatz",
-            "Leipzig-Möckern",
-            "Leipzig-Leutzsch",
-            "Leipzig-Rückmarsdorf"
-        ],
-        "entfallende_halte": [],
-        "gleis": "7",
-        "gleis_geplant": "7",
-        "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
-        "info": "pünktlich",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "station_ticker": "🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:09"
-    },
-    {
         "zeit": "21:16",
         "echte_zeit": "21:16",
         "linie": "ICE 594",
@@ -76,10 +16,53 @@
         "gleis": "11",
         "gleis_geplant": "11",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–F",
+        "zug_modell": "ICE Triebzug",
+        "wagenreihung": [
+            {
+                "wagen": "1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": false
+            },
+            {
+                "wagen": "2",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": false
+            },
+            {
+                "wagen": "3",
+                "klasse": "Bistro",
+                "sektor": "B",
+                "fahrrad": false
+            },
+            {
+                "wagen": "4",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": false
+            },
+            {
+                "wagen": "5",
+                "klasse": "2",
+                "sektor": "D",
+                "fahrrad": false
+            },
+            {
+                "wagen": "6",
+                "klasse": "2",
+                "sektor": "E",
+                "fahrrad": false
+            },
+            {
+                "wagen": "7",
+                "klasse": "2",
+                "sektor": "F",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "ICE Triebzug • Sektor A–F",
         "info": "pünktlich",
         "begruendung": "Verspätung eines vorausfahrenden Zuges",
         "meldungen": [
@@ -88,7 +71,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:09"
+        "update": "21:18"
     },
     {
         "zeit": "21:21",
@@ -108,17 +91,36 @@
         "gleis": "23",
         "gleis_geplant": "23",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–D",
+        "zug_modell": "Regionaltriebzug",
+        "wagenreihung": [
+            {
+                "wagen": "Wg.1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Regionaltriebzug • Sektor A–D",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:09"
+        "update": "21:18"
     },
     {
         "zeit": "21:32",
@@ -138,17 +140,36 @@
         "gleis": "22",
         "gleis_geplant": "22",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–D",
+        "zug_modell": "Regionaltriebzug",
+        "wagenreihung": [
+            {
+                "wagen": "Wg.1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Regionaltriebzug • Sektor A–D",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:09"
+        "update": "21:18"
     },
     {
         "zeit": "21:43",
@@ -168,17 +189,36 @@
         "gleis": "21",
         "gleis_geplant": "21",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–D",
+        "zug_modell": "Regionaltriebzug",
+        "wagenreihung": [
+            {
+                "wagen": "Wg.1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Regionaltriebzug • Sektor A–D",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:09"
+        "update": "21:18"
     },
     {
         "zeit": "21:49",
@@ -198,17 +238,36 @@
         "gleis": "8",
         "gleis_geplant": "8",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–D",
+        "zug_modell": "Regionaltriebzug",
+        "wagenreihung": [
+            {
+                "wagen": "Wg.1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Regionaltriebzug • Sektor A–D",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:09"
+        "update": "21:18"
     },
     {
         "zeit": "21:55",
@@ -223,17 +282,60 @@
         "gleis": "11",
         "gleis_geplant": "11",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–F",
+        "zug_modell": "ICE Triebzug",
+        "wagenreihung": [
+            {
+                "wagen": "1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": false
+            },
+            {
+                "wagen": "2",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": false
+            },
+            {
+                "wagen": "3",
+                "klasse": "Bistro",
+                "sektor": "B",
+                "fahrrad": false
+            },
+            {
+                "wagen": "4",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": false
+            },
+            {
+                "wagen": "5",
+                "klasse": "2",
+                "sektor": "D",
+                "fahrrad": false
+            },
+            {
+                "wagen": "6",
+                "klasse": "2",
+                "sektor": "E",
+                "fahrrad": false
+            },
+            {
+                "wagen": "7",
+                "klasse": "2",
+                "sektor": "F",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "ICE Triebzug • Sektor A–F",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:09"
+        "update": "21:18"
     },
     {
         "zeit": "22:00",
@@ -253,17 +355,36 @@
         "gleis": "21",
         "gleis_geplant": "21",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–D",
+        "zug_modell": "Regionaltriebzug",
+        "wagenreihung": [
+            {
+                "wagen": "Wg.1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Regionaltriebzug • Sektor A–D",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:09"
+        "update": "21:18"
     },
     {
         "zeit": "22:12",
@@ -282,10 +403,53 @@
         "gleis": "11",
         "gleis_geplant": "11",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–F",
+        "zug_modell": "ICE Triebzug",
+        "wagenreihung": [
+            {
+                "wagen": "1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": false
+            },
+            {
+                "wagen": "2",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": false
+            },
+            {
+                "wagen": "3",
+                "klasse": "Bistro",
+                "sektor": "B",
+                "fahrrad": false
+            },
+            {
+                "wagen": "4",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": false
+            },
+            {
+                "wagen": "5",
+                "klasse": "2",
+                "sektor": "D",
+                "fahrrad": false
+            },
+            {
+                "wagen": "6",
+                "klasse": "2",
+                "sektor": "E",
+                "fahrrad": false
+            },
+            {
+                "wagen": "7",
+                "klasse": "2",
+                "sektor": "F",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "ICE Triebzug • Sektor A–F",
         "info": "pünktlich",
         "begruendung": "Defekt an fahrzeuggebundener Einstiegshilfe",
         "meldungen": [
@@ -294,7 +458,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:09"
+        "update": "21:18"
     },
     {
         "zeit": "21:39",
@@ -312,10 +476,47 @@
         "gleis": "15",
         "gleis_geplant": "15",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–F",
+        "zug_modell": "Intercity",
+        "wagenreihung": [
+            {
+                "wagen": "1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": false
+            },
+            {
+                "wagen": "2",
+                "klasse": "Bistro",
+                "sektor": "B",
+                "fahrrad": false
+            },
+            {
+                "wagen": "3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": false
+            },
+            {
+                "wagen": "4",
+                "klasse": "2",
+                "sektor": "D",
+                "fahrrad": false
+            },
+            {
+                "wagen": "5",
+                "klasse": "2",
+                "sektor": "E",
+                "fahrrad": false
+            },
+            {
+                "wagen": "6",
+                "klasse": "2",
+                "sektor": "F",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Intercity • Sektor A–F",
         "info": "+35",
         "begruendung": "Reparatur an der Strecke +++ Reparatur am Zug +++ Verspätung eines vorausfahrenden Zuges",
         "meldungen": [
@@ -326,7 +527,7 @@
         "bauarbeiten": true,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:09"
+        "update": "21:18"
     },
     {
         "zeit": "22:21",
@@ -346,17 +547,36 @@
         "gleis": "23",
         "gleis_geplant": "23",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–D",
+        "zug_modell": "Regionaltriebzug",
+        "wagenreihung": [
+            {
+                "wagen": "Wg.1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Regionaltriebzug • Sektor A–D",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:09"
+        "update": "21:18"
     },
     {
         "zeit": "22:32",
@@ -376,17 +596,36 @@
         "gleis": "22",
         "gleis_geplant": "22",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–D",
+        "zug_modell": "Regionaltriebzug",
+        "wagenreihung": [
+            {
+                "wagen": "Wg.1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Regionaltriebzug • Sektor A–D",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:09"
+        "update": "21:18"
     },
     {
         "zeit": "22:38",
@@ -404,17 +643,60 @@
         "gleis": "15",
         "gleis_geplant": "15",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–F",
+        "zug_modell": "ICE Triebzug",
+        "wagenreihung": [
+            {
+                "wagen": "1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": false
+            },
+            {
+                "wagen": "2",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": false
+            },
+            {
+                "wagen": "3",
+                "klasse": "Bistro",
+                "sektor": "B",
+                "fahrrad": false
+            },
+            {
+                "wagen": "4",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": false
+            },
+            {
+                "wagen": "5",
+                "klasse": "2",
+                "sektor": "D",
+                "fahrrad": false
+            },
+            {
+                "wagen": "6",
+                "klasse": "2",
+                "sektor": "E",
+                "fahrrad": false
+            },
+            {
+                "wagen": "7",
+                "klasse": "2",
+                "sektor": "F",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "ICE Triebzug • Sektor A–F",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:09"
+        "update": "21:18"
     },
     {
         "zeit": "22:43",
@@ -434,17 +716,36 @@
         "gleis": "21",
         "gleis_geplant": "21",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–D",
+        "zug_modell": "Regionaltriebzug",
+        "wagenreihung": [
+            {
+                "wagen": "Wg.1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": true
+            },
+            {
+                "wagen": "Wg.3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Regionaltriebzug • Sektor A–D",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:09"
+        "update": "21:18"
     },
     {
         "zeit": "22:58",
@@ -464,17 +765,60 @@
         "gleis": "11",
         "gleis_geplant": "11",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–F",
+        "zug_modell": "ICE Triebzug",
+        "wagenreihung": [
+            {
+                "wagen": "1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": false
+            },
+            {
+                "wagen": "2",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": false
+            },
+            {
+                "wagen": "3",
+                "klasse": "Bistro",
+                "sektor": "B",
+                "fahrrad": false
+            },
+            {
+                "wagen": "4",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": false
+            },
+            {
+                "wagen": "5",
+                "klasse": "2",
+                "sektor": "D",
+                "fahrrad": false
+            },
+            {
+                "wagen": "6",
+                "klasse": "2",
+                "sektor": "E",
+                "fahrrad": false
+            },
+            {
+                "wagen": "7",
+                "klasse": "2",
+                "sektor": "F",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "ICE Triebzug • Sektor A–F",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:09"
+        "update": "21:18"
     },
     {
         "zeit": "23:49",
@@ -494,10 +838,47 @@
         "gleis": "12",
         "gleis_geplant": "12",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–F",
+        "zug_modell": "Nightjet / Nachtzug",
+        "wagenreihung": [
+            {
+                "wagen": "1",
+                "klasse": "2",
+                "sektor": "A",
+                "fahrrad": false
+            },
+            {
+                "wagen": "2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": false
+            },
+            {
+                "wagen": "3",
+                "klasse": "Bistro",
+                "sektor": "C",
+                "fahrrad": false
+            },
+            {
+                "wagen": "4",
+                "klasse": "1",
+                "sektor": "D",
+                "fahrrad": false
+            },
+            {
+                "wagen": "5",
+                "klasse": "1",
+                "sektor": "E",
+                "fahrrad": false
+            },
+            {
+                "wagen": "6",
+                "klasse": "2",
+                "sektor": "F",
+                "fahrrad": false
+            }
+        ],
+        "wagenreihung_text": "Nightjet / Nachtzug • Sektor A–F",
         "info": "pünktlich",
         "begruendung": "Verspätung im Ausland",
         "meldungen": [
@@ -506,7 +887,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:09"
+        "update": "21:18"
     },
     {
         "zeit": "23:49",
@@ -526,17 +907,54 @@
         "gleis": "12",
         "gleis_geplant": "12",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–F",
+        "zug_modell": "Nightjet / Nachtzug",
+        "wagenreihung": [
+            {
+                "wagen": "1",
+                "klasse": "2",
+                "sektor": "A",
+                "fahrrad": false
+            },
+            {
+                "wagen": "2",
+                "klasse": "2",
+                "sektor": "B",
+                "fahrrad": false
+            },
+            {
+                "wagen": "3",
+                "klasse": "Bistro",
+                "sektor": "C",
+                "fahrrad": false
+            },
+            {
+                "wagen": "4",
+                "klasse": "1",
+                "sektor": "D",
+                "fahrrad": false
+            },
+            {
+                "wagen": "5",
+                "klasse": "1",
+                "sektor": "E",
+                "fahrrad": false
+            },
+            {
+                "wagen": "6",
+                "klasse": "2",
+                "sektor": "F",
+                "fahrrad": false
+            }
+        ],
+        "wagenreihung_text": "Nightjet / Nachtzug • Sektor A–F",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:09"
+        "update": "21:18"
     },
     {
         "zeit": "23:49",
@@ -556,16 +974,53 @@
         "gleis": "12",
         "gleis_geplant": "12",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "wagenreihung": [],
-        "wagenreihung_text": "",
+        "sektoren": "A–F",
+        "zug_modell": "Intercity",
+        "wagenreihung": [
+            {
+                "wagen": "1",
+                "klasse": "1",
+                "sektor": "A",
+                "fahrrad": false
+            },
+            {
+                "wagen": "2",
+                "klasse": "Bistro",
+                "sektor": "B",
+                "fahrrad": false
+            },
+            {
+                "wagen": "3",
+                "klasse": "2",
+                "sektor": "C",
+                "fahrrad": false
+            },
+            {
+                "wagen": "4",
+                "klasse": "2",
+                "sektor": "D",
+                "fahrrad": false
+            },
+            {
+                "wagen": "5",
+                "klasse": "2",
+                "sektor": "E",
+                "fahrrad": false
+            },
+            {
+                "wagen": "6",
+                "klasse": "2",
+                "sektor": "F",
+                "fahrrad": true
+            }
+        ],
+        "wagenreihung_text": "Intercity • Sektor A–F",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:09"
+        "update": "21:18"
     }
 ]
