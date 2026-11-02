@@ -23,8 +23,8 @@
             "Störung (Code 2000)"
         ],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
         "zeit": "17:32",
@@ -44,15 +44,18 @@
         "gleis_geplant": "2",
         "gleiswechsel": false,
         "info": "+2",
-        "begruendung": "",
-        "meldungen": [],
+        "begruendung": "Störung (Code 2000) +++ Störung (Code 0)",
+        "meldungen": [
+            "Störung (Code 2000)",
+            "Störung (Code 0)"
+        ],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
         "zeit": "17:27",
-        "echte_zeit": "17:36",
+        "echte_zeit": "17:37",
         "linie": "ICE 695",
         "zug_nr": "ICE 695",
         "ziel": "Stuttgart Hbf",
@@ -67,14 +70,14 @@
         "gleis": "4",
         "gleis_geplant": "4",
         "gleiswechsel": false,
-        "info": "+9",
+        "info": "+10",
         "begruendung": "Störung (Code 0)",
         "meldungen": [
             "Störung (Code 0)"
         ],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
         "zeit": "17:37",
@@ -88,42 +91,18 @@
             "Berlin Südkreuz"
         ],
         "entfallende_halte": [],
-        "gleis": "1 A - D",
+        "gleis": "5",
         "gleis_geplant": "1 A - D",
-        "gleiswechsel": false,
-        "info": "pünktlich",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
-    },
-    {
-        "zeit": "17:20",
-        "echte_zeit": "17:38",
-        "linie": "OE RE8",
-        "zug_nr": "OE 62027",
-        "ziel": "Wittenberge",
-        "ziel_geplant": "Wittenberge",
-        "via": [
-            "Berlin Jungfernheide",
-            "Berlin-Spandau",
-            "Falkensee",
-            "Nauen"
-        ],
-        "entfallende_halte": [],
-        "gleis": "8",
-        "gleis_geplant": "5",
         "gleiswechsel": true,
-        "info": "+18",
-        "begruendung": "Heute von Gleis 8 (statt Gleis 5) +++ Personen im Gleis",
+        "info": "pünktlich",
+        "begruendung": "Heute von Gleis 5 (statt Gleis 1 A - D) +++ Störung (Code 0)",
         "meldungen": [
-            "Heute von Gleis 8 (statt Gleis 5)",
-            "Personen im Gleis"
+            "Heute von Gleis 5 (statt Gleis 1 A - D)",
+            "Störung (Code 0)"
         ],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
         "zeit": "17:37",
@@ -151,34 +130,35 @@
             "Halt entfällt in: Hamburg Dammtor, Neumünster, Kiel Hbf"
         ],
         "bauarbeiten": true,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
-        "zeit": "17:37",
-        "echte_zeit": "17:40",
-        "linie": "ICE 1603",
-        "zug_nr": "ICE 1603",
-        "ziel": "München Hbf",
-        "ziel_geplant": "München Hbf",
+        "zeit": "17:20",
+        "echte_zeit": "17:39",
+        "linie": "OE RE8",
+        "zug_nr": "OE 62027",
+        "ziel": "Wittenberge",
+        "ziel_geplant": "Wittenberge",
         "via": [
-            "Halle(Saale)Hbf",
-            "Erfurt Hbf",
-            "Nürnberg Hbf",
-            "Ingolstadt Hbf"
+            "Berlin Jungfernheide",
+            "Berlin-Spandau",
+            "Falkensee",
+            "Nauen"
         ],
         "entfallende_halte": [],
-        "gleis": "4",
-        "gleis_geplant": "4",
-        "gleiswechsel": false,
-        "info": "+3",
-        "begruendung": "Störung (Code 0)",
+        "gleis": "8",
+        "gleis_geplant": "5",
+        "gleiswechsel": true,
+        "info": "+19",
+        "begruendung": "Heute von Gleis 8 (statt Gleis 5) +++ Personen im Gleis",
         "meldungen": [
-            "Störung (Code 0)"
+            "Heute von Gleis 8 (statt Gleis 5)",
+            "Personen im Gleis"
         ],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
         "zeit": "17:41",
@@ -203,8 +183,8 @@
             "Störung (Code 0)"
         ],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
         "zeit": "17:32",
@@ -230,36 +210,38 @@
             "Störung (Code 0)"
         ],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
-        "zeit": "17:47",
-        "echte_zeit": "17:56",
-        "linie": "OE RB10",
-        "zug_nr": "OE 62074",
-        "ziel": "Nauen",
-        "ziel_geplant": "Nauen",
+        "zeit": "17:37",
+        "echte_zeit": "17:45",
+        "linie": "ICE 1603",
+        "zug_nr": "ICE 1603",
+        "ziel": "München Hbf",
+        "ziel_geplant": "München Hbf",
         "via": [
-            "Berlin Jungfernheide",
-            "Berlin-Spandau",
-            "Albrechtshof",
-            "Seegefeld"
+            "Halle(Saale)Hbf",
+            "Erfurt Hbf",
+            "Nürnberg Hbf",
+            "Ingolstadt Hbf"
         ],
         "entfallende_halte": [],
-        "gleis": "7",
-        "gleis_geplant": "7",
+        "gleis": "4",
+        "gleis_geplant": "4",
         "gleiswechsel": false,
-        "info": "+9",
-        "begruendung": "",
-        "meldungen": [],
+        "info": "+8",
+        "begruendung": "Störung (Code 0)",
+        "meldungen": [
+            "Störung (Code 0)"
+        ],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
         "zeit": "17:54",
-        "echte_zeit": "18:00",
+        "echte_zeit": "18:01",
         "linie": "ICE 803",
         "zug_nr": "ICE 803",
         "ziel": "München Hbf",
@@ -274,19 +256,43 @@
         "gleis": "4",
         "gleis_geplant": "4",
         "gleiswechsel": false,
-        "info": "+6",
+        "info": "+7",
         "begruendung": "Störung (Code 0) +++ Weichenstörung",
         "meldungen": [
             "Störung (Code 0)",
             "Weichenstörung"
         ],
         "bauarbeiten": true,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
+    },
+    {
+        "zeit": "17:47",
+        "echte_zeit": "18:02",
+        "linie": "OE RB10",
+        "zug_nr": "OE 62074",
+        "ziel": "Nauen",
+        "ziel_geplant": "Nauen",
+        "via": [
+            "Berlin Jungfernheide",
+            "Berlin-Spandau",
+            "Albrechtshof",
+            "Seegefeld"
+        ],
+        "entfallende_halte": [],
+        "gleis": "7",
+        "gleis_geplant": "7",
+        "gleiswechsel": false,
+        "info": "+15",
+        "begruendung": "",
+        "meldungen": [],
+        "bauarbeiten": false,
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
         "zeit": "17:52",
-        "echte_zeit": "18:02",
+        "echte_zeit": "18:04",
         "linie": "RE FEX",
         "zug_nr": "RE 21917",
         "ziel": "Flughafen BER",
@@ -299,40 +305,12 @@
         "gleis": "1",
         "gleis_geplant": "1",
         "gleiswechsel": false,
-        "info": "+10",
+        "info": "+12",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
-    },
-    {
-        "zeit": "17:28",
-        "echte_zeit": "18:07",
-        "linie": "RJ 385",
-        "zug_nr": "RJ 385",
-        "ziel": "Praha hl.n.",
-        "ziel_geplant": "Praha hl.n.",
-        "via": [
-            "Berlin Südkreuz",
-            "Dresden-Neustadt",
-            "Dresden Hbf",
-            "Bad Schandau"
-        ],
-        "entfallende_halte": [],
-        "gleis": "3",
-        "gleis_geplant": "3",
-        "gleiswechsel": false,
-        "info": "+39",
-        "begruendung": "Verspätung im Ausland +++ Störung (Code 0) +++ Weichenstörung",
-        "meldungen": [
-            "Verspätung im Ausland",
-            "Störung (Code 0)",
-            "Weichenstörung"
-        ],
-        "bauarbeiten": true,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
         "zeit": "18:07",
@@ -355,8 +333,8 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
         "zeit": "18:07",
@@ -379,12 +357,40 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
+    },
+    {
+        "zeit": "17:28",
+        "echte_zeit": "18:08",
+        "linie": "RJ 385",
+        "zug_nr": "RJ 385",
+        "ziel": "Praha hl.n.",
+        "ziel_geplant": "Praha hl.n.",
+        "via": [
+            "Berlin Südkreuz",
+            "Dresden-Neustadt",
+            "Dresden Hbf",
+            "Bad Schandau"
+        ],
+        "entfallende_halte": [],
+        "gleis": "3",
+        "gleis_geplant": "3",
+        "gleiswechsel": false,
+        "info": "+40",
+        "begruendung": "Verspätung im Ausland +++ Störung (Code 0) +++ Weichenstörung",
+        "meldungen": [
+            "Verspätung im Ausland",
+            "Störung (Code 0)",
+            "Weichenstörung"
+        ],
+        "bauarbeiten": true,
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
         "zeit": "17:09",
-        "echte_zeit": "18:08",
+        "echte_zeit": "18:11",
         "linie": "RE RE4",
         "zug_nr": "RE 3156",
         "ziel": "Falkenberg(Elster)",
@@ -399,14 +405,15 @@
         "gleis": "1",
         "gleis_geplant": "2",
         "gleiswechsel": true,
-        "info": "+59",
-        "begruendung": "Heute von Gleis 1 (statt Gleis 2)",
+        "info": "+62",
+        "begruendung": "Heute von Gleis 1 (statt Gleis 2) +++ Störung (Code 0)",
         "meldungen": [
-            "Heute von Gleis 1 (statt Gleis 2)"
+            "Heute von Gleis 1 (statt Gleis 2)",
+            "Störung (Code 0)"
         ],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
         "zeit": "18:14",
@@ -431,8 +438,8 @@
             "Technische Störung am Zug"
         ],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
         "zeit": "17:42",
@@ -455,8 +462,8 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
         "zeit": "18:09",
@@ -482,8 +489,8 @@
             "Störung (Code 0)"
         ],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
         "zeit": "18:19",
@@ -501,11 +508,13 @@
         "gleis_geplant": "1",
         "gleiswechsel": false,
         "info": "pünktlich",
-        "begruendung": "",
-        "meldungen": [],
+        "begruendung": "Störung (Code 0)",
+        "meldungen": [
+            "Störung (Code 0)"
+        ],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
         "zeit": "17:54",
@@ -528,8 +537,8 @@
             "Mehrzweckabteil vorne"
         ],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
         "zeit": "18:23",
@@ -552,8 +561,8 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
         "zeit": "18:25",
@@ -576,8 +585,8 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
         "zeit": "18:29",
@@ -602,8 +611,8 @@
             "Störung (Code 0)"
         ],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
         "zeit": "18:34",
@@ -625,8 +634,8 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
         "zeit": "18:37",
@@ -647,8 +656,8 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
         "zeit": "18:37",
@@ -671,8 +680,8 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
         "zeit": "18:38",
@@ -695,8 +704,8 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
         "zeit": "18:41",
@@ -723,8 +732,8 @@
             "Verspätung eines vorausfahrenden Zuges"
         ],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
         "zeit": "18:43",
@@ -749,8 +758,8 @@
             "Störung (Code 0)"
         ],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
         "zeit": "18:48",
@@ -773,8 +782,8 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
         "zeit": "18:52",
@@ -795,8 +804,8 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
         "zeit": "18:54",
@@ -819,8 +828,8 @@
             "Mehrzweckabteil vorne"
         ],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
         "zeit": "18:46",
@@ -840,8 +849,8 @@
             "Störung (Code 1000)"
         ],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     },
     {
         "zeit": "18:46",
@@ -864,7 +873,7 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "17:37"
+        "station_ticker": "🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚧 Stellwerksstörung / -ausfall +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich sowie auf den Bahnsteigen gilt das Hausrecht der DB InfraGO AG. Der übermäßige Verzehr von Alkohol sowie das Rauchen außerhalb gekennzeichneter Raucherbereiche sind untersagt. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
+        "update": "17:40"
     }
 ]
