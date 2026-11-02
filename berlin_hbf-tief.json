@@ -1,86 +1,10 @@
 [
     {
-        "zeit": "23:22",
-        "echte_zeit": "23:23",
-        "linie": "RE FEX",
-        "zug_nr": "RE 21961",
-        "kategorie": "RE",
-        "ziel": "Flughafen BER",
-        "ziel_geplant": "Flughafen BER",
-        "via": [
-            "Berlin Potsdamer Platz",
-            "Berlin Südkreuz"
-        ],
-        "entfallende_halte": [],
-        "gleis": "8",
-        "gleis_geplant": "1",
-        "gleiswechsel": true,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "",
-        "info": "+1",
-        "begruendung": "Heute von Gleis 8 (statt Gleis 1)",
-        "meldungen": [
-            "Heute von Gleis 8 (statt Gleis 1)"
-        ],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [
-            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
-            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5)",
-            "🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12)",
-            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
-        ],
-        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:26"
-    },
-    {
-        "zeit": "23:20",
-        "echte_zeit": "23:30",
-        "linie": "OE RE8",
-        "zug_nr": "OE 62039",
-        "kategorie": "OE",
-        "ziel": "Wittenberge",
-        "ziel_geplant": "Wittenberge",
-        "via": [
-            "Berlin Jungfernheide",
-            "Berlin-Spandau",
-            "Albrechtshof",
-            "Seegefeld"
-        ],
-        "entfallende_halte": [],
-        "gleis": "6",
-        "gleis_geplant": "5",
-        "gleiswechsel": true,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "",
-        "info": "+10",
-        "begruendung": "Heute von Gleis 6 (statt Gleis 5) +++ Verzögerungen im Betriebsablauf",
-        "meldungen": [
-            "Heute von Gleis 6 (statt Gleis 5)",
-            "Verzögerungen im Betriebsablauf"
-        ],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [
-            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
-            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5)",
-            "🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12)",
-            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
-        ],
-        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:26"
-    },
-    {
         "zeit": "23:29",
-        "echte_zeit": "23:30",
+        "echte_zeit": "23:29",
         "linie": "ICE 905",
         "zug_nr": "ICE 905",
+        "fahrt_nr": "905",
         "kategorie": "ICE",
         "ziel": "München Hbf",
         "ziel_geplant": "München Hbf",
@@ -100,7 +24,8 @@
         "zugteile": [],
         "wagenreihung": [],
         "wagenreihung_text": "",
-        "info": "+1",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-02&evaNumber=8011160&number=905&time=2026-11-02T22:29:00.000Z",
+        "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
@@ -108,16 +33,18 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5)",
             "🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12)",
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 7/8)",
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
-        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:26"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "23:37"
     },
     {
         "zeit": "23:24",
-        "echte_zeit": "23:34",
+        "echte_zeit": "23:33",
         "linie": "RE 3",
         "zug_nr": "RE 3320",
+        "fahrt_nr": "3320",
         "kategorie": "RE",
         "ziel": "Eberswalde Hbf",
         "ziel_geplant": "Eberswalde Hbf",
@@ -137,7 +64,8 @@
         "zugteile": [],
         "wagenreihung": [],
         "wagenreihung_text": "",
-        "info": "+10",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-02&evaNumber=8011160&number=3320&time=2026-11-02T22:24:00.000Z",
+        "info": "+9",
         "begruendung": "Heute von Gleis 5 (statt Gleis 6)",
         "meldungen": [
             "Heute von Gleis 5 (statt Gleis 6)"
@@ -147,16 +75,61 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5)",
             "🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12)",
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 7/8)",
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
-        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:26"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "23:37"
+    },
+    {
+        "zeit": "23:20",
+        "echte_zeit": "23:35",
+        "linie": "OE RE8",
+        "zug_nr": "OE 62039",
+        "fahrt_nr": "62039",
+        "kategorie": "OE",
+        "ziel": "Wittenberge",
+        "ziel_geplant": "Wittenberge",
+        "via": [
+            "Berlin Jungfernheide",
+            "Berlin-Spandau",
+            "Albrechtshof",
+            "Seegefeld"
+        ],
+        "entfallende_halte": [],
+        "gleis": "6",
+        "gleis_geplant": "5",
+        "gleiswechsel": true,
+        "sektoren": "",
+        "zug_modell": "",
+        "formation": "",
+        "zugteile": [],
+        "wagenreihung": [],
+        "wagenreihung_text": "",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=OE&date=2026-11-02&evaNumber=8011160&number=62039&time=2026-11-02T22:20:00.000Z",
+        "info": "+15",
+        "begruendung": "Heute von Gleis 6 (statt Gleis 5) +++ Verzögerungen im Betriebsablauf",
+        "meldungen": [
+            "Heute von Gleis 6 (statt Gleis 5)",
+            "Verzögerungen im Betriebsablauf"
+        ],
+        "bauarbeiten": false,
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5)",
+            "🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12)",
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 7/8)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "23:37"
     },
     {
         "zeit": "23:35",
-        "echte_zeit": "23:37",
+        "echte_zeit": "23:35",
         "linie": "RE 3",
         "zug_nr": "RE 3359",
+        "fahrt_nr": "3359",
         "kategorie": "RE",
         "ziel": "Jüterbog",
         "ziel_geplant": "Jüterbog",
@@ -176,7 +149,8 @@
         "zugteile": [],
         "wagenreihung": [],
         "wagenreihung_text": "",
-        "info": "+2",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-02&evaNumber=8011160&number=3359&time=2026-11-02T22:35:00.000Z",
+        "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
@@ -184,16 +158,18 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5)",
             "🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12)",
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 7/8)",
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
-        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:26"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "23:37"
     },
     {
         "zeit": "23:37",
         "echte_zeit": "23:37",
         "linie": "RE FEX",
         "zug_nr": "RE 21963",
+        "fahrt_nr": "21963",
         "kategorie": "RE",
         "ziel": "Flughafen BER",
         "ziel_geplant": "Flughafen BER",
@@ -211,6 +187,7 @@
         "zugteile": [],
         "wagenreihung": [],
         "wagenreihung_text": "",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-02&evaNumber=8011160&number=21963&time=2026-11-02T22:37:00.000Z",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
@@ -219,16 +196,18 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5)",
             "🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12)",
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 7/8)",
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
-        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:26"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "23:37"
     },
     {
         "zeit": "23:43",
-        "echte_zeit": "23:48",
+        "echte_zeit": "23:46",
         "linie": "OE RE8",
         "zug_nr": "OE 62036",
+        "fahrt_nr": "62036",
         "kategorie": "OE",
         "ziel": "Baruth(Mark)",
         "ziel_geplant": "Baruth(Mark)",
@@ -248,7 +227,8 @@
         "zugteile": [],
         "wagenreihung": [],
         "wagenreihung_text": "",
-        "info": "+5",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=OE&date=2026-11-02&evaNumber=8011160&number=62036&time=2026-11-02T22:43:00.000Z",
+        "info": "+3",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
@@ -256,16 +236,18 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5)",
             "🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12)",
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 7/8)",
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
-        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:26"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "23:37"
     },
     {
         "zeit": "23:51",
         "echte_zeit": "23:52",
         "linie": "ICE 1540",
         "zug_nr": "ICE 1540",
+        "fahrt_nr": "1540",
         "kategorie": "ICE",
         "ziel": "Köln Hbf",
         "ziel_geplant": "Köln Hbf",
@@ -285,6 +267,7 @@
         "zugteile": [],
         "wagenreihung": [],
         "wagenreihung_text": "",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-02&evaNumber=8011160&number=1540&time=2026-11-02T22:51:00.000Z",
         "info": "+1",
         "begruendung": "",
         "meldungen": [],
@@ -293,16 +276,18 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5)",
             "🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12)",
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 7/8)",
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
-        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:26"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "23:37"
     },
     {
         "zeit": "23:52",
         "echte_zeit": "23:52",
         "linie": "RE FEX",
         "zug_nr": "RE 21965",
+        "fahrt_nr": "21965",
         "kategorie": "RE",
         "ziel": "Flughafen BER",
         "ziel_geplant": "Flughafen BER",
@@ -320,6 +305,7 @@
         "zugteile": [],
         "wagenreihung": [],
         "wagenreihung_text": "",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-02&evaNumber=8011160&number=21965&time=2026-11-02T22:52:00.000Z",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
@@ -328,16 +314,18 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5)",
             "🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12)",
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 7/8)",
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
-        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:26"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "23:37"
     },
     {
         "zeit": "00:08",
         "echte_zeit": "00:08",
         "linie": "ICE 273",
         "zug_nr": "ICE 273",
+        "fahrt_nr": "273",
         "kategorie": "ICE",
         "ziel": "Zürich HB",
         "ziel_geplant": "Zürich HB",
@@ -357,6 +345,7 @@
         "zugteile": [],
         "wagenreihung": [],
         "wagenreihung_text": "",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-03&evaNumber=8011160&number=273&time=2026-11-02T23:08:00.000Z",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
@@ -365,16 +354,18 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5)",
             "🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12)",
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 7/8)",
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
-        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:26"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "23:37"
     },
     {
         "zeit": "00:19",
         "echte_zeit": "00:19",
         "linie": "RE 3",
         "zug_nr": "RE 3360",
+        "fahrt_nr": "3360",
         "kategorie": "RE",
         "ziel": "Eberswalde Hbf",
         "ziel_geplant": "Eberswalde Hbf",
@@ -394,6 +385,7 @@
         "zugteile": [],
         "wagenreihung": [],
         "wagenreihung_text": "",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-03&evaNumber=8011160&number=3360&time=2026-11-02T23:19:00.000Z",
         "info": "pünktlich",
         "begruendung": "Universal-WC fehlt",
         "meldungen": [
@@ -404,16 +396,18 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5)",
             "🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12)",
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 7/8)",
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
-        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:26"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "23:37"
     },
     {
         "zeit": "00:40",
         "echte_zeit": "00:40",
         "linie": "RE 3",
         "zug_nr": "RE 3363",
+        "fahrt_nr": "3363",
         "kategorie": "RE",
         "ziel": "Jüterbog",
         "ziel_geplant": "Jüterbog",
@@ -433,6 +427,7 @@
         "zugteile": [],
         "wagenreihung": [],
         "wagenreihung_text": "",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-03&evaNumber=8011160&number=3363&time=2026-11-02T23:40:00.000Z",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
@@ -441,16 +436,18 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5)",
             "🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12)",
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 7/8)",
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
-        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:26"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "23:37"
     },
     {
         "zeit": "00:52",
         "echte_zeit": "00:52",
         "linie": "RE FEX",
         "zug_nr": "RE 21967",
+        "fahrt_nr": "21967",
         "kategorie": "RE",
         "ziel": "Flughafen BER",
         "ziel_geplant": "Flughafen BER",
@@ -468,6 +465,7 @@
         "zugteile": [],
         "wagenreihung": [],
         "wagenreihung_text": "",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-03&evaNumber=8011160&number=21967&time=2026-11-02T23:52:00.000Z",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
@@ -476,9 +474,10 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5)",
             "🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12)",
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 7/8)",
             "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
-        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:26"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12) +++ 🛗 Rolltreppe außer Betrieb (zu Gleis 7/8) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "23:37"
     }
 ]
