@@ -103,7 +103,6 @@
         }
         .station-name { font-size: 1.45rem; font-weight: 900; color: var(--db-dark); margin: 6px 0; }
 
-        /* Filter-Leiste (Alle / Fernverkehr / Regional / S-Bahn) */
         .filter-bar {
             display: flex; gap: 8px; overflow-x: auto; padding-top: 6px; scrollbar-width: none;
         }
@@ -117,7 +116,6 @@
             background: var(--db-red); color: #fff; border-color: var(--db-red);
         }
 
-        /* Echter DB-Bahnhofs-Lauftext (ZZA-Ticker) */
         .station-ticker-bar {
             background: var(--db-zza-blue);
             color: #ffffff;
@@ -144,7 +142,6 @@
             100% { transform: translateX(-100%); }
         }
 
-        /* Aufzugsstörungs-Leiste */
         .elevator-alert-bar {
             background: #ffebee; color: #b71c1c; padding: 7px 16px;
             font-size: 0.78rem; font-weight: 800; border-bottom: 1px solid #ffcdd2;
@@ -184,31 +181,209 @@
         .pl-old { font-size: 0.72rem; text-decoration: line-through; color: var(--text-secondary); display: block; }
         .pl-sector { font-size: 0.72rem; font-weight: 800; color: var(--db-zza-blue); background: #e8eef5; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-top: 3px; }
 
-        /* Grafische Wagenreihung */
-        .coach-sequence-box {
+        /* =========================================================
+           ORIGINAL DB WAGENREIHUNGS-DESIGN (wie auf bahn.de)
+           ========================================================= */
+        .db-reihung-container {
             grid-column: 1 / 4;
-            margin-top: 10px;
-            background: #f8f9fb;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 8px 10px;
+            margin-top: 12px;
+            background: #e3e7ec;
+            border: 1px solid #cfd6df;
+            border-radius: 10px;
+            padding: 10px 12px 0 12px;
+            overflow: hidden;
         }
-        .coach-header {
-            font-size: 0.72rem; font-weight: 800; color: var(--text-secondary);
-            margin-bottom: 6px; display: flex; justify-content: space-between;
+        .db-reihung-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 8px;
         }
-        .coach-strip {
-            display: flex; gap: 4px; overflow-x: auto; padding-bottom: 2px;
+        .db-dir-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            color: #4a5568;
+            font-weight: 700;
         }
-        .coach-item {
-            min-width: 38px; padding: 4px 5px; border-radius: 5px;
-            background: #212d40; color: #fff; text-align: center;
-            font-size: 0.7rem; font-weight: 800; display: flex; flex-direction: column;
-            border-bottom: 3px solid #636e72;
+        .db-gl-badge {
+            background: #192a56;
+            color: #fff;
+            font-weight: 800;
+            font-size: 0.72rem;
+            padding: 3px 7px;
+            border-radius: 4px;
         }
-        .coach-item.first-class { background: #3d3512; border-bottom-color: #ffd700; }
-        .coach-item.bistro { background: #5c131b; border-bottom-color: var(--db-red); }
-        .coach-sec { font-size: 0.6rem; color: #b2bec3; font-weight: 700; }
+        .db-formation-pill {
+            background: #ffffff;
+            color: #1a2536;
+            border: 1px solid #cbd5e0;
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .db-train-scroll {
+            display: flex;
+            align-items: flex-end;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            gap: 0;
+        }
+        .db-zugteil-block {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .db-zugteil-label {
+            font-size: 0.68rem;
+            font-weight: 800;
+            color: #2d3748;
+            background: rgba(255,255,255,0.75);
+            padding: 1px 6px;
+            border-radius: 4px;
+            margin-bottom: 4px;
+        }
+        .db-zugteil-cars {
+            display: flex;
+            align-items: flex-start;
+            gap: 3px;
+        }
+        .db-car-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .db-car-sec-top {
+            font-size: 0.62rem;
+            font-weight: 800;
+            color: #4a5568;
+            height: 13px;
+            margin-bottom: 2px;
+        }
+        /* Wagenkasten-Formen */
+        .db-car-body {
+            height: 36px;
+            min-width: 38px;
+            background: #ffffff;
+            border: 1.5px solid #5a626a;
+            color: #1a2536;
+            font-weight: 800;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+        }
+        /* Linker Triebkopf (Zugspitze links wie auf bahn.de) */
+        .db-car-body.nose-left {
+            min-width: 44px;
+            height: 40px;
+            margin-top: -4px;
+            border-top-left-radius: 16px 36px;
+            border-bottom-left-radius: 4px;
+            padding-left: 6px;
+        }
+        /* Rechter Triebkopf (Zugspitze rechts wie auf bahn.de) */
+        .db-car-body.nose-right {
+            min-width: 44px;
+            height: 40px;
+            margin-top: -4px;
+            border-top-right-radius: 16px 36px;
+            border-bottom-right-radius: 4px;
+            padding-right: 6px;
+        }
+        /* Reine 1. Klasse (Dunkelgrau wie auf bahn.de) */
+        .db-car-body.class-1 {
+            background: #5a626a;
+            color: #ffffff;
+        }
+        /* Gemischter Wagen 2. | 1. Klasse (halb weiß, halb dunkelgrau wie beim Talent 2 auf bahn.de) */
+        .db-car-body.class-split {
+            padding: 0;
+            min-width: 48px;
+        }
+        .db-split-left {
+            flex: 1;
+            height: 100%;
+            background: #ffffff;
+            color: #1a2536;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            padding-left: 3px;
+        }
+        .db-split-right {
+            flex: 1;
+            height: 100%;
+            background: #5a626a;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            padding-right: 3px;
+        }
+        /* Bordbistro */
+        .db-car-body.class-bistro {
+            background: #fff5f5;
+            border-color: var(--db-red);
+            color: var(--db-red);
+        }
+        .db-wnr-sub {
+            position: absolute;
+            top: 1px;
+            right: 3px;
+            font-size: 0.52rem;
+            opacity: 0.7;
+            font-weight: 700;
+        }
+        /* Graue Symbol-Leiste unter den Wagen (❄️ Klimaanlage & 🚲 Fahrrad) */
+        .db-car-icons {
+            width: 100%;
+            background: #f1f3f6;
+            margin-top: 3px;
+            padding: 3px 2px;
+            min-height: 34px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 2px;
+            font-size: 0.68rem;
+            border-top: 2px solid #cbd5e0;
+        }
+        /* Sichtbare Zugtrennung / Kupplung zwischen Zugteil 1 und Zugteil 2 */
+        .db-coupling-divider {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0 8px;
+            align-self: stretch;
+        }
+        .db-coupling-line {
+            width: 2px;
+            flex: 1;
+            border-left: 2px dashed #718096;
+            margin-bottom: 2px;
+        }
+        .db-coupling-badge {
+            background: #2d3748;
+            color: #fff;
+            font-size: 0.62rem;
+            font-weight: 800;
+            padding: 2px 5px;
+            border-radius: 4px;
+            white-space: nowrap;
+            margin: 2px 0;
+        }
 
         /* Gelber Verspätungs- & Oranger Bauarbeiten-Balken */
         .delay-reason { 
@@ -310,14 +485,12 @@
         </div>
     </div>
 
-    <!-- Live-Ticker wie am echten Bahnsteig -->
     <div class="station-ticker-bar" id="station-ticker-box">
         <div class="ticker-content" id="station-ticker-text">
             ℹ️ Bitte beachten Sie die Ansagen und Hinweise am Bahnsteig sowie das Rauch- und Alkoholverbot im Bahnhofsbereich.
         </div>
     </div>
 
-    <!-- Anzeige für defekte Aufzüge / Rolltreppen -->
     <div class="elevator-alert-bar" id="elevator-alert"></div>
 
     <div id="board"></div>
@@ -432,25 +605,96 @@
         document.getElementById('star').innerText = isFav ? '★' : '☆';
     }
 
+    /* Zeichnet den Zug wie auf bahn.de (mit Zugspitzen, 2.|1.-Teilung, Klima/Fahrrad & Zugtrennung bei 2 Zügen) */
     function renderCoachSequence(zug) {
-        if (!zug.wagenreihung || zug.wagenreihung.length === 0) return '';
-        const itemsHtml = zug.wagenreihung.map(w => {
-            const cls = w.klasse === '1' ? 'first-class' : (w.klasse === 'Bistro' ? 'bistro' : '');
-            const label = w.klasse === 'Bistro' ? '🍴' : (w.wagen || (w.klasse + '.Kl'));
-            return `
-                <div class="coach-item ${cls}">
-                    <span>${label}</span>
-                    <span class="coach-sec">${w.sektor || ''}</span>
+        let teile = zug.zugteile || [];
+        if (teile.length === 0 && zug.wagenreihung && zug.wagenreihung.length > 0) {
+            teile = [{
+                teil_nr: 1,
+                bezeichnung: `${zug.wagenreihung.length}-Teiler`,
+                wagen: zug.wagenreihung
+            }];
+        }
+        if (teile.length === 0) return '';
+
+        const hasSectors = teile.some(t => (t.wagen || []).some(w => w.sektor));
+
+        const teileHtml = teile.map((teil, tIdx) => {
+            const wagenArr = teil.wagen || [];
+            const carsHtml = wagenArr.map((w, wIdx) => {
+                const isFirst = (wIdx === 0);
+                const isLast = (wIdx === wagenArr.length - 1);
+                let shapeCls = 'db-car-body';
+                if (isFirst) shapeCls += ' nose-left';
+                if (isLast) shapeCls += ' nose-right';
+
+                let innerHtml = '';
+                const wnrBadge = w.wagen && !w.wagen.startsWith('Wg') && !w.wagen.startsWith('Tz')
+                    ? `<span class="db-wnr-sub">${w.wagen}</span>` : '';
+
+                if (w.klasse === '2+1') {
+                    shapeCls += ' class-split';
+                    innerHtml = `<div class="db-split-left">2.</div><div class="db-split-right">1.</div>${wnrBadge}`;
+                } else if (w.klasse === '1') {
+                    shapeCls += ' class-1';
+                    innerHtml = `1.${wnrBadge}`;
+                } else if (w.klasse === 'Bistro') {
+                    shapeCls += ' class-bistro';
+                    innerHtml = `🍴${wnrBadge}`;
+                } else {
+                    innerHtml = `2.${wnrBadge}`;
+                }
+
+                const showKlima = (w.klima !== false);
+                const showBike = Boolean(w.fahrrad);
+
+                return `
+                    <div class="db-car-col">
+                        ${hasSectors ? `<div class="db-car-sec-top">${w.sektor || ''}</div>` : ''}
+                        <div class="${shapeCls}">${innerHtml}</div>
+                        <div class="db-car-icons">
+                            <span>${showKlima ? '❄️' : '&nbsp;'}</span>
+                            <span>${showBike ? '🚲' : '&nbsp;'}</span>
+                        </div>
+                    </div>`;
+            }).join('');
+
+            const labelText = teile.length > 1
+                ? `${teil.bezeichnung}${teil.ziel ? ' ➔ ' + teil.ziel : ''}`
+                : '';
+
+            const blockHtml = `
+                <div class="db-zugteil-block">
+                    ${labelText ? `<div class="db-zugteil-label">${labelText}</div>` : ''}
+                    <div class="db-zugteil-cars">${carsHtml}</div>
                 </div>`;
+
+            // Wenn ein zweiter Zugteil folgt -> sichtbare Zugtrennung / Kupplung zeichnen!
+            if (tIdx < teile.length - 1) {
+                return blockHtml + `
+                    <div class="db-coupling-divider" title="Zugtrennung / 2 gekuppelte Züge">
+                        <div class="db-coupling-line"></div>
+                        <div class="db-coupling-badge">╠═╣</div>
+                        <div class="db-coupling-line"></div>
+                    </div>`;
+            }
+            return blockHtml;
         }).join('');
 
+        const formationLabel = zug.formation || (teile.length > 1 ? `${teile.length} Züge gekuppelt` : `${teile[0].wagen.length}-Teiler`);
+
         return `
-            <div class="coach-sequence-box">
-                <div class="coach-header">
-                    <span>🚄 ${zug.wagenreihung_text || 'Wagenreihung'}</span>
-                    <span>🟡 1.Kl &nbsp; 🔴 Bistro &nbsp; ⚫ 2.Kl</span>
+            <div class="db-reihung-container">
+                <div class="db-reihung-top">
+                    <div class="db-dir-group">
+                        <span class="db-gl-badge">Gl. ${zug.gleis || '1'}</span>
+                        <span>← Abfahrtsrichtung</span>
+                    </div>
+                    <span class="db-formation-pill">🚄 ${formationLabel}</span>
                 </div>
-                <div class="coach-strip">${itemsHtml}</div>
+                <div class="db-train-scroll">
+                    ${teileHtml}
+                </div>
             </div>`;
     }
 
@@ -494,7 +738,6 @@
                     }
                 }
 
-                // Aufzugsstörungen anzeigen
                 const elBar = document.getElementById('elevator-alert');
                 const defekte = data[0].defekte_aufzuege || [];
                 if (defekte.length > 0) {
@@ -516,9 +759,8 @@
                 if (aktuelleMinuten > 1320 && zugMinuten < 180) zugMinuten += 1440;
                 if (zugMinuten < (aktuelleMinuten - 5)) return false;
 
-                // Kategorie-Filter anwenden
                 const l = (zug.linie || "").toUpperCase();
-                const isFV = l.startsWith("ICE") || l.startsWith("IC") || l.startsWith("EC") || l.startsWith("FLX") || l.startsWith("NJ");
+                const isFV = l.startsWith("ICE") || l.startsWith("IC") || l.startsWith("EC") || l.startsWith("FLX") || l.startsWith("NJ") || l.startsWith("D ");
                 const isSBahn = l.startsWith("S ") || /^S\d/.test(l);
                 if (currentFilter === 'FV') return isFV;
                 if (currentFilter === 'SBAHN') return isSBahn;
