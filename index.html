@@ -181,11 +181,9 @@
         .pl-old { font-size: 0.72rem; text-decoration: line-through; color: var(--text-secondary); display: block; }
         .pl-sector { font-size: 0.72rem; font-weight: 800; color: var(--db-zza-blue); background: #e8eef5; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-top: 3px; }
 
-        /* =========================================================
-           ORIGINAL DB WAGENREIHUNGS-DESIGN (wie auf bahn.de)
-           ========================================================= */
+        /* ORIGINAL DB WAGENREIHUNGS-DESIGN (wie auf bahn.de) */
+        .db-reihung-slot { grid-column: 1 / 4; }
         .db-reihung-container {
-            grid-column: 1 / 4;
             margin-top: 12px;
             background: #e3e7ec;
             border: 1px solid #cfd6df;
@@ -264,7 +262,6 @@
             height: 13px;
             margin-bottom: 2px;
         }
-        /* Wagenkasten-Formen */
         .db-car-body {
             height: 36px;
             min-width: 38px;
@@ -280,7 +277,6 @@
             overflow: hidden;
             box-shadow: 0 1px 2px rgba(0,0,0,0.06);
         }
-        /* Linker Triebkopf (Zugspitze links wie auf bahn.de) */
         .db-car-body.nose-left {
             min-width: 44px;
             height: 40px;
@@ -289,7 +285,6 @@
             border-bottom-left-radius: 4px;
             padding-left: 6px;
         }
-        /* Rechter Triebkopf (Zugspitze rechts wie auf bahn.de) */
         .db-car-body.nose-right {
             min-width: 44px;
             height: 40px;
@@ -298,12 +293,10 @@
             border-bottom-right-radius: 4px;
             padding-right: 6px;
         }
-        /* Reine 1. Klasse (Dunkelgrau wie auf bahn.de) */
         .db-car-body.class-1 {
             background: #5a626a;
             color: #ffffff;
         }
-        /* Gemischter Wagen 2. | 1. Klasse (halb weiß, halb dunkelgrau wie beim Talent 2 auf bahn.de) */
         .db-car-body.class-split {
             padding: 0;
             min-width: 48px;
@@ -330,7 +323,6 @@
             font-size: 0.8rem;
             padding-right: 3px;
         }
-        /* Bordbistro */
         .db-car-body.class-bistro {
             background: #fff5f5;
             border-color: var(--db-red);
@@ -344,7 +336,6 @@
             opacity: 0.7;
             font-weight: 700;
         }
-        /* Graue Symbol-Leiste unter den Wagen (❄️ Klimaanlage & 🚲 Fahrrad) */
         .db-car-icons {
             width: 100%;
             background: #f1f3f6;
@@ -359,7 +350,6 @@
             font-size: 0.68rem;
             border-top: 2px solid #cbd5e0;
         }
-        /* Sichtbare Zugtrennung / Kupplung zwischen Zugteil 1 und Zugteil 2 */
         .db-coupling-divider {
             display: flex;
             flex-direction: column;
@@ -385,7 +375,6 @@
             margin: 2px 0;
         }
 
-        /* Gelber Verspätungs- & Oranger Bauarbeiten-Balken */
         .delay-reason { 
             grid-column: 1 / 4; 
             background: var(--info-yellow); 
@@ -523,10 +512,18 @@
         { name: "Zerbst/Anhalt", file: "zerbst.json", eva: "8013389" }
     ].sort((a, b) => a.name.localeCompare(b.name));
 
+    const BAUREIHEN_MAP = {
+        "0442": "Talent 2 (BR 442)", "1442": "Talent 2 (BR 442)", "2442": "Talent 2 (BR 442)", "3442": "Talent 2 (BR 442)",
+        "0842": "Talent 2 (BR 442)", "1842": "Talent 2 (BR 442)", "0445": "Twindexx / KISS (BR 445)", "0446": "Twindexx (BR 446)",
+        "0462": "Desiro HC (BR 462)", "1462": "Desiro HC (BR 1462)", "0463": "Mireo (BR 463)", "1463": "Mireo (BR 1463)",
+        "0412": "ICE 4 (BR 412)", "9412": "ICE 4 (BR 412)", "0401": "ICE 1", "0402": "ICE 2", "0403": "ICE 3", "0411": "ICE T"
+    };
+
     const BASE_URL = 'https://raw.githubusercontent.com/nicopro2021/Abfahrtstafel-/main/';
     let currentStation = null;
     let currentFilter = 'ALL';
     let favorites = JSON.parse(localStorage.getItem('db_monitor_favs')) || [null, null, null, null];
+    const LIVE_SEQ_CACHE = {};
 
     function setFilter(filterType, btnEl) {
         currentFilter = filterType;
@@ -543,7 +540,7 @@
             document.getElementById('g-wetter').innerText = data.wetter || "--°C";
             document.getElementById('g-msg').innerText = data.nachricht || "Alle Systeme normal.";
             document.getElementById('weather-small').innerText = data.wetter || "";
-        } catch(e) { console.log("Info-Fehler"); }
+        } catch(e) {}
     }
 
     function openSearch() {
@@ -605,7 +602,123 @@
         document.getElementById('star').innerText = isFav ? '★' : '☆';
     }
 
-    /* Zeichnet den Zug wie auf bahn.de (mit Zugspitzen, 2.|1.-Teilung, Klima/Fahrrad & Zugtrennung bei 2 Zügen) */
+    function parseBahnDeJsonInBrowser(data, cat) {
+        if (!data || !data.groups || data.groups.length === 0) return null;
+        const istRegio = !["ICE", "IC", "EC", "EN", "NJ", "FLX", "D"].includes((cat || "").toUpperCase());
+        const rawUnits = [];
+        let brGefunden = "";
+
+        for (const grp of data.groups) {
+            const vehicles = grp.vehicles || [];
+            for (const v of vehicles) {
+                const vid = String(v.vehicleID || "").replace(/\D/g, "");
+                if (vid.length === 12 && vid.startsWith("9") && vid.slice(2, 4) === "80") {
+                    const brCode = vid.slice(4, 8);
+                    if (BAUREIHEN_MAP[brCode]) { brGefunden = BAUREIHEN_MAP[brCode]; break; }
+                }
+            }
+            const wagen = [];
+            for (const v of vehicles) {
+                if (v.status === "CLOSED") continue;
+                const vt = v.type || {};
+                const catType = String(vt.category || "").toUpperCase();
+                const has1 = Boolean(vt.hasFirstClass || catType.includes("FIRST"));
+                const has2 = Boolean(vt.hasEconomyClass || catType.includes("ECONOMY") || catType.includes("SECOND"));
+                const hasBistro = Boolean(vt.hasBistro || catType.includes("DINING") || catType.includes("BISTRO"));
+                if (!has1 && !has2 && !hasBistro && (catType.includes("LOCOMOTIVE") || catType.includes("POWERCAR"))) continue;
+
+                const ams = (v.amenities || []).map(a => String(a.type || "").toUpperCase());
+                const hatKlima = ams.length === 0 || ams.includes("AIR_CONDITION");
+                const hatRad = Boolean(vt.hasBikeSpace || ams.includes("BIKE_SPACE") || ams.includes("MULTI_PURPOSE") || catType.includes("BIKE"));
+                const vid = String(v.vehicleID || "").replace(/\D/g, "");
+                const istEndwagen = (vid.length === 12 && ["0442","1442","2442","3442","0462","1462","0463","1463"].includes(vid.slice(4,8)))
+                    || catType.includes("CONTROLCAR") || catType.includes("POWERCAR");
+
+                let klasse = "2";
+                if (hasBistro && !has1 && !has2) klasse = "Bistro";
+                else if ((has1 && has2) || (has1 && istRegio)) klasse = "2+1";
+                else if (has1) klasse = "1";
+                else if (hasBistro) klasse = "Bistro";
+
+                wagen.push({
+                    wagen: v.wagonIdentificationNumber ? String(v.wagonIdentificationNumber) : "",
+                    klasse,
+                    sektor: (v.platformPosition && v.platformPosition.sector) || "",
+                    klima: hatKlima,
+                    fahrrad: hatRad,
+                    ist_steuerwagen: istEndwagen
+                });
+            }
+            // Prüfen, ob 2 gekuppelte Triebzüge (z.B. 2x 3-Teiler) in einer Gruppe stecken
+            if (wagen.length >= 4) {
+                let cur = [];
+                for (let i = 0; i < wagen.length; i++) {
+                    cur.push(wagen[i]);
+                    if (i >= 1 && i < wagen.length - 1 && wagen[i].ist_steuerwagen && wagen[i+1].ist_steuerwagen && cur.length >= 2) {
+                        rawUnits.push(cur);
+                        cur = [];
+                    }
+                }
+                if (cur.length > 0) rawUnits.push(cur);
+            } else if (wagen.length > 0) {
+                rawUnits.push(wagen);
+            }
+        }
+        if (rawUnits.length === 0) return null;
+        const zugteile = rawUnits.map((u, idx) => ({
+            teil_nr: idx + 1,
+            bezeichnung: rawUnits.length > 1 ? `${idx + 1}. Zugteil (${u.length}-Teiler)` : `${u.length}-Teiler`,
+            wagen: u
+        }));
+        const lens = zugteile.map(z => z.wagen.length);
+        const formation = rawUnits.length > 1
+            ? (new Set(lens).size === 1 ? `${rawUnits.length}x ${lens[0]}-Teiler (${rawUnits.length} Züge)` : lens.map(l => `${l}-Teiler`).join(" + "))
+            : (istRegio ? `${lens[0]}-Teiler` : `${lens[0]} Wagen`);
+        const modell = brGefunden ? `${brGefunden} • ${formation}` : formation;
+        return { zugteile, formation, zug_modell: modell };
+    }
+
+    async function fetchLiveSequenceIfMissing(zug, slotId, badgeId) {
+        if (!zug.reihung_url) return;
+        const cacheKey = zug.zug_nr + "_" + zug.zeit;
+        if (LIVE_SEQ_CACHE[cacheKey]) {
+            applyLiveSequence(zug, LIVE_SEQ_CACHE[cacheKey], slotId, badgeId);
+            return;
+        }
+        const enc = encodeURIComponent(zug.reihung_url);
+        const relays = [
+            `https://api.codetabs.com/v1/proxy?quest=${enc}`,
+            `https://api.allorigins.win/raw?url=${enc}`
+        ];
+        for (const rUrl of relays) {
+            try {
+                const res = await fetch(rUrl);
+                if (res.ok) {
+                    const json = await res.json();
+                    const parsed = parseBahnDeJsonInBrowser(json, zug.kategorie);
+                    if (parsed) {
+                        LIVE_SEQ_CACHE[cacheKey] = parsed;
+                        applyLiveSequence(zug, parsed, slotId, badgeId);
+                        return;
+                    }
+                }
+            } catch (e) {}
+        }
+    }
+
+    function applyLiveSequence(zug, parsed, slotId, badgeId) {
+        zug.zugteile = parsed.zugteile;
+        zug.formation = parsed.formation;
+        zug.zug_modell = parsed.zug_modell;
+        const slotEl = document.getElementById(slotId);
+        if (slotEl) slotEl.innerHTML = renderCoachSequence(zug);
+        const badgeEl = document.getElementById(badgeId);
+        if (badgeEl && parsed.zug_modell) {
+            badgeEl.style.display = 'inline-block';
+            badgeEl.innerText = parsed.zug_modell;
+        }
+    }
+
     function renderCoachSequence(zug) {
         let teile = zug.zugteile || [];
         if (teile.length === 0 && zug.wagenreihung && zug.wagenreihung.length > 0) {
@@ -669,7 +782,6 @@
                     <div class="db-zugteil-cars">${carsHtml}</div>
                 </div>`;
 
-            // Wenn ein zweiter Zugteil folgt -> sichtbare Zugtrennung / Kupplung zeichnen!
             if (tIdx < teile.length - 1) {
                 return blockHtml + `
                     <div class="db-coupling-divider" title="Zugtrennung / 2 gekuppelte Züge">
@@ -752,6 +864,7 @@
             board.innerHTML = '';
             const jetzt = new Date();
             const aktuelleMinuten = (jetzt.getHours() * 60) + jetzt.getMinutes();
+            const missingQueue = [];
 
             data.filter(zug => {
                 const [h, m] = (zug.echte_zeit || zug.zeit).split(':').map(Number);
@@ -767,7 +880,7 @@
                 if (currentFilter === 'REGIO') return !isFV && !isSBahn;
                 return true;
             })
-            .forEach(zug => {
+            .forEach((zug, idx) => {
                 const isCancelled = (zug.info || "").includes("FÄLLT AUS");
                 const [h, m] = (zug.echte_zeit || zug.zeit).split(':').map(Number);
                 let zugMinuten = (h * 60) + m;
@@ -795,6 +908,13 @@
                     bannerIcon = '⚠️';
                 }
 
+                const slotId = `reihung-slot-${idx}`;
+                const badgeId = `model-badge-${idx}`;
+
+                if ((!zug.zugteile || zug.zugteile.length === 0) && zug.reihung_url && !isCancelled) {
+                    missingQueue.push({ zug, slotId, badgeId });
+                }
+
                 board.innerHTML += `
                     <div class="departure-row ${isCancelled ? 'cancelled' : ''}">
                         ${isAboutToDepart && !isCancelled ? '<div class="blink-dot"></div>' : ''}
@@ -812,7 +932,7 @@
                         <div style="padding-left: 10px;">
                             <div class="train-meta">
                                 <span class="${badgeClass}">${zug.linie}</span>
-                                ${zug.zug_modell ? `<span class="train-model-badge">${zug.zug_modell}</span>` : ''}
+                                <span id="${badgeId}" class="train-model-badge" style="${zug.zug_modell ? '' : 'display:none;'}">${zug.zug_modell || ''}</span>
                             </div>
                             <span class="train-dest" style="${isCancelled ? 'text-decoration:line-through;' : ''}">${zug.ziel}</span>
                             ${viaStr ? `<span class="train-via">${viaStr}</span>` : ''}
@@ -824,10 +944,13 @@
                             ${zug.gleiswechsel ? `<span class="pl-old">statt ${zug.gleis_geplant}</span>` : ''}
                             ${zug.sektoren ? `<span class="pl-sector">Sektor ${zug.sektoren}</span>` : ''}
                         </div>
-                        ${renderCoachSequence(zug)}
+                        <div id="${slotId}" class="db-reihung-slot">${renderCoachSequence(zug)}</div>
                         ${zug.begruendung ? `<div class="${bannerClass}">${bannerIcon} <span>${zug.begruendung}</span></div>` : ''}
                     </div>`;
             });
+
+            // Fehlende Wagenreihungen live über den Browser nachladen
+            missingQueue.forEach(item => fetchLiveSequenceIfMissing(item.zug, item.slotId, item.badgeId));
         } catch (e) { console.error(e); }
     }
 
