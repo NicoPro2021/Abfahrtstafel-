@@ -22,32 +22,34 @@
             "Heute von Gleis 3 (statt Gleis 1)"
         ],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ ℹ️ Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die örtlichen Regelungen zum Alkoholverbot im Bahnhofsbereich und in den Zügen des Nahverkehrs. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "20:25"
+        "station_ticker": "Bauarbeiten",
+        "update": "20:28"
     },
     {
         "zeit": "20:29",
-        "echte_zeit": "20:31",
-        "linie": "RB RB36",
+        "echte_zeit": "20:30",
+        "linie": "RB36",
         "zug_nr": "RB 80377",
         "ziel": "Magdeburg Hbf",
         "ziel_geplant": "Magdeburg Hbf",
         "via": [],
         "entfallende_halte": [],
-        "gleis": "1",
+        "gleis": "2",
         "gleis_geplant": "1",
-        "gleiswechsel": false,
-        "info": "+2",
-        "begruendung": "",
-        "meldungen": [],
+        "gleiswechsel": true,
+        "info": "+1",
+        "begruendung": "Heute von Gleis 2 (statt Gleis 1)",
+        "meldungen": [
+            "Heute von Gleis 2 (statt Gleis 1)"
+        ],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ ℹ️ Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die örtlichen Regelungen zum Alkoholverbot im Bahnhofsbereich und in den Zügen des Nahverkehrs. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "20:25"
+        "station_ticker": "Bauarbeiten",
+        "update": "20:28"
     },
     {
         "zeit": "20:31",
         "echte_zeit": "20:32",
-        "linie": "RB RB36",
+        "linie": "RB36",
         "zug_nr": "RB 80380",
         "ziel": "Oebisfelde",
         "ziel_geplant": "Oebisfelde",
@@ -65,13 +67,13 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ ℹ️ Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die örtlichen Regelungen zum Alkoholverbot im Bahnhofsbereich und in den Zügen des Nahverkehrs. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "20:25"
+        "station_ticker": "Bauarbeiten",
+        "update": "20:28"
     },
     {
         "zeit": "20:35",
         "echte_zeit": "20:35",
-        "linie": "RB RB40",
+        "linie": "RB40",
         "zug_nr": "RB 16435",
         "ziel": "Burg(Magdeburg)",
         "ziel_geplant": "Burg(Magdeburg)",
@@ -91,13 +93,13 @@
             "Heute von Gleis 3 (statt Gleis 1)"
         ],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ ℹ️ Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die örtlichen Regelungen zum Alkoholverbot im Bahnhofsbereich und in den Zügen des Nahverkehrs. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "20:25"
+        "station_ticker": "Bauarbeiten",
+        "update": "20:28"
     },
     {
         "zeit": "20:26",
         "echte_zeit": "20:39",
-        "linie": "RB RB40",
+        "linie": "RB40",
         "zug_nr": "RB 16432",
         "ziel": "Braunschweig Hbf",
         "ziel_geplant": "Braunschweig Hbf",
@@ -112,18 +114,43 @@
         "gleis_geplant": "1",
         "gleiswechsel": true,
         "info": "+13",
-        "begruendung": "Heute von Gleis 4 (statt Gleis 1)",
+        "begruendung": "Heute von Gleis 4 (statt Gleis 1) +++ Verspätung aus vorheriger Fahrt",
         "meldungen": [
-            "Heute von Gleis 4 (statt Gleis 1)"
+            "Heute von Gleis 4 (statt Gleis 1)",
+            "Verspätung aus vorheriger Fahrt"
         ],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ ℹ️ Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die örtlichen Regelungen zum Alkoholverbot im Bahnhofsbereich und in den Zügen des Nahverkehrs. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "20:25"
+        "station_ticker": "Bauarbeiten",
+        "update": "20:28"
+    },
+    {
+        "zeit": "20:41",
+        "echte_zeit": "20:43",
+        "linie": "S1",
+        "zug_nr": "S 39035",
+        "ziel": "Schönebeck-Bad Salzelmen",
+        "ziel_geplant": "Schönebeck-Bad Salzelmen",
+        "via": [
+            "Magdeburg Hbf",
+            "Magdeburg-Buckau",
+            "Magdeburg SKET Industriepark",
+            "Magdeburg-Salbke"
+        ],
+        "entfallende_halte": [],
+        "gleis": "1",
+        "gleis_geplant": "1",
+        "gleiswechsel": false,
+        "info": "+2",
+        "begruendung": "",
+        "meldungen": [],
+        "bauarbeiten": false,
+        "station_ticker": "Bauarbeiten",
+        "update": "20:28"
     },
     {
         "zeit": "20:45",
         "echte_zeit": "20:45",
-        "linie": "RE RE20",
+        "linie": "RE20",
         "zug_nr": "RE 16954",
         "ziel": "Uelzen",
         "ziel_geplant": "Uelzen",
@@ -141,36 +168,12 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ ℹ️ Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die örtlichen Regelungen zum Alkoholverbot im Bahnhofsbereich und in den Zügen des Nahverkehrs. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "20:25"
-    },
-    {
-        "zeit": "20:41",
-        "echte_zeit": "20:47",
-        "linie": "S S1",
-        "zug_nr": "S 39035",
-        "ziel": "Schönebeck-Bad Salzelmen",
-        "ziel_geplant": "Schönebeck-Bad Salzelmen",
-        "via": [
-            "Magdeburg Hbf",
-            "Magdeburg-Buckau",
-            "Magdeburg SKET Industriepark",
-            "Magdeburg-Salbke"
-        ],
-        "entfallende_halte": [],
-        "gleis": "1",
-        "gleis_geplant": "1",
-        "gleiswechsel": false,
-        "info": "+6",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ ℹ️ Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die örtlichen Regelungen zum Alkoholverbot im Bahnhofsbereich und in den Zügen des Nahverkehrs. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "20:25"
+        "station_ticker": "Bauarbeiten",
+        "update": "20:28"
     },
     {
         "zeit": "20:46",
-        "echte_zeit": "20:52",
+        "echte_zeit": "20:54",
         "linie": "OE RE1",
         "zug_nr": "OE 73744",
         "ziel": "Magdeburg Hbf",
@@ -180,19 +183,19 @@
         "gleis": "4",
         "gleis_geplant": "1",
         "gleiswechsel": true,
-        "info": "+6",
+        "info": "+8",
         "begruendung": "Heute von Gleis 4 (statt Gleis 1)",
         "meldungen": [
             "Heute von Gleis 4 (statt Gleis 1)"
         ],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ ℹ️ Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die örtlichen Regelungen zum Alkoholverbot im Bahnhofsbereich und in den Zügen des Nahverkehrs. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "20:25"
+        "station_ticker": "Bauarbeiten",
+        "update": "20:28"
     },
     {
         "zeit": "20:51",
         "echte_zeit": "20:54",
-        "linie": "RE RE13",
+        "linie": "RE13",
         "zug_nr": "RE 16134",
         "ziel": "Magdeburg Hbf",
         "ziel_geplant": "Magdeburg Hbf",
@@ -207,8 +210,8 @@
             "Heute von Gleis 4 (statt Gleis 1)"
         ],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ ℹ️ Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die örtlichen Regelungen zum Alkoholverbot im Bahnhofsbereich und in den Zügen des Nahverkehrs. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "20:25"
+        "station_ticker": "Bauarbeiten",
+        "update": "20:28"
     },
     {
         "zeit": "21:10",
@@ -233,13 +236,13 @@
             "Heute von Gleis 3 (statt Gleis 1)"
         ],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ ℹ️ Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die örtlichen Regelungen zum Alkoholverbot im Bahnhofsbereich und in den Zügen des Nahverkehrs. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "20:25"
+        "station_ticker": "Bauarbeiten",
+        "update": "20:28"
     },
     {
         "zeit": "21:13",
         "echte_zeit": "21:13",
-        "linie": "S S1",
+        "linie": "S1",
         "zug_nr": "S 39032",
         "ziel": "Wittenberge",
         "ziel_geplant": "Wittenberge",
@@ -257,13 +260,13 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ ℹ️ Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die örtlichen Regelungen zum Alkoholverbot im Bahnhofsbereich und in den Zügen des Nahverkehrs. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "20:25"
+        "station_ticker": "Bauarbeiten",
+        "update": "20:28"
     },
     {
         "zeit": "21:12",
         "echte_zeit": "21:14",
-        "linie": "RE RE20",
+        "linie": "RE20",
         "zug_nr": "RE 16951",
         "ziel": "Schönebeck-Bad Salzelmen",
         "ziel_geplant": "Schönebeck-Bad Salzelmen",
@@ -281,13 +284,13 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ ℹ️ Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die örtlichen Regelungen zum Alkoholverbot im Bahnhofsbereich und in den Zügen des Nahverkehrs. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "20:25"
+        "station_ticker": "Bauarbeiten",
+        "update": "20:28"
     },
     {
         "zeit": "21:15",
         "echte_zeit": "21:15",
-        "linie": "RE RE13",
+        "linie": "RE13",
         "zug_nr": "RE 16135",
         "ziel": "Leipzig Hbf",
         "ziel_geplant": "Leipzig Hbf",
@@ -307,13 +310,13 @@
             "Heute von Gleis 3 (statt Gleis 1)"
         ],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ ℹ️ Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die örtlichen Regelungen zum Alkoholverbot im Bahnhofsbereich und in den Zügen des Nahverkehrs. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "20:25"
+        "station_ticker": "Bauarbeiten",
+        "update": "20:28"
     },
     {
         "zeit": "21:26",
         "echte_zeit": "21:26",
-        "linie": "RB RB40",
+        "linie": "RB40",
         "zug_nr": "RB 16434",
         "ziel": "Magdeburg Hbf",
         "ziel_geplant": "Magdeburg Hbf",
@@ -328,13 +331,13 @@
             "Heute von Gleis 4 (statt Gleis 1)"
         ],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ ℹ️ Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die örtlichen Regelungen zum Alkoholverbot im Bahnhofsbereich und in den Zügen des Nahverkehrs. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "20:25"
+        "station_ticker": "Bauarbeiten",
+        "update": "20:28"
     },
     {
         "zeit": "21:31",
         "echte_zeit": "21:31",
-        "linie": "RB RB36",
+        "linie": "RB36",
         "zug_nr": "RB 80379",
         "ziel": "Magdeburg Hbf",
         "ziel_geplant": "Magdeburg Hbf",
@@ -347,13 +350,13 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ ℹ️ Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die örtlichen Regelungen zum Alkoholverbot im Bahnhofsbereich und in den Zügen des Nahverkehrs. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "20:25"
+        "station_ticker": "Bauarbeiten",
+        "update": "20:28"
     },
     {
         "zeit": "21:34",
         "echte_zeit": "21:34",
-        "linie": "RB RB36",
+        "linie": "RB36",
         "zug_nr": "RB 80382",
         "ziel": "Oebisfelde",
         "ziel_geplant": "Oebisfelde",
@@ -371,13 +374,13 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ ℹ️ Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die örtlichen Regelungen zum Alkoholverbot im Bahnhofsbereich und in den Zügen des Nahverkehrs. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "20:25"
+        "station_ticker": "Bauarbeiten",
+        "update": "20:28"
     },
     {
         "zeit": "21:35",
         "echte_zeit": "21:35",
-        "linie": "RB RB40",
+        "linie": "RB40",
         "zug_nr": "RB 16437",
         "ziel": "Burg(Magdeburg)",
         "ziel_geplant": "Burg(Magdeburg)",
@@ -397,13 +400,37 @@
             "Heute von Gleis 3 (statt Gleis 1)"
         ],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ ℹ️ Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die örtlichen Regelungen zum Alkoholverbot im Bahnhofsbereich und in den Zügen des Nahverkehrs. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "20:25"
+        "station_ticker": "Bauarbeiten",
+        "update": "20:28"
+    },
+    {
+        "zeit": "21:41",
+        "echte_zeit": "21:41",
+        "linie": "S1",
+        "zug_nr": "S 39037",
+        "ziel": "Schönebeck-Bad Salzelmen",
+        "ziel_geplant": "Schönebeck-Bad Salzelmen",
+        "via": [
+            "Magdeburg Hbf",
+            "Magdeburg-Buckau",
+            "Magdeburg SKET Industriepark",
+            "Magdeburg-Salbke"
+        ],
+        "entfallende_halte": [],
+        "gleis": "1",
+        "gleis_geplant": "1",
+        "gleiswechsel": false,
+        "info": "pünktlich",
+        "begruendung": "",
+        "meldungen": [],
+        "bauarbeiten": false,
+        "station_ticker": "Bauarbeiten",
+        "update": "20:28"
     },
     {
         "zeit": "21:45",
         "echte_zeit": "21:45",
-        "linie": "RE RE20",
+        "linie": "RE20",
         "zug_nr": "RE 16956",
         "ziel": "Salzwedel",
         "ziel_geplant": "Salzwedel",
@@ -421,8 +448,8 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ ℹ️ Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die örtlichen Regelungen zum Alkoholverbot im Bahnhofsbereich und in den Zügen des Nahverkehrs. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "20:25"
+        "station_ticker": "Bauarbeiten",
+        "update": "20:28"
     },
     {
         "zeit": "21:46",
@@ -442,37 +469,13 @@
             "Heute von Gleis 4 (statt Gleis 1)"
         ],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ ℹ️ Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die örtlichen Regelungen zum Alkoholverbot im Bahnhofsbereich und in den Zügen des Nahverkehrs. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "20:25"
-    },
-    {
-        "zeit": "21:41",
-        "echte_zeit": "21:47",
-        "linie": "S S1",
-        "zug_nr": "S 39037",
-        "ziel": "Schönebeck-Bad Salzelmen",
-        "ziel_geplant": "Schönebeck-Bad Salzelmen",
-        "via": [
-            "Magdeburg Hbf",
-            "Magdeburg-Buckau",
-            "Magdeburg SKET Industriepark",
-            "Magdeburg-Salbke"
-        ],
-        "entfallende_halte": [],
-        "gleis": "1",
-        "gleis_geplant": "1",
-        "gleiswechsel": false,
-        "info": "+6",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ ℹ️ Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die örtlichen Regelungen zum Alkoholverbot im Bahnhofsbereich und in den Zügen des Nahverkehrs. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "20:25"
+        "station_ticker": "Bauarbeiten",
+        "update": "20:28"
     },
     {
         "zeit": "21:51",
         "echte_zeit": "21:54",
-        "linie": "RE RE13",
+        "linie": "RE13",
         "zug_nr": "RE 16136",
         "ziel": "Magdeburg Hbf",
         "ziel_geplant": "Magdeburg Hbf",
@@ -487,7 +490,7 @@
             "Heute von Gleis 4 (statt Gleis 1)"
         ],
         "bauarbeiten": false,
-        "station_ticker": "🚧 Bauarbeiten +++ ℹ️ Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die örtlichen Regelungen zum Alkoholverbot im Bahnhofsbereich und in den Zügen des Nahverkehrs. +++ 🧳 Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt.",
-        "update": "20:25"
+        "station_ticker": "Bauarbeiten",
+        "update": "20:28"
     }
 ]
