@@ -14,20 +14,19 @@ jobs:
     # Verhindert, dass sich Workflows überschneiden
     concurrency:
       group: bahn-monitor
-      cancel-in-progress: false # Auf false, damit ein laufender Loop sauber zu Ende schreibt
+      cancel-in-progress: false
     permissions:
       contents: write
       actions: write
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Wichtig für Rebase
+          fetch-depth: 0
 
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
-          cache: 'pip'
 
       - name: Install Dependencies
         run: pip install --upgrade pip requests curl_cffi
@@ -48,7 +47,7 @@ jobs:
             if ! git diff --cached --quiet; then
               git commit -m "Live Update Runde $i ($(date +'%H:%M'))"
               
-              # Rebase mit Autostash, falls du während des Loops Code im Repo geändert hast
+              # Rebase mit Autostash, falls sich das Repo während des Loops geändert hat
               git pull --rebase --autostash origin main
               git push origin main
               echo "Runde $i erfolgreich hochgeladen."
@@ -61,7 +60,7 @@ jobs:
           done
 
       - name: Restart Workflow
-        if: always() # Startet den nächsten Loop auch, wenn der vorherige fehlschlug
+        if: always()
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
