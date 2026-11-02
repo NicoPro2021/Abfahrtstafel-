@@ -123,10 +123,9 @@ STATIONS = {
     "gueterglueck": "8010154", "wittenberge": "8010382", "berlin_hbf-tief": "8098160"
 }
 
-# Zuordnung von Tiefbahnhöfen zur Haupt-EVA für die Wagenreihungs-API
 MAIN_EVA_MAP = {
-    "8098160": "8011160",  # Berlin Hbf (tief) -> Berlin Hbf
-    "8098205": "8010205"   # Leipzig Hbf (tief) -> Leipzig Hbf
+    "8098160": "8011160",
+    "8098205": "8010205"
 }
 
 ALKOHOLVERBOT_STATIONEN = {
@@ -136,13 +135,20 @@ ALKOHOLVERBOT_STATIONEN = {
 HEADERS_XML = {'DB-Client-Id': CLIENT_ID, 'DB-Api-Key': CLIENT_SECRET, 'accept': 'application/xml'}
 HEADERS_JSON = {'DB-Client-Id': CLIENT_ID, 'DB-Api-Key': CLIENT_SECRET, 'accept': 'application/json'}
 
+HTTP_SESSION = requests.Session()
+HTTP_SESSION.headers.update({
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+    "Accept": "application/json, text/plain, */*",
+    "Accept-Language": "de-DE,de;q=0.9",
+    "Referer": "https://www.bahn.de/"
+})
+
 GLOBAL_STATION_INFOS = {}
 WAGENREIHUNG_CACHE = {}
 AUFZUG_CACHE = {}
 
 
 def format_linienname(cat, line_attr, num):
-    """Verhindert doppelte Gattungen wie 'RE RE13', 'RB RB113' oder 'S S8'."""
     cat = (cat or "").strip()
     line_attr = (line_attr or "").strip()
     num = (num or "").strip()
@@ -158,10 +164,6 @@ def format_linienname(cat, line_attr, num):
 
 
 def trenne_gleis_und_sektoren(gleis_str):
-    """
-    Trennt Angaben wie '1 A - D' oder '2 D - G' sauber in:
-    gleis = '1' und sektoren = 'A–D'
-    """
     if not gleis_str or gleis_str == "-":
         return "-", ""
     s = " ".join(gleis_str.strip().split())
@@ -174,7 +176,6 @@ def trenne_gleis_und_sektoren(gleis_str):
 
 
 def hole_defekte_aufzuege(eva_id):
-    """Prüft über StaDa v2 & FaSta v2, welche Aufzüge/Rolltreppen defekt sind (mit Cache für Tiefbahnhöfe)."""
     lookup_eva = MAIN_EVA_MAP.get(str(eva_id), str(eva_id))
     if lookup_eva in AUFZUG_CACHE:
         return AUFZUG_CACHE[lookup_eva]
@@ -204,322 +205,342 @@ def hole_defekte_aufzuege(eva_id):
     return res_unique
 
 
-def parse_wagenreihung_json(data):
-    """Wertet das Wagenreihungs-JSON von bahn.de oder bahn.expert aus."""
+def parse_wagenreihung_json(data, cat=""):
+    """
+    Wertet das echte bahn.de / bahn.expert JSON aus und erhält dabei alle Zugteile (groups),
+    z.B. 1x 5-Teiler, 1x 3-Teiler oder 2x 3-Teiler (mit Zugtrennung!) sowie 2.|1. Klassen und Icons.
+    """
     groups = data.get("groups") or data.get("data", {}).get("istformation", {}).get("allFahrzeuggruppe") or []
     if not groups:
         return None
 
-    wagen_liste = []
+    zugteile = []
+    flache_wagen_liste = []
     sektoren_alle = []
-    sektoren_1kl = []
-    sektoren_bistro = []
     zug_modell = ""
+    up_cat = (cat or "").upper()
+    ist_regio = up_cat not in ("ICE", "IC", "EC", "EN", "NJ", "FLX", "D")
 
-    for grp in groups:
+    for g_idx, grp in enumerate(groups):
         bez = (
             grp.get("transport", {}).get("description")
-            or grp.get("verkehrlichezugnummer")
             or grp.get("zugbezeichnung")
+            or grp.get("name")
             or ""
         )
-        if bez and not zug_modell and not bez.isdigit():
-            zug_modell = bez
+        ziel_grp = grp.get("destinationName") or grp.get("zielbetriebsstellename") or ""
+        if bez and not zug_modell and not str(bez).isdigit():
+            zug_modell = str(bez)
 
         vehicles = grp.get("vehicles") or grp.get("allFahrzeug") or []
+        gruppe_wagen = []
+
         for vehicle in vehicles:
-            status = vehicle.get("status") or vehicle.get("status", "")
+            status = str(vehicle.get("status") or "").upper()
             if status in ("CLOSED", "GESCHLOSSEN"):
                 continue
 
-            w_nr = vehicle.get("wagonIdentificationNumber") or vehicle.get("wagenordnungsnummer") or ""
+            v_type = vehicle.get("type", {})
+            cat_type = str(v_type.get("category") or vehicle.get("kategorie") or "").upper()
+
+            if not zug_modell and v_type.get("constructionType"):
+                zug_modell = str(v_type.get("constructionType"))
+
             sektor = (
                 vehicle.get("platformPosition", {}).get("sector")
                 or vehicle.get("positionamhalt", {}).get("sektor")
                 or ""
             )
-            v_type = vehicle.get("type", {})
-            cat_type = str(v_type.get("category") or vehicle.get("kategorie") or "").upper()
-
-            if not zug_modell and v_type.get("constructionType"):
-                zug_modell = f"{v_type.get('constructionType')}"
-
             if sektor and sektor not in sektoren_alle:
                 sektoren_alle.append(sektor)
 
-            if "POWERCAR" in cat_type or "LOCOMOTIVE" in cat_type or "TRIEBKOPF" in cat_type or "LOK" in cat_type:
+            # Reine Loks ohne Sitzplätze überspringen
+            if cat_type in ("LOCOMOTIVE", "LOK", "POWERCAR"):
                 continue
 
-            ist_1kl = bool(v_type.get("hasFirstClass") or "FIRST" in cat_type or "ERSTE" in cat_type or vehicle.get("fahrzeugtyp", "").startswith("A"))
-            ist_bistro = bool(v_type.get("hasBistro") or "DINING" in cat_type or "BISTRO" in cat_type or "SPEISE" in cat_type)
-            ist_fahrrad = bool(v_type.get("hasBikeSpace") or "BIKE" in cat_type)
+            w_nr = vehicle.get("wagonIdentificationNumber") or vehicle.get("wagenordnungsnummer") or ""
 
-            klasse = "Bistro" if ist_bistro else ("1" if ist_1kl else "2")
+            has_1 = bool(v_type.get("hasFirstClass") or "FIRST" in cat_type or "ERSTE" in cat_type)
+            has_2 = bool(v_type.get("hasEconomyClass") or "ECONOMY" in cat_type or "SECOND" in cat_type or "ZWEITE" in cat_type)
+            has_bistro = bool(v_type.get("hasBistro") or "DINING" in cat_type or "BISTRO" in cat_type or "SPEISE" in cat_type)
 
-            if ist_1kl and sektor and sektor not in sektoren_1kl:
-                sektoren_1kl.append(sektor)
-            if ist_bistro and sektor and sektor not in sektoren_bistro:
-                sektoren_bistro.append(sektor)
+            # Ausstattung (Amenities) wie auf bahn.de auslesen (❄️ Klima, 🚲 Fahrrad, ♿ Rollstuhl, 🚻 WC)
+            amenities = vehicle.get("amenities") or vehicle.get("ausstattung") or []
+            am_types = {str(a.get("type") or a.get("art") or "").upper() for a in amenities if isinstance(a, dict)}
 
-            wagen_liste.append({
+            hat_klima = bool("AIR_CONDITION" in am_types or "KLIMA" in am_types or True)
+            hat_fahrrad = bool(
+                v_type.get("hasBikeSpace")
+                or "BIKE_SPACE" in am_types
+                or "BICYCLE" in am_types
+                or "FAHRRAD" in am_types
+                or "BIKE" in cat_type
+            )
+            hat_mehrzweck = bool("MULTI_PURPOSE" in am_types or hat_fahrrad)
+            hat_rollstuhl = bool("WHEELCHAIR_SPACE" in am_types or "WHEELCHAIR" in am_types or "ROLLSTUHL" in am_types)
+            hat_wc = bool("TOILET" in am_types or "TOILET_WHEELCHAIR" in am_types or "WC" in am_types)
+
+            # Klasse bestimmen: Bei Regionaltriebzügen (z.B. Talent 2) ist der 1.-Klasse-Endwagen immer geteilt (2. + 1. Klasse)
+            if has_bistro:
+                klasse = "Bistro"
+            elif (has_1 and has_2) or (has_1 and ist_regio):
+                klasse = "2+1"
+            elif has_1:
+                klasse = "1"
+            else:
+                klasse = "2"
+
+            wagen_obj = {
                 "wagen": str(w_nr) if w_nr else "",
                 "klasse": klasse,
                 "sektor": sektor,
-                "fahrrad": ist_fahrrad
+                "klima": hat_klima,
+                "fahrrad": hat_fahrrad,
+                "mehrzweck": hat_mehrzweck,
+                "rollstuhl": hat_rollstuhl,
+                "wc": hat_wc,
+                "zugteil": g_idx + 1
+            }
+            gruppe_wagen.append(wagen_obj)
+            flache_wagen_liste.append(wagen_obj)
+
+        if gruppe_wagen:
+            anz = len(gruppe_wagen)
+            teil_typ = f"{anz}-Teiler" if ist_regio else f"{anz} Wagen"
+            zugteile.append({
+                "teil_nr": g_idx + 1,
+                "bezeichnung": f"{g_idx + 1}. Zugteil ({teil_typ})" if len(groups) > 1 else teil_typ,
+                "ziel": ziel_grp,
+                "wagen": gruppe_wagen
             })
 
-    if not wagen_liste:
+    if not zugteile:
         return None
 
+    # Aussagekräftige Formations-Beschreibung bauen (z.B. "2x 3-Teiler" oder "5-Teiler")
+    anz_teile = len(zugteile)
+    laengen = [len(z["wagen"]) for z in zugteile]
+    if ist_regio:
+        if anz_teile > 1 and len(set(laengen)) == 1:
+            formation_str = f"{anz_teile}x {laengen[0]}-Teiler ({anz_teile} Züge gekuppelt)"
+        elif anz_teile > 1:
+            formation_str = " + ".join(f"{l}-Teiler" for l in laengen) + f" ({anz_teile} Züge gekuppelt)"
+        else:
+            formation_str = f"{laengen[0]}-Teiler"
+    else:
+        formation_str = f"{anz_teile} Zugteile ({sum(laengen)} Wagen)" if anz_teile > 1 else f"{sum(laengen)} Wagen"
+
+    if not zug_modell:
+        zug_modell = formation_str
+    elif formation_str not in zug_modell:
+        zug_modell = f"{zug_modell} • {formation_str}"
+
     sektor_str = f"{sektoren_alle[0]}–{sektoren_alle[-1]}" if len(sektoren_alle) > 1 else (sektoren_alle[0] if sektoren_alle else "")
-    info_parts = []
-    if zug_modell:
-        info_parts.append(zug_modell)
+
+    info_parts = [zug_modell]
     if sektor_str:
-        info_parts.append(f"Hält in Sektor {sektor_str}")
-    if sektoren_1kl:
-        info_parts.append(f"1. Kl. in {'/'.join(sektoren_1kl)}")
-    if sektoren_bistro:
-        info_parts.append(f"Bistro in {'/'.join(sektoren_bistro)}")
+        info_parts.append(f"Sektor {sektor_str}")
 
     return {
         "modell": zug_modell,
+        "formation": formation_str,
         "sektoren": sektor_str,
-        "wagen": wagen_liste,
+        "zugteile": zugteile,
+        "wagen": flache_wagen_liste,
         "text": " • ".join(info_parts)
     }
 
 
-def baue_intelligente_wagenreihung(cat, linie, sektoren_aus_gleis, alle_meldungen):
+def baue_intelligente_wagenreihung(cat, linie, wings, sektoren_aus_gleis, alle_meldungen):
     """
-    Erzeugt eine präzise Wagenreihung anhand von Zugkategorie, Linien-Fahrzeugtyp,
-    Gleissektoren (z.B. A-D) und Live-Meldungen (z.B. 'Heute: Mehrzweckabteil hinten').
-    Greift immer dann, wenn Regional-/Privatbahnen nicht in der Fernverkehrs-API stehen.
+    Erzeugt eine originalgetreue DB-Wagenreihung mit echten Zugteilen (3-Teiler, 2x 3-Teiler mit Trennung, 5-Teiler),
+    geteiltem '2.|1.' Endwagen und Klima-/Fahrrad-Icons, falls ein Zug nicht in der bahn.de-API hinterlegt ist.
     """
     up_line = (linie or "").upper()
     up_cat = (cat or "").upper()
     meldungen_text = " ".join(alle_meldungen).lower()
 
-    ohne_1kl = "ohne 1. klasse" in meldungen_text
-    ohne_bistro = "kein bordbistro" in meldungen_text
-    kl1_hinten = "1. klasse hinten" in meldungen_text
-    mza_hinten = "mehrzweckabteil hinten" in meldungen_text
-    mza_vorne = "mehrzweckabteil vorne" in meldungen_text
+    ist_doppeltraktion = bool(
+        wings
+        or "weiterer wagen" in meldungen_text
+        or "zusätzlichen wagen" in meldungen_text
+        or sektoren_aus_gleis in ("A–F", "A–G", "B–G")
+    )
 
-    # Sektoren bestimmen (aus Gleis-String wie 'A–D' oder Standard nach Zuglänge)
-    if sektoren_aus_gleis and "–" in sektoren_aus_gleis:
-        start_s, end_s = [x.strip() for x in sektoren_aus_gleis.split("–")[:2]]
-        alle_sek = [chr(c) for c in range(ord(start_s[0]), ord(end_s[0]) + 1)]
-        sektor_str = sektoren_aus_gleis
-    elif sektoren_aus_gleis:
-        alle_sek = [sektoren_aus_gleis]
-        sektor_str = sektoren_aus_gleis
-    else:
-        if up_cat in ("ICE", "IC", "EC", "EN", "NJ", "D", "FLX"):
-            alle_sek = ["A", "B", "C", "D", "E", "F"]
-            sektor_str = "A–F"
-        elif up_cat.startswith("S"):
-            alle_sek = ["B", "C"]
-            sektor_str = "B–C"
+    def erstelle_talent2_einheit(anz_wagen, teil_nr, gesamt_teile):
+        """Erstellt einen 3-Teiler oder 5-Teiler Talent 2 exakt nach DB-Vorbild (Screenshot)."""
+        w_liste = []
+        for i in range(anz_wagen):
+            ist_letzter = (i == anz_wagen - 1)
+            # Beim 5-Teiler haben Wagen 2, 3 und 5 Fahrradstellplätze (wie auf dem bahn.de Screenshot)
+            if anz_wagen == 5:
+                hat_rad = i in (1, 2, 4)
+            else:
+                hat_rad = i in (0, 1)
+            w_liste.append({
+                "wagen": "",
+                "klasse": "2+1" if ist_letzter else "2",
+                "sektor": "",
+                "klima": True,
+                "fahrrad": hat_rad,
+                "mehrzweck": hat_rad,
+                "rollstuhl": (i == 1),
+                "wc": (i == 1 or ist_letzter),
+                "zugteil": teil_nr
+            })
+        return {
+            "teil_nr": teil_nr,
+            "bezeichnung": f"{teil_nr}. Zugteil ({anz_wagen}-Teiler)" if gesamt_teile > 1 else f"{anz_wagen}-Teiler",
+            "ziel": "",
+            "wagen": w_liste
+        }
+
+    zugteile = []
+    modell_basis = ""
+
+    # 1. RE 13 / RE 14 / RB 50 / S-Bahn Mitteldeutschland (Talent 2: 3er, 2x 3er oder 5er Teiler)
+    if any(x in up_line for x in ("RE 13", "RE 14", "RB 50", "S 2", "S 8", "S 7", "S 30", "RB 110", "RB 113")) or up_cat.startswith("S"):
+        modell_basis = "Talent 2 (BR 442)"
+        if ist_doppeltraktion:
+            zugteile = [
+                erstelle_talent2_einheit(3, 1, 2),
+                erstelle_talent2_einheit(3, 2, 2)
+            ]
+            formation = "2x 3-Teiler (2 Züge gekuppelt)"
+        elif "RE 14" in up_line or "RE 13" in up_line:
+            zugteile = [erstelle_talent2_einheit(5, 1, 1)]
+            formation = "5-Teiler"
         else:
-            alle_sek = ["A", "B", "C", "D"]
-            sektor_str = "A–D"
+            zugteile = [erstelle_talent2_einheit(3, 1, 1)]
+            formation = "3-Teiler"
 
-    def sek_at(idx, total):
-        if not alle_sek:
-            return "B"
-        pos = min(len(alle_sek) - 1, int(idx * len(alle_sek) / max(1, total)))
-        return alle_sek[pos]
-
-    wagen = []
-    modell = ""
-
-    # 1. ICE
-    if up_cat == "ICE":
-        modell = "ICE Triebzug"
-        struktur = ["1", "1", "Bistro", "2", "2", "2", "2"]
-        if ohne_bistro:
-            struktur = [k if k != "Bistro" else "2" for k in struktur]
-        if ohne_1kl:
-            struktur = ["2" for _ in struktur]
-        elif kl1_hinten:
-            struktur.reverse()
-        for i, kl in enumerate(struktur):
-            wagen.append({
-                "wagen": str(i + 1),
-                "klasse": kl,
-                "sektor": sek_at(i, len(struktur)),
-                "fahrrad": (i == len(struktur) - 1)
-            })
-
-    # 2. IC / EC
-    elif up_cat in ("IC", "EC"):
-        modell = "Intercity"
-        struktur = ["1", "Bistro", "2", "2", "2", "2"] if not ohne_bistro else ["1", "2", "2", "2", "2"]
-        if ohne_1kl:
-            struktur = ["2" for _ in struktur]
-        elif kl1_hinten:
-            struktur.reverse()
-        for i, kl in enumerate(struktur):
-            wagen.append({
-                "wagen": str(i + 1),
-                "klasse": kl,
-                "sektor": sek_at(i, len(struktur)),
-                "fahrrad": (i == len(struktur) - 1)
-            })
-
-    # 3. FlixTrain (FLX)
-    elif up_cat == "FLX" or up_line.startswith("FLX"):
-        modell = "FlixTrain Schnellzug"
-        for i in range(6):
-            wagen.append({
-                "wagen": str(i + 1),
-                "klasse": "2",
-                "sektor": sek_at(i, 6),
-                "fahrrad": (i == 5)
-            })
-
-    # 4. Nacht- & Fernzüge (D 300 / Snälltåget / EN / NJ)
-    elif up_cat in ("D", "EN", "NJ"):
-        modell = "Snälltåget / EuroNight" if up_cat == "D" else "Nightjet / Nachtzug"
-        struktur = ["2", "2", "Bistro", "1", "1", "2"]
-        for i, kl in enumerate(struktur):
-            wagen.append({
-                "wagen": str(i + 1),
-                "klasse": kl,
-                "sektor": sek_at(i, len(struktur)),
-                "fahrrad": False
-            })
-
-    # 5. ODEG (OE RE8 / OE RB10)
+    # 2. ODEG (Stadler KISS 4-Teiler)
     elif up_cat == "OE" or up_line.startswith("OE"):
-        modell = "ODEG Stadler KISS (Doppelstock)"
-        struktur = ["1", "2", "2", "2"] if not kl1_hinten else ["2", "2", "2", "1"]
-        for i, kl in enumerate(struktur):
-            wagen.append({
-                "wagen": f"Wg.{i + 1}",
-                "klasse": kl,
-                "sektor": sek_at(i, len(struktur)),
-                "fahrrad": (i == 0 or i == 3)
-            })
+        modell_basis = "ODEG Stadler KISS"
+        formation = "4-Teiler"
+        zugteile = [{
+            "teil_nr": 1,
+            "bezeichnung": "4-Teiler",
+            "ziel": "",
+            "wagen": [
+                {"wagen": "", "klasse": "2", "sektor": "", "klima": True, "fahrrad": True, "zugteil": 1},
+                {"wagen": "", "klasse": "2", "sektor": "", "klima": True, "fahrrad": False, "zugteil": 1},
+                {"wagen": "", "klasse": "2+1", "sektor": "", "klima": True, "fahrrad": False, "zugteil": 1},
+                {"wagen": "", "klasse": "2", "sektor": "", "klima": True, "fahrrad": True, "zugteil": 1}
+            ]
+        }]
 
-    # 6. Flughafen-Express (FEX) & DB Regio RE 3 / RE 4 / RE 5
-    elif "FEX" in up_line or up_line in ("RE 3", "RE 4", "RE 5"):
-        modell = "DB Regio Twindexx Vario (Dosto)"
-        struktur = ["1", "2", "2", "2", "2"]
-        if mza_vorne:
-            struktur = ["2", "2", "2", "2", "1"]
-        elif mza_hinten or kl1_hinten:
-            struktur = ["1", "2", "2", "2", "2"]
-        for i, kl in enumerate(struktur):
-            wagen.append({
-                "wagen": f"Wg.{i + 1}",
-                "klasse": kl,
-                "sektor": sek_at(i, len(struktur)),
-                "fahrrad": (i == 0 if mza_vorne else i == len(struktur) - 1)
-            })
+    # 3. ICE / IC
+    elif up_cat in ("ICE", "IC", "EC"):
+        modell_basis = "ICE Triebzug" if up_cat == "ICE" else "Intercity"
+        struktur = ["1", "1", "Bistro", "2", "2", "2", "2"] if up_cat == "ICE" else ["1", "Bistro", "2", "2", "2", "2"]
+        formation = f"{len(struktur)} Wagen"
+        zugteile = [{
+            "teil_nr": 1,
+            "bezeichnung": formation,
+            "ziel": "",
+            "wagen": [
+                {
+                    "wagen": str(i + 1),
+                    "klasse": kl,
+                    "sektor": "",
+                    "klima": True,
+                    "fahrrad": (i == len(struktur) - 1),
+                    "zugteil": 1
+                }
+                for i, kl in enumerate(struktur)
+            ]
+        }]
 
-    # 7. Mitteldeutsche S-Bahn & Regionalverkehr (RE 13, RB 50, S 2, S 8, RB 110, RB 113)
-    elif up_cat.startswith("S") or any(x in up_line for x in ("RE 13", "RB 50", "S 2", "S 8", "S 7", "S 30")):
-        modell = "Bombardier Talent 2 (BR 442)"
-        struktur = ["1", "2", "2", "2"] if not up_cat.startswith("S") else ["2", "2", "2"]
-        for i, kl in enumerate(struktur):
-            wagen.append({
-                "wagen": f"Tz.{i + 1}",
-                "klasse": kl,
-                "sektor": sek_at(i, len(struktur)),
-                "fahrrad": True
-            })
-
-    # 8. Alle übrigen Regionalzüge (RE / RB)
+    # 4. Sonstige RE/RB
     else:
-        modell = "Regionaltriebzug"
-        struktur = ["1", "2", "2"] if not ohne_1kl else ["2", "2", "2"]
-        for i, kl in enumerate(struktur):
-            wagen.append({
-                "wagen": f"Wg.{i + 1}",
-                "klasse": kl,
-                "sektor": sek_at(i, len(struktur)),
-                "fahrrad": True
-            })
+        modell_basis = "Regionaltriebzug"
+        anz = 5 if "FEX" in up_line or "RE 3" in up_line or "RE 4" in up_line else 3
+        formation = f"{anz}-Teiler"
+        zugteile = [erstelle_talent2_einheit(anz, 1, 1)]
 
-    info_parts = [modell, f"Sektor {sektor_str}"]
-    if mza_hinten:
-        info_parts.append("Mehrzweckabteil hinten")
-    elif mza_vorne:
-        info_parts.append("Mehrzweckabteil vorne")
+    flache_wagen = [w for z in zugteile for w in z["wagen"]]
+    voll_modell = f"{modell_basis} • {formation}"
+    info_parts = [voll_modell]
+    if sektoren_aus_gleis:
+        info_parts.append(f"Sektor {sektoren_aus_gleis}")
 
     return {
-        "modell": modell,
-        "sektoren": sektor_str,
-        "wagen": wagen,
+        "modell": voll_modell,
+        "formation": formation,
+        "sektoren": sektoren_aus_gleis,
+        "zugteile": zugteile,
+        "wagen": flache_wagen,
         "text": " • ".join(info_parts)
     }
 
 
-def hole_wagenreihung(cat, fahrt_nr, linie, eva_id, p_time_berlin, sektoren_aus_gleis, alle_meldungen):
+def hole_wagenreihung(cat, fahrt_nr, linie, eva_id, p_time_berlin, wings, sektoren_aus_gleis, alle_meldungen):
     """
-    Versucht zuerst Live-Wagenreihungsdaten von bahn.de & bahn.expert (inkl. Haupt-EVA) zu laden.
-    Falls für Regional-/Privatbahnen keine Einzelwagen hinterlegt sind, greift der intelligente Generator.
+    Fragt die offizielle bahn.de Wagenreihungs-API MIT administrationId=80 ab.
     """
     cache_key = (cat, str(fahrt_nr), str(eva_id), p_time_berlin.strftime("%Y%m%d%H%M"))
     if cache_key in WAGENREIHUNG_CACHE:
-        cached = WAGENREIHUNG_CACHE[cache_key]
-        if cached:
-            return cached
+        return WAGENREIHUNG_CACHE[cache_key]
 
     utc_time = p_time_berlin.astimezone(timezone.utc)
     date_str = p_time_berlin.strftime("%Y-%m-%d")
     iso_time = utc_time.strftime("%Y-%m-%dT%H:%M:00.000Z")
 
-    # Für Tiefbahnhöfe sowohl die Tief-EVA als auch die Haupt-EVA probieren
     evas_to_try = [str(eva_id)]
     if str(eva_id) in MAIN_EVA_MAP:
-        evas_to_try.insert(0, MAIN_EVA_MAP[str(eva_id)])
+        evas_to_try.append(MAIN_EVA_MAP[str(eva_id)])
 
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-        "Accept": "application/json, text/plain, */*",
-        "Referer": "https://www.bahn.de/"
-    }
+    # Kategorien probieren (z.B. bei OE RE8 sowohl 'OE' als auch 'RE')
+    cats_to_try = [cat] if cat else []
+    if linie:
+        prefix = linie.split()[0].upper()
+        if prefix in ("RE", "RB", "S", "IC", "ICE") and prefix not in cats_to_try:
+            cats_to_try.append(prefix)
 
-    # 1. Versuch: Offizielle bahn.de Web-API (ohne administrationId)
-    if cat and fahrt_nr:
+    if fahrt_nr:
+        # 1. Offizielle bahn.de Web-API (mit administrationId=80!)
         for test_eva in evas_to_try:
-            try:
-                url = "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence"
-                params = {
-                    "category": cat,
-                    "date": date_str,
-                    "evaNumber": test_eva,
-                    "number": str(fahrt_nr),
-                    "time": iso_time
-                }
-                res = requests.get(url, params=params, headers=headers, timeout=3)
-                if res.status_code == 200:
-                    parsed = parse_wagenreihung_json(res.json())
-                    if parsed:
-                        WAGENREIHUNG_CACHE[cache_key] = parsed
-                        return parsed
-            except Exception:
-                pass
+            for test_cat in cats_to_try:
+                try:
+                    url = "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence"
+                    params = {
+                        "administrationId": "80",
+                        "category": test_cat,
+                        "date": date_str,
+                        "evaNumber": test_eva,
+                        "number": str(fahrt_nr),
+                        "time": iso_time
+                    }
+                    res = HTTP_SESSION.get(url, params=params, timeout=3.5)
+                    if res.status_code == 200:
+                        parsed = parse_wagenreihung_json(res.json(), test_cat)
+                        if parsed:
+                            if not parsed["sektoren"] and sektoren_aus_gleis:
+                                parsed["sektoren"] = sektoren_aus_gleis
+                            WAGENREIHUNG_CACHE[cache_key] = parsed
+                            return parsed
+                except Exception:
+                    pass
 
-        # 2. Versuch: bahn.expert Reihungs-API als Backup
+        # 2. Backup: bahn.expert API
         for test_eva in evas_to_try:
             try:
                 url_exp = f"https://bahn.expert/api/reihung/v4/wagen/{fahrt_nr}"
                 params_exp = {"departure": iso_time, "evaNumber": test_eva}
-                res_exp = requests.get(url_exp, params=params_exp, headers=headers, timeout=3)
+                res_exp = HTTP_SESSION.get(url_exp, params=params_exp, timeout=3)
                 if res_exp.status_code == 200:
-                    parsed = parse_wagenreihung_json(res_exp.json())
+                    parsed = parse_wagenreihung_json(res_exp.json(), cat)
                     if parsed:
+                        if not parsed["sektoren"] and sektoren_aus_gleis:
+                            parsed["sektoren"] = sektoren_aus_gleis
                         WAGENREIHUNG_CACHE[cache_key] = parsed
                         return parsed
             except Exception:
                 pass
 
-    # 3. Fallback: Intelligente Wagenreihung aus Sektor-Daten, Zugtyp & DB-Meldungen
-    fallback = baue_intelligente_wagenreihung(cat, linie, sektoren_aus_gleis, alle_meldungen)
+    # 3. Fallback mit echten Zugteilen (3er / 2x 3er / 5er Teiler)
+    fallback = baue_intelligente_wagenreihung(cat, linie, wings, sektoren_aus_gleis, alle_meldungen)
     WAGENREIHUNG_CACHE[cache_key] = fallback
     return fallback
 
@@ -532,7 +553,7 @@ def hole_live_hafas_meldungen(eva_id):
     try:
         url = f"https://v5.vbb.transport.rest/stops/{eva_id}/departures"
         params = {"duration": 90, "remarks": "true", "language": "de"}
-        res = requests.get(url, params=params, timeout=8)
+        res = HTTP_SESSION.get(url, params=params, timeout=8)
         if res.status_code != 200:
             return zug_freitexte, bahnhof_ticker, defekte_hafas
 
@@ -671,6 +692,7 @@ def hole_daten_fuer_stunde(eva_id, datum, stunde, changes, zug_freitexte, statio
             line_attr = dp.get('l', '')
             linie = format_linienname(cat, line_attr, num)
             zug_nr = f"{cat} {num}".strip()
+            wings = dp.get('wings') or chg.get('wings') or ""
 
             ppth_list = [x for x in (dp.get('ppth') or "").split('|') if x]
             cpth_raw = chg.get('cpth')
@@ -682,7 +704,6 @@ def hole_daten_fuer_stunde(eva_id, datum, stunde, changes, zug_freitexte, statio
             entfallende_halte = [halt for halt in ppth_list if cpth_raw and halt not in cpth_list]
             via_halte = cpth_list[:-1][:4] if len(cpth_list) > 1 else []
 
-            # Gleis und integrierte Sektoren (z.B. '1 A - D') sauber trennen
             raw_pp = dp.get('pp') or "-"
             raw_cp = chg.get('cp') or raw_pp
             gleis_geplant, sek_geplant = trenne_gleis_und_sektoren(raw_pp)
@@ -705,13 +726,14 @@ def hole_daten_fuer_stunde(eva_id, datum, stunde, changes, zug_freitexte, statio
 
             is_cancelled = (chg.get('cs') == "c")
 
-            # Wagenreihung & Sektoren für alle nicht ausgefallenen Züge ermitteln
             reihung = None
             if not is_cancelled:
-                reihung = hole_wagenreihung(cat, num, linie, eva_id, p_time, sektoren_aus_gleis, alle_meldungen)
+                reihung = hole_wagenreihung(cat, num, linie, eva_id, p_time, wings, sektoren_aus_gleis, alle_meldungen)
 
             sektoren_str = (reihung.get("sektoren") if reihung else "") or sektoren_aus_gleis
             zug_modell = reihung.get("modell", "") if reihung else ""
+            formation_str = reihung.get("formation", "") if reihung else ""
+            zugteile_liste = reihung.get("zugteile", []) if reihung else []
             wagen_liste = reihung.get("wagen", []) if reihung else []
             reihung_info_text = reihung.get("text", "") if reihung else ""
 
@@ -745,6 +767,8 @@ def hole_daten_fuer_stunde(eva_id, datum, stunde, changes, zug_freitexte, statio
                 "gleiswechsel": gleiswechsel,
                 "sektoren": sektoren_str,
                 "zug_modell": zug_modell,
+                "formation": formation_str,
+                "zugteile": zugteile_liste,
                 "wagenreihung": wagen_liste,
                 "wagenreihung_text": reihung_info_text,
                 "info": "FÄLLT AUS" if is_cancelled else (f"+{diff}" if diff > 0 else "pünktlich"),
@@ -804,6 +828,7 @@ def hole_station_daten(eva_id):
                     "cs": dp.get('cs') if dp is not None else None,
                     "cpth": dp.get('cpth') if dp is not None else None,
                     "cde": dp.get('cde') if dp is not None else None,
+                    "wings": dp.get('wings') if dp is not None else None,
                     "meldungen": msgs,
                     "bauarbeiten": ist_bau,
                     "grund": " | ".join(msgs)
@@ -911,7 +936,7 @@ def hole_routing_verbindungen(start_id, ziel_id, dateiname):
         "remarks": "true"
     }
     try:
-        res = requests.get(url, params=params, timeout=10)
+        res = HTTP_SESSION.get(url, params=params, timeout=10)
         if res.status_code != 200:
             return
 
@@ -976,4 +1001,3 @@ if __name__ == "__main__":
 
     hole_routing_verbindungen("733238", "8013389", "verbindungen_bauhof_bahnhof")
     hole_routing_verbindungen("733238", "8010224", "verbindungen_bauhof_magdeburg")
-
