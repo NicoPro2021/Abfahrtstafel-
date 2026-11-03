@@ -24,8 +24,8 @@ import requests
 # Als Umgebungsvariablen setzen (lokal: export DB_CLIENT_ID=... / GitHub: Repository-Secrets
 # und im Workflow per  env:  durchreichen).
 # ==============================================================================
-CLIENT_ID = os.environ.get("DB_CLIENT_ID", "")
-CLIENT_SECRET = os.environ.get("DB_API_KEY", "")
+CLIENT_ID = os.environ.get("DB_CLIENT_ID", "647fddb98582bec8984c65e1256eb617")
+CLIENT_SECRET = os.environ.get("DB_API_KEY", "6af72e24106f2250967364fac780bbe6")
 
 # ==============================================================================
 # WAGENREIHUNG: Verhalten
