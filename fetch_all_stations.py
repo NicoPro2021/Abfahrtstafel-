@@ -1,6 +1,5 @@
 import re
 import sys
-import socket
 import subprocess
 import threading
 import urllib.parse
@@ -21,6 +20,23 @@ import requests
 # DEINE ZUGANGSDATEN
 CLIENT_ID = "647fddb98582bec8984c65e1256eb617"
 CLIENT_SECRET = "6af72e24106f2250967364fac780bbe6"
+
+# ==============================================================================
+# UMLAUF-KONFIGURATION FÜR TRIEBZÜGE (Talent 2 / BR 442 in Sachsen-Anhalt)
+# ==============================================================================
+# 1. Züge, die planmäßig in Doppeltraktion (2x 3-Teiler = 2 gekuppelte Züge) fahren:
+DOPPELTRAKTION_2X3_ZUEGE = {
+    "16112", "16115", "16116", "16119", "16120", "16123",
+    "16124", "16127", "16128", "16131", "16132", "16136"
+}
+
+# 2. Züge, die planmäßig als 5-Teiler fahren (z.B. RE 14 / RE 7 Umläufe):
+FUENFTEILER_ZUEGE = {
+    "16138", "16134", "16130", "16126", "16122", "16118",
+    "16114", "16110", "3710", "3712", "3714", "3716", "3718"
+}
+# Alle anderen Regionalzüge auf RE 13 / RE 14 / RB 50 / S-Bahn fahren als 3-Teiler.
+# ==============================================================================
 
 # OFFIZIELLE DB RIS-CODES
 DB_CODES = {
@@ -108,9 +124,6 @@ BAUREIHEN_NAMEN = {
     "0415": "ICE T (BR 415)", "0412": "ICE 4 (BR 412)", "9412": "ICE 4 (BR 412)"
 }
 
-# Zugnummern auf dem RE 13, die planmäßig als Doppeltraktion (2x 3-Teiler) verkehren
-RE13_DOPPELTRAKTION_NUMMERN = {"16136", "16112", "16115", "16116", "16119", "16120", "16123", "16124", "16127", "16128", "16131", "16132"}
-
 HEADERS_XML = {'DB-Client-Id': CLIENT_ID, 'DB-Api-Key': CLIENT_SECRET, 'accept': 'application/xml'}
 HEADERS_JSON = {'DB-Client-Id': CLIENT_ID, 'DB-Api-Key': CLIENT_SECRET, 'accept': 'application/json'}
 
@@ -121,21 +134,7 @@ GLOBAL_STATION_INFOS = {}
 ZUG_FORMATION_CACHE = {}
 AUFZUG_CACHE = {}
 HAFAS_TIMEOUT_COUNT = 0
-DIAGNOSE_COUNT = 0
-
-
-def is_warp_proxy_active():
-    """Prüft, ob der lokale Cloudflare WARP SOCKS5-Proxy auf Port 40000 läuft."""
-    try:
-        with socket.create_connection(("127.0.0.1", 40000), timeout=0.3):
-            return True
-    except Exception:
-        return False
-
-
-WARP_ACTIVE = is_warp_proxy_active()
-if WARP_ACTIVE:
-    print("[Info] Cloudflare WARP Proxy (Port 40000) erkannt -> Live-Abfragen über WARP aktiv.")
+BAHN_DE_BLOCKED = False
 
 
 def get_thread_cffi_session():
@@ -144,11 +143,6 @@ def get_thread_cffi_session():
             s = cffi_requests.Session(impersonate="chrome")
         except Exception:
             s = requests.Session()
-        if WARP_ACTIVE:
-            s.proxies = {
-                "http": "socks5h://127.0.0.1:40000",
-                "https": "socks5h://127.0.0.1:40000"
-            }
         THREAD_LOCAL.cffi_session = s
     return THREAD_LOCAL.cffi_session
 
@@ -207,15 +201,10 @@ def ermittle_baureihe(vehicles, grp_obj=None, fallback_desc=""):
 
 
 def teile_gekuppelte_triebzuege_auf(gruppe_wagen, ist_regio=True):
-    """
-    Teilt gekuppelte Triebzüge (z.B. 2x 3-Teiler = 6 Wagen, 3er+5er = 8 Wagen, 2x 5-Teiler = 10 Wagen)
-    an der Kupplungsstelle in separate Zugteile auf.
-    """
     n = len(gruppe_wagen)
     if n < 4:
         return [gruppe_wagen]
 
-    # 1. Prüfen auf explizite Steuerwagen-Paare oder 2+1 Endwagen in der Mitte
     teile = []
     aktueller_teil = []
     for idx, w in enumerate(gruppe_wagen):
@@ -233,7 +222,6 @@ def teile_gekuppelte_triebzuege_auf(gruppe_wagen, ist_regio=True):
     if len(teile) > 1:
         return teile
 
-    # 2. Wenn Regionaltriebzug mit 6 Wagen (2x 3-Teiler) oder 10 Wagen (2x 5-Teiler) in einer Liste liegt
     if ist_regio and n == 6:
         return [gruppe_wagen[:3], gruppe_wagen[3:]]
     if ist_regio and n == 10:
@@ -411,10 +399,11 @@ def baue_konsistente_linien_reihung(cat, fahrt_nr, linie, wings, sektoren_aus_gl
 
     ist_doppeltraktion = bool(
         wings
-        or nr_str in RE13_DOPPELTRAKTION_NUMMERN
+        or nr_str in DOPPELTRAKTION_2X3_ZUEGE
         or "weiterer wagen" in meldungen_text
         or "zusätzlichen wagen" in meldungen_text
     )
+    ist_fuenfteiler = bool(nr_str in FUENFTEILER_ZUEGE or ("RE 14" in up_line and nr_int % 2 == 0) or "RE 7" in up_line)
 
     def baue_triebzug_einheit(anz_wagen, teil_nr, gesamt_teile):
         w_liste = []
@@ -443,10 +432,7 @@ def baue_konsistente_linien_reihung(cat, fahrt_nr, linie, wings, sektoren_aus_gl
         if ist_doppeltraktion:
             zugteile = [baue_triebzug_einheit(3, 1, 2), baue_triebzug_einheit(3, 2, 2)]
             formation = "2x 3-Teiler (2 Züge)"
-        elif "RE 14" in up_line and (nr_int % 2 == 0):
-            zugteile = [baue_triebzug_einheit(5, 1, 1)]
-            formation = "5-Teiler"
-        elif "RE 7" in up_line:
+        elif ist_fuenfteiler:
             zugteile = [baue_triebzug_einheit(5, 1, 1)]
             formation = "5-Teiler"
         else:
@@ -493,7 +479,7 @@ def baue_konsistente_linien_reihung(cat, fahrt_nr, linie, wings, sektoren_aus_gl
 
 
 def hole_wagenreihung(cat, fahrt_nr, linie, eva_id, p_time_berlin, trip_id, wings, sektoren_aus_gleis, alle_meldungen, tz):
-    global DIAGNOSE_COUNT
+    global BAHN_DE_BLOCKED
     if not fahrt_nr:
         return None, ""
 
@@ -531,32 +517,27 @@ def hole_wagenreihung(cat, fahrt_nr, linie, eva_id, p_time_berlin, trip_id, wing
         if zug_tag_key in ZUG_FORMATION_CACHE:
             return kopiere_formation_fuer_unterwegsbahnhof(ZUG_FORMATION_CACHE[zug_tag_key], sektoren_aus_gleis), primary_bahn_url
 
-    session = get_thread_cffi_session()
-
-    # Live-Abruf von www.bahn.de (läuft auf GitHub Actions über den lokalen Cloudflare WARP Proxy)
-    try:
-        res = session.get(
-            primary_bahn_url,
-            headers={"Accept": "application/json", "Referer": "https://www.bahn.de/"},
-            timeout=4
-        )
-        if DIAGNOSE_COUNT < 4:
-            DIAGNOSE_COUNT += 1
-            print(f"[Diagnose bahn.de] {linie} ({fahrt_nr}) @ {lookup_eva}: HTTP {res.status_code}")
-
-        if res.status_code == 200 and res.text.strip().startswith("{"):
-            parsed = parse_wagenreihung_json(res.json(), primary_cat)
-            if parsed:
-                if not parsed["sektoren"] and sektoren_aus_gleis:
-                    parsed["sektoren"] = sektoren_aus_gleis
-                with CACHE_LOCK:
-                    ZUG_FORMATION_CACHE[zug_tag_key] = parsed
-                print(f"  -> [Live-Wagenreihung OK] {linie} ({fahrt_nr}): {parsed['modell']}")
-                return parsed, primary_bahn_url
-    except Exception as e:
-        if DIAGNOSE_COUNT < 4:
-            DIAGNOSE_COUNT += 1
-            print(f"[Diagnose bahn.de Fehler]: {e}")
+    # Falls das Skript lokal (Heimnetz) läuft, klappt bahn.de direkt; auf GitHub greift nach dem 1. 403 sofort der Schutzschalter
+    if not BAHN_DE_BLOCKED:
+        session = get_thread_cffi_session()
+        try:
+            res = session.get(
+                primary_bahn_url,
+                headers={"Accept": "application/json", "Referer": "https://www.bahn.de/"},
+                timeout=3
+            )
+            if res.status_code == 200 and res.text.strip().startswith("{"):
+                parsed = parse_wagenreihung_json(res.json(), primary_cat)
+                if parsed:
+                    if not parsed["sektoren"] and sektoren_aus_gleis:
+                        parsed["sektoren"] = sektoren_aus_gleis
+                    with CACHE_LOCK:
+                        ZUG_FORMATION_CACHE[zug_tag_key] = parsed
+                    return parsed, primary_bahn_url
+            elif res.status_code == 403:
+                BAHN_DE_BLOCKED = True
+        except Exception:
+            BAHN_DE_BLOCKED = True
 
     konsistent = baue_konsistente_linien_reihung(cat, fahrt_nr, linie, wings, sektoren_aus_gleis, alle_meldungen)
     with CACHE_LOCK:
@@ -924,7 +905,7 @@ def hole_routing_verbindungen(start_id, ziel_id, dateiname):
 
 if __name__ == "__main__":
     station_items = list(STATIONS.items())
-    with ThreadPoolExecutor(max_workers=2) as executor:
+    with ThreadPoolExecutor(max_workers=4) as executor:
         executor.map(verarbeite_station, station_items)
     erzeuge_global_info()
     hole_routing_verbindungen("733238", "8013389", "verbindungen_bauhof_bahnhof")
