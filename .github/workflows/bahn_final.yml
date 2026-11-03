@@ -28,18 +28,7 @@ jobs:
           python-version: '3.x'
 
       - name: Install Dependencies
-        run: pip install --upgrade pip requests "curl_cffi>=0.7.0" PySocks
-
-      - name: Setup Cloudflare WARP Proxy (umgeht bahn.de HTTP 403 Sperre)
-        run: |
-          curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
-          echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ jammy main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
-          sudo apt-get update && sudo apt-get install -y cloudflare-warp
-          sudo warp-cli --accept-tos registration new || sudo warp-cli --accept-tos register || true
-          sudo warp-cli --accept-tos mode proxy
-          sudo warp-cli --accept-tos proxy port 40000
-          sudo warp-cli --accept-tos connect || true
-          sleep 3
+        run: pip install --upgrade pip requests curl_cffi
 
       - name: Main Loop
         run: |
