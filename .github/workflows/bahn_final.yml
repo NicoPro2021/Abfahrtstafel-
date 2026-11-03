@@ -10,8 +10,6 @@ env:
 
 jobs:
   run:
-    # Wenn im Log "blockiert" steht (bahn.de sperrt GitHub-Server), hier auf einen eigenen Rechner/Raspberry Pi
-    # mit normaler Internetleitung umstellen:  runs-on: self-hosted
     runs-on: ubuntu-latest
     concurrency:
       group: bahn-monitor
@@ -32,23 +30,7 @@ jobs:
       - name: Install Dependencies
         run: pip install --upgrade pip requests curl_cffi
 
-      # Zugangsdaten stehen NICHT mehr im Code, sondern in: Repo -> Settings -> Secrets and variables -> Actions
-      - name: Prüfe Secrets
-        id: check
-        env:
-          DB_CLIENT_ID: ${{ secrets.DB_CLIENT_ID }}
-          DB_API_KEY: ${{ secrets.DB_API_KEY }}
-        run: |
-          if [ -z "$DB_CLIENT_ID" ] || [ -z "$DB_API_KEY" ]; then
-            echo "::error::Secrets DB_CLIENT_ID und/oder DB_API_KEY fehlen (Settings -> Secrets and variables -> Actions)."
-            exit 1
-          fi
-
       - name: Main Loop
-        env:
-          DB_CLIENT_ID: ${{ secrets.DB_CLIENT_ID }}
-          DB_API_KEY: ${{ secrets.DB_API_KEY }}
-          # REIHUNG_SCHAETZEN: '1'   # nur aktivieren, wenn geschätzte Reihungen (mit ~ markiert) gewünscht sind
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -71,9 +53,8 @@ jobs:
             sleep 150
           done
 
-      # Nicht neu starten, wenn schon die Secrets fehlen (sonst Endlosschleife aus fehlschlagenden Läufen)
       - name: Restart Workflow
-        if: always() && steps.check.outcome == 'success'
+        if: always()
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
