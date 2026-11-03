@@ -11,7 +11,6 @@ env:
 jobs:
   run:
     runs-on: ubuntu-latest
-    # Verhindert, dass sich Workflows überschneiden
     concurrency:
       group: bahn-monitor
       cancel-in-progress: false
@@ -29,11 +28,21 @@ jobs:
           python-version: '3.x'
 
       - name: Install Dependencies
-        run: pip install --upgrade pip requests curl_cffi
+        run: pip install --upgrade pip requests "curl_cffi>=0.7.0" PySocks
+
+      - name: Setup Cloudflare WARP Proxy (umgeht bahn.de HTTP 403 Sperre)
+        run: |
+          curl -fsSL https://pkg.cloudflareclient.com/pubkey.gpg | sudo gpg --yes --dearmor --output /usr/share/keyrings/cloudflare-warp-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/cloudflare-warp-archive-keyring.gpg] https://pkg.cloudflareclient.com/ jammy main" | sudo tee /etc/apt/sources.list.d/cloudflare-client.list
+          sudo apt-get update && sudo apt-get install -y cloudflare-warp
+          sudo warp-cli --accept-tos registration new || sudo warp-cli --accept-tos register || true
+          sudo warp-cli --accept-tos mode proxy
+          sudo warp-cli --accept-tos proxy port 40000
+          sudo warp-cli --accept-tos connect || true
+          sleep 3
 
       - name: Main Loop
         run: |
-          # Git Identität lokal setzen
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
@@ -42,12 +51,9 @@ jobs:
             echo "=== Runde $i startet um $(date +'%H:%M:%S') ==="
             python -u fetch_all_stations.py
             
-            # Prüfen, ob JSON-Dateien geändert wurden
             git add *.json
             if ! git diff --cached --quiet; then
               git commit -m "Live Update Runde $i ($(date +'%H:%M'))"
-              
-              # Rebase mit Autostash, falls sich das Repo während des Loops geändert hat
               git pull --rebase --autostash origin main
               git push origin main
               echo "Runde $i erfolgreich hochgeladen."
@@ -55,7 +61,6 @@ jobs:
               echo "Keine Änderungen in Runde $i."
             fi
             
-            # 150 Sekunden warten (entspricht ca. 40 Min Gesamtlaufzeit bei 15 Runden)
             sleep 150
           done
 
