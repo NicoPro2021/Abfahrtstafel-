@@ -182,7 +182,7 @@
             "🛗 Aufzug außer Betrieb (zu Gleis 4/5)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (zu Gleis 4/5) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:00"
+        "update": "21:04"
     },
     {
         "zeit": "21:10",
@@ -287,11 +287,118 @@
             "🛗 Aufzug außer Betrieb (zu Gleis 4/5)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (zu Gleis 4/5) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:00"
+        "update": "21:04"
+    },
+    {
+        "zeit": "21:05",
+        "echte_zeit": "21:13",
+        "linie": "RE 6",
+        "zug_nr": "RE 3639",
+        "fahrt_nr": "3639",
+        "kategorie": "RE",
+        "ziel": "Hennigsdorf(b Berlin)",
+        "ziel_geplant": "Hennigsdorf(b Berlin)",
+        "via": [
+            "Weisen",
+            "Perleberg",
+            "Groß Pankow",
+            "Pritzwalk"
+        ],
+        "entfallende_halte": [],
+        "gleis": "6",
+        "gleis_geplant": "6",
+        "gleiswechsel": false,
+        "sektoren": "A–E",
+        "zug_modell": "Talent 2 (BR 442) • 3-Teiler",
+        "formation": "3-Teiler",
+        "zugteile": [
+            {
+                "teil_nr": 1,
+                "bezeichnung": "3-Teiler",
+                "ziel": "",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": true,
+                        "wc": true,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "rollstuhl": false,
+                        "wc": true,
+                        "zugteil": 1
+                    }
+                ]
+            }
+        ],
+        "wagenreihung": [
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": true,
+                "wc": true,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "rollstuhl": false,
+                "wc": true,
+                "zugteil": 1
+            }
+        ],
+        "wagenreihung_text": "Talent 2 (BR 442) • 3-Teiler • Sektor A–E",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-03&evaNumber=8010382&number=3639&time=2026-11-03T20:05:00.000Z",
+        "info": "+8",
+        "begruendung": "Warten auf Anschlussreisende",
+        "meldungen": [
+            "Warten auf Anschlussreisende"
+        ],
+        "bauarbeiten": false,
+        "defekte_aufzuege": [
+            "🛗 Aufzug außer Betrieb (zu Gleis 4/5)"
+        ],
+        "station_ticker": "🛗 Aufzug außer Betrieb (zu Gleis 4/5) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "21:04"
     },
     {
         "zeit": "21:01",
-        "echte_zeit": "21:13",
+        "echte_zeit": "21:14",
         "linie": "ICE 90",
         "zug_nr": "ICE 90",
         "fahrt_nr": "90",
@@ -463,7 +570,7 @@
         ],
         "wagenreihung_text": "ICE 4 (BR 412) • 7 Wagen",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-03&evaNumber=8010382&number=90&time=2026-11-03T20:01:00.000Z",
-        "info": "+12",
+        "info": "+13",
         "begruendung": "Verspätetes Personal aus vorheriger Fahrt +++ Vorfahrt eines anderen Zuges",
         "meldungen": [
             "Verspätetes Personal aus vorheriger Fahrt",
@@ -474,114 +581,7 @@
             "🛗 Aufzug außer Betrieb (zu Gleis 4/5)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (zu Gleis 4/5) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:00"
-    },
-    {
-        "zeit": "21:05",
-        "echte_zeit": "21:13",
-        "linie": "RE 6",
-        "zug_nr": "RE 3639",
-        "fahrt_nr": "3639",
-        "kategorie": "RE",
-        "ziel": "Hennigsdorf(b Berlin)",
-        "ziel_geplant": "Hennigsdorf(b Berlin)",
-        "via": [
-            "Weisen",
-            "Perleberg",
-            "Groß Pankow",
-            "Pritzwalk"
-        ],
-        "entfallende_halte": [],
-        "gleis": "6",
-        "gleis_geplant": "6",
-        "gleiswechsel": false,
-        "sektoren": "A–E",
-        "zug_modell": "Talent 2 (BR 442) • 3-Teiler",
-        "formation": "3-Teiler",
-        "zugteile": [
-            {
-                "teil_nr": 1,
-                "bezeichnung": "3-Teiler",
-                "ziel": "",
-                "wagen": [
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "",
-                        "klima": true,
-                        "fahrrad": true,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "",
-                        "klima": true,
-                        "fahrrad": true,
-                        "rollstuhl": true,
-                        "wc": true,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2+1",
-                        "sektor": "",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": true,
-                        "zugteil": 1
-                    }
-                ]
-            }
-        ],
-        "wagenreihung": [
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "",
-                "klima": true,
-                "fahrrad": true,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "",
-                "klima": true,
-                "fahrrad": true,
-                "rollstuhl": true,
-                "wc": true,
-                "zugteil": 1
-            },
-            {
-                "wagen": "",
-                "klasse": "2+1",
-                "sektor": "",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": true,
-                "zugteil": 1
-            }
-        ],
-        "wagenreihung_text": "Talent 2 (BR 442) • 3-Teiler • Sektor A–E",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-03&evaNumber=8010382&number=3639&time=2026-11-03T20:05:00.000Z",
-        "info": "+8",
-        "begruendung": "Warten auf Anschlussreisende",
-        "meldungen": [
-            "Warten auf Anschlussreisende"
-        ],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [
-            "🛗 Aufzug außer Betrieb (zu Gleis 4/5)"
-        ],
-        "station_ticker": "🛗 Aufzug außer Betrieb (zu Gleis 4/5) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:00"
+        "update": "21:04"
     },
     {
         "zeit": "21:05",
@@ -706,11 +706,11 @@
             "🛗 Aufzug außer Betrieb (zu Gleis 4/5)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (zu Gleis 4/5) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:00"
+        "update": "21:04"
     },
     {
         "zeit": "21:30",
-        "echte_zeit": "21:40",
+        "echte_zeit": "21:39",
         "linie": "RJ 172",
         "zug_nr": "RJ 172",
         "fahrt_nr": "172",
@@ -803,7 +803,7 @@
         ],
         "wagenreihung_text": "Talent 2 (BR 442) • 3-Teiler",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RJ&date=2026-11-03&evaNumber=8010382&number=172&time=2026-11-03T20:30:00.000Z",
-        "info": "+10",
+        "info": "+9",
         "begruendung": "Verspätung im Ausland +++ Verspätetes Personal aus vorheriger Fahrt",
         "meldungen": [
             "Verspätung im Ausland",
@@ -814,7 +814,7 @@
             "🛗 Aufzug außer Betrieb (zu Gleis 4/5)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (zu Gleis 4/5) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:00"
+        "update": "21:04"
     },
     {
         "zeit": "22:00",
@@ -999,7 +999,7 @@
             "🛗 Aufzug außer Betrieb (zu Gleis 4/5)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (zu Gleis 4/5) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:00"
+        "update": "21:04"
     },
     {
         "zeit": "22:05",
@@ -1126,7 +1126,7 @@
             "🛗 Aufzug außer Betrieb (zu Gleis 4/5)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (zu Gleis 4/5) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:00"
+        "update": "21:04"
     },
     {
         "zeit": "22:07",
@@ -1253,7 +1253,7 @@
             "🛗 Aufzug außer Betrieb (zu Gleis 4/5)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (zu Gleis 4/5) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:00"
+        "update": "21:04"
     },
     {
         "zeit": "22:10",
@@ -1358,7 +1358,7 @@
             "🛗 Aufzug außer Betrieb (zu Gleis 4/5)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (zu Gleis 4/5) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:00"
+        "update": "21:04"
     },
     {
         "zeit": "23:00",
@@ -1541,7 +1541,7 @@
             "🛗 Aufzug außer Betrieb (zu Gleis 4/5)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (zu Gleis 4/5) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:00"
+        "update": "21:04"
     },
     {
         "zeit": "23:05",
@@ -1666,7 +1666,7 @@
             "🛗 Aufzug außer Betrieb (zu Gleis 4/5)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (zu Gleis 4/5) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:00"
+        "update": "21:04"
     },
     {
         "zeit": "23:07",
@@ -1793,7 +1793,7 @@
             "🛗 Aufzug außer Betrieb (zu Gleis 4/5)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (zu Gleis 4/5) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:00"
+        "update": "21:04"
     },
     {
         "zeit": "23:01",
@@ -1980,6 +1980,6 @@
             "🛗 Aufzug außer Betrieb (zu Gleis 4/5)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (zu Gleis 4/5) +++ 🚧 Bauarbeiten +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "21:00"
+        "update": "21:04"
     }
 ]
