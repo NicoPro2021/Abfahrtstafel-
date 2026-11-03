@@ -1,30 +1,30 @@
 [
     {
-        "zeit": "04:05",
-        "echte_zeit": "04:05",
-        "linie": "RE 13",
-        "zug_nr": "RE 16100",
-        "fahrt_nr": "16100",
+        "zeit": "05:41",
+        "echte_zeit": "05:41",
+        "linie": "RE 14",
+        "zug_nr": "RE 16158",
+        "fahrt_nr": "16158",
         "kategorie": "RE",
         "ziel": "Magdeburg Hbf",
         "ziel_geplant": "Magdeburg Hbf",
         "via": [
             "Zerbst/Anhalt",
-            "Güterglück",
-            "Lübs(Magdeburg)",
-            "Prödel"
+            "Gommern",
+            "Königsborn",
+            "Biederitz"
         ],
         "entfallende_halte": [],
         "gleis": "2",
         "gleis_geplant": "2",
         "gleiswechsel": false,
         "sektoren": "",
-        "zug_modell": "Talent 2 (BR 442) • 3-Teiler",
-        "formation": "3-Teiler",
+        "zug_modell": "Talent 2 (BR 442) • 5-Teiler",
+        "formation": "5-Teiler",
         "zugteile": [
             {
                 "teil_nr": 1,
-                "bezeichnung": "3-Teiler",
+                "bezeichnung": "5-Teiler",
                 "ziel": "",
                 "wagen": [
                     {
@@ -32,7 +32,7 @@
                         "klasse": "2",
                         "sektor": "",
                         "klima": true,
-                        "fahrrad": true,
+                        "fahrrad": false,
                         "rollstuhl": false,
                         "wc": false,
                         "zugteil": 1
@@ -49,89 +49,6 @@
                     },
                     {
                         "wagen": "",
-                        "klasse": "2+1",
-                        "sektor": "",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": true,
-                        "zugteil": 1
-                    }
-                ]
-            }
-        ],
-        "wagenreihung": [
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "",
-                "klima": true,
-                "fahrrad": true,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "",
-                "klima": true,
-                "fahrrad": true,
-                "rollstuhl": true,
-                "wc": true,
-                "zugteil": 1
-            },
-            {
-                "wagen": "",
-                "klasse": "2+1",
-                "sektor": "",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": true,
-                "zugteil": 1
-            }
-        ],
-        "wagenreihung_text": "Talent 2 (BR 442) • 3-Teiler",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-03&evaNumber=8012777&number=16100&time=2026-11-03T03:05:00.000Z",
-        "info": "pünktlich",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "04:07"
-    },
-    {
-        "zeit": "04:55",
-        "echte_zeit": "04:55",
-        "linie": "RE 13",
-        "zug_nr": "RE 16102",
-        "fahrt_nr": "16102",
-        "kategorie": "RE",
-        "ziel": "Magdeburg Hbf",
-        "ziel_geplant": "Magdeburg Hbf",
-        "via": [
-            "Zerbst/Anhalt",
-            "Güterglück",
-            "Lübs(Magdeburg)",
-            "Prödel"
-        ],
-        "entfallende_halte": [],
-        "gleis": "2",
-        "gleis_geplant": "2",
-        "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "Talent 2 (BR 442) • 3-Teiler",
-        "formation": "3-Teiler",
-        "zugteile": [
-            {
-                "teil_nr": 1,
-                "bezeichnung": "3-Teiler",
-                "ziel": "",
-                "wagen": [
-                    {
-                        "wagen": "",
                         "klasse": "2",
                         "sektor": "",
                         "klima": true,
@@ -145,9 +62,9 @@
                         "klasse": "2",
                         "sektor": "",
                         "klima": true,
-                        "fahrrad": true,
-                        "rollstuhl": true,
-                        "wc": true,
+                        "fahrrad": false,
+                        "rollstuhl": false,
+                        "wc": false,
                         "zugteil": 1
                     },
                     {
@@ -155,7 +72,7 @@
                         "klasse": "2+1",
                         "sektor": "",
                         "klima": true,
-                        "fahrrad": false,
+                        "fahrrad": true,
                         "rollstuhl": false,
                         "wc": true,
                         "zugteil": 1
@@ -169,7 +86,7 @@
                 "klasse": "2",
                 "sektor": "",
                 "klima": true,
-                "fahrrad": true,
+                "fahrrad": false,
                 "rollstuhl": false,
                 "wc": false,
                 "zugteil": 1
@@ -186,36 +103,59 @@
             },
             {
                 "wagen": "",
-                "klasse": "2+1",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
                 "sektor": "",
                 "klima": true,
                 "fahrrad": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
                 "rollstuhl": false,
                 "wc": true,
                 "zugteil": 1
             }
         ],
-        "wagenreihung_text": "Talent 2 (BR 442) • 3-Teiler",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-03&evaNumber=8012777&number=16102&time=2026-11-03T03:55:00.000Z",
+        "wagenreihung_text": "Talent 2 (BR 442) • 5-Teiler",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-03&evaNumber=8012777&number=16158&time=2026-11-03T04:41:00.000Z",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "04:07"
+        "update": "04:11"
     },
     {
-        "zeit": "04:59",
-        "echte_zeit": "04:59",
+        "zeit": "05:52",
+        "echte_zeit": "05:52",
         "linie": "RE 13",
-        "zug_nr": "RE 16101",
-        "fahrt_nr": "16101",
+        "zug_nr": "RE 16103",
+        "fahrt_nr": "16103",
         "kategorie": "RE",
-        "ziel": "Dessau Hbf",
-        "ziel_geplant": "Dessau Hbf",
+        "ziel": "Leipzig Hbf",
+        "ziel_geplant": "Leipzig Hbf",
         "via": [
-            "Roßlau(Elbe)"
+            "Roßlau(Elbe)",
+            "Dessau Hbf",
+            "Wolfen(Bitterfeld)",
+            "Bitterfeld"
         ],
         "entfallende_halte": [],
         "gleis": "1",
@@ -296,13 +236,13 @@
             }
         ],
         "wagenreihung_text": "Talent 2 (BR 442) • 3-Teiler",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-03&evaNumber=8012777&number=16101&time=2026-11-03T03:59:00.000Z",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-03&evaNumber=8012777&number=16103&time=2026-11-03T04:52:00.000Z",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "04:07"
+        "update": "04:11"
     }
 ]
