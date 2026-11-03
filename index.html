@@ -523,7 +523,26 @@
     let currentStation = null;
     let currentFilter = 'ALL';
     let favorites = JSON.parse(localStorage.getItem('db_monitor_favs')) || [null, null, null, null];
-    const LIVE_SEQ_CACHE = {};
+
+    // Live-Nachladen der Wagenreihung im Browser (nur wenn der Server keine Reihung geliefert hat)
+    const LIVE_SEQ_CACHE = {};                 // rowKey -> { t, parsed }
+    const LIVE_SEQ_FAIL = {};                  // rowKey -> Zeitpunkt des letzten Fehlversuchs
+    const LIVE_CACHE_TTL_MS = 20 * 60 * 1000;  // erfolgreiche Reihung so lange behalten
+    const LIVE_FAIL_TTL_MS = 5 * 60 * 1000;    // nach Fehlschlag so lange NICHT erneut versuchen
+    const LIVE_FETCH_MAX_MIN = 120;            // bahn.de liefert Reihungen nur für die nächsten ~2 Stunden
+    const LIVE_TIMEOUT_MS = 8000;
+    let liveQueueRunning = false;
+
+    function esc(s) {
+        return String(s === undefined || s === null ? '' : s)
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    // Stabile ID pro Abfahrt (früher: Listen-Index -> nach jedem Refresh landete die Reihung im falschen Zug)
+    function makeRowKey(zug) {
+        const eva = currentStation ? currentStation.eva : '';
+        return `${eva}_${zug.zug_nr}_${zug.zeit}`.replace(/[^A-Za-z0-9_-]/g, '_');
+    }
 
     function setFilter(filterType, btnEl) {
         currentFilter = filterType;
@@ -602,37 +621,68 @@
         document.getElementById('star').innerText = isFav ? '★' : '☆';
     }
 
-    function parseBahnDeJsonInBrowser(data, cat) {
-        if (!data || !data.groups || data.groups.length === 0) return null;
-        const istRegio = !["ICE", "IC", "EC", "EN", "NJ", "FLX", "D"].includes((cat || "").toUpperCase());
-        const rawUnits = [];
-        let brGefunden = "";
+    // ------------------------------------------------------------------
+    // Parser für die bahn.de-Antwort. Arbeitet bewusst wie der Server (fetch_all_stations.py):
+    // jede Fahrzeuggruppe der API ist ein Zugteil. (Die frühere "Steuerwagen"-Heuristik hat Talent-2-Züge
+    // in lauter 2er-Stücke zerlegt, weil alle 442-Wagen als Steuerwagen galten.)
+    // ------------------------------------------------------------------
+    function posStart(v) {
+        const pp = v && v.platformPosition;
+        return (pp && typeof pp.start === 'number') ? pp.start : null;
+    }
 
-        for (const grp of data.groups) {
+    function parseBahnDeJsonInBrowser(data, cat) {
+        if (Array.isArray(data)) data = data[0];
+        if (!data || typeof data !== 'object') return null;
+        let groups = data.groups || [];
+        if (!groups.length) return null;
+        const istRegio = !["ICE", "IC", "EC", "EN", "NJ", "FLX", "D"].includes((cat || "").toUpperCase());
+
+        // Reihenfolge wie am Bahnsteig (nur wenn ALLE Fahrzeuge eine Position haben)
+        const alleV = groups.flatMap(g => g.vehicles || []);
+        if (alleV.length && alleV.every(v => posStart(v) !== null)) {
+            groups = groups
+                .map(g => Object.assign({}, g, { vehicles: (g.vehicles || []).slice().sort((a, b) => posStart(a) - posStart(b)) }))
+                .sort((a, b) => {
+                    const pa = posStart((a.vehicles || [])[0]); const pb = posStart((b.vehicles || [])[0]);
+                    return (pa === null ? 1e9 : pa) - (pb === null ? 1e9 : pb);
+                });
+        }
+
+        // Fahrtrichtung (0 = Richtung Bahnsteigbeginn/links, 100 = Richtung Bahnsteigende/rechts)
+        let richtung = '';
+        const dirRaw = [data.direction, data.platform && data.platform.direction]
+            .find(x => x !== undefined && x !== null && typeof x !== 'boolean' && String(x).trim() !== '' && !isNaN(Number(x)));
+        if (dirRaw !== undefined) {
+            const d = Number(dirRaw);
+            if (d === 0) richtung = 'links';
+            else if (d === 100) richtung = 'rechts';
+        }
+
+        const zugteile = [];
+        const baureihen = [];
+        groups.forEach((grp, idx) => {
             const vehicles = grp.vehicles || [];
             for (const v of vehicles) {
                 const vid = String(v.vehicleID || "").replace(/\D/g, "");
                 if (vid.length === 12 && vid.startsWith("9") && vid.slice(2, 4) === "80") {
-                    const brCode = vid.slice(4, 8);
-                    if (BAUREIHEN_MAP[brCode]) { brGefunden = BAUREIHEN_MAP[brCode]; break; }
+                    const name = BAUREIHEN_MAP[vid.slice(4, 8)];
+                    if (name) { if (!baureihen.includes(name)) baureihen.push(name); break; }
                 }
             }
             const wagen = [];
             for (const v of vehicles) {
-                if (v.status === "CLOSED") continue;
+                if (v.closed || String(v.status || "").toUpperCase() === "CLOSED") continue;
                 const vt = v.type || {};
                 const catType = String(vt.category || "").toUpperCase();
                 const has1 = Boolean(vt.hasFirstClass || catType.includes("FIRST"));
                 const has2 = Boolean(vt.hasEconomyClass || catType.includes("ECONOMY") || catType.includes("SECOND"));
                 const hasBistro = Boolean(vt.hasBistro || catType.includes("DINING") || catType.includes("BISTRO"));
-                if (!has1 && !has2 && !hasBistro && (catType.includes("LOCOMOTIVE") || catType.includes("POWERCAR"))) continue;
+                if (!has1 && !has2 && !hasBistro && (catType.includes("LOCOMOTIVE") || catType.includes("POWERCAR") || catType.includes("LOK") || catType.includes("TRIEBKOPF"))) continue;
 
-                const ams = (v.amenities || []).map(a => String(a.type || "").toUpperCase());
-                const hatKlima = ams.length === 0 || ams.includes("AIR_CONDITION");
+                const ams = (v.amenities || []).map(a => String((a && a.type) || "").toUpperCase());
+                const hatKlima = ams.length === 0 || ams.some(t => t.includes("AIR_COND"));
                 const hatRad = Boolean(vt.hasBikeSpace || ams.includes("BIKE_SPACE") || ams.includes("MULTI_PURPOSE") || catType.includes("BIKE"));
-                const vid = String(v.vehicleID || "").replace(/\D/g, "");
-                const istEndwagen = (vid.length === 12 && ["0442","1442","2442","3442","0462","1462","0463","1463"].includes(vid.slice(4,8)))
-                    || catType.includes("CONTROLCAR") || catType.includes("POWERCAR");
 
                 let klasse = "2";
                 if (hasBistro && !has1 && !has2) klasse = "Bistro";
@@ -645,46 +695,55 @@
                     klasse,
                     sektor: (v.platformPosition && v.platformPosition.sector) || "",
                     klima: hatKlima,
-                    fahrrad: hatRad,
-                    ist_steuerwagen: istEndwagen
+                    fahrrad: hatRad
                 });
             }
-            // Prüfen, ob 2 gekuppelte Triebzüge (z.B. 2x 3-Teiler) in einer Gruppe stecken
-            if (wagen.length >= 4) {
-                let cur = [];
-                for (let i = 0; i < wagen.length; i++) {
-                    cur.push(wagen[i]);
-                    if (i >= 1 && i < wagen.length - 1 && wagen[i].ist_steuerwagen && wagen[i+1].ist_steuerwagen && cur.length >= 2) {
-                        rawUnits.push(cur);
-                        cur = [];
-                    }
-                }
-                if (cur.length > 0) rawUnits.push(cur);
-            } else if (wagen.length > 0) {
-                rawUnits.push(wagen);
+            if (wagen.length) {
+                const tt = istRegio ? `${wagen.length}-Teiler` : `${wagen.length} Wagen`;
+                const dest = (grp.transport && grp.transport.destination && grp.transport.destination.name) || grp.destinationName || "";
+                zugteile.push({ teil_nr: idx + 1, bezeichnung: groups.length > 1 ? `${idx + 1}. Zugteil (${tt})` : tt, ziel: dest, wagen });
             }
-        }
-        if (rawUnits.length === 0) return null;
-        const zugteile = rawUnits.map((u, idx) => ({
-            teil_nr: idx + 1,
-            bezeichnung: rawUnits.length > 1 ? `${idx + 1}. Zugteil (${u.length}-Teiler)` : `${u.length}-Teiler`,
-            wagen: u
-        }));
+        });
+        if (!zugteile.length) return null;
+
         const lens = zugteile.map(z => z.wagen.length);
-        const formation = rawUnits.length > 1
-            ? (new Set(lens).size === 1 ? `${rawUnits.length}x ${lens[0]}-Teiler (${rawUnits.length} Züge)` : lens.map(l => `${l}-Teiler`).join(" + "))
-            : (istRegio ? `${lens[0]}-Teiler` : `${lens[0]} Wagen`);
-        const modell = brGefunden ? `${brGefunden} • ${formation}` : formation;
-        return { zugteile, formation, zug_modell: modell };
+        let formation;
+        if (istRegio) {
+            if (zugteile.length > 1 && new Set(lens).size === 1) formation = `${zugteile.length}x ${lens[0]}-Teiler (${zugteile.length} Züge)`;
+            else if (zugteile.length > 1) formation = lens.map(l => `${l}-Teiler`).join(" + ") + ` (${zugteile.length} Züge)`;
+            else formation = `${lens[0]}-Teiler`;
+        } else {
+            const summe = lens.reduce((a, b) => a + b, 0);
+            formation = zugteile.length > 1 ? `${zugteile.length} Zugteile (${summe} Wagen)` : `${summe} Wagen`;
+        }
+        const br = baureihen.join(" + ");
+        return { zugteile, formation, zug_modell: br ? `${br} • ${formation}` : formation, richtung };
     }
 
-    async function fetchLiveSequenceIfMissing(zug, slotId, badgeId) {
-        if (!zug.reihung_url) return;
-        const cacheKey = zug.zug_nr + "_" + zug.zeit;
-        if (LIVE_SEQ_CACHE[cacheKey]) {
-            applyLiveSequence(zug, LIVE_SEQ_CACHE[cacheKey], slotId, badgeId);
-            return;
-        }
+    function applyParsedToZug(zug, parsed) {
+        zug.zugteile = parsed.zugteile;
+        zug.formation = parsed.formation;
+        zug.zug_modell = parsed.zug_modell;
+        zug.reihung_richtung = parsed.richtung || '';
+        zug.reihung_quelle = 'live';
+    }
+
+    function getLiveCached(key) {
+        const e = LIVE_SEQ_CACHE[key];
+        if (!e) return null;
+        if (Date.now() - e.t > LIVE_CACHE_TTL_MS) { delete LIVE_SEQ_CACHE[key]; return null; }
+        return e.parsed;
+    }
+
+    async function fetchMitTimeout(url, ms) {
+        const ctrl = new AbortController();
+        const timer = setTimeout(() => ctrl.abort(), ms);
+        try { return await fetch(url, { signal: ctrl.signal }); }
+        finally { clearTimeout(timer); }
+    }
+
+    async function fetchLiveSequence(item) {
+        const { zug, key, slotId, badgeId } = item;
         const enc = encodeURIComponent(zug.reihung_url);
         const relays = [
             `https://api.codetabs.com/v1/proxy?quest=${enc}`,
@@ -692,25 +751,39 @@
         ];
         for (const rUrl of relays) {
             try {
-                const res = await fetch(rUrl);
-                if (res.ok) {
-                    const json = await res.json();
-                    const parsed = parseBahnDeJsonInBrowser(json, zug.kategorie);
-                    if (parsed) {
-                        LIVE_SEQ_CACHE[cacheKey] = parsed;
-                        applyLiveSequence(zug, parsed, slotId, badgeId);
-                        return;
-                    }
+                const res = await fetchMitTimeout(rUrl, LIVE_TIMEOUT_MS);
+                if (!res.ok) continue;
+                const json = await res.json();
+                const parsed = parseBahnDeJsonInBrowser(json, zug.kategorie);
+                if (parsed) {
+                    LIVE_SEQ_CACHE[key] = { t: Date.now(), parsed };
+                    delete LIVE_SEQ_FAIL[key];
+                    applyLiveSequence(zug, parsed, slotId, badgeId);
+                    return true;
                 }
             } catch (e) {}
         }
+        LIVE_SEQ_FAIL[key] = Date.now();   // nicht alle 15 s erneut Proxys und bahn.de bombardieren
+        return false;
+    }
+
+    async function processLiveQueue(queue, stationAtStart) {
+        if (liveQueueRunning) return;
+        liveQueueRunning = true;
+        try {
+            for (const item of queue) {
+                if (currentStation !== stationAtStart) break;       // Bahnhof inzwischen gewechselt
+                if (getLiveCached(item.key)) continue;
+                const failT = LIVE_SEQ_FAIL[item.key];
+                if (failT && Date.now() - failT < LIVE_FAIL_TTL_MS) continue;
+                await fetchLiveSequence(item);
+            }
+        } finally { liveQueueRunning = false; }
     }
 
     function applyLiveSequence(zug, parsed, slotId, badgeId) {
-        zug.zugteile = parsed.zugteile;
-        zug.formation = parsed.formation;
-        zug.zug_modell = parsed.zug_modell;
-        const slotEl = document.getElementById(slotId);
+        applyParsedToZug(zug, parsed);
+        const slotEl = document.getElementById(slotId);       // stabile ID: existiert nur, wenn genau diese Abfahrt noch angezeigt wird
         if (slotEl) slotEl.innerHTML = renderCoachSequence(zug);
         const badgeEl = document.getElementById(badgeId);
         if (badgeEl && parsed.zug_modell) {
@@ -743,7 +816,7 @@
 
                 let innerHtml = '';
                 const wnrBadge = w.wagen && !w.wagen.startsWith('Wg') && !w.wagen.startsWith('Tz')
-                    ? `<span class="db-wnr-sub">${w.wagen}</span>` : '';
+                    ? `<span class="db-wnr-sub">${esc(w.wagen)}</span>` : '';
 
                 if (w.klasse === '2+1') {
                     shapeCls += ' class-split';
@@ -763,7 +836,7 @@
 
                 return `
                     <div class="db-car-col">
-                        ${hasSectors ? `<div class="db-car-sec-top">${w.sektor || ''}</div>` : ''}
+                        ${hasSectors ? `<div class="db-car-sec-top">${esc(w.sektor)}</div>` : ''}
                         <div class="${shapeCls}">${innerHtml}</div>
                         <div class="db-car-icons">
                             <span>${showKlima ? '❄️' : '&nbsp;'}</span>
@@ -773,7 +846,7 @@
             }).join('');
 
             const labelText = teile.length > 1
-                ? `${teil.bezeichnung}${teil.ziel ? ' ➔ ' + teil.ziel : ''}`
+                ? `${esc(teil.bezeichnung)}${teil.ziel ? ' ➔ ' + esc(teil.ziel) : ''}`
                 : '';
 
             const blockHtml = `
@@ -793,16 +866,21 @@
             return blockHtml;
         }).join('');
 
-        const formationLabel = zug.formation || (teile.length > 1 ? `${teile.length} Züge gekuppelt` : `${teile[0].wagen.length}-Teiler`);
+        let formationLabel = zug.formation || (teile.length > 1 ? `${teile.length} Züge gekuppelt` : `${teile[0].wagen.length}-Teiler`);
+        if (zug.reihung_quelle === 'geschaetzt') formationLabel += ' (geschätzt)';
+
+        // Pfeil nur, wenn die API die Fahrtrichtung geliefert hat (früher: immer "←", also bei jedem zweiten Zug falsch)
+        const dirHtml = zug.reihung_richtung === 'rechts' ? '<span>Abfahrtsrichtung →</span>'
+                      : zug.reihung_richtung === 'links' ? '<span>← Abfahrtsrichtung</span>' : '';
 
         return `
             <div class="db-reihung-container">
                 <div class="db-reihung-top">
                     <div class="db-dir-group">
-                        <span class="db-gl-badge">Gl. ${zug.gleis || '1'}</span>
-                        <span>← Abfahrtsrichtung</span>
+                        <span class="db-gl-badge">Gl. ${esc(zug.gleis || '–')}</span>
+                        ${dirHtml}
                     </div>
-                    <span class="db-formation-pill">🚄 ${formationLabel}</span>
+                    <span class="db-formation-pill">🚄 ${esc(formationLabel)}</span>
                 </div>
                 <div class="db-train-scroll">
                     ${teileHtml}
@@ -812,9 +890,11 @@
 
     async function loadData() {
         if(!currentStation) return;
+        const stationAtStart = currentStation;
         try {
-            const res = await fetch(`${BASE_URL}${currentStation.file}?t=${Date.now()}`);
+            const res = await fetch(`${BASE_URL}${stationAtStart.file}?t=${Date.now()}`);
             const data = await res.json();
+            if (currentStation !== stationAtStart) return;   // Bahnhof wurde währenddessen gewechselt -> Antwort verwerfen
             
             if (data && data.length > 0) {
                 const lastUpdateStr = data[0].update || "00:00";
@@ -861,10 +941,11 @@
             }
 
             const board = document.getElementById('board');
-            board.innerHTML = '';
+            const scrollPos = board.scrollTop;
             const jetzt = new Date();
             const aktuelleMinuten = (jetzt.getHours() * 60) + jetzt.getMinutes();
             const missingQueue = [];
+            const rowsHtml = [];
 
             data.filter(zug => {
                 const [h, m] = (zug.echte_zeit || zug.zeit).split(':').map(Number);
@@ -880,7 +961,7 @@
                 if (currentFilter === 'REGIO') return !isFV && !isSBahn;
                 return true;
             })
-            .forEach((zug, idx) => {
+            .forEach(zug => {
                 const isCancelled = (zug.info || "").includes("FÄLLT AUS");
                 const [h, m] = (zug.echte_zeit || zug.zeit).split(':').map(Number);
                 let zugMinuten = (h * 60) + m;
@@ -889,7 +970,7 @@
                 const diffMinuten = zugMinuten - aktuelleMinuten;
                 const isAboutToDepart = diffMinuten <= 3 && diffMinuten >= 0;
                 const isDelayed = zug.echte_zeit !== zug.zeit && !isCancelled;
-                const viaStr = (zug.via && zug.via.length > 0) ? `über ${zug.via.join(' – ')}` : '';
+                const viaStr = (zug.via && zug.via.length > 0) ? `über ${zug.via.map(esc).join(' – ')}` : '';
                 
                 const lUpper = (zug.linie || "").toUpperCase();
                 let badgeClass = 'train-id';
@@ -908,49 +989,58 @@
                     bannerIcon = '⚠️';
                 }
 
-                const slotId = `reihung-slot-${idx}`;
-                const badgeId = `model-badge-${idx}`;
+                const rowKey = makeRowKey(zug);
+                const slotId = `reihung-slot-${rowKey}`;
+                const badgeId = `model-badge-${rowKey}`;
 
-                if ((!zug.zugteile || zug.zugteile.length === 0) && zug.reihung_url && !isCancelled) {
-                    missingQueue.push({ zug, slotId, badgeId });
+                const hatReihung = () => zug.zugteile && zug.zugteile.length > 0;
+                if (!hatReihung()) {
+                    const cached = getLiveCached(rowKey);
+                    if (cached) applyParsedToZug(zug, cached);
+                }
+                if (!hatReihung() && zug.reihung_url && !isCancelled && diffMinuten <= LIVE_FETCH_MAX_MIN) {
+                    missingQueue.push({ zug, key: rowKey, slotId, badgeId });
                 }
 
-                board.innerHTML += `
+                rowsHtml.push(`
                     <div class="departure-row ${isCancelled ? 'cancelled' : ''}">
                         ${isAboutToDepart && !isCancelled ? '<div class="blink-dot"></div>' : ''}
                         <div class="time-container">
                             ${isDelayed ? `
-                                <span class="actual-time">${zug.echte_zeit}</span>
-                                <span class="p-time delayed">${zug.zeit}</span>
-                                <span class="status-delayed">${zug.info}</span>
+                                <span class="actual-time">${esc(zug.echte_zeit)}</span>
+                                <span class="p-time delayed">${esc(zug.zeit)}</span>
+                                <span class="status-delayed">${esc(zug.info)}</span>
                             ` : `
-                                <span class="p-time">${zug.zeit}</span>
+                                <span class="p-time">${esc(zug.zeit)}</span>
                                 ${!isCancelled ? '<span class="status-ontime">pünktlich</span>' : ''}
                             `}
                             ${isCancelled ? '<span class="status-delayed">Fällt aus</span>' : ''}
                         </div>
                         <div style="padding-left: 10px;">
                             <div class="train-meta">
-                                <span class="${badgeClass}">${zug.linie}</span>
-                                <span id="${badgeId}" class="train-model-badge" style="${zug.zug_modell ? '' : 'display:none;'}">${zug.zug_modell || ''}</span>
+                                <span class="${badgeClass}">${esc(zug.linie)}</span>
+                                <span id="${badgeId}" class="train-model-badge" style="${zug.zug_modell ? '' : 'display:none;'}">${esc(zug.zug_modell)}</span>
                             </div>
-                            <span class="train-dest" style="${isCancelled ? 'text-decoration:line-through;' : ''}">${zug.ziel}</span>
+                            <span class="train-dest" style="${isCancelled ? 'text-decoration:line-through;' : ''}">${esc(zug.ziel)}</span>
                             ${viaStr ? `<span class="train-via">${viaStr}</span>` : ''}
-                            ${zug.entfallende_halte && zug.entfallende_halte.length > 0 ? `<span class="train-cancelled-stops">⛔ Ohne Halt in: ${zug.entfallende_halte.slice(0,3).join(', ')}</span>` : ''}
+                            ${zug.entfallende_halte && zug.entfallende_halte.length > 0 ? `<span class="train-cancelled-stops">⛔ Ohne Halt in: ${zug.entfallende_halte.slice(0,3).map(esc).join(', ')}</span>` : ''}
                         </div>
                         <div class="platform-group" style="text-align:right;">
                             <span class="pl-label">Gleis</span>
-                            <span class="pl-value ${zug.gleiswechsel ? 'changed' : ''}" style="${isCancelled ? 'text-decoration:line-through; color:#ccc;' : ''}">${zug.gleis || '—'}</span>
-                            ${zug.gleiswechsel ? `<span class="pl-old">statt ${zug.gleis_geplant}</span>` : ''}
-                            ${zug.sektoren ? `<span class="pl-sector">Sektor ${zug.sektoren}</span>` : ''}
+                            <span class="pl-value ${zug.gleiswechsel ? 'changed' : ''}" style="${isCancelled ? 'text-decoration:line-through; color:#ccc;' : ''}">${esc(zug.gleis || '—')}</span>
+                            ${zug.gleiswechsel ? `<span class="pl-old">statt ${esc(zug.gleis_geplant)}</span>` : ''}
+                            ${zug.sektoren ? `<span class="pl-sector">Sektor ${esc(zug.sektoren)}</span>` : ''}
                         </div>
                         <div id="${slotId}" class="db-reihung-slot">${renderCoachSequence(zug)}</div>
-                        ${zug.begruendung ? `<div class="${bannerClass}">${bannerIcon} <span>${zug.begruendung}</span></div>` : ''}
-                    </div>`;
+                        ${zug.begruendung ? `<div class="${bannerClass}">${bannerIcon} <span>${esc(zug.begruendung)}</span></div>` : ''}
+                    </div>`);
             });
 
-            // Fehlende Wagenreihungen live über den Browser nachladen
-            missingQueue.forEach(item => fetchLiveSequenceIfMissing(item.zug, item.slotId, item.badgeId));
+            board.innerHTML = rowsHtml.join('');
+            board.scrollTop = scrollPos;
+
+            // Fehlende Wagenreihungen live über den Browser nachladen (nacheinander, mit Fehler-Cache)
+            processLiveQueue(missingQueue, stationAtStart);
         } catch (e) { console.error(e); }
     }
 
