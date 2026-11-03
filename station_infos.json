@@ -1,16 +1,4 @@
 {
-    "8013389": {
-        "eva": "8013389",
-        "ticker": [
-            "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen.",
-            "🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände."
-        ],
-        "defekte_aufzuege": [],
-        "bauarbeiten_aktiv": false,
-        "baumeldungen": [],
-        "alkoholverbot": false,
-        "update": "04:14"
-    },
     "8010077": {
         "eva": "8010077",
         "ticker": [
@@ -21,24 +9,31 @@
         "bauarbeiten_aktiv": false,
         "baumeldungen": [],
         "alkoholverbot": true,
-        "update": "04:14"
+        "update": "04:18"
+    },
+    "8013389": {
+        "eva": "8013389",
+        "ticker": [
+            "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen.",
+            "🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände."
+        ],
+        "defekte_aufzuege": [],
+        "bauarbeiten_aktiv": false,
+        "baumeldungen": [],
+        "alkoholverbot": false,
+        "update": "04:18"
     },
     "8010224": {
         "eva": "8010224",
         "ticker": [
-            "🚧 Defekte Oberleitung",
-            "🚧 Umleitung des Zuges",
             "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt.",
             "🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände."
         ],
         "defekte_aufzuege": [],
-        "bauarbeiten_aktiv": true,
-        "baumeldungen": [
-            "Defekte Oberleitung",
-            "Umleitung des Zuges"
-        ],
+        "bauarbeiten_aktiv": false,
+        "baumeldungen": [],
         "alkoholverbot": true,
-        "update": "04:14"
+        "update": "04:18"
     },
     "8010050": {
         "eva": "8010050",
@@ -53,19 +48,24 @@
             "Weichenstörung"
         ],
         "alkoholverbot": true,
-        "update": "04:14"
+        "update": "04:18"
     },
     "8010205": {
         "eva": "8010205",
         "ticker": [
+            "🚧 Weichenstörung",
+            "🚧 Umleitung des Zuges",
             "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt.",
             "🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände."
         ],
         "defekte_aufzuege": [],
-        "bauarbeiten_aktiv": false,
-        "baumeldungen": [],
+        "bauarbeiten_aktiv": true,
+        "baumeldungen": [
+            "Weichenstörung",
+            "Umleitung des Zuges"
+        ],
         "alkoholverbot": true,
-        "update": "04:14"
+        "update": "04:18"
     },
     "8098205": {
         "eva": "8098205",
@@ -77,30 +77,92 @@
         "bauarbeiten_aktiv": false,
         "baumeldungen": [],
         "alkoholverbot": true,
-        "update": "04:14"
+        "update": "04:18"
     },
     "8011160": {
         "eva": "8011160",
         "ticker": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16 (S-Bahn))",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5)",
+            "🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 15/16)",
+            "🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12)",
+            "🛗 Aufzug außer Betrieb (Gleis 3/4 (C/D) - Gleis 13/14)",
+            "🛗 Aufzug außer Betrieb (von Parkhaus A zum 1. UG)",
+            "🛗 Aufzug außer Betrieb (von Parkhaus B zu EG)",
+            "🛗 Aufzug außer Betrieb (von Parkhaus C zu 1.UG)",
+            "🛗 Aufzug außer Betrieb (Gleis 1/2 (C/D) - 1.UG - EG)",
+            "🛗 Aufzug außer Betrieb (Gleis 7/8 (C/D) - 1.UG - EG)",
+            "🛗 Aufzug außer Betrieb (Gleis 3/4 (C/D) - Gleis 15/16)",
+            "🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 13/14)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.UG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)",
             "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt.",
             "🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände."
         ],
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16 (S-Bahn))",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5)",
+            "🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 15/16)",
+            "🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12)",
+            "🛗 Aufzug außer Betrieb (Gleis 3/4 (C/D) - Gleis 13/14)",
+            "🛗 Aufzug außer Betrieb (von Parkhaus A zum 1. UG)",
+            "🛗 Aufzug außer Betrieb (von Parkhaus B zu EG)",
+            "🛗 Aufzug außer Betrieb (von Parkhaus C zu 1.UG)",
+            "🛗 Aufzug außer Betrieb (Gleis 1/2 (C/D) - 1.UG - EG)",
+            "🛗 Aufzug außer Betrieb (Gleis 7/8 (C/D) - 1.UG - EG)",
+            "🛗 Aufzug außer Betrieb (Gleis 3/4 (C/D) - Gleis 15/16)",
+            "🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 13/14)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.UG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "bauarbeiten_aktiv": false,
         "baumeldungen": [],
         "alkoholverbot": true,
-        "update": "04:15"
+        "update": "04:18"
     },
     "8098160": {
         "eva": "8098160",
         "ticker": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16 (S-Bahn))",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5)",
+            "🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 15/16)",
+            "🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12)",
+            "🛗 Aufzug außer Betrieb (Gleis 3/4 (C/D) - Gleis 13/14)",
+            "🛗 Aufzug außer Betrieb (von Parkhaus A zum 1. UG)",
+            "🛗 Aufzug außer Betrieb (von Parkhaus B zu EG)",
+            "🛗 Aufzug außer Betrieb (von Parkhaus C zu 1.UG)",
+            "🛗 Aufzug außer Betrieb (Gleis 1/2 (C/D) - 1.UG - EG)",
+            "🛗 Aufzug außer Betrieb (Gleis 7/8 (C/D) - 1.UG - EG)",
+            "🛗 Aufzug außer Betrieb (Gleis 3/4 (C/D) - Gleis 15/16)",
+            "🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 13/14)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.UG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)",
             "🚧 Bauarbeiten",
             "🚧 Weichenstörung",
             "🚧 Umleitung des Zuges",
             "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt.",
             "🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände."
         ],
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16 (S-Bahn))",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5)",
+            "🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 15/16)",
+            "🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 11/12)",
+            "🛗 Aufzug außer Betrieb (Gleis 3/4 (C/D) - Gleis 13/14)",
+            "🛗 Aufzug außer Betrieb (von Parkhaus A zum 1. UG)",
+            "🛗 Aufzug außer Betrieb (von Parkhaus B zu EG)",
+            "🛗 Aufzug außer Betrieb (von Parkhaus C zu 1.UG)",
+            "🛗 Aufzug außer Betrieb (Gleis 1/2 (C/D) - 1.UG - EG)",
+            "🛗 Aufzug außer Betrieb (Gleis 7/8 (C/D) - 1.UG - EG)",
+            "🛗 Aufzug außer Betrieb (Gleis 3/4 (C/D) - Gleis 15/16)",
+            "🛗 Aufzug außer Betrieb (Gleis 5/6 (C/D) - Gleis 13/14)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.UG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "bauarbeiten_aktiv": true,
         "baumeldungen": [
             "Bauarbeiten",
@@ -108,7 +170,7 @@
             "Umleitung des Zuges"
         ],
         "alkoholverbot": true,
-        "update": "04:15"
+        "update": "04:18"
     },
     "8010060": {
         "eva": "8010060",
@@ -120,7 +182,7 @@
         "bauarbeiten_aktiv": false,
         "baumeldungen": [],
         "alkoholverbot": true,
-        "update": "04:15"
+        "update": "04:18"
     },
     "8010382": {
         "eva": "8010382",
@@ -132,7 +194,7 @@
         "bauarbeiten_aktiv": false,
         "baumeldungen": [],
         "alkoholverbot": true,
-        "update": "04:15"
+        "update": "04:18"
     },
     "8010302": {
         "eva": "8010302",
@@ -144,7 +206,7 @@
         "bauarbeiten_aktiv": false,
         "baumeldungen": [],
         "alkoholverbot": false,
-        "update": "04:15"
+        "update": "04:18"
     },
     "8012777": {
         "eva": "8012777",
@@ -156,7 +218,7 @@
         "bauarbeiten_aktiv": false,
         "baumeldungen": [],
         "alkoholverbot": false,
-        "update": "04:15"
+        "update": "04:18"
     },
     "8013335": {
         "eva": "8013335",
@@ -168,7 +230,7 @@
         "bauarbeiten_aktiv": false,
         "baumeldungen": [],
         "alkoholverbot": false,
-        "update": "04:15"
+        "update": "04:18"
     },
     "8013455": {
         "eva": "8013455",
@@ -180,7 +242,7 @@
         "bauarbeiten_aktiv": false,
         "baumeldungen": [],
         "alkoholverbot": false,
-        "update": "04:15"
+        "update": "04:18"
     },
     "8010031": {
         "eva": "8010031",
@@ -192,7 +254,7 @@
         "bauarbeiten_aktiv": false,
         "baumeldungen": [],
         "alkoholverbot": false,
-        "update": "04:15"
+        "update": "04:18"
     },
     "8010047": {
         "eva": "8010047",
@@ -204,7 +266,7 @@
         "bauarbeiten_aktiv": false,
         "baumeldungen": [],
         "alkoholverbot": false,
-        "update": "04:15"
+        "update": "04:18"
     },
     "8010076": {
         "eva": "8010076",
@@ -216,7 +278,7 @@
         "bauarbeiten_aktiv": false,
         "baumeldungen": [],
         "alkoholverbot": false,
-        "update": "04:15"
+        "update": "04:18"
     },
     "8011361": {
         "eva": "8011361",
@@ -228,7 +290,7 @@
         "bauarbeiten_aktiv": false,
         "baumeldungen": [],
         "alkoholverbot": false,
-        "update": "04:15"
+        "update": "04:18"
     },
     "8011673": {
         "eva": "8011673",
@@ -240,7 +302,7 @@
         "bauarbeiten_aktiv": false,
         "baumeldungen": [],
         "alkoholverbot": false,
-        "update": "04:15"
+        "update": "04:18"
     },
     "8010226": {
         "eva": "8010226",
@@ -252,7 +314,7 @@
         "bauarbeiten_aktiv": false,
         "baumeldungen": [],
         "alkoholverbot": false,
-        "update": "04:15"
+        "update": "04:18"
     },
     "8012673": {
         "eva": "8012673",
@@ -264,19 +326,7 @@
         "bauarbeiten_aktiv": false,
         "baumeldungen": [],
         "alkoholverbot": false,
-        "update": "04:15"
-    },
-    "8013365": {
-        "eva": "8013365",
-        "ticker": [
-            "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen.",
-            "🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände."
-        ],
-        "defekte_aufzuege": [],
-        "bauarbeiten_aktiv": false,
-        "baumeldungen": [],
-        "alkoholverbot": false,
-        "update": "04:15"
+        "update": "04:18"
     },
     "8010154": {
         "eva": "8010154",
@@ -288,6 +338,18 @@
         "bauarbeiten_aktiv": false,
         "baumeldungen": [],
         "alkoholverbot": false,
-        "update": "04:15"
+        "update": "04:18"
+    },
+    "8013365": {
+        "eva": "8013365",
+        "ticker": [
+            "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen.",
+            "🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände."
+        ],
+        "defekte_aufzuege": [],
+        "bauarbeiten_aktiv": false,
+        "baumeldungen": [],
+        "alkoholverbot": false,
+        "update": "04:18"
     }
 }
