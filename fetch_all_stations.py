@@ -1,7 +1,9 @@
+import os
 import re
 import sys
 import subprocess
 import threading
+import time
 import urllib.parse
 import xml.etree.ElementTree as ET
 import json
@@ -17,12 +19,36 @@ except ImportError:
 
 import requests
 
-# DEINE ZUGANGSDATEN
-CLIENT_ID = "647fddb98582bec8984c65e1256eb617"
-CLIENT_SECRET = "6af72e24106f2250967364fac780bbe6"
+# ==============================================================================
+# ZUGANGSDATEN - NICHT MEHR IM CODE!
+# Als Umgebungsvariablen setzen (lokal: export DB_CLIENT_ID=... / GitHub: Repository-Secrets
+# und im Workflow per  env:  durchreichen).
+# ==============================================================================
+CLIENT_ID = os.environ.get("DB_CLIENT_ID", "")
+CLIENT_SECRET = os.environ.get("DB_API_KEY", "")
 
 # ==============================================================================
-# UMLAUF-KONFIGURATION FÜR TRIEBZÜGE (Talent 2 / BR 442 in Sachsen-Anhalt)
+# WAGENREIHUNG: Verhalten
+# ==============================================================================
+# Standard: NUR echte Daten von bahn.de. Gibt es keine, bleibt die Reihung leer
+# (statt etwas zu erfinden). Wer trotzdem eine Schätzung auf Basis der Umlauf-Listen
+# unten möchte:  REIHUNG_SCHAETZEN=1  setzen. Geschätzte Reihungen sind mit "~" und
+# reihung_quelle = "geschaetzt" markiert.
+REIHUNG_SCHAETZEN = os.environ.get("REIHUNG_SCHAETZEN", "0") == "1"
+BAHN_TIMEOUT = 8          # Sekunden pro Anfrage an bahn.de
+BAHN_MAX_BLOCKS = 3       # so viele 403/429 in Folge -> bahn.de für den Rest des Laufs auslassen
+BAHN_MIN_INTERVAL = 0.3   # Sekunden Mindestabstand zwischen zwei bahn.de-Anfragen (alle Threads zusammen)
+
+# Cache auf Platte: überlebt die Runden der Schleife im Workflow (derselbe Job), wird NICHT committet
+# (Punkt-Datei wird von 'git add *.json' nicht erfasst). Spart sehr viele Anfragen.
+REIHUNG_CACHE_FILE = os.environ.get("REIHUNG_CACHE_FILE", ".reihung_cache.json")
+CACHE_TTL_LIVE = 20 * 60      # echte Reihung so lange wiederverwenden
+CACHE_TTL_NONE = 10 * 60      # "bahn.de hat nichts" so lange nicht erneut fragen
+CACHE_MAX_AGE = 3 * 3600      # alles Ältere fliegt beim Speichern raus
+
+# ==============================================================================
+# UMLAUF-KONFIGURATION FÜR TRIEBZÜGE (nur für die optionale Schätzung!)
+# Achtung: Umläufe wechseln je nach Wochentag/Tagesbetrieb - das ist nur eine Faustregel.
 # ==============================================================================
 # 1. Züge, die planmäßig in Doppeltraktion (2x 3-Teiler = 2 gekuppelte Züge) fahren:
 DOPPELTRAKTION_2X3_ZUEGE = {
@@ -127,14 +153,31 @@ BAUREIHEN_NAMEN = {
 HEADERS_XML = {'DB-Client-Id': CLIENT_ID, 'DB-Api-Key': CLIENT_SECRET, 'accept': 'application/xml'}
 HEADERS_JSON = {'DB-Client-Id': CLIENT_ID, 'DB-Api-Key': CLIENT_SECRET, 'accept': 'application/json'}
 
+# Header, wie sie der bahn.de-Webclient schickt (Origin/Referer/Sec-Fetch sind für die Web-API wichtig)
+BAHN_HEADERS = {
+    "Accept": "application/json, text/plain, */*",
+    "Accept-Language": "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7",
+    "Origin": "https://www.bahn.de",
+    "Referer": "https://www.bahn.de/buchung/fahrplan/suche",
+    "Sec-Fetch-Dest": "empty",
+    "Sec-Fetch-Mode": "cors",
+    "Sec-Fetch-Site": "same-origin",
+}
+
 THREAD_LOCAL = threading.local()
 CACHE_LOCK = threading.Lock()
+STATS_LOCK = threading.Lock()
+THROTTLE_LOCK = threading.Lock()
+THROTTLE_STATE = {"last": 0.0}
 
 GLOBAL_STATION_INFOS = {}
-ZUG_FORMATION_CACHE = {}
+ZUG_FORMATION_CACHE = {}      # key -> {"t": Zeitstempel, "data": Reihung ODER None (= bahn.de hat nichts)}
 AUFZUG_CACHE = {}
 HAFAS_TIMEOUT_COUNT = 0
-BAHN_DE_BLOCKED = False
+
+BAHN_STATE = {"blocks_in_row": 0, "blocked": False}
+REIHUNG_STATS = {}
+REIHUNG_DIAG = []
 
 
 def get_thread_cffi_session():
@@ -200,6 +243,57 @@ def ermittle_baureihe(vehicles, grp_obj=None, fallback_desc=""):
     return ""
 
 
+def _fahrzeuge_von(grp):
+    return grp.get("vehicles") or grp.get("coaches") or grp.get("allFahrzeug") or []
+
+
+def _pos_start(v):
+    pp = v.get("platformPosition")
+    if isinstance(pp, dict):
+        s = pp.get("start")
+        if isinstance(s, (int, float)) and not isinstance(s, bool):
+            return float(s)
+    return None
+
+
+def sortiere_nach_bahnsteigposition(groups):
+    """Bringt Gruppen und Fahrzeuge in die Reihenfolge am Bahnsteig (aufsteigende Position),
+    aber nur, wenn ALLE Fahrzeuge eine Position haben. Sonst bleibt die API-Reihenfolge."""
+    alle = [v for g in groups for v in _fahrzeuge_von(g)]
+    if not alle or any(_pos_start(v) is None for v in alle):
+        return groups
+    neue = []
+    for g in groups:
+        g2 = dict(g)
+        vs = sorted(_fahrzeuge_von(g), key=_pos_start)
+        for k in ("vehicles", "coaches", "allFahrzeug"):
+            if g.get(k):
+                g2[k] = vs
+                break
+        neue.append(g2)
+    neue.sort(key=lambda g: _pos_start(_fahrzeuge_von(g)[0]) if _fahrzeuge_von(g) else 1e9)
+    return neue
+
+
+def ermittle_richtung(data, seq_obj):
+    """Fahrtrichtung relativ zur Bahnsteig-Darstellung: 'links' (Richtung Position 0), 'rechts' (Richtung 100)
+    oder '' wenn die API nichts liefert (dann zeigt das Frontend keinen Pfeil statt eines falschen)."""
+    plattform = data.get("platform") if isinstance(data.get("platform"), dict) else {}
+    for quelle in (data, seq_obj, plattform):
+        if not isinstance(quelle, dict):
+            continue
+        raw = quelle.get("direction")
+        if isinstance(raw, bool):
+            continue
+        if isinstance(raw, (int, float)) or (isinstance(raw, str) and raw.strip().isdigit()):
+            wert = int(float(raw))
+            if wert == 0:
+                return "links"
+            if wert == 100:
+                return "rechts"
+    return ""
+
+
 def parse_wagenreihung_json(data, cat=""):
     if isinstance(data, list) and data:
         data = data[0]
@@ -222,6 +316,9 @@ def parse_wagenreihung_json(data, cat=""):
     if not groups:
         return None
 
+    groups = sortiere_nach_bahnsteigposition(groups)
+    richtung = ermittle_richtung(data, seq_obj)
+
     zugteile = []
     flache_wagen_liste = []
     sektoren_alle = []
@@ -235,7 +332,7 @@ def parse_wagenreihung_json(data, cat=""):
         bez = grp.get("transport", {}).get("description") or grp.get("zugbezeichnung") or grp.get("name") or ""
         ziel_grp = grp.get("transport", {}).get("destination", {}).get("name") or grp.get("destinationName") or ""
         vehicles = grp.get("vehicles") or grp.get("coaches") or grp.get("allFahrzeug") or []
-        
+
         br_name = ermittle_baureihe(vehicles, grp, str(bez))
         if br_name and br_name not in baureihen_gefunden:
             baureihen_gefunden.append(br_name)
@@ -260,13 +357,16 @@ def parse_wagenreihung_json(data, cat=""):
                 continue
 
             w_nr = vehicle.get("wagonIdentificationNumber") or vehicle.get("identificationNumber") or ""
-            
+
             amenities = vehicle.get("amenities") or vehicle.get("ausstattung") or []
             am_types = {str(a.get("type") or a.get("art") or "").upper() for a in amenities if isinstance(a, dict)}
-            hat_klima = bool(features.get("airConditioning", True)) if features else (("AIR_CONDITION" in am_types) if amenities else True)
+            hat_klima = bool(features.get("airConditioning", True)) if features else (("AIR_COND" in " ".join(am_types)) if amenities else True)
             hat_fahrrad = bool(features.get("bike") or features.get("multiPurpose")) if features else bool(
                 v_type.get("hasBikeSpace") or "BIKE_SPACE" in am_types or "MULTI_PURPOSE" in am_types or "BIKE" in cat_type
             )
+            # Rollstuhl/WC nur noch aus den echten Daten (vorher: fest Rollstuhl=False, WC=True)
+            hat_rollstuhl = any("WHEELCHAIR" in t or "ROLLSTUHL" in t for t in am_types)
+            hat_wc = any("TOILET" in t or t == "WC" for t in am_types)
 
             if has_bistro and not has_1 and not has_2:
                 klasse = "Bistro"
@@ -285,8 +385,8 @@ def parse_wagenreihung_json(data, cat=""):
                 "sektor": sektor,
                 "klima": hat_klima,
                 "fahrrad": hat_fahrrad,
-                "rollstuhl": False,
-                "wc": True,
+                "rollstuhl": hat_rollstuhl,
+                "wc": hat_wc,
                 "zugteil": teil_nr
             }
             gruppe_wagen.append(w_obj)
@@ -317,7 +417,8 @@ def parse_wagenreihung_json(data, cat=""):
     else:
         formation_str = f"{gesamt_einheiten} Zugteile ({sum(laengen)} Wagen)" if gesamt_einheiten > 1 else f"{sum(laengen)} Wagen"
 
-    br_str = baureihen_gefunden[0] if baureihen_gefunden else ("Talent 2 (BR 442)" if ist_regio else "")
+    # Baureihe nur, wenn sie wirklich in den Daten steht (vorher: bei Regio-Zügen pauschal "Talent 2")
+    br_str = " + ".join(baureihen_gefunden)
     zug_modell = f"{br_str} • {formation_str}" if br_str else formation_str
     sektor_str = f"{sektoren_alle[0]}–{sektoren_alle[-1]}" if len(sektoren_alle) > 1 else (sektoren_alle[0] if sektoren_alle else "")
 
@@ -327,51 +428,23 @@ def parse_wagenreihung_json(data, cat=""):
         "sektoren": sektor_str,
         "zugteile": zugteile,
         "wagen": flache_wagen_liste,
-        "text": f"{zug_modell} • Sektor {sektor_str}" if sektor_str else zug_modell
-    }
-
-
-def kopiere_formation_fuer_unterwegsbahnhof(cached_reihung, sektoren_aus_gleis):
-    neue_zugteile, neue_wagen = [], []
-    for z in cached_reihung.get("zugteile", []):
-        w_kopie = []
-        for w in z.get("wagen", []):
-            wc = dict(w)
-            if not sektoren_aus_gleis:
-                wc["sektor"] = ""
-            w_kopie.append(wc)
-            neue_wagen.append(wc)
-        neue_zugteile.append({
-            "teil_nr": z["teil_nr"],
-            "bezeichnung": z["bezeichnung"],
-            "ziel": z.get("ziel", ""),
-            "wagen": w_kopie
-        })
-    modell = cached_reihung.get("modell", "")
-    return {
-        "modell": modell,
-        "formation": cached_reihung.get("formation", ""),
-        "sektoren": sektoren_aus_gleis,
-        "zugteile": neue_zugteile,
-        "wagen": neue_wagen,
-        "text": f"{modell} • Sektor {sektoren_aus_gleis}" if sektoren_aus_gleis else modell
+        "text": f"{zug_modell} • Sektor {sektor_str}" if sektor_str else zug_modell,
+        "quelle": "live",
+        "richtung": richtung
     }
 
 
 def baue_konsistente_linien_reihung(cat, fahrt_nr, linie, wings, sektoren_aus_gleis, alle_meldungen):
+    """NUR SCHÄTZUNG (wird nur mit REIHUNG_SCHAETZEN=1 benutzt). Rät anhand von Linie/Zugnummer."""
     up_line = (linie or "").upper().strip()
     up_cat = (cat or "").upper().strip()
-    meldungen_text = " ".join(alle_meldungen).lower()
     nr_str = str(fahrt_nr).strip()
     nr_int = int(nr_str) if nr_str.isdigit() else 0
 
-    ist_doppeltraktion = bool(
-        wings
-        or nr_str in DOPPELTRAKTION_2X3_ZUEGE
-        or "weiterer wagen" in meldungen_text
-        or "zusätzlichen wagen" in meldungen_text
-    )
-    ist_fuenfteiler = bool(nr_str in FUENFTEILER_ZUEGE or ("RE 14" in up_line and nr_int % 2 == 0) or "RE 7" in up_line)
+    # Nur noch echte Hinweise: Flügelzug-Attribut oder die Umlaufliste (keine Textsuche mehr:
+    # "Bereitstellung weiterer Wagen" o.ä. hat früher fälschlich Doppeltraktion ausgelöst)
+    ist_doppeltraktion = bool(wings or nr_str in DOPPELTRAKTION_2X3_ZUEGE)
+    ist_fuenfteiler = bool(nr_str in FUENFTEILER_ZUEGE or (up_line == "RE 14" and nr_int % 2 == 0) or up_line == "RE 7")
 
     def baue_triebzug_einheit(anz_wagen, teil_nr, gesamt_teile):
         w_liste = []
@@ -395,7 +468,8 @@ def baue_konsistente_linien_reihung(cat, fahrt_nr, linie, wings, sektoren_aus_gl
             "wagen": w_liste
         }
 
-    if any(k in up_line for k in ("RE 13", "RE 14", "RB 50", "RB 40", "RB 113", "RE 7", "RB 33", "RB 20", "RB 22")) or up_cat.startswith("S") or up_line.startswith("S "):
+    # exakte Linienvergleiche statt Teilstring-Suche ("RE 7" traf früher auch "RE 70")
+    if up_line in ("RE 13", "RE 14", "RB 50", "RB 40", "RB 113", "RE 7", "RB 33", "RB 20", "RB 22") or up_cat.startswith("S") or up_line.startswith("S "):
         modell_basis = "Talent 2 (BR 442)"
         if ist_doppeltraktion:
             zugteile = [baue_triebzug_einheit(3, 1, 2), baue_triebzug_einheit(3, 2, 2)]
@@ -407,62 +481,103 @@ def baue_konsistente_linien_reihung(cat, fahrt_nr, linie, wings, sektoren_aus_gl
             zugteile = [baue_triebzug_einheit(3, 1, 1)]
             formation = "3-Teiler"
     elif up_cat == "OE" or up_line.startswith("OE") or up_line in ("RE 1", "RE 8", "RB 10"):
-        modell_basis = "ODEG Stadler KISS (BR 445)" if "RE 1" not in up_line else "ODEG Desiro HC (BR 462)"
-        anz = 6 if "RE 1" in up_line else 4
+        modell_basis = "ODEG Stadler KISS (BR 445)" if up_line != "RE 1" else "ODEG Desiro HC (BR 462)"
+        anz = 6 if up_line == "RE 1" else 4
         formation = f"{anz}-Teiler"
         zugteile = [baue_triebzug_einheit(anz, 1, 1)]
     elif "FEX" in up_line or up_line in ("RE 3", "RE 4", "RE 5", "RE 20"):
         modell_basis = "Twindexx Vario (BR 445)"
-        anz = 4 if "FEX" in up_line or "RE 20" in up_line else 5
+        anz = 4 if "FEX" in up_line or up_line == "RE 20" else 5
         formation = f"{anz}-Teiler"
         zugteile = [baue_triebzug_einheit(anz, 1, 1)]
     elif up_cat in ("ICE", "IC", "EC", "FLX", "D", "EN", "NJ"):
-        modell_basis = "ICE 4 (BR 412)" if up_cat == "ICE" else ("Intercity 2" if up_cat in ("IC", "EC") else "Fernzug")
-        struktur = ["1", "1", "Bistro", "2", "2", "2", "2"] if up_cat == "ICE" else ["1", "2", "2", "2", "2"]
-        formation = f"{len(struktur)} Wagen"
-        zugteile = [{
-            "teil_nr": 1,
-            "bezeichnung": formation,
-            "ziel": "",
-            "wagen": [
-                {"wagen": str(i + 1), "klasse": kl, "sektor": "", "klima": True, "fahrrad": (i == len(struktur) - 1), "rollstuhl": (i == 1), "wc": True, "zugteil": 1}
-                for i, kl in enumerate(struktur)
-            ]
-        }]
+        # Fernverkehr wird NICHT geraten: ICE-Längen schwanken (z.B. 7/12/13 Wagen)
+        return None
     else:
         modell_basis = "Talent 2 (BR 442)"
         formation = "3-Teiler"
         zugteile = [baue_triebzug_einheit(3, 1, 1)]
 
     flache_wagen = [w for z in zugteile for w in z["wagen"]]
-    voll_modell = f"{modell_basis} • {formation}"
+    voll_modell = f"~{modell_basis} • {formation}"
     return {
         "modell": voll_modell,
         "formation": formation,
         "sektoren": sektoren_aus_gleis,
         "zugteile": zugteile,
         "wagen": flache_wagen,
-        "text": f"{voll_modell} • Sektor {sektoren_aus_gleis}" if sektoren_aus_gleis else voll_modell
+        "text": f"{voll_modell} • Sektor {sektoren_aus_gleis}" if sektoren_aus_gleis else voll_modell,
+        "quelle": "geschaetzt"
     }
 
 
-def hole_wagenreihung(cat, fahrt_nr, linie, eva_id, p_time_berlin, trip_id, wings, sektoren_aus_gleis, alle_meldungen, tz):
-    global BAHN_DE_BLOCKED
+def _zaehle(name):
+    with STATS_LOCK:
+        REIHUNG_STATS[name] = REIHUNG_STATS.get(name, 0) + 1
+
+
+def _diag(msg):
+    with STATS_LOCK:
+        if len(REIHUNG_DIAG) < 25:
+            REIHUNG_DIAG.append(msg)
+            print(f"  [Wagenreihung] {msg}")
+
+
+def _drossele():
+    with THROTTLE_LOCK:
+        warte = BAHN_MIN_INTERVAL - (time.monotonic() - THROTTLE_STATE["last"])
+        if warte > 0:
+            time.sleep(warte)
+        THROTTLE_STATE["last"] = time.monotonic()
+
+
+def bahn_abfrage(url):
+    """Fragt bahn.de ab. Rückgabe: (status, daten, detail)
+    status: 'ok' | 'keine_daten' | 'blockiert' | 'fehler'
+    Ein einzelner Timeout sperrt NICHT mehr alles (früher: ein Fehler => ganzer Lauf nur noch Schätzung)."""
+    with STATS_LOCK:
+        if BAHN_STATE["blocked"]:
+            return "blockiert", None, "bahn.de in diesem Lauf als gesperrt erkannt"
+
+    session = get_thread_cffi_session()
+    detail = ""
+    for _ in range(2):
+        _drossele()
+        try:
+            res = session.get(url, headers=BAHN_HEADERS, timeout=BAHN_TIMEOUT)
+        except Exception as e:
+            detail = f"{type(e).__name__}: {e}"
+            continue
+
+        code = res.status_code
+        body = (res.text or "").lstrip()
+        if code == 200 and body[:1] in ("{", "["):
+            try:
+                data = res.json()
+            except Exception as e:
+                return "fehler", None, f"JSON ungültig: {e}"
+            with STATS_LOCK:
+                BAHN_STATE["blocks_in_row"] = 0
+            return "ok", data, ""
+        if code in (204, 404):
+            # Normalfall z.B. bei privaten EVU ohne Reihungsdaten - KEIN Zeichen für Sperre
+            return "keine_daten", None, f"HTTP {code}"
+        if code in (401, 403, 429) or code == 200:
+            # 200 ohne JSON = Bot-Schutz-/HTML-Seite
+            with STATS_LOCK:
+                BAHN_STATE["blocks_in_row"] += 1
+                if BAHN_STATE["blocks_in_row"] >= BAHN_MAX_BLOCKS:
+                    BAHN_STATE["blocked"] = True
+            return "blockiert", None, f"HTTP {code}"
+        detail = f"HTTP {code}"
+        if code < 500:
+            break
+    return "fehler", None, detail
+
+
+def hole_wagenreihung(cat, fahrt_nr, linie, eva_id, p_time_berlin, trip_id, wings, sektoren_aus_gleis, alle_meldungen, tz, betreiber=""):
     if not fahrt_nr:
         return None, ""
-
-    init_time_berlin = p_time_berlin
-    m_init = re.search(r"-(\d{10})-\d+$", str(trip_id or ""))
-    if m_init:
-        try:
-            init_time_berlin = datetime.strptime(m_init.group(1), "%y%m%d%H%M").replace(tzinfo=tz)
-        except Exception:
-            pass
-
-    zug_tag_key = (str(fahrt_nr), init_time_berlin.strftime("%Y-%m-%d"))
-    utc_time = p_time_berlin.astimezone(timezone.utc)
-    iso_time = utc_time.strftime("%Y-%m-%dT%H:%M:00.000Z")
-    date_str = p_time_berlin.strftime("%Y-%m-%d")
 
     lookup_eva = MAIN_EVA_MAP.get(str(eva_id), str(eva_id))
     primary_cat = cat or (linie.split()[0].upper() if linie else "RE")
@@ -471,7 +586,12 @@ def hole_wagenreihung(cat, fahrt_nr, linie, eva_id, p_time_berlin, trip_id, wing
         if first_w in ("RE", "RB"):
             primary_cat = first_w
 
-    primary_bahn_url = (
+    # Die bahn.de-API erwartet Datum UND Uhrzeit in UTC (früher: Datum in Berliner Zeit -> um Mitternacht falsch)
+    utc_time = p_time_berlin.astimezone(timezone.utc)
+    iso_time = utc_time.strftime("%Y-%m-%dT%H:%M:00.000Z")
+    date_str = utc_time.strftime("%Y-%m-%d")
+
+    url = (
         "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence"
         f"?administrationId=80"
         f"&category={urllib.parse.quote(str(primary_cat))}"
@@ -481,35 +601,70 @@ def hole_wagenreihung(cat, fahrt_nr, linie, eva_id, p_time_berlin, trip_id, wing
         f"&time={iso_time}"
     )
 
+    # Sektoren, Zugteile und Fahrtrichtung gelten nur am jeweiligen Bahnhof -> Schlüssel enthält den Bahnhof.
+    cache_key = f"{primary_cat}|{fahrt_nr}|{iso_time}|{lookup_eva}"
+    jetzt_ts = time.time()
     with CACHE_LOCK:
-        if zug_tag_key in ZUG_FORMATION_CACHE:
-            return kopiere_formation_fuer_unterwegsbahnhof(ZUG_FORMATION_CACHE[zug_tag_key], sektoren_aus_gleis), primary_bahn_url
+        eintrag = ZUG_FORMATION_CACHE.get(cache_key)
 
-    if not BAHN_DE_BLOCKED:
-        session = get_thread_cffi_session()
-        try:
-            res = session.get(
-                primary_bahn_url,
-                headers={"Accept": "application/json", "Referer": "https://www.bahn.de/"},
-                timeout=3
-            )
-            if res.status_code == 200 and res.text.strip().startswith("{"):
-                parsed = parse_wagenreihung_json(res.json(), primary_cat)
-                if parsed:
-                    if not parsed["sektoren"] and sektoren_aus_gleis:
-                        parsed["sektoren"] = sektoren_aus_gleis
-                    with CACHE_LOCK:
-                        ZUG_FORMATION_CACHE[zug_tag_key] = parsed
-                    return parsed, primary_bahn_url
-            elif res.status_code == 403:
-                BAHN_DE_BLOCKED = True
-        except Exception:
-            BAHN_DE_BLOCKED = True
+    status, detail = "", ""
+    if eintrag and jetzt_ts - eintrag.get("t", 0) < (CACHE_TTL_LIVE if eintrag.get("data") else CACHE_TTL_NONE):
+        if eintrag.get("data"):
+            _zaehle("cache")
+            return eintrag["data"], url
+        status = "keine_daten"          # kürzlich schon geprüft: bahn.de kennt diesen Zug (noch) nicht
+        _zaehle("keine_daten")
+    else:
+        status, data, detail = bahn_abfrage(url)
+        if status == "ok":
+            parsed = parse_wagenreihung_json(data, primary_cat)
+            if parsed:
+                if not parsed["sektoren"] and sektoren_aus_gleis:
+                    parsed["sektoren"] = sektoren_aus_gleis
+                with CACHE_LOCK:
+                    ZUG_FORMATION_CACHE[cache_key] = {"t": jetzt_ts, "data": parsed}
+                _zaehle("live")
+                return parsed, url
+            status, detail = "ungueltig", "Antwort ohne verwertbare Fahrzeuggruppen"
+        if status in ("keine_daten", "ungueltig"):
+            with CACHE_LOCK:
+                ZUG_FORMATION_CACHE[cache_key] = {"t": jetzt_ts, "data": None}
+        _zaehle(status)
+        _diag(f"{linie or primary_cat} (Nr. {fahrt_nr}) @ {lookup_eva}: {status} [{detail}] Betreiber-Code={betreiber or '?'}")
 
-    konsistent = baue_konsistente_linien_reihung(cat, fahrt_nr, linie, wings, sektoren_aus_gleis, alle_meldungen)
-    with CACHE_LOCK:
-        ZUG_FORMATION_CACHE[zug_tag_key] = konsistent
-    return konsistent, primary_bahn_url
+    if REIHUNG_SCHAETZEN:
+        schaetzung = baue_konsistente_linien_reihung(cat, fahrt_nr, linie, wings, sektoren_aus_gleis, alle_meldungen)
+        if schaetzung:
+            _zaehle("geschaetzt")
+            return schaetzung, url
+    return None, url
+
+
+def lade_reihung_cache():
+    try:
+        with open(REIHUNG_CACHE_FILE, encoding="utf-8") as f:
+            raw = json.load(f)
+        jetzt = time.time()
+        with CACHE_LOCK:
+            for k, v in raw.items():
+                if isinstance(v, dict) and jetzt - v.get("t", 0) < CACHE_MAX_AGE:
+                    ZUG_FORMATION_CACHE[k] = v
+        print(f"Reihungs-Cache: {len(ZUG_FORMATION_CACHE)} Einträge geladen")
+    except FileNotFoundError:
+        pass
+    except Exception as e:
+        print(f"Reihungs-Cache nicht lesbar ({e}) - starte leer")
+
+
+def speichere_reihung_cache():
+    jetzt = time.time()
+    try:
+        with CACHE_LOCK:
+            frisch = {k: v for k, v in ZUG_FORMATION_CACHE.items() if jetzt - v.get("t", 0) < CACHE_MAX_AGE}
+        with open(REIHUNG_CACHE_FILE, "w", encoding="utf-8") as f:
+            json.dump(frisch, f, ensure_ascii=False)
+    except Exception as e:
+        print(f"Reihungs-Cache konnte nicht gespeichert werden: {e}")
 
 
 def hole_defekte_aufzuege(eva_id):
@@ -681,7 +836,10 @@ def hole_daten_fuer_stunde(eva_id, datum, stunde, changes, zug_freitexte, statio
             is_cancelled = (chg.get('cs') == "c")
             reihung, reihung_url = (None, "")
             if not is_cancelled:
-                reihung, reihung_url = hole_wagenreihung(cat, num, linie, eva_id, p_time, trip_id, wings, sektoren_aus_gleis, alle_meldungen, tz)
+                reihung, reihung_url = hole_wagenreihung(
+                    cat, num, linie, eva_id, p_time, trip_id, wings, sektoren_aus_gleis,
+                    alle_meldungen, tz, betreiber=tl.get('o', '')
+                )
 
             if gleiswechsel:
                 alle_meldungen.insert(0, f"Heute von Gleis {gleis_aktuell} (statt Gleis {gleis_geplant})")
@@ -715,6 +873,8 @@ def hole_daten_fuer_stunde(eva_id, datum, stunde, changes, zug_freitexte, statio
                 "zugteile": reihung.get("zugteile", []) if reihung else [],
                 "wagenreihung": reihung.get("wagen", []) if reihung else [],
                 "wagenreihung_text": reihung.get("text", "") if reihung else "",
+                "reihung_quelle": reihung.get("quelle", "") if reihung else "",
+                "reihung_richtung": reihung.get("richtung", "") if reihung else "",
                 "reihung_url": reihung_url,
                 "info": "FÄLLT AUS" if is_cancelled else (f"+{diff}" if diff > 0 else "pünktlich"),
                 "begruendung": " +++ ".join(dict.fromkeys(alle_meldungen)),
@@ -765,6 +925,8 @@ def hole_station_daten(eva_id):
                     "bauarbeiten": ist_bau,
                     "grund": " | ".join(msgs)
                 }
+        else:
+            print(f"fchg für {eva_id}: HTTP {c_res.status_code}")
     except Exception as e:
         print(f"fchg Fehler für {eva_id}: {e}")
 
@@ -803,11 +965,15 @@ def hole_station_daten(eva_id):
 
 def verarbeite_station(item):
     name, eva_id = item
-    daten = hole_station_daten(eva_id)
-    mit_reihung = sum(1 for z in daten if z.get("zugteile"))
-    with open(f"{name}.json", 'w', encoding='utf-8') as f:
-        json.dump(daten, f, ensure_ascii=False, indent=4)
-    print(f"[{name}] {len(daten)} Züge gespeichert ({mit_reihung} mit Wagenreihung)")
+    try:
+        daten = hole_station_daten(eva_id)
+        mit_reihung = sum(1 for z in daten if z.get("zugteile"))
+        with open(f"{name}.json", 'w', encoding='utf-8') as f:
+            json.dump(daten, f, ensure_ascii=False, indent=4)
+        print(f"[{name}] {len(daten)} Züge gespeichert ({mit_reihung} mit Wagenreihung)")
+    except Exception as e:
+        # früher wurden Fehler in Threads still verschluckt
+        print(f"[{name}] FEHLER: {type(e).__name__}: {e}")
 
 
 def erzeuge_global_info():
@@ -878,10 +1044,29 @@ def hole_routing_verbindungen(start_id, ziel_id, dateiname):
         pass
 
 
+def drucke_reihung_statistik():
+    print("-" * 60)
+    if REIHUNG_STATS:
+        print("Wagenreihung: " + ", ".join(f"{k}={v}" for k, v in sorted(REIHUNG_STATS.items())))
+    else:
+        print("Wagenreihung: keine Abfragen")
+    if BAHN_STATE["blocked"]:
+        print("WARNUNG: bahn.de lehnt Anfragen von dieser IP ab (403/429/Bot-Schutz).")
+        print("         Häufig bei GitHub Actions (Rechenzentrums-IP). Skript auf einem Rechner/Pi mit")
+        print("         normalem Internetanschluss laufen lassen, dann kommen die echten Reihungen.")
+    print("-" * 60)
+
+
 if __name__ == "__main__":
+    if not CLIENT_ID or not CLIENT_SECRET:
+        sys.exit("FEHLER: Umgebungsvariablen DB_CLIENT_ID und DB_API_KEY fehlen (Zugangsdaten stehen nicht mehr im Code).")
+
+    lade_reihung_cache()
     station_items = list(STATIONS.items())
     with ThreadPoolExecutor(max_workers=4) as executor:
-        executor.map(verarbeite_station, station_items)
+        list(executor.map(verarbeite_station, station_items))
     erzeuge_global_info()
     hole_routing_verbindungen("733238", "8013389", "verbindungen_bauhof_bahnhof")
     hole_routing_verbindungen("733238", "8010224", "verbindungen_bauhof_magdeburg")
+    speichere_reihung_cache()
+    drucke_reihung_statistik()
