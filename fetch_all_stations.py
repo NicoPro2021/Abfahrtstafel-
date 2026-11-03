@@ -517,7 +517,6 @@ def hole_wagenreihung(cat, fahrt_nr, linie, eva_id, p_time_berlin, trip_id, wing
         if zug_tag_key in ZUG_FORMATION_CACHE:
             return kopiere_formation_fuer_unterwegsbahnhof(ZUG_FORMATION_CACHE[zug_tag_key], sektoren_aus_gleis), primary_bahn_url
 
-    # Falls das Skript lokal (Heimnetz) läuft, klappt bahn.de direkt; auf GitHub greift nach dem 1. 403 sofort der Schutzschalter
     if not BAHN_DE_BLOCKED:
         session = get_thread_cffi_session()
         try:
