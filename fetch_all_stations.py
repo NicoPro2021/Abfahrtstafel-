@@ -27,7 +27,7 @@ CLIENT_SECRET = "6af72e24106f2250967364fac780bbe6"
 # 1. Züge, die planmäßig in Doppeltraktion (2x 3-Teiler = 2 gekuppelte Züge) fahren:
 DOPPELTRAKTION_2X3_ZUEGE = {
     "16112", "16115", "16116", "16119", "16120", "16123",
-    "16124", "16127", "16128", "16131", "16132", "16136"
+    "16124", "16127", "16128", "16131", "16132", "16136", "16137"
 }
 
 # 2. Züge, die planmäßig als 5-Teiler fahren (z.B. RE 14 / RE 7 Umläufe):
@@ -200,35 +200,6 @@ def ermittle_baureihe(vehicles, grp_obj=None, fallback_desc=""):
     return ""
 
 
-def teile_gekuppelte_triebzuege_auf(gruppe_wagen, ist_regio=True):
-    n = len(gruppe_wagen)
-    if n < 4:
-        return [gruppe_wagen]
-
-    teile = []
-    aktueller_teil = []
-    for idx, w in enumerate(gruppe_wagen):
-        aktueller_teil.append(w)
-        if 2 <= len(aktueller_teil) and idx < n - 2:
-            ist_kupplung = (
-                (w.get("ist_steuerwagen") and gruppe_wagen[idx + 1].get("ist_steuerwagen"))
-                or (ist_regio and w.get("klasse") in ("2+1", "1") and gruppe_wagen[idx + 1].get("klasse") == "2")
-            )
-            if ist_kupplung:
-                teile.append(aktueller_teil)
-                aktueller_teil = []
-    if aktueller_teil:
-        teile.append(aktueller_teil)
-    if len(teile) > 1:
-        return teile
-
-    if ist_regio and n == 6:
-        return [gruppe_wagen[:3], gruppe_wagen[3:]]
-    if ist_regio and n == 10:
-        return [gruppe_wagen[:5], gruppe_wagen[5:]]
-    return [gruppe_wagen]
-
-
 def parse_wagenreihung_json(data, cat=""):
     if isinstance(data, list) and data:
         data = data[0]
@@ -251,13 +222,20 @@ def parse_wagenreihung_json(data, cat=""):
     if not groups:
         return None
 
-    zugteile, flache_wagen_liste, sektoren_alle, baureihen_gefunden, raw_units = [], [], [], [], []
-    ist_regio = (cat or "").upper() not in ("ICE", "IC", "EC", "EN", "NJ", "FLX", "D")
+    zugteile = []
+    flache_wagen_liste = []
+    sektoren_alle = []
+    baureihen_gefunden = []
+    up_cat = (cat or "").upper()
+    ist_regio = up_cat not in ("ICE", "IC", "EC", "EN", "NJ", "FLX", "D")
 
-    for grp in groups:
+    # Jedes Element in 'groups' wird exakt als eigenständiger Zugteil übernommen
+    for idx, grp in enumerate(groups):
+        teil_nr = idx + 1
         bez = grp.get("transport", {}).get("description") or grp.get("zugbezeichnung") or grp.get("name") or ""
         ziel_grp = grp.get("transport", {}).get("destination", {}).get("name") or grp.get("destinationName") or ""
         vehicles = grp.get("vehicles") or grp.get("coaches") or grp.get("allFahrzeug") or []
+        
         br_name = ermittle_baureihe(vehicles, grp, str(bez))
         if br_name and br_name not in baureihen_gefunden:
             baureihen_gefunden.append(br_name)
@@ -282,10 +260,7 @@ def parse_wagenreihung_json(data, cat=""):
                 continue
 
             w_nr = vehicle.get("wagonIdentificationNumber") or vehicle.get("identificationNumber") or ""
-            raw_vid = re.sub(r"\D", "", str(vehicle.get("vehicleID") or vehicle.get("uic") or ""))
-            ist_uic_endwagen = len(raw_vid) == 12 and raw_vid[4:8] in ("0442", "1442", "2442", "3442", "0462", "1462", "0463", "1463")
-            ist_steuerwagen = ist_uic_endwagen or any(k in cat_type for k in ("CONTROLCAR", "CONTROL_CAR", "STEUERWAGEN", "POWERCAR"))
-
+            
             amenities = vehicle.get("amenities") or vehicle.get("ausstattung") or []
             am_types = {str(a.get("type") or a.get("art") or "").upper() for a in amenities if isinstance(a, dict)}
             hat_klima = bool(features.get("airConditioning", True)) if features else (("AIR_CONDITION" in am_types) if amenities else True)
@@ -304,7 +279,7 @@ def parse_wagenreihung_json(data, cat=""):
             else:
                 klasse = "2"
 
-            gruppe_wagen.append({
+            w_obj = {
                 "wagen": str(w_nr) if w_nr else "",
                 "klasse": klasse,
                 "sektor": sektor,
@@ -312,32 +287,25 @@ def parse_wagenreihung_json(data, cat=""):
                 "fahrrad": hat_fahrrad,
                 "rollstuhl": False,
                 "wc": True,
-                "ist_steuerwagen": ist_steuerwagen
-            })
+                "zugteil": teil_nr
+            }
+            gruppe_wagen.append(w_obj)
+            flache_wagen_liste.append(w_obj)
 
         if gruppe_wagen:
-            for einheit in teile_gekuppelte_triebzuege_auf(gruppe_wagen, ist_regio):
-                raw_units.append((einheit, ziel_grp))
+            anz = len(gruppe_wagen)
+            teil_typ = f"{anz}-Teiler" if ist_regio else f"{anz} Wagen"
+            zugteile.append({
+                "teil_nr": teil_nr,
+                "bezeichnung": f"{teil_nr}. Zugteil ({teil_typ})" if len(groups) > 1 else teil_typ,
+                "ziel": ziel_grp,
+                "wagen": gruppe_wagen
+            })
 
-    if not raw_units:
+    if not zugteile:
         return None
 
-    gesamt_einheiten = len(raw_units)
-    for idx, (einheit_wagen, ziel_grp) in enumerate(raw_units):
-        teil_nr = idx + 1
-        for w in einheit_wagen:
-            w.pop("ist_steuerwagen", None)
-            w["zugteil"] = teil_nr
-            flache_wagen_liste.append(w)
-        anz = len(einheit_wagen)
-        teil_typ = f"{anz}-Teiler" if ist_regio else f"{anz} Wagen"
-        zugteile.append({
-            "teil_nr": teil_nr,
-            "bezeichnung": f"{teil_nr}. Zugteil ({teil_typ})" if gesamt_einheiten > 1 else teil_typ,
-            "ziel": ziel_grp,
-            "wagen": einheit_wagen
-        })
-
+    gesamt_einheiten = len(zugteile)
     laengen = [len(z["wagen"]) for z in zugteile]
     if ist_regio:
         if gesamt_einheiten > 1 and len(set(laengen)) == 1:
@@ -887,6 +855,13 @@ def hole_routing_verbindungen(start_id, ziel_id, dateiname):
             abfahrt = first_leg.get("departure", "")[11:16] or "--:--"
             ankunft = last_leg.get("arrival", "")[11:16] or "--:--"
             delay = first_leg.get("departureDelay")
+            remarks = []
+            for leg in legs:
+                for rem in leg.get("remarks", []):
+                    if rem.get("type") in ("warning", "status"):
+                        txt = rem.get("text") or rem.get("summary")
+                        if txt:
+                            remarks.append(" ".join(txt.split()))
             verbindungs_liste.append({
                 "abfahrt": abfahrt,
                 "ankunft": ankunft,
@@ -894,6 +869,7 @@ def hole_routing_verbindungen(start_id, ziel_id, dateiname):
                 "gleis": first_leg.get("departurePlatform") or "-",
                 "info": f"+{int(delay/60)}" if delay and delay > 0 else "pünktlich",
                 "umstiege": len(legs) - 1,
+                "hinweise": " | ".join(dict.fromkeys(remarks[:2])),
                 "update": jetzt.strftime("%H:%M")
             })
         with open(f"{dateiname}.json", 'w', encoding='utf-8') as f:
