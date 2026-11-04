@@ -1,128 +1,5 @@
 [
     {
-        "zeit": "06:12",
-        "echte_zeit": "06:12",
-        "linie": "RE 20",
-        "zug_nr": "RE 16921",
-        "fahrt_nr": "16921",
-        "kategorie": "RE",
-        "ziel": "Schönebeck-Bad Salzelmen",
-        "ziel_geplant": "Schönebeck-Bad Salzelmen",
-        "via": [
-            "Magdeburg Hbf",
-            "Magdeburg-Buckau",
-            "Magdeburg SKET Industriepark",
-            "Magdeburg-Salbke"
-        ],
-        "entfallende_halte": [],
-        "gleis": "2",
-        "gleis_geplant": "2",
-        "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "Twindexx Vario (BR 445) • 4-Teiler",
-        "formation": "4-Teiler",
-        "zugteile": [
-            {
-                "teil_nr": 1,
-                "bezeichnung": "4-Teiler",
-                "ziel": "",
-                "wagen": [
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "",
-                        "klima": true,
-                        "fahrrad": true,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "",
-                        "klima": true,
-                        "fahrrad": true,
-                        "rollstuhl": true,
-                        "wc": true,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2+1",
-                        "sektor": "",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": true,
-                        "zugteil": 1
-                    }
-                ]
-            }
-        ],
-        "wagenreihung": [
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "",
-                "klima": true,
-                "fahrrad": true,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "",
-                "klima": true,
-                "fahrrad": true,
-                "rollstuhl": true,
-                "wc": true,
-                "zugteil": 1
-            },
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "",
-                "klasse": "2+1",
-                "sektor": "",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": true,
-                "zugteil": 1
-            }
-        ],
-        "wagenreihung_text": "Twindexx Vario (BR 445) • 4-Teiler",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-04&evaNumber=8010226&number=16921&time=2026-11-04T05:12:00.000Z",
-        "info": "pünktlich",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:20"
-    },
-    {
         "zeit": "06:13",
         "echte_zeit": "06:15",
         "linie": "S 1",
@@ -223,7 +100,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:20"
+        "update": "06:22"
     },
     {
         "zeit": "06:16",
@@ -323,7 +200,7 @@
         "bauarbeiten": true,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:20"
+        "update": "06:22"
     },
     {
         "zeit": "06:16",
@@ -441,12 +318,14 @@
         "wagenreihung_text": "ODEG Stadler KISS (BR 445) • 4-Teiler",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=OE&date=2026-11-04&evaNumber=8010226&number=73717&time=2026-11-04T05:16:00.000Z",
         "info": "+2",
-        "begruendung": "",
-        "meldungen": [],
+        "begruendung": "Verspätung aus vorheriger Fahrt",
+        "meldungen": [
+            "Verspätung aus vorheriger Fahrt"
+        ],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:20"
+        "update": "06:22"
     },
     {
         "zeit": "06:18",
@@ -584,114 +463,11 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:20"
-    },
-    {
-        "zeit": "06:25",
-        "echte_zeit": "06:25",
-        "linie": "RB 40",
-        "zug_nr": "RB 16451",
-        "fahrt_nr": "16451",
-        "kategorie": "RB",
-        "ziel": "Burg(Magdeburg)",
-        "ziel_geplant": "Burg(Magdeburg)",
-        "via": [
-            "Magdeburg Herrenkrug",
-            "Biederitz",
-            "Gerwisch",
-            "Möser"
-        ],
-        "entfallende_halte": [],
-        "gleis": "3",
-        "gleis_geplant": "3",
-        "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "Talent 2 (BR 442) • 3-Teiler",
-        "formation": "3-Teiler",
-        "zugteile": [
-            {
-                "teil_nr": 1,
-                "bezeichnung": "3-Teiler",
-                "ziel": "",
-                "wagen": [
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "",
-                        "klima": true,
-                        "fahrrad": true,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "",
-                        "klima": true,
-                        "fahrrad": true,
-                        "rollstuhl": true,
-                        "wc": true,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2+1",
-                        "sektor": "",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": true,
-                        "zugteil": 1
-                    }
-                ]
-            }
-        ],
-        "wagenreihung": [
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "",
-                "klima": true,
-                "fahrrad": true,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "",
-                "klima": true,
-                "fahrrad": true,
-                "rollstuhl": true,
-                "wc": true,
-                "zugteil": 1
-            },
-            {
-                "wagen": "",
-                "klasse": "2+1",
-                "sektor": "",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": true,
-                "zugteil": 1
-            }
-        ],
-        "wagenreihung_text": "Talent 2 (BR 442) • 3-Teiler",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RB&date=2026-11-04&evaNumber=8010226&number=16451&time=2026-11-04T05:25:00.000Z",
-        "info": "pünktlich",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:20"
+        "update": "06:22"
     },
     {
         "zeit": "06:26",
-        "echte_zeit": "06:28",
+        "echte_zeit": "06:26",
         "linie": "RB 40",
         "zug_nr": "RB 16404",
         "fahrt_nr": "16404",
@@ -784,17 +560,120 @@
         ],
         "wagenreihung_text": "Talent 2 (BR 442) • 3-Teiler",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RB&date=2026-11-04&evaNumber=8010226&number=16404&time=2026-11-04T05:26:00.000Z",
-        "info": "+2",
+        "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:20"
+        "update": "06:22"
+    },
+    {
+        "zeit": "06:25",
+        "echte_zeit": "06:26",
+        "linie": "RB 40",
+        "zug_nr": "RB 16451",
+        "fahrt_nr": "16451",
+        "kategorie": "RB",
+        "ziel": "Burg(Magdeburg)",
+        "ziel_geplant": "Burg(Magdeburg)",
+        "via": [
+            "Magdeburg Herrenkrug",
+            "Biederitz",
+            "Gerwisch",
+            "Möser"
+        ],
+        "entfallende_halte": [],
+        "gleis": "3",
+        "gleis_geplant": "3",
+        "gleiswechsel": false,
+        "sektoren": "",
+        "zug_modell": "Talent 2 (BR 442) • 3-Teiler",
+        "formation": "3-Teiler",
+        "zugteile": [
+            {
+                "teil_nr": 1,
+                "bezeichnung": "3-Teiler",
+                "ziel": "",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": true,
+                        "wc": true,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "rollstuhl": false,
+                        "wc": true,
+                        "zugteil": 1
+                    }
+                ]
+            }
+        ],
+        "wagenreihung": [
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": true,
+                "wc": true,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "rollstuhl": false,
+                "wc": true,
+                "zugteil": 1
+            }
+        ],
+        "wagenreihung_text": "Talent 2 (BR 442) • 3-Teiler",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RB&date=2026-11-04&evaNumber=8010226&number=16451&time=2026-11-04T05:25:00.000Z",
+        "info": "+1",
+        "begruendung": "",
+        "meldungen": [],
+        "bauarbeiten": false,
+        "defekte_aufzuege": [],
+        "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "06:22"
     },
     {
         "zeit": "06:33",
-        "echte_zeit": "06:36",
+        "echte_zeit": "06:37",
         "linie": "RB 36",
         "zug_nr": "RB 80346",
         "fahrt_nr": "80346",
@@ -887,13 +766,13 @@
         ],
         "wagenreihung_text": "Talent 2 (BR 442) • 3-Teiler",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RB&date=2026-11-04&evaNumber=8010226&number=80346&time=2026-11-04T05:33:00.000Z",
-        "info": "+3",
+        "info": "+4",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:20"
+        "update": "06:22"
     },
     {
         "zeit": "06:41",
@@ -996,7 +875,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:20"
+        "update": "06:22"
     },
     {
         "zeit": "06:45",
@@ -1119,11 +998,11 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:20"
+        "update": "06:22"
     },
     {
         "zeit": "06:46",
-        "echte_zeit": "06:46",
+        "echte_zeit": "06:47",
         "linie": "OE RE1",
         "zug_nr": "OE 73716",
         "fahrt_nr": "73716",
@@ -1231,13 +1110,13 @@
         ],
         "wagenreihung_text": "ODEG Stadler KISS (BR 445) • 4-Teiler",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=OE&date=2026-11-04&evaNumber=8010226&number=73716&time=2026-11-04T05:46:00.000Z",
-        "info": "pünktlich",
+        "info": "+1",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:20"
+        "update": "06:22"
     },
     {
         "zeit": "06:53",
@@ -1335,7 +1214,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:20"
+        "update": "06:22"
     },
     {
         "zeit": "07:06",
@@ -1437,7 +1316,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:20"
+        "update": "06:22"
     },
     {
         "zeit": "07:09",
@@ -1540,7 +1419,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:20"
+        "update": "06:22"
     },
     {
         "zeit": "06:51",
@@ -1640,7 +1519,7 @@
         "bauarbeiten": true,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:20"
+        "update": "06:22"
     },
     {
         "zeit": "07:13",
@@ -1743,7 +1622,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:20"
+        "update": "06:22"
     },
     {
         "zeit": "07:12",
@@ -1866,7 +1745,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:20"
+        "update": "06:22"
     },
     {
         "zeit": "07:14",
@@ -1969,7 +1848,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:20"
+        "update": "06:22"
     },
     {
         "zeit": "07:16",
@@ -2092,7 +1971,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:20"
+        "update": "06:22"
     },
     {
         "zeit": "07:17",
@@ -2190,7 +2069,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:20"
+        "update": "06:22"
     },
     {
         "zeit": "07:19",
@@ -2288,7 +2167,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:20"
+        "update": "06:22"
     },
     {
         "zeit": "07:25",
@@ -2391,7 +2270,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:20"
+        "update": "06:22"
     },
     {
         "zeit": "07:25",
@@ -2489,7 +2368,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:20"
+        "update": "06:22"
     },
     {
         "zeit": "07:34",
@@ -2587,7 +2466,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:20"
+        "update": "06:22"
     },
     {
         "zeit": "07:35",
@@ -2690,7 +2569,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:20"
+        "update": "06:22"
     },
     {
         "zeit": "07:41",
@@ -2793,7 +2672,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:20"
+        "update": "06:22"
     },
     {
         "zeit": "07:45",
@@ -2916,7 +2795,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:20"
+        "update": "06:22"
     },
     {
         "zeit": "07:46",
@@ -3034,11 +2913,11 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:20"
+        "update": "06:22"
     },
     {
         "zeit": "07:51",
-        "echte_zeit": "07:53",
+        "echte_zeit": "07:54",
         "linie": "RE 13",
         "zug_nr": "RE 16108",
         "fahrt_nr": "16108",
@@ -3126,12 +3005,12 @@
         ],
         "wagenreihung_text": "Talent 2 (BR 442) • 3-Teiler",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-04&evaNumber=8010226&number=16108&time=2026-11-04T06:51:00.000Z",
-        "info": "+2",
+        "info": "+3",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:20"
+        "update": "06:22"
     }
 ]
