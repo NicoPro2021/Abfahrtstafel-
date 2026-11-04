@@ -120,9 +120,14 @@
             "Heute von Gleis 6 (statt Gleis 7)"
         ],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "02:47"
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5)",
+            "🛗 Aufzug außer Betrieb (von Parkhaus A zum 1. UG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (von Parkhaus A zum 1. UG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "02:50"
     },
     {
         "zeit": "03:07",
@@ -130,6 +135,132 @@
         "linie": "RE FEX",
         "zug_nr": "RE 21803",
         "fahrt_nr": "21803",
+        "kategorie": "RE",
+        "ziel": "Flughafen BER",
+        "ziel_geplant": "Flughafen BER",
+        "via": [
+            "Berlin Potsdamer Platz",
+            "Berlin Südkreuz"
+        ],
+        "entfallende_halte": [],
+        "gleis": "1",
+        "gleis_geplant": "1",
+        "gleiswechsel": false,
+        "sektoren": "D–G",
+        "zug_modell": "Twindexx Vario (BR 445) • 4-Teiler",
+        "formation": "4-Teiler",
+        "zugteile": [
+            {
+                "teil_nr": 1,
+                "bezeichnung": "4-Teiler",
+                "ziel": "",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": true,
+                        "wc": true,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "",
+                        "klima": true,
+                        "fahrrad": false,
+                        "rollstuhl": false,
+                        "wc": true,
+                        "zugteil": 1
+                    }
+                ]
+            }
+        ],
+        "wagenreihung": [
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": true,
+                "wc": true,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "",
+                "klima": true,
+                "fahrrad": false,
+                "rollstuhl": false,
+                "wc": true,
+                "zugteil": 1
+            }
+        ],
+        "wagenreihung_text": "Twindexx Vario (BR 445) • 4-Teiler • Sektor D–G",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-04&evaNumber=8011160&number=21803&time=2026-11-04T02:07:00.000Z",
+        "info": "pünktlich",
+        "begruendung": "",
+        "meldungen": [],
+        "bauarbeiten": false,
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5)",
+            "🛗 Aufzug außer Betrieb (von Parkhaus A zum 1. UG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (von Parkhaus A zum 1. UG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "02:50"
+    },
+    {
+        "zeit": "03:37",
+        "echte_zeit": "03:37",
+        "linie": "RE FEX",
+        "zug_nr": "RE 21805",
+        "fahrt_nr": "21805",
         "kategorie": "RE",
         "ziel": "Flughafen BER",
         "ziel_geplant": "Flughafen BER",
@@ -236,18 +367,23 @@
             }
         ],
         "wagenreihung_text": "Twindexx Vario (BR 445) • 4-Teiler",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-04&evaNumber=8011160&number=21803&time=2026-11-04T02:07:00.000Z",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-04&evaNumber=8011160&number=21805&time=2026-11-04T02:37:00.000Z",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "02:47"
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5)",
+            "🛗 Aufzug außer Betrieb (von Parkhaus A zum 1. UG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (von Parkhaus A zum 1. UG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "02:50"
     },
     {
         "zeit": "03:23",
-        "echte_zeit": "03:23",
+        "echte_zeit": "03:38",
         "linie": "ICE 646",
         "zug_nr": "ICE 646",
         "fahrt_nr": "646",
@@ -422,137 +558,22 @@
         ],
         "wagenreihung_text": "ICE 4 (BR 412) • 7 Wagen",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-04&evaNumber=8011160&number=646&time=2026-11-04T02:23:00.000Z",
-        "info": "pünktlich",
-        "begruendung": "Heute von Gleis 8 (statt Gleis 7) +++ Halt entfällt in: Gelsenkirchen Hbf",
+        "info": "+15",
+        "begruendung": "Heute von Gleis 8 (statt Gleis 7) +++ Verspätete Bereitstellung des Zuges +++ Halt entfällt in: Gelsenkirchen Hbf",
         "meldungen": [
             "Heute von Gleis 8 (statt Gleis 7)",
+            "Verspätete Bereitstellung des Zuges",
             "Halt entfällt in: Gelsenkirchen Hbf"
         ],
         "bauarbeiten": true,
-        "defekte_aufzuege": [],
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "02:47"
-    },
-    {
-        "zeit": "03:37",
-        "echte_zeit": "03:37",
-        "linie": "RE FEX",
-        "zug_nr": "RE 21805",
-        "fahrt_nr": "21805",
-        "kategorie": "RE",
-        "ziel": "Flughafen BER",
-        "ziel_geplant": "Flughafen BER",
-        "via": [
-            "Berlin Potsdamer Platz",
-            "Berlin Südkreuz"
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5)",
+            "🛗 Aufzug außer Betrieb (von Parkhaus A zum 1. UG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
         ],
-        "entfallende_halte": [],
-        "gleis": "1",
-        "gleis_geplant": "1",
-        "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "Twindexx Vario (BR 445) • 4-Teiler",
-        "formation": "4-Teiler",
-        "zugteile": [
-            {
-                "teil_nr": 1,
-                "bezeichnung": "4-Teiler",
-                "ziel": "",
-                "wagen": [
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "",
-                        "klima": true,
-                        "fahrrad": true,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "",
-                        "klima": true,
-                        "fahrrad": true,
-                        "rollstuhl": true,
-                        "wc": true,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2+1",
-                        "sektor": "",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": true,
-                        "zugteil": 1
-                    }
-                ]
-            }
-        ],
-        "wagenreihung": [
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "",
-                "klima": true,
-                "fahrrad": true,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "",
-                "klima": true,
-                "fahrrad": true,
-                "rollstuhl": true,
-                "wc": true,
-                "zugteil": 1
-            },
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "",
-                "klasse": "2+1",
-                "sektor": "",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": true,
-                "zugteil": 1
-            }
-        ],
-        "wagenreihung_text": "Twindexx Vario (BR 445) • 4-Teiler",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-04&evaNumber=8011160&number=21805&time=2026-11-04T02:37:00.000Z",
-        "info": "pünktlich",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "02:47"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (von Parkhaus A zum 1. UG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "02:50"
     },
     {
         "zeit": "03:52",
@@ -671,8 +692,13 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "02:47"
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5)",
+            "🛗 Aufzug außer Betrieb (von Parkhaus A zum 1. UG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 5) +++ 🛗 Aufzug außer Betrieb (von Parkhaus A zum 1. UG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "02:50"
     }
 ]
