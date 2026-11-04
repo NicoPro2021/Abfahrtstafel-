@@ -20,14 +20,17 @@ except ImportError:
 import requests
 
 # ==============================================================================
-# ZUGANGSDATEN
+# ZUGANGSDATEN & CLOUDFLARE WORKER PROXY
 # ==============================================================================
 CLIENT_ID = os.environ.get("DB_CLIENT_ID", "647fddb98582bec8984c65e1256eb617")
 CLIENT_SECRET = os.environ.get("DB_API_KEY", "6af72e24106f2250967364fac780bbe6")
 
+# Dein Cloudflare Worker als Brücke zu bahn.de
+CF_WORKER_URL = os.environ.get("CF_WORKER_URL", "https://bahn-proxy.erikjordantill.workers.dev/")
+
 BAHN_TIMEOUT = 8
-BAHN_MAX_BLOCKS = 3
-BAHN_MIN_INTERVAL = 0.4
+BAHN_MAX_BLOCKS = 4
+BAHN_MIN_INTERVAL = 0.25
 
 REIHUNG_CACHE_FILE = os.environ.get("REIHUNG_CACHE_FILE", ".reihung_cache.json")
 CACHE_TTL_LIVE = 20 * 60
@@ -123,14 +126,10 @@ BAUREIHEN_NAMEN = {
 HEADERS_XML = {'DB-Client-Id': CLIENT_ID, 'DB-Api-Key': CLIENT_SECRET, 'accept': 'application/xml'}
 HEADERS_JSON = {'DB-Client-Id': CLIENT_ID, 'DB-Api-Key': CLIENT_SECRET, 'accept': 'application/json'}
 
-# WICHTIG: Kein "Origin"-Header bei Same-Origin GET-Requests (löst sonst Akamai OPS_BLOCKED aus)
 BAHN_HEADERS = {
     "Accept": "application/json, text/plain, */*",
     "Accept-Language": "de-DE,de;q=0.9",
     "Referer": "https://www.bahn.de/buchung/fahrplan/suche",
-    "Sec-Fetch-Dest": "empty",
-    "Sec-Fetch-Mode": "cors",
-    "Sec-Fetch-Site": "same-origin",
 }
 
 THREAD_LOCAL = threading.local()
@@ -154,15 +153,6 @@ def get_thread_cffi_session():
             s = cffi_requests.Session(impersonate="chrome")
         except Exception:
             s = requests.Session()
-        # Einmalig Cookies von bahn.de initialisieren
-        try:
-            s.get(
-                "https://www.bahn.de/buchung/fahrplan/suche",
-                headers={"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "Accept-Language": "de-DE,de;q=0.9"},
-                timeout=4
-            )
-        except Exception:
-            pass
         THREAD_LOCAL.cffi_session = s
     return THREAD_LOCAL.cffi_session
 
@@ -272,7 +262,7 @@ def parse_wagenreihung_json(data, cat=""):
         data = data[0]
     if not isinstance(data, dict):
         return None
-    if data.get("status") == "ERROR" or data.get("code") == "OPS_BLOCKED":
+    if data.get("status") == "ERROR" or data.get("code") == "OPS_BLOCKED" or data.get("error"):
         return None
     if "result" in data and isinstance(data["result"], dict):
         data = data["result"].get("data")
@@ -298,10 +288,7 @@ def parse_wagenreihung_json(data, cat=""):
     up_cat = (cat or "").upper()
     ist_regio = up_cat not in ("ICE", "IC", "EC", "EN", "NJ", "FLX", "D")
 
-    # Jede Gruppe in 'groups' wird 1:1 als eigener Zugteil übernommen:
-    # - 1 Gruppe mit 3 Fahrzeugen -> 3-Teiler
-    # - 1 Gruppe mit 5 Fahrzeugen -> 5-Teiler
-    # - 2 Gruppen mit je 3 Fahrzeugen -> 2x 3-Teiler (2 Züge)
+    # Jede Gruppe in 'groups' wird 1:1 als eigener Zugteil ausgewertet
     for idx, grp in enumerate(groups):
         teil_nr = idx + 1
         bez = grp.get("transport", {}).get("description") or grp.get("zugbezeichnung") or grp.get("name") or ""
@@ -426,23 +413,32 @@ def _drossele():
         THROTTLE_STATE["last"] = time.monotonic()
 
 
-def bahn_abfrage(url):
+def bahn_abfrage(bahn_url):
     with STATS_LOCK:
         if BAHN_STATE["blocked"]:
-            return "blockiert", None, "bahn.de OPS_BLOCKED aktiv"
+            return "blockiert", None, "OPS_BLOCKED aktiv"
 
     session = get_thread_cffi_session()
+    # Anfrage läuft über deinen Cloudflare Worker
+    abfrage_url = (
+        f"{CF_WORKER_URL.rstrip('/')}/?url={urllib.parse.quote(bahn_url, safe='')}"
+        if CF_WORKER_URL else bahn_url
+    )
+
     detail = ""
     for _ in range(2):
         _drossele()
         try:
-            res = session.get(url, headers=BAHN_HEADERS, timeout=BAHN_TIMEOUT)
+            res = session.get(abfrage_url, headers=BAHN_HEADERS, timeout=BAHN_TIMEOUT)
         except Exception as e:
             detail = f"{type(e).__name__}: {e}"
             continue
 
         code = res.status_code
         body = (res.text or "").lstrip()
+
+        if "Hello World" in body:
+            return "fehler", None, "Cloudflare Worker noch nicht auf 'Bereitstellen' (Deploy) geklickt!"
 
         if "OPS_BLOCKED" in body or code in (401, 403, 429):
             with STATS_LOCK:
@@ -515,6 +511,7 @@ def hole_wagenreihung(cat, fahrt_nr, linie, eva_id, p_time_berlin, sektoren_aus_
             with CACHE_LOCK:
                 ZUG_FORMATION_CACHE[cache_key] = {"t": jetzt_ts, "data": parsed}
             _zaehle("live")
+            print(f"  -> [Live-Wagenreihung OK] {linie} ({fahrt_nr}) @ {lookup_eva}: {parsed['modell']}")
             return parsed, url
         status, detail = "keine_daten", "Leere Gruppen"
 
@@ -925,16 +922,13 @@ def drucke_reihung_statistik():
     print("-" * 60)
     if REIHUNG_STATS:
         print("Wagenreihung Statistik: " + ", ".join(f"{k}={v}" for k, v in sorted(REIHUNG_STATS.items())))
-    if BAHN_STATE["blocked"]:
-        print("HINWEIS: bahn.de blockiert die GitHub-Actions-Server-IP mit OPS_BLOCKED (HTTP 403).")
-        print("Es wurden KEINE geschätzten Wagenreihungen eingetragen (Felder bleiben leer).")
     print("-" * 60)
 
 
 if __name__ == "__main__":
     lade_reihung_cache()
     station_items = list(STATIONS.items())
-    with ThreadPoolExecutor(max_workers=4) as executor:
+    with ThreadPoolExecutor(max_workers=3) as executor:
         list(executor.map(verarbeite_station, station_items))
     erzeuge_global_info()
     hole_routing_verbindungen("733238", "8013389", "verbindungen_bauhof_bahnhof")
