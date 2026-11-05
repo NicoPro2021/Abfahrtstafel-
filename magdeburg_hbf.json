@@ -1,24 +1,22 @@
 [
     {
-        "zeit": "01:23",
-        "echte_zeit": "02:30",
-        "linie": "ICE 1540",
-        "zug_nr": "ICE 1540",
-        "fahrt_nr": "1540",
-        "kategorie": "ICE",
-        "ziel": "Köln Hbf",
-        "ziel_geplant": "Köln Hbf",
+        "zeit": "03:45",
+        "echte_zeit": "03:45",
+        "linie": "RE 20",
+        "zug_nr": "RE 16920",
+        "fahrt_nr": "16920",
+        "kategorie": "RE",
+        "ziel": "Uelzen",
+        "ziel_geplant": "Uelzen",
         "via": [
-            "Braunschweig Hbf",
-            "Hannover Hbf",
-            "Minden(Westf)",
-            "Bielefeld Hbf"
+            "Magdeburg-Neustadt",
+            "Magdeburg-Eichenweiler",
+            "Magdeburg-Rothensee",
+            "Wolmirstedt"
         ],
-        "entfallende_halte": [
-            "Gelsenkirchen Hbf"
-        ],
-        "gleis": "8",
-        "gleis_geplant": "8",
+        "entfallende_halte": [],
+        "gleis": "4",
+        "gleis_geplant": "4",
         "gleiswechsel": false,
         "sektoren": "",
         "zug_modell": "",
@@ -28,16 +26,13 @@
         "wagenreihung_text": "Keine Wagenreihung verfügbar",
         "reihung_quelle": "keine",
         "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-05&evaNumber=8010224&number=1540&time=2026-11-05T00:23:00.000Z",
-        "info": "+67",
-        "begruendung": "Verspätete Bereitstellung des Zuges +++ Halt entfällt in: Gelsenkirchen Hbf",
-        "meldungen": [
-            "Verspätete Bereitstellung des Zuges",
-            "Halt entfällt in: Gelsenkirchen Hbf"
-        ],
-        "bauarbeiten": true,
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-05&evaNumber=8010224&number=16920&time=2026-11-05T02:45:00.000Z",
+        "info": "pünktlich",
+        "begruendung": "",
+        "meldungen": [],
+        "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "01:58"
+        "update": "02:01"
     }
 ]
