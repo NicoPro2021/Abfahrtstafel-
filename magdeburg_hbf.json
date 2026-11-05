@@ -1,7 +1,7 @@
 [
     {
         "zeit": "00:01",
-        "echte_zeit": "00:09",
+        "echte_zeit": "00:08",
         "linie": "S 1",
         "zug_nr": "S 39041",
         "fahrt_nr": "39041",
@@ -27,7 +27,7 @@
         "reihung_quelle": "keine",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=S&date=2026-11-05&evaNumber=8010224&number=39041&time=2026-11-05T23:01:00.000Z",
-        "info": "+8",
+        "info": "+7",
         "begruendung": "Tiere im Gleis",
         "meldungen": [
             "Tiere im Gleis"
@@ -35,11 +35,11 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Ersatzverkehr mit Bus ist eingerichtet +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:59"
+        "update": "00:03"
     },
     {
         "zeit": "00:04",
-        "echte_zeit": "00:59",
+        "echte_zeit": "01:20",
         "linie": "ICE 957",
         "zug_nr": "ICE 957",
         "fahrt_nr": "957",
@@ -62,20 +62,21 @@
         "reihung_quelle": "keine",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-05&evaNumber=8010224&number=957&time=2026-11-05T23:04:00.000Z",
-        "info": "+55",
-        "begruendung": "Verspätete Bereitstellung des Zuges +++ Bereitstellung weiterer Wagen",
+        "info": "+76",
+        "begruendung": "Verspätete Bereitstellung des Zuges +++ Bereitstellung weiterer Wagen +++ Bauarbeiten",
         "meldungen": [
             "Verspätete Bereitstellung des Zuges",
-            "Bereitstellung weiterer Wagen"
+            "Bereitstellung weiterer Wagen",
+            "Bauarbeiten"
         ],
-        "bauarbeiten": false,
+        "bauarbeiten": true,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Ersatzverkehr mit Bus ist eingerichtet +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:59"
+        "update": "00:03"
     },
     {
         "zeit": "00:04",
-        "echte_zeit": "00:59",
+        "echte_zeit": "01:20",
         "linie": "ICE 947",
         "zug_nr": "ICE 947",
         "fahrt_nr": "947",
@@ -98,15 +99,58 @@
         "reihung_quelle": "keine",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-05&evaNumber=8010224&number=947&time=2026-11-05T23:04:00.000Z",
-        "info": "+55",
-        "begruendung": "Verspätetes Personal aus vorheriger Fahrt +++ Bereitstellung weiterer Wagen",
+        "info": "+76",
+        "begruendung": "Verspätetes Personal aus vorheriger Fahrt +++ Bereitstellung weiterer Wagen +++ Bauarbeiten",
         "meldungen": [
             "Verspätetes Personal aus vorheriger Fahrt",
-            "Bereitstellung weiterer Wagen"
+            "Bereitstellung weiterer Wagen",
+            "Bauarbeiten"
         ],
-        "bauarbeiten": false,
+        "bauarbeiten": true,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Ersatzverkehr mit Bus ist eingerichtet +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:59"
+        "update": "00:03"
+    },
+    {
+        "zeit": "01:23",
+        "echte_zeit": "01:52",
+        "linie": "ICE 1540",
+        "zug_nr": "ICE 1540",
+        "fahrt_nr": "1540",
+        "kategorie": "ICE",
+        "ziel": "Köln Hbf",
+        "ziel_geplant": "Köln Hbf",
+        "via": [
+            "Braunschweig Hbf",
+            "Hannover Hbf",
+            "Minden(Westf)",
+            "Bielefeld Hbf"
+        ],
+        "entfallende_halte": [
+            "Gelsenkirchen Hbf"
+        ],
+        "gleis": "8",
+        "gleis_geplant": "8",
+        "gleiswechsel": false,
+        "sektoren": "",
+        "zug_modell": "",
+        "formation": "",
+        "zugteile": [],
+        "wagenreihung": [],
+        "wagenreihung_text": "Keine Wagenreihung verfügbar",
+        "reihung_quelle": "keine",
+        "reihung_richtung": "",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-06&evaNumber=8010224&number=1540&time=2026-11-06T00:23:00.000Z",
+        "info": "+29",
+        "begruendung": "Reparatur am Zug +++ Fehlende Fahrradbeförderung +++ Halt entfällt in: Gelsenkirchen Hbf",
+        "meldungen": [
+            "Reparatur am Zug",
+            "Fehlende Fahrradbeförderung",
+            "Halt entfällt in: Gelsenkirchen Hbf"
+        ],
+        "bauarbeiten": true,
+        "defekte_aufzuege": [],
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Ersatzverkehr mit Bus ist eingerichtet +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "00:03"
     }
 ]
