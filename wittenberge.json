@@ -1,22 +1,24 @@
 [
     {
-        "zeit": "23:00",
-        "echte_zeit": "23:23",
-        "linie": "ICE 809",
-        "zug_nr": "ICE 809",
-        "fahrt_nr": "809",
-        "kategorie": "ICE",
-        "ziel": "Berlin Südkreuz",
-        "ziel_geplant": "Berlin Südkreuz",
+        "zeit": "23:05",
+        "echte_zeit": "23:33",
+        "linie": "OE RE8",
+        "zug_nr": "OE 62038",
+        "fahrt_nr": "62038",
+        "kategorie": "OE",
+        "ziel": "Berlin Hbf",
+        "ziel_geplant": "Berlin Hbf",
         "via": [
-            "Berlin-Spandau",
-            "Berlin Hbf"
+            "Bad Wilsnack",
+            "Glöwen",
+            "Breddin",
+            "Neustadt(Dosse)"
         ],
         "entfallende_halte": [],
-        "gleis": "2",
-        "gleis_geplant": "3",
+        "gleis": "1",
+        "gleis_geplant": "2",
         "gleiswechsel": true,
-        "sektoren": "",
+        "sektoren": "D–F",
         "zug_modell": "",
         "formation": "",
         "zugteile": [],
@@ -24,17 +26,16 @@
         "wagenreihung_text": "Keine Wagenreihung verfügbar",
         "reihung_quelle": "keine",
         "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-07&evaNumber=8010382&number=809&time=2026-11-07T22:00:00.000Z",
-        "info": "+23",
-        "begruendung": "Heute von Gleis 2 (statt Gleis 3) +++ Tiere im Gleis",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=OE&date=2026-11-07&evaNumber=8010382&number=62038&time=2026-11-07T22:05:00.000Z",
+        "info": "+28",
+        "begruendung": "Heute von Gleis 1 (statt Gleis 2)",
         "meldungen": [
-            "Heute von Gleis 2 (statt Gleis 3)",
-            "Tiere im Gleis"
+            "Heute von Gleis 1 (statt Gleis 2)"
         ],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Streckensperrung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:32"
+        "update": "23:35"
     },
     {
         "zeit": "23:01",
@@ -70,6 +71,6 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Streckensperrung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:32"
+        "update": "23:35"
     }
 ]
