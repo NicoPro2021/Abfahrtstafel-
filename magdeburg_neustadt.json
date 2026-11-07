@@ -28,11 +28,11 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "11:32"
+        "update": "11:35"
     },
     {
         "zeit": "11:31",
-        "echte_zeit": "11:33",
+        "echte_zeit": "11:32",
         "linie": "RB 36",
         "zug_nr": "RB 80358",
         "fahrt_nr": "80358",
@@ -58,13 +58,13 @@
         "reihung_quelle": "keine",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RB&date=2026-11-07&evaNumber=8010226&number=80358&time=2026-11-07T10:31:00.000Z",
-        "info": "+2",
+        "info": "+1",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "11:32"
+        "update": "11:35"
     },
     {
         "zeit": "11:45",
@@ -100,11 +100,11 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "11:32"
+        "update": "11:35"
     },
     {
         "zeit": "11:46",
-        "echte_zeit": "11:47",
+        "echte_zeit": "11:48",
         "linie": "OE RE1",
         "zug_nr": "OE 73726",
         "fahrt_nr": "73726",
@@ -125,13 +125,13 @@
         "reihung_quelle": "keine",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=OE&date=2026-11-07&evaNumber=8010226&number=73726&time=2026-11-07T10:46:00.000Z",
-        "info": "+1",
+        "info": "+2",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "11:32"
+        "update": "11:35"
     },
     {
         "zeit": "12:13",
@@ -167,7 +167,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "11:32"
+        "update": "11:35"
     },
     {
         "zeit": "12:12",
@@ -198,24 +198,28 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "11:32"
+        "update": "11:35"
     },
     {
         "zeit": "11:41",
-        "echte_zeit": "12:15",
+        "echte_zeit": "12:16",
         "linie": "S 1",
         "zug_nr": "S 39017",
         "fahrt_nr": "39017",
         "kategorie": "S",
-        "ziel": "Schönebeck-Bad Salzelmen",
+        "ziel": "Magdeburg Hbf",
         "ziel_geplant": "Schönebeck-Bad Salzelmen",
-        "via": [
-            "Magdeburg Hbf",
+        "via": [],
+        "entfallende_halte": [
             "Magdeburg-Buckau",
             "Magdeburg SKET Industriepark",
-            "Magdeburg-Salbke"
+            "Magdeburg-Salbke",
+            "Magdeburg Südost",
+            "Schönebeck-Frohse",
+            "Schönebeck(Elbe)",
+            "Schönebeck Süd",
+            "Schönebeck-Bad Salzelmen"
         ],
-        "entfallende_halte": [],
         "gleis": "2",
         "gleis_geplant": "2",
         "gleiswechsel": false,
@@ -228,15 +232,17 @@
         "reihung_quelle": "keine",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=S&date=2026-11-07&evaNumber=8010226&number=39017&time=2026-11-07T10:41:00.000Z",
-        "info": "+34",
-        "begruendung": "Reparatur am Zug",
+        "info": "+35",
+        "begruendung": "Fährt heute nur bis Magdeburg Hbf +++ Reparatur am Zug +++ Halt entfällt in: Magdeburg-Buckau, Magdeburg SKET Industriepark, Magdeburg-Salbke, Magdeburg Südost",
         "meldungen": [
-            "Reparatur am Zug"
+            "Fährt heute nur bis Magdeburg Hbf",
+            "Reparatur am Zug",
+            "Halt entfällt in: Magdeburg-Buckau, Magdeburg SKET Industriepark, Magdeburg-Salbke, Magdeburg Südost"
         ],
-        "bauarbeiten": false,
+        "bauarbeiten": true,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "11:32"
+        "update": "11:35"
     },
     {
         "zeit": "12:16",
@@ -272,7 +278,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "11:32"
+        "update": "11:35"
     },
     {
         "zeit": "12:29",
@@ -303,7 +309,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "11:32"
+        "update": "11:35"
     },
     {
         "zeit": "12:31",
@@ -339,7 +345,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "11:32"
+        "update": "11:35"
     },
     {
         "zeit": "12:41",
@@ -375,7 +381,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "11:32"
+        "update": "11:35"
     },
     {
         "zeit": "12:43",
@@ -406,7 +412,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "11:32"
+        "update": "11:35"
     },
     {
         "zeit": "12:45",
@@ -442,6 +448,6 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "11:32"
+        "update": "11:35"
     }
 ]
