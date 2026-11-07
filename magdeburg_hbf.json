@@ -1,7 +1,43 @@
 [
     {
-        "zeit": "01:23",
+        "zeit": "01:16",
         "echte_zeit": "01:23",
+        "linie": "ICE 657",
+        "zug_nr": "ICE 657",
+        "fahrt_nr": "657",
+        "kategorie": "ICE",
+        "ziel": "Berlin Gesundbrunnen",
+        "ziel_geplant": "Berlin Gesundbrunnen",
+        "via": [
+            "Berlin Südkreuz",
+            "Berlin Hbf"
+        ],
+        "entfallende_halte": [],
+        "gleis": "6",
+        "gleis_geplant": "6",
+        "gleiswechsel": false,
+        "sektoren": "",
+        "zug_modell": "",
+        "formation": "",
+        "zugteile": [],
+        "wagenreihung": [],
+        "wagenreihung_text": "Keine Wagenreihung verfügbar",
+        "reihung_quelle": "keine",
+        "reihung_richtung": "",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-07&evaNumber=8010224&number=657&time=2026-11-07T00:16:00.000Z",
+        "info": "+7",
+        "begruendung": "Vorfahrt eines anderen Zuges",
+        "meldungen": [
+            "Vorfahrt eines anderen Zuges"
+        ],
+        "bauarbeiten": false,
+        "defekte_aufzuege": [],
+        "station_ticker": "🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "01:04"
+    },
+    {
+        "zeit": "01:23",
+        "echte_zeit": "01:25",
         "linie": "ICE 1540",
         "zug_nr": "ICE 1540",
         "fahrt_nr": "1540",
@@ -29,7 +65,7 @@
         "reihung_quelle": "keine",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-07&evaNumber=8010224&number=1540&time=2026-11-07T00:23:00.000Z",
-        "info": "pünktlich",
+        "info": "+2",
         "begruendung": "Weichenstörung +++ Halt entfällt in: Gelsenkirchen Hbf",
         "meldungen": [
             "Weichenstörung",
@@ -38,43 +74,7 @@
         "bauarbeiten": true,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "01:01"
-    },
-    {
-        "zeit": "01:16",
-        "echte_zeit": "01:24",
-        "linie": "ICE 657",
-        "zug_nr": "ICE 657",
-        "fahrt_nr": "657",
-        "kategorie": "ICE",
-        "ziel": "Berlin Gesundbrunnen",
-        "ziel_geplant": "Berlin Gesundbrunnen",
-        "via": [
-            "Berlin Südkreuz",
-            "Berlin Hbf"
-        ],
-        "entfallende_halte": [],
-        "gleis": "6",
-        "gleis_geplant": "6",
-        "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "Keine Wagenreihung verfügbar",
-        "reihung_quelle": "keine",
-        "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-07&evaNumber=8010224&number=657&time=2026-11-07T00:16:00.000Z",
-        "info": "+8",
-        "begruendung": "Vorfahrt eines anderen Zuges",
-        "meldungen": [
-            "Vorfahrt eines anderen Zuges"
-        ],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "station_ticker": "🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "01:01"
+        "update": "01:04"
     },
     {
         "zeit": "01:53",
@@ -110,7 +110,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "01:01"
+        "update": "01:04"
     },
     {
         "zeit": "02:47",
@@ -146,7 +146,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "01:01"
+        "update": "01:04"
     },
     {
         "zeit": "02:57",
@@ -182,6 +182,6 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "01:01"
+        "update": "01:04"
     }
 ]
