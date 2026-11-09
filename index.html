@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>DB Monitor Pro | Live Dashboard</title>
+    <style>
+        :root {
+            --db-red: #e2001a;
+            --db-red-hover: #c50016;
+            --db-gray-bg: #f4f7f9;
+            --db-dark: #1a2536;
+            --db-zza-blue: #0b1d51;
+            --text-main: #2d3436;
+            --text-secondary: #636e72;
+            --ontime-green: #008754;
+            --delay-red: #d50000;
+            --info-yellow: #ffea00;
+            --construction-orange: #ff9800;
+            --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            --glass-bg: rgba(255, 255, 255, 0.92);
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        html, body { 
+            height: 100%; margin: 0; padding: 0; 
+            background: var(--db-gray-bg); 
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
+            overflow: hidden; 
+            color: var(--text-main);
+        }
+
+        .db-navbar {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            padding: 12px 20px;
+            display: flex; align-items: center; justify-content: space-between;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            position: sticky; top: 0; z-index: 1000;
+        }
+
+        .db-logo { 
+            background: var(--db-red); color: white; 
+            font-weight: 900; padding: 4px 10px; 
+            border-radius: 4px; letter-spacing: -1px;
+            font-size: 1.1rem;
+        }
+
+        .status-indicator { display: flex; align-items: center; gap: 8px; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.5px; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; background-color: #b2bec3; transition: 0.3s; }
+        .dot.online { background-color: var(--ontime-green); box-shadow: 0 0 8px var(--ontime-green); }
+        .dot.offline { background-color: var(--delay-red); box-shadow: 0 0 8px var(--delay-red); }
+
+        #welcome-screen { 
+            position: fixed; inset: 53px 0 0 0; background: var(--db-gray-bg); z-index: 3000; 
+            display: flex; flex-direction: column; align-items: center; padding: 20px 0;
+            overflow-y: auto;
+        }
+        #welcome-screen.hidden { display: none; }
+
+        .global-info-banner {
+            width: 92%; max-width: 600px; background: #fff; border-radius: 12px; padding: 20px;
+            margin-bottom: 18px; border-left: 6px solid var(--db-red);
+            box-shadow: var(--card-shadow);
+        }
+
+        .alcohol-notice-card {
+            width: 92%; max-width: 600px; background: var(--db-zza-blue); color: #fff;
+            border-radius: 12px; padding: 14px 18px; margin-bottom: 22px;
+            font-size: 0.85rem; line-height: 1.4; display: flex; align-items: center; gap: 12px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .search-box { 
+            background: #fff; padding: 18px 20px; border-radius: 12px; 
+            width: 92%; max-width: 600px; border: 1px solid rgba(0,0,0,0.1); 
+            margin-bottom: 25px; cursor: pointer;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.2s; display: flex; align-items: center; gap: 10px;
+            color: var(--text-secondary); font-weight: 600;
+        }
+        .search-box:active { transform: scale(0.98); }
+
+        .fav-grid { 
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; 
+            width: 92%; max-width: 600px; margin-bottom: 40px;
+        }
+        .fav-item { 
+            background: #fff; border: 1px solid rgba(0,0,0,0.05); padding: 18px; 
+            border-radius: 12px; text-align: left; cursor: pointer;
+            box-shadow: var(--card-shadow); transition: 0.3s;
+        }
+        .fav-item:active { background: #f1f2f6; }
+        .fav-item b { font-size: 1rem; color: var(--db-dark); }
+
+        .monitor { display: none; flex-direction: column; height: calc(100% - 53px); background: #fff; }
+        .monitor.active { display: flex; }
+
+        .station-header { 
+            padding: 14px 20px 10px 20px; border-bottom: 3px solid var(--db-red); 
+            background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .station-name { font-size: 1.45rem; font-weight: 900; color: var(--db-dark); margin: 6px 0; }
+
+        .filter-bar {
+            display: flex; gap: 8px; overflow-x: auto; padding-top: 6px; scrollbar-width: none;
+        }
+        .filter-bar::-webkit-scrollbar { display: none; }
+        .filter-btn {
+            border: 1px solid #dfe6e9; background: #f8f9fa; color: var(--text-secondary);
+            padding: 6px 14px; border-radius: 18px; font-size: 0.78rem; font-weight: 800;
+            cursor: pointer; white-space: nowrap; transition: 0.2s;
+        }
+        .filter-btn.active {
+            background: var(--db-red); color: #fff; border-color: var(--db-red);
+        }
+
+        .station-ticker-bar {
+            background: var(--db-zza-blue);
+            color: #ffffff;
+            overflow: hidden;
+            white-space: nowrap;
+            padding: 8px 0;
+            font-size: 0.84rem;
+            font-weight: 700;
+            border-bottom: 2px solid #000;
+            position: relative;
+        }
+        .station-ticker-bar.warning {
+            background: #fff3cd;
+            color: #1a2536;
+            border-bottom: 2px solid var(--construction-orange);
+        }
+        .ticker-content {
+            display: inline-block;
+            padding-left: 100%;
+            animation: ticker-scroll 30s linear infinite;
+        }
+        @keyframes ticker-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .elevator-alert-bar {
+            background: #ffebee; color: #b71c1c; padding: 7px 16px;
+            font-size: 0.78rem; font-weight: 800; border-bottom: 1px solid #ffcdd2;
+            display: none; align-items: center; gap: 8px;
+        }
+
+        #board { flex: 1; overflow-y: auto; padding-bottom: 60px; }
+
+        .departure-row { 
+            display: grid; grid-template-columns: 85px 1fr 82px; 
+            padding: 16px 20px; border-bottom: 1px solid #eaeaea; align-items: center;
+            position: relative; transition: background 0.2s;
+        }
+        .departure-row:active { background: #f9f9f9; }
+        .departure-row.cancelled { background: #fff5f5; }
+
+        .time-container { display: flex; flex-direction: column; gap: 2px; }
+        .p-time { font-size: 1.25rem; font-weight: 800; color: var(--db-dark); }
+        .p-time.delayed { text-decoration: line-through; color: var(--text-secondary); font-size: 0.9rem; font-weight: 600; }
+        .actual-time { color: var(--delay-red); font-size: 1.3rem; font-weight: 800; }
+        
+        .status-ontime { color: var(--ontime-green); font-size: 0.72rem; font-weight: 800; text-transform: uppercase; }
+        .status-delayed { color: var(--delay-red); font-size: 0.72rem; font-weight: 800; text-transform: uppercase; }
+
+        .train-meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+        .train-id { font-size: 0.8rem; font-weight: 800; color: var(--db-red); text-transform: uppercase; background: rgba(226, 0, 26, 0.1); padding: 2px 6px; border-radius: 4px; }
+        .train-id.ice { background: #fff; border: 1.5px solid var(--db-red); color: var(--db-red); font-style: italic; }
+        .train-id.sbahn { background: #008754; color: #fff; border-radius: 12px; padding: 2px 8px; }
+        .train-model-badge { font-size: 0.7rem; background: #eef2f5; color: var(--db-dark); padding: 2px 6px; border-radius: 4px; font-weight: 700; }
+        .train-dest { font-size: 1.15rem; font-weight: 800; color: var(--db-dark); margin-top: 3px; display: block; }
+        .train-via { font-size: 0.78rem; color: var(--text-secondary); margin-top: 2px; display: block; }
+        .train-cancelled-stops { font-size: 0.78rem; color: var(--delay-red); font-weight: 700; margin-top: 2px; display: block; }
+        
+        .pl-label { font-size: 0.65rem; color: var(--text-secondary); font-weight: 800; text-transform: uppercase; display: block; }
+        .pl-value { font-size: 1.45rem; font-weight: 900; color: var(--db-dark); padding: 2px 8px; border-radius: 6px; display: inline-block; }
+        .pl-value.changed { background: var(--info-yellow); color: #000; box-shadow: 0 0 0 2px #000; }
+        .pl-old { font-size: 0.72rem; text-decoration: line-through; color: var(--text-secondary); display: block; }
+        .pl-sector { font-size: 0.72rem; font-weight: 800; color: var(--db-zza-blue); background: #e8eef5; padding: 2px 6px; border-radius: 4px; display: inline-block; margin-top: 3px; }
+
+        /* ORIGINAL DB WAGENREIHUNGS-DESIGN (wie auf bahn.de) */
+        .db-reihung-slot { grid-column: 1 / 4; }
+        .db-reihung-container {
+            margin-top: 12px;
+            background: #e3e7ec;
+            border: 1px solid #cfd6df;
+            border-radius: 10px;
+            padding: 10px 12px 0 12px;
+            overflow: hidden;
+        }
+        .db-reihung-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .db-dir-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            color: #4a5568;
+            font-weight: 700;
+        }
+        .db-gl-badge {
+            background: #192a56;
+            color: #fff;
+            font-weight: 800;
+            font-size: 0.72rem;
+            padding: 3px 7px;
+            border-radius: 4px;
+        }
+        .db-formation-pill {
+            background: #ffffff;
+            color: #1a2536;
+            border: 1px solid #cbd5e0;
+            font-size: 0.72rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+        .db-train-scroll {
+            display: flex;
+            align-items: flex-end;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            gap: 0;
+        }
+        .db-zugteil-block {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .db-zugteil-label {
+            font-size: 0.68rem;
+            font-weight: 800;
+            color: #2d3748;
+            background: rgba(255,255,255,0.75);
+            padding: 1px 6px;
+            border-radius: 4px;
+            margin-bottom: 4px;
+        }
+        .db-zugteil-cars {
+            display: flex;
+            align-items: flex-start;
+            gap: 3px;
+        }
+        .db-car-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .db-car-sec-top {
+            font-size: 0.62rem;
+            font-weight: 800;
+            color: #4a5568;
+            height: 13px;
+            margin-bottom: 2px;
+        }
+        .db-car-body {
+            height: 36px;
+            min-width: 38px;
+            background: #ffffff;
+            border: 1.5px solid #5a626a;
+            color: #1a2536;
+            font-weight: 800;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+        }
+        .db-car-body.nose-left {
+            min-width: 44px;
+            height: 40px;
+            margin-top: -4px;
+            border-top-left-radius: 16px 36px;
+            border-bottom-left-radius: 4px;
+            padding-left: 6px;
+        }
+        .db-car-body.nose-right {
+            min-width: 44px;
+            height: 40px;
+            margin-top: -4px;
+            border-top-right-radius: 16px 36px;
+            border-bottom-right-radius: 4px;
+            padding-right: 6px;
+        }
+        .db-car-body.class-1 {
+            background: #5a626a;
+            color: #ffffff;
+        }
+        .db-car-body.class-split {
+            padding: 0;
+            min-width: 48px;
+        }
+        .db-split-left {
+            flex: 1;
+            height: 100%;
+            background: #ffffff;
+            color: #1a2536;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            padding-left: 3px;
+        }
+        .db-split-right {
+            flex: 1;
+            height: 100%;
+            background: #5a626a;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            padding-right: 3px;
+        }
+        .db-car-body.class-bistro {
+            background: #fff5f5;
+            border-color: var(--db-red);
+            color: var(--db-red);
+        }
+        .db-wnr-sub {
+            position: absolute;
+            top: 1px;
+            right: 3px;
+            font-size: 0.52rem;
+            opacity: 0.7;
+            font-weight: 700;
+        }
+        .db-car-icons {
+            width: 100%;
+            background: #f1f3f6;
+            margin-top: 3px;
+            padding: 3px 2px;
+            min-height: 34px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 2px;
+            font-size: 0.68rem;
+            border-top: 2px solid #cbd5e0;
+        }
+        .db-coupling-divider {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0 8px;
+            align-self: stretch;
+        }
+        .db-coupling-line {
+            width: 2px;
+            flex: 1;
+            border-left: 2px dashed #718096;
+            margin-bottom: 2px;
+        }
+        .db-coupling-badge {
+            background: #2d3748;
+            color: #fff;
+            font-size: 0.62rem;
+            font-weight: 800;
+            padding: 2px 5px;
+            border-radius: 4px;
+            white-space: nowrap;
+            margin: 2px 0;
+        }
+
+        .delay-reason { 
+            grid-column: 1 / 4; 
+            background: var(--info-yellow); 
+            color: #1a2536; 
+            font-size: 0.82rem; 
+            font-weight: 700; 
+            margin-top: 10px; 
+            padding: 9px 12px; 
+            border-radius: 8px;
+            display: flex; align-items: center; gap: 8px;
+            box-shadow: inset 0 -2px 0 rgba(0,0,0,0.12);
+        }
+        .delay-reason.construction {
+            background: #ffe0b2;
+            border-left: 4px solid var(--construction-orange);
+        }
+        .delay-reason.cancelled-banner {
+            background: #ffebee;
+            color: var(--delay-red);
+            border-left: 4px solid var(--delay-red);
+        }
+
+        .blink-dot {
+            width: 10px; height: 10px; background: var(--db-red); border-radius: 50%;
+            position: absolute; left: 6px; top: 38px;
+            animation: blink 1.2s infinite ease-in-out;
+        }
+
+        @keyframes blink { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.25; transform: scale(0.8); } }
+
+        #search-overlay { position: fixed; inset: 0; background: #fff; z-index: 4000; display: none; flex-direction: column; }
+        .search-nav { padding: 15px; background: var(--db-dark); display: flex; gap: 15px; align-items: center; }
+        .search-input { flex: 1; border: none; padding: 14px; border-radius: 8px; font-size: 1.1rem; outline: none; background: #f5f6fa; }
+
+        .search-res-item { padding: 18px 25px; border-bottom: 1px solid #f1f2f6; font-weight: 700; font-size: 1.1rem; display: flex; justify-content: space-between; cursor: pointer; }
+        .search-res-item:active { background: #f1f2f6; }
+    </style>
+</head>
+<body>
+
+<div class="db-navbar">
+    <div class="db-logo">DB</div>
+    <div class="status-indicator">
+        <div id="status-dot" class="dot"></div>
+        <span id="status-text" style="color: var(--text-secondary);">PRÜFE DATEN...</span>
+    </div>
+    <div id="weather-small" style="font-weight: 800; font-size: 0.85rem; color: var(--db-dark);">--°C</div>
+</div>
+
+<div id="welcome-screen">
+    <div class="global-info-banner" id="global-info">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <b id="g-title" style="font-size: 1.05rem;">Lade Betriebslage...</b>
+            <span id="g-wetter" style="background: var(--db-gray-bg); padding: 4px 8px; border-radius: 6px; font-weight: 800;">☀️ --°C</span>
+        </div>
+        <div id="g-msg" style="font-size: 0.9rem; color: var(--text-secondary); margin-top: 8px; line-height: 1.4;">Bitte wählen Sie einen Bahnhof aus der Liste oder den Favoriten.</div>
+    </div>
+
+    <div class="alcohol-notice-card">
+        <span style="font-size: 1.5rem;">🚭🍺</span>
+        <div>
+            <b>Bahnhofsinformation & Hausrecht:</b><br>
+            An den Bahnhöfen gilt Rauchverbot außerhalb gekennzeichneter Zonen sowie an ausgewählten Stationen und in den Zügen des Regionalverkehrs ein striktes Alkoholverbot.
+        </div>
+    </div>
+
+    <div class="search-box" onclick="openSearch()">
+        <span>🔍</span>
+        <span>Bahnhof suchen...</span>
+    </div>
+    
+    <div style="width: 92%; max-width: 600px; margin-bottom: 10px; font-weight: 800; font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase;">Favoriten</div>
+    <div class="fav-grid" id="fav-bar"></div>
+</div>
+
+<div id="search-overlay">
+    <div class="search-nav">
+        <button onclick="closeSearch()" style="color:white; background:none; border:none; font-size:1.8rem; cursor:pointer;">✕</button>
+        <input type="text" class="search-input" id="station-query" placeholder="Wohin solls gehen?" oninput="filterStations()">
+    </div>
+    <div id="search-results" style="overflow-y: auto;"></div>
+</div>
+
+<div class="monitor" id="monitor-app">
+    <div class="station-header">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <button onclick="goHome()" style="background:#f5f6fa; border:none; width:40px; height:40px; border-radius:50%; font-size:1.2rem; cursor:pointer;">←</button>
+            <div id="clock" style="font-weight: 800; font-size: 1.2rem; font-variant-numeric: tabular-nums; background: var(--db-dark); color: white; padding: 4px 12px; border-radius: 20px;">00:00</div>
+            <button id="star" onclick="toggleFavorite()" style="background:none; border:none; font-size:1.8rem; color:#ccc; cursor:pointer;">★</button>
+        </div>
+        <h1 id="display-station" class="station-name" onclick="loadData()">Lade...</h1>
+        <div class="filter-bar">
+            <button class="filter-btn active" onclick="setFilter('ALL', this)">Alle</button>
+            <button class="filter-btn" onclick="setFilter('FV', this)">Fernverkehr</button>
+            <button class="filter-btn" onclick="setFilter('REGIO', this)">Regional</button>
+            <button class="filter-btn" onclick="setFilter('SBAHN', this)">S-Bahn</button>
+        </div>
+    </div>
+
+    <div class="station-ticker-bar" id="station-ticker-box">
+        <div class="ticker-content" id="station-ticker-text">
+            ℹ️ Bitte beachten Sie die Ansagen und Hinweise am Bahnsteig sowie das Rauch- und Alkoholverbot im Bahnhofsbereich.
+        </div>
+    </div>
+
+    <div class="elevator-alert-bar" id="elevator-alert"></div>
+
+    <div id="board"></div>
+</div>
+
+<script>
+    const STATIONS_DB = [
+        { name: "Bad Belzig", file: "bad_belzig.json", eva: "8010031" },
+        { name: "Berlin Hbf", file: "berlin_hbf.json", eva: "8011160" },
+        { name: "Berlin Hbf (tief)", file: "berlin_hbf-tief.json", eva: "8098160" },
+        { name: "Biederitz", file: "biederitz.json", eva: "8010047" },
+        { name: "Bitterfeld", file: "bitterfeld.json", eva: "8010050" },
+        { name: "Brandenburg Hbf", file: "brandenburg_hbf.json", eva: "8010060" },
+        { name: "Delitzsch unt Bf", file: "delitzsch_unt_bf.json", eva: "8010076" },
+        { name: "Dessau Hbf", file: "dessau_hbf.json", eva: "8010077" },
+        { name: "Dessau Süd", file: "dessau_sued.json", eva: "8011361" },
+        { name: "Gommern", file: "gommern.json", eva: "8011673" },
+        { name: "Güterglück", file: "gueterglueck.json", eva: "8010154" },
+        { name: "Leipzig Hbf", file: "leipzig_hbf.json", eva: "8010205" },
+        { name: "Leipzig Hbf (tief)", file: "leipzig_hbf_tief.json", eva: "8098205" },
+        { name: "Magdeburg Hbf", file: "magdeburg_hbf.json", eva: "8010224" },
+        { name: "Magdeburg Herrenkrug", file: "magdeburg_herrenkrug.json", eva: "8013455" },
+        { name: "Magdeburg Neustadt", file: "magdeburg_neustadt.json", eva: "8010226" },
+        { name: "Pretzier (Altm)", file: "pretzier_altm.json", eva: "8012673" },
+        { name: "Rodleben", file: "rodleben.json", eva: "8012777" },
+        { name: "Roßlau (Elbe)", file: "rosslau.json", eva: "8010302" },
+        { name: "Wittenberge", file: "wittenberge.json", eva: "8010382" },
+        { name: "Wolfen", file: "wolfen.json", eva: "8013335" },
+        { name: "Wusterwitz", file: "wusterwitz.json", eva: "8013365" },
+        { name: "Zerbst/Anhalt", file: "zerbst.json", eva: "8013389" }
+    ].sort((a, b) => a.name.localeCompare(b.name));
+
+    const BAUREIHEN_MAP = {
+        "0442": "Talent 2 (BR 442)", "1442": "Talent 2 (BR 442)", "2442": "Talent 2 (BR 442)", "3442": "Talent 2 (BR 442)",
+        "0842": "Talent 2 (BR 442)", "1842": "Talent 2 (BR 442)", "0445": "Twindexx / KISS (BR 445)", "0446": "Twindexx (BR 446)",
+        "0462": "Desiro HC (BR 462)", "1462": "Desiro HC (BR 1462)", "0463": "Mireo (BR 463)", "1463": "Mireo (BR 1463)",
+        "0412": "ICE 4 (BR 412)", "9412": "ICE 4 (BR 412)", "0401": "ICE 1", "0402": "ICE 2", "0403": "ICE 3", "0411": "ICE T"
+    };
+
+    const BASE_URL = 'https://raw.githubusercontent.com/nicopro2021/Abfahrtstafel-/main/';
+    let currentStation = null;
+    let currentFilter = 'ALL';
+    let favorites = JSON.parse(localStorage.getItem('db_monitor_favs')) || [null, null, null, null];
+
+    // Live-Nachladen der Wagenreihung im Browser (nur wenn der Server keine Reihung geliefert hat)
+    const LIVE_SEQ_CACHE = {};                 // rowKey -> { t, parsed }
+    const LIVE_SEQ_FAIL = {};                  // rowKey -> Zeitpunkt des letzten Fehlversuchs
+    const LIVE_CACHE_TTL_MS = 20 * 60 * 1000;  // erfolgreiche Reihung so lange behalten
+    const LIVE_FAIL_TTL_MS = 5 * 60 * 1000;    // nach Fehlschlag so lange NICHT erneut versuchen
+    const LIVE_FETCH_MAX_MIN = 120;            // bahn.de liefert Reihungen nur für die nächsten ~2 Stunden
+    const LIVE_TIMEOUT_MS = 8000;
+    let liveQueueRunning = false;
+
+    function esc(s) {
+        return String(s === undefined || s === null ? '' : s)
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    // Stabile ID pro Abfahrt (früher: Listen-Index -> nach jedem Refresh landete die Reihung im falschen Zug)
+    function makeRowKey(zug) {
+        const eva = currentStation ? currentStation.eva : '';
+        return `${eva}_${zug.zug_nr}_${zug.zeit}`.replace(/[^A-Za-z0-9_-]/g, '_');
+    }
+
+    function setFilter(filterType, btnEl) {
+        currentFilter = filterType;
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btnEl.classList.add('active');
+        loadData();
+    }
+
+    async function loadGlobalInfo() {
+        try {
+            const res = await fetch(`${BASE_URL}global_info.json?t=${Date.now()}`);
+            const data = await res.json();
+            document.getElementById('g-title').innerText = data.title || "Status";
+            document.getElementById('g-wetter').innerText = data.wetter || "--°C";
+            document.getElementById('g-msg').innerText = data.nachricht || "Alle Systeme normal.";
+            document.getElementById('weather-small').innerText = data.wetter || "";
+        } catch(e) {}
+    }
+
+    function openSearch() {
+        document.getElementById('search-overlay').style.display = 'flex';
+        document.getElementById('station-query').focus();
+        filterStations();
+    }
+    function closeSearch() { document.getElementById('search-overlay').style.display = 'none'; }
+    function goHome() { 
+        document.getElementById('welcome-screen').classList.remove('hidden'); 
+        document.getElementById('monitor-app').classList.remove('active'); 
+        loadGlobalInfo();
+        updateFavUI(); 
+    }
+
+    function selectStation(station) {
+        currentStation = station;
+        document.getElementById('display-station').innerText = station.name;
+        document.getElementById('welcome-screen').classList.add('hidden');
+        document.getElementById('monitor-app').classList.add('active');
+        closeSearch();
+        updateStar();
+        loadData();
+    }
+
+    function filterStations() {
+        const q = document.getElementById('station-query').value.toLowerCase();
+        document.getElementById('search-results').innerHTML = STATIONS_DB.filter(s => s.name.toLowerCase().includes(q))
+            .map(s => `<div class="search-res-item" onclick='selectStation(${JSON.stringify(s)})'>${s.name} <span>›</span></div>`).join('');
+    }
+
+    function updateFavUI() {
+        document.getElementById('fav-bar').innerHTML = favorites.map((f, i) => `
+            <div class="fav-item" onclick="fClick(${i})">
+                <div style="background:${f ? 'rgba(226, 0, 26, 0.1)' : '#f5f6fa'}; width:35px; height:35px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.1rem;">
+                    ${f ? '📍' : '＋'}
+                </div>
+                <b style="display:block; margin-top:10px;">${f ? f.name : 'Platz '+(i+1)}</b>
+            </div>`).join('');
+    }
+
+    function fClick(i) { if(favorites[i]) selectStation(favorites[i]); else openSearch(); }
+
+    function toggleFavorite() {
+        const idx = favorites.findIndex(f => f && f.file === currentStation.file);
+        if (idx > -1) favorites[idx] = null;
+        else {
+            const empty = favorites.indexOf(null);
+            if (empty > -1) favorites[empty] = currentStation;
+            else favorites[0] = currentStation;
+        }
+        localStorage.setItem('db_monitor_favs', JSON.stringify(favorites));
+        updateStar();
+    }
+
+    function updateStar() {
+        const isFav = favorites.some(f => f && f.file === currentStation.file);
+        document.getElementById('star').style.color = isFav ? 'var(--db-red)' : '#ccc';
+        document.getElementById('star').innerText = isFav ? '★' : '☆';
+    }
+
+    // ------------------------------------------------------------------
+    // Parser für die bahn.de-Antwort. Arbeitet bewusst wie der Server (fetch_all_stations.py):
+    // jede Fahrzeuggruppe der API ist ein Zugteil. (Die frühere "Steuerwagen"-Heuristik hat Talent-2-Züge
+    // in lauter 2er-Stücke zerlegt, weil alle 442-Wagen als Steuerwagen galten.)
+    // ------------------------------------------------------------------
+    function posStart(v) {
+        const pp = v && v.platformPosition;
+        return (pp && typeof pp.start === 'number') ? pp.start : null;
+    }
+
+    function parseBahnDeJsonInBrowser(data, cat) {
+        if (Array.isArray(data)) data = data[0];
+        if (!data || typeof data !== 'object') return null;
+        let groups = data.groups || [];
+        if (!groups.length) return null;
+        const istRegio = !["ICE", "IC", "EC", "EN", "NJ", "FLX", "D"].includes((cat || "").toUpperCase());
+
+        // Reihenfolge wie am Bahnsteig (nur wenn ALLE Fahrzeuge eine Position haben)
+        const alleV = groups.flatMap(g => g.vehicles || []);
+        if (alleV.length && alleV.every(v => posStart(v) !== null)) {
+            groups = groups
+                .map(g => Object.assign({}, g, { vehicles: (g.vehicles || []).slice().sort((a, b) => posStart(a) - posStart(b)) }))
+                .sort((a, b) => {
+                    const pa = posStart((a.vehicles || [])[0]); const pb = posStart((b.vehicles || [])[0]);
+                    return (pa === null ? 1e9 : pa) - (pb === null ? 1e9 : pb);
+                });
+        }
+
+        // Fahrtrichtung (0 = Richtung Bahnsteigbeginn/links, 100 = Richtung Bahnsteigende/rechts)
+        let richtung = '';
+        const dirRaw = [data.direction, data.platform && data.platform.direction]
+            .find(x => x !== undefined && x !== null && typeof x !== 'boolean' && String(x).trim() !== '' && !isNaN(Number(x)));
+        if (dirRaw !== undefined) {
+            const d = Number(dirRaw);
+            if (d === 0) richtung = 'links';
+            else if (d === 100) richtung = 'rechts';
+        }
+
+        const zugteile = [];
+        const baureihen = [];
+        groups.forEach((grp, idx) => {
+            const vehicles = grp.vehicles || [];
+            for (const v of vehicles) {
+                const vid = String(v.vehicleID || "").replace(/\D/g, "");
+                if (vid.length === 12 && vid.startsWith("9") && vid.slice(2, 4) === "80") {
+                    const name = BAUREIHEN_MAP[vid.slice(4, 8)];
+                    if (name) { if (!baureihen.includes(name)) baureihen.push(name); break; }
+                }
+            }
+            const wagen = [];
+            for (const v of vehicles) {
+                if (v.closed || String(v.status || "").toUpperCase() === "CLOSED") continue;
+                const vt = v.type || {};
+                const catType = String(vt.category || "").toUpperCase();
+                const has1 = Boolean(vt.hasFirstClass || catType.includes("FIRST"));
+                const has2 = Boolean(vt.hasEconomyClass || catType.includes("ECONOMY") || catType.includes("SECOND"));
+                const hasBistro = Boolean(vt.hasBistro || catType.includes("DINING") || catType.includes("BISTRO"));
+                if (!has1 && !has2 && !hasBistro && (catType.includes("LOCOMOTIVE") || catType.includes("POWERCAR") || catType.includes("LOK") || catType.includes("TRIEBKOPF"))) continue;
+
+                const ams = (v.amenities || []).map(a => String((a && a.type) || "").toUpperCase());
+                const hatKlima = ams.length === 0 || ams.some(t => t.includes("AIR_COND"));
+                const hatRad = Boolean(vt.hasBikeSpace || ams.includes("BIKE_SPACE") || ams.includes("MULTI_PURPOSE") || catType.includes("BIKE"));
+
+                let klasse = "2";
+                if (hasBistro && !has1 && !has2) klasse = "Bistro";
+                else if ((has1 && has2) || (has1 && istRegio)) klasse = "2+1";
+                else if (has1) klasse = "1";
+                else if (hasBistro) klasse = "Bistro";
+
+                wagen.push({
+                    wagen: v.wagonIdentificationNumber ? String(v.wagonIdentificationNumber) : "",
+                    klasse,
+                    sektor: (v.platformPosition && v.platformPosition.sector) || "",
+                    klima: hatKlima,
+                    fahrrad: hatRad
+                });
+            }
+            if (wagen.length) {
+                const tt = istRegio ? `${wagen.length}-Teiler` : `${wagen.length} Wagen`;
+                const dest = (grp.transport && grp.transport.destination && grp.transport.destination.name) || grp.destinationName || "";
+                zugteile.push({ teil_nr: idx + 1, bezeichnung: groups.length > 1 ? `${idx + 1}. Zugteil (${tt})` : tt, ziel: dest, wagen });
+            }
+        });
+        if (!zugteile.length) return null;
+
+        const lens = zugteile.map(z => z.wagen.length);
+        let formation;
+        if (istRegio) {
+            if (zugteile.length > 1 && new Set(lens).size === 1) formation = `${zugteile.length}x ${lens[0]}-Teiler (${zugteile.length} Züge)`;
+            else if (zugteile.length > 1) formation = lens.map(l => `${l}-Teiler`).join(" + ") + ` (${zugteile.length} Züge)`;
+            else formation = `${lens[0]}-Teiler`;
+        } else {
+            const summe = lens.reduce((a, b) => a + b, 0);
+            formation = zugteile.length > 1 ? `${zugteile.length} Zugteile (${summe} Wagen)` : `${summe} Wagen`;
+        }
+        const br = baureihen.join(" + ");
+        return { zugteile, formation, zug_modell: br ? `${br} • ${formation}` : formation, richtung };
+    }
+
+    function applyParsedToZug(zug, parsed) {
+        zug.zugteile = parsed.zugteile;
+        zug.formation = parsed.formation;
+        zug.zug_modell = parsed.zug_modell;
+        zug.reihung_richtung = parsed.richtung || '';
+        zug.reihung_quelle = 'live';
+    }
+
+    function getLiveCached(key) {
+        const e = LIVE_SEQ_CACHE[key];
+        if (!e) return null;
+        if (Date.now() - e.t > LIVE_CACHE_TTL_MS) { delete LIVE_SEQ_CACHE[key]; return null; }
+        return e.parsed;
+    }
+
+    async function fetchMitTimeout(url, ms) {
+        const ctrl = new AbortController();
+        const timer = setTimeout(() => ctrl.abort(), ms);
+        try { return await fetch(url, { signal: ctrl.signal }); }
+        finally { clearTimeout(timer); }
+    }
+
+    async function fetchLiveSequence(item) {
+        const { zug, key, slotId, badgeId } = item;
+        const enc = encodeURIComponent(zug.reihung_url);
+        const relays = [
+            `https://api.codetabs.com/v1/proxy?quest=${enc}`,
+            `https://api.allorigins.win/raw?url=${enc}`
+        ];
+        for (const rUrl of relays) {
+            try {
+                const res = await fetchMitTimeout(rUrl, LIVE_TIMEOUT_MS);
+                if (!res.ok) continue;
+                const json = await res.json();
+                const parsed = parseBahnDeJsonInBrowser(json, zug.kategorie);
+                if (parsed) {
+                    LIVE_SEQ_CACHE[key] = { t: Date.now(), parsed };
+                    delete LIVE_SEQ_FAIL[key];
+                    applyLiveSequence(zug, parsed, slotId, badgeId);
+                    return true;
+                }
+            } catch (e) {}
+        }
+        LIVE_SEQ_FAIL[key] = Date.now();   // nicht alle 15 s erneut Proxys und bahn.de bombardieren
+        return false;
+    }
+
+    async function processLiveQueue(queue, stationAtStart) {
+        if (liveQueueRunning) return;
+        liveQueueRunning = true;
+        try {
+            for (const item of queue) {
+                if (currentStation !== stationAtStart) break;       // Bahnhof inzwischen gewechselt
+                if (getLiveCached(item.key)) continue;
+                const failT = LIVE_SEQ_FAIL[item.key];
+                if (failT && Date.now() - failT < LIVE_FAIL_TTL_MS) continue;
+                await fetchLiveSequence(item);
+            }
+        } finally { liveQueueRunning = false; }
+    }
+
+    function applyLiveSequence(zug, parsed, slotId, badgeId) {
+        applyParsedToZug(zug, parsed);
+        const slotEl = document.getElementById(slotId);       // stabile ID: existiert nur, wenn genau diese Abfahrt noch angezeigt wird
+        if (slotEl) slotEl.innerHTML = renderCoachSequence(zug);
+        const badgeEl = document.getElementById(badgeId);
+        if (badgeEl && parsed.zug_modell) {
+            badgeEl.style.display = 'inline-block';
+            badgeEl.innerText = parsed.zug_modell;
+        }
+    }
+
+    function renderCoachSequence(zug) {
+        let teile = zug.zugteile || [];
+        if (teile.length === 0 && zug.wagenreihung && zug.wagenreihung.length > 0) {
+            teile = [{
+                teil_nr: 1,
+                bezeichnung: `${zug.wagenreihung.length}-Teiler`,
+                wagen: zug.wagenreihung
+            }];
+        }
+        if (teile.length === 0) return '';
+
+        const hasSectors = teile.some(t => (t.wagen || []).some(w => w.sektor));
+
+        const teileHtml = teile.map((teil, tIdx) => {
+            const wagenArr = teil.wagen || [];
+            const carsHtml = wagenArr.map((w, wIdx) => {
+                const isFirst = (wIdx === 0);
+                const isLast = (wIdx === wagenArr.length - 1);
+                let shapeCls = 'db-car-body';
+                if (isFirst) shapeCls += ' nose-left';
+                if (isLast) shapeCls += ' nose-right';
+
+                let innerHtml = '';
+                const wnrBadge = w.wagen && !w.wagen.startsWith('Wg') && !w.wagen.startsWith('Tz')
+                    ? `<span class="db-wnr-sub">${esc(w.wagen)}</span>` : '';
+
+                if (w.klasse === '2+1') {
+                    shapeCls += ' class-split';
+                    innerHtml = `<div class="db-split-left">2.</div><div class="db-split-right">1.</div>${wnrBadge}`;
+                } else if (w.klasse === '1') {
+                    shapeCls += ' class-1';
+                    innerHtml = `1.${wnrBadge}`;
+                } else if (w.klasse === 'Bistro') {
+                    shapeCls += ' class-bistro';
+                    innerHtml = `🍴${wnrBadge}`;
+                } else {
+                    innerHtml = `2.${wnrBadge}`;
+                }
+
+                const showKlima = (w.klima !== false);
+                const showBike = Boolean(w.fahrrad);
+
+                return `
+                    <div class="db-car-col">
+                        ${hasSectors ? `<div class="db-car-sec-top">${esc(w.sektor)}</div>` : ''}
+                        <div class="${shapeCls}">${innerHtml}</div>
+                        <div class="db-car-icons">
+                            <span>${showKlima ? '❄️' : '&nbsp;'}</span>
+                            <span>${showBike ? '🚲' : '&nbsp;'}</span>
+                        </div>
+                    </div>`;
+            }).join('');
+
+            const labelText = teile.length > 1
+                ? `${esc(teil.bezeichnung)}${teil.ziel ? ' ➔ ' + esc(teil.ziel) : ''}`
+                : '';
+
+            const blockHtml = `
+                <div class="db-zugteil-block">
+                    ${labelText ? `<div class="db-zugteil-label">${labelText}</div>` : ''}
+                    <div class="db-zugteil-cars">${carsHtml}</div>
+                </div>`;
+
+            if (tIdx < teile.length - 1) {
+                return blockHtml + `
+                    <div class="db-coupling-divider" title="Zugtrennung / 2 gekuppelte Züge">
+                        <div class="db-coupling-line"></div>
+                        <div class="db-coupling-badge">╠═╣</div>
+                        <div class="db-coupling-line"></div>
+                    </div>`;
+            }
+            return blockHtml;
+        }).join('');
+
+        let formationLabel = zug.formation || (teile.length > 1 ? `${teile.length} Züge gekuppelt` : `${teile[0].wagen.length}-Teiler`);
+        if (zug.reihung_quelle === 'geschaetzt') formationLabel += ' (geschätzt)';
+
+        // Pfeil nur, wenn die API die Fahrtrichtung geliefert hat (früher: immer "←", also bei jedem zweiten Zug falsch)
+        const dirHtml = zug.reihung_richtung === 'rechts' ? '<span>Abfahrtsrichtung →</span>'
+                      : zug.reihung_richtung === 'links' ? '<span>← Abfahrtsrichtung</span>' : '';
+
+        return `
+            <div class="db-reihung-container">
+                <div class="db-reihung-top">
+                    <div class="db-dir-group">
+                        <span class="db-gl-badge">Gl. ${esc(zug.gleis || '–')}</span>
+                        ${dirHtml}
+                    </div>
+                    <span class="db-formation-pill">🚄 ${esc(formationLabel)}</span>
+                </div>
+                <div class="db-train-scroll">
+                    ${teileHtml}
+                </div>
+            </div>`;
+    }
+
+    async function loadData() {
+        if(!currentStation) return;
+        const stationAtStart = currentStation;
+        try {
+            const res = await fetch(`${BASE_URL}${stationAtStart.file}?t=${Date.now()}`);
+            const data = await res.json();
+            if (currentStation !== stationAtStart) return;   // Bahnhof wurde währenddessen gewechselt -> Antwort verwerfen
+            
+            if (data && data.length > 0) {
+                const lastUpdateStr = data[0].update || "00:00";
+                const [upH, upM] = lastUpdateStr.split(':').map(Number);
+                const jetzt = new Date();
+                const updateDate = new Date();
+                updateDate.setHours(upH, upM, 0);
+
+                let diffMin = Math.round((jetzt - updateDate) / 60000);
+                if (diffMin < -700) diffMin += 1440;
+
+                const dot = document.getElementById('status-dot');
+                const txt = document.getElementById('status-text');
+
+                if (diffMin < 15) {
+                    dot.className = 'dot online';
+                    txt.innerText = 'LIVE';
+                    txt.style.color = 'var(--ontime-green)';
+                } else {
+                    dot.className = 'dot offline';
+                    txt.innerText = 'VERALTET ('+diffMin+'m)';
+                    txt.style.color = 'var(--delay-red)';
+                }
+
+                if (data[0].station_ticker) {
+                    const tickerEl = document.getElementById('station-ticker-text');
+                    const tickerBox = document.getElementById('station-ticker-box');
+                    tickerEl.innerText = data[0].station_ticker;
+                    if (data.some(z => z.bauarbeiten)) {
+                        tickerBox.classList.add('warning');
+                    } else {
+                        tickerBox.classList.remove('warning');
+                    }
+                }
+
+                const elBar = document.getElementById('elevator-alert');
+                const defekte = data[0].defekte_aufzuege || [];
+                if (defekte.length > 0) {
+                    elBar.style.display = 'flex';
+                    elBar.innerText = defekte.join(' +++ ');
+                } else {
+                    elBar.style.display = 'none';
+                }
+            }
+
+            const board = document.getElementById('board');
+            const scrollPos = board.scrollTop;
+            const jetzt = new Date();
+            const aktuelleMinuten = (jetzt.getHours() * 60) + jetzt.getMinutes();
+            const missingQueue = [];
+            const rowsHtml = [];
+
+            data.filter(zug => {
+                const [h, m] = (zug.echte_zeit || zug.zeit).split(':').map(Number);
+                let zugMinuten = (h * 60) + m;
+                if (aktuelleMinuten > 1320 && zugMinuten < 180) zugMinuten += 1440;
+                if (zugMinuten < (aktuelleMinuten - 5)) return false;
+
+                const l = (zug.linie || "").toUpperCase();
+                const isFV = l.startsWith("ICE") || l.startsWith("IC") || l.startsWith("EC") || l.startsWith("FLX") || l.startsWith("NJ") || l.startsWith("D ");
+                const isSBahn = l.startsWith("S ") || /^S\d/.test(l);
+                if (currentFilter === 'FV') return isFV;
+                if (currentFilter === 'SBAHN') return isSBahn;
+                if (currentFilter === 'REGIO') return !isFV && !isSBahn;
+                return true;
+            })
+            .forEach(zug => {
+                const isCancelled = (zug.info || "").includes("FÄLLT AUS");
+                const [h, m] = (zug.echte_zeit || zug.zeit).split(':').map(Number);
+                let zugMinuten = (h * 60) + m;
+                if (aktuelleMinuten > 1320 && zugMinuten < 180) zugMinuten += 1440;
+
+                const diffMinuten = zugMinuten - aktuelleMinuten;
+                const isAboutToDepart = diffMinuten <= 3 && diffMinuten >= 0;
+                const isDelayed = zug.echte_zeit !== zug.zeit && !isCancelled;
+                const viaStr = (zug.via && zug.via.length > 0) ? `über ${zug.via.map(esc).join(' – ')}` : '';
+                
+                const lUpper = (zug.linie || "").toUpperCase();
+                let badgeClass = 'train-id';
+                if (lUpper.startsWith("ICE") || lUpper.startsWith("IC") || lUpper.startsWith("FLX")) badgeClass += ' ice';
+                else if (lUpper.startsWith("S ") || /^S\d/.test(lUpper)) badgeClass += ' sbahn';
+
+                let bannerClass = 'delay-reason';
+                let bannerIcon = 'ℹ️';
+                if (isCancelled) {
+                    bannerClass += ' cancelled-banner';
+                    bannerIcon = '❌';
+                } else if (zug.bauarbeiten) {
+                    bannerClass += ' construction';
+                    bannerIcon = '🚧';
+                } else {
+                    bannerIcon = '⚠️';
+                }
+
+                const rowKey = makeRowKey(zug);
+                const slotId = `reihung-slot-${rowKey}`;
+                const badgeId = `model-badge-${rowKey}`;
+
+                const hatReihung = () => zug.zugteile && zug.zugteile.length > 0;
+                if (!hatReihung()) {
+                    const cached = getLiveCached(rowKey);
+                    if (cached) applyParsedToZug(zug, cached);
+                }
+                if (!hatReihung() && zug.reihung_url && !isCancelled && diffMinuten <= LIVE_FETCH_MAX_MIN) {
+                    missingQueue.push({ zug, key: rowKey, slotId, badgeId });
+                }
+
+                rowsHtml.push(`
+                    <div class="departure-row ${isCancelled ? 'cancelled' : ''}">
+                        ${isAboutToDepart && !isCancelled ? '<div class="blink-dot"></div>' : ''}
+                        <div class="time-container">
+                            ${isDelayed ? `
+                                <span class="actual-time">${esc(zug.echte_zeit)}</span>
+                                <span class="p-time delayed">${esc(zug.zeit)}</span>
+                                <span class="status-delayed">${esc(zug.info)}</span>
+                            ` : `
+                                <span class="p-time">${esc(zug.zeit)}</span>
+                                ${!isCancelled ? '<span class="status-ontime">pünktlich</span>' : ''}
+                            `}
+                            ${isCancelled ? '<span class="status-delayed">Fällt aus</span>' : ''}
+                        </div>
+                        <div style="padding-left: 10px;">
+                            <div class="train-meta">
+                                <span class="${badgeClass}">${esc(zug.linie)}</span>
+                                <span id="${badgeId}" class="train-model-badge" style="${zug.zug_modell ? '' : 'display:none;'}">${esc(zug.zug_modell)}</span>
+                            </div>
+                            <span class="train-dest" style="${isCancelled ? 'text-decoration:line-through;' : ''}">${esc(zug.ziel)}</span>
+                            ${viaStr ? `<span class="train-via">${viaStr}</span>` : ''}
+                            ${zug.entfallende_halte && zug.entfallende_halte.length > 0 ? `<span class="train-cancelled-stops">⛔ Ohne Halt in: ${zug.entfallende_halte.slice(0,3).map(esc).join(', ')}</span>` : ''}
+                        </div>
+                        <div class="platform-group" style="text-align:right;">
+                            <span class="pl-label">Gleis</span>
+                            <span class="pl-value ${zug.gleiswechsel ? 'changed' : ''}" style="${isCancelled ? 'text-decoration:line-through; color:#ccc;' : ''}">${esc(zug.gleis || '—')}</span>
+                            ${zug.gleiswechsel ? `<span class="pl-old">statt ${esc(zug.gleis_geplant)}</span>` : ''}
+                            ${zug.sektoren ? `<span class="pl-sector">Sektor ${esc(zug.sektoren)}</span>` : ''}
+                        </div>
+                        <div id="${slotId}" class="db-reihung-slot">${renderCoachSequence(zug)}</div>
+                        ${zug.begruendung ? `<div class="${bannerClass}">${bannerIcon} <span>${esc(zug.begruendung)}</span></div>` : ''}
+                    </div>`);
+            });
+
+            board.innerHTML = rowsHtml.join('');
+            board.scrollTop = scrollPos;
+
+            // Fehlende Wagenreihungen live über den Browser nachladen (nacheinander, mit Fehler-Cache)
+            processLiveQueue(missingQueue, stationAtStart);
+        } catch (e) { console.error(e); }
+    }
+
+    setInterval(() => { 
+        document.getElementById('clock').innerText = new Date().toLocaleTimeString('de-DE', {hour:'2-digit', minute:'2-digit'}); 
+    }, 1000);
+    
+    setInterval(() => {
+        loadData();
+        loadGlobalInfo();
+    }, 15000);
+
+    loadGlobalInfo();
+    updateFavUI();
+</script>
+</body>
+</html>
