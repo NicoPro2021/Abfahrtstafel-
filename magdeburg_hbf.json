@@ -18,13 +18,309 @@
         "gleis": "7",
         "gleis_geplant": "7",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "Keine Wagenreihung verfügbar",
-        "reihung_quelle": "keine",
+        "sektoren": "G–A",
+        "zug_modell": "BR 6812 + BR 7812 • 2 Zugteile (14 Wagen)",
+        "formation": "2 Zugteile (14 Wagen)",
+        "zugteile": [
+            {
+                "teil_nr": 1,
+                "bezeichnung": "1. Zugteil (7 Wagen)",
+                "ziel": "Köln Hbf",
+                "wagen": [
+                    {
+                        "wagen": "37",
+                        "klasse": "1",
+                        "sektor": "G",
+                        "klima": true,
+                        "fahrrad": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "36",
+                        "klasse": "1",
+                        "sektor": "G",
+                        "klima": false,
+                        "fahrrad": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "35",
+                        "klasse": "2",
+                        "sektor": "G",
+                        "klima": true,
+                        "fahrrad": false,
+                        "rollstuhl": true,
+                        "wc": true,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "34",
+                        "klasse": "2",
+                        "sektor": "F",
+                        "klima": true,
+                        "fahrrad": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "33",
+                        "klasse": "2",
+                        "sektor": "E",
+                        "klima": true,
+                        "fahrrad": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "32",
+                        "klasse": "2",
+                        "sektor": "E",
+                        "klima": true,
+                        "fahrrad": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "31",
+                        "klasse": "2",
+                        "sektor": "D",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    }
+                ]
+            },
+            {
+                "teil_nr": 2,
+                "bezeichnung": "2. Zugteil (7 Wagen)",
+                "ziel": "Essen Hbf",
+                "wagen": [
+                    {
+                        "wagen": "21",
+                        "klasse": "2",
+                        "sektor": "D",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 2
+                    },
+                    {
+                        "wagen": "22",
+                        "klasse": "2",
+                        "sektor": "C",
+                        "klima": true,
+                        "fahrrad": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 2
+                    },
+                    {
+                        "wagen": "23",
+                        "klasse": "2",
+                        "sektor": "C",
+                        "klima": true,
+                        "fahrrad": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 2
+                    },
+                    {
+                        "wagen": "24",
+                        "klasse": "2",
+                        "sektor": "B",
+                        "klima": true,
+                        "fahrrad": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 2
+                    },
+                    {
+                        "wagen": "25",
+                        "klasse": "2",
+                        "sektor": "B",
+                        "klima": true,
+                        "fahrrad": false,
+                        "rollstuhl": true,
+                        "wc": true,
+                        "zugteil": 2
+                    },
+                    {
+                        "wagen": "26",
+                        "klasse": "1",
+                        "sektor": "A",
+                        "klima": false,
+                        "fahrrad": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 2
+                    },
+                    {
+                        "wagen": "27",
+                        "klasse": "1",
+                        "sektor": "A",
+                        "klima": true,
+                        "fahrrad": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 2
+                    }
+                ]
+            }
+        ],
+        "wagenreihung": [
+            {
+                "wagen": "37",
+                "klasse": "1",
+                "sektor": "G",
+                "klima": true,
+                "fahrrad": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "36",
+                "klasse": "1",
+                "sektor": "G",
+                "klima": false,
+                "fahrrad": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "35",
+                "klasse": "2",
+                "sektor": "G",
+                "klima": true,
+                "fahrrad": false,
+                "rollstuhl": true,
+                "wc": true,
+                "zugteil": 1
+            },
+            {
+                "wagen": "34",
+                "klasse": "2",
+                "sektor": "F",
+                "klima": true,
+                "fahrrad": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "33",
+                "klasse": "2",
+                "sektor": "E",
+                "klima": true,
+                "fahrrad": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "32",
+                "klasse": "2",
+                "sektor": "E",
+                "klima": true,
+                "fahrrad": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "31",
+                "klasse": "2",
+                "sektor": "D",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "21",
+                "klasse": "2",
+                "sektor": "D",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 2
+            },
+            {
+                "wagen": "22",
+                "klasse": "2",
+                "sektor": "C",
+                "klima": true,
+                "fahrrad": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 2
+            },
+            {
+                "wagen": "23",
+                "klasse": "2",
+                "sektor": "C",
+                "klima": true,
+                "fahrrad": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 2
+            },
+            {
+                "wagen": "24",
+                "klasse": "2",
+                "sektor": "B",
+                "klima": true,
+                "fahrrad": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 2
+            },
+            {
+                "wagen": "25",
+                "klasse": "2",
+                "sektor": "B",
+                "klima": true,
+                "fahrrad": false,
+                "rollstuhl": true,
+                "wc": true,
+                "zugteil": 2
+            },
+            {
+                "wagen": "26",
+                "klasse": "1",
+                "sektor": "A",
+                "klima": false,
+                "fahrrad": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 2
+            },
+            {
+                "wagen": "27",
+                "klasse": "1",
+                "sektor": "A",
+                "klima": true,
+                "fahrrad": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 2
+            }
+        ],
+        "wagenreihung_text": "BR 6812 + BR 7812 • 2 Zugteile (14 Wagen) • Sektor G–A",
+        "reihung_quelle": "live",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-09&evaNumber=8010224&number=944&time=2026-11-09T07:00:00.000Z",
         "info": "+1",
