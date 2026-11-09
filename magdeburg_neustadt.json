@@ -1,7 +1,7 @@
 [
     {
         "zeit": "06:06",
-        "echte_zeit": "06:07",
+        "echte_zeit": "06:09",
         "linie": "RE 6",
         "zug_nr": "RE 80292",
         "fahrt_nr": "80292",
@@ -22,13 +22,13 @@
         "reihung_quelle": "keine",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-09&evaNumber=8010226&number=80292&time=2026-11-09T05:06:00.000Z",
-        "info": "+1",
+        "info": "+3",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
-        "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:05"
+        "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "06:08"
     },
     {
         "zeit": "06:12",
@@ -63,8 +63,8 @@
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
-        "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:05"
+        "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "06:08"
     },
     {
         "zeit": "06:13",
@@ -99,8 +99,8 @@
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
-        "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:05"
+        "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "06:08"
     },
     {
         "zeit": "06:16",
@@ -130,8 +130,8 @@
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
-        "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:05"
+        "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "06:08"
     },
     {
         "zeit": "06:16",
@@ -166,8 +166,8 @@
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
-        "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:05"
+        "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "06:08"
     },
     {
         "zeit": "06:18",
@@ -191,14 +191,16 @@
         "wagenreihung_text": "Keine Wagenreihung verfügbar",
         "reihung_quelle": "keine",
         "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-09&evaNumber=8010226&number=16158&time=2026-11-09T05:18:00.000Z",
-        "info": "+2",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
+        "reihung_url": "",
+        "info": "FÄLLT AUS",
+        "begruendung": "Bauarbeiten",
+        "meldungen": [
+            "Bauarbeiten"
+        ],
+        "bauarbeiten": true,
         "defekte_aufzuege": [],
-        "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:05"
+        "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "06:08"
     },
     {
         "zeit": "06:33",
@@ -233,8 +235,8 @@
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
-        "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:05"
+        "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "06:08"
     },
     {
         "zeit": "06:41",
@@ -269,8 +271,8 @@
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
-        "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:05"
+        "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "06:08"
     },
     {
         "zeit": "06:45",
@@ -305,8 +307,8 @@
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
-        "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:05"
+        "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "06:08"
     },
     {
         "zeit": "06:46",
@@ -336,8 +338,8 @@
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
-        "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:05"
+        "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "06:08"
     },
     {
         "zeit": "06:53",
@@ -367,8 +369,8 @@
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
-        "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:05"
+        "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "06:08"
     },
     {
         "zeit": "07:06",
@@ -402,8 +404,8 @@
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
-        "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:05"
+        "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "06:08"
     },
     {
         "zeit": "07:12",
@@ -438,8 +440,8 @@
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
-        "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:05"
+        "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "06:08"
     },
     {
         "zeit": "07:13",
@@ -474,8 +476,8 @@
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
-        "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:05"
+        "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "06:08"
     },
     {
         "zeit": "07:16",
@@ -510,8 +512,8 @@
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
-        "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:05"
+        "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "06:08"
     },
     {
         "zeit": "07:17",
@@ -541,8 +543,8 @@
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
-        "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:05"
+        "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "06:08"
     },
     {
         "zeit": "07:19",
@@ -572,8 +574,8 @@
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
-        "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:05"
+        "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "06:08"
     },
     {
         "zeit": "07:25",
@@ -608,8 +610,8 @@
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
-        "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:05"
+        "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "06:08"
     },
     {
         "zeit": "07:41",
@@ -644,8 +646,8 @@
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
-        "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:05"
+        "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "06:08"
     },
     {
         "zeit": "07:25",
@@ -677,8 +679,8 @@
         ],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
-        "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:05"
+        "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "06:08"
     },
     {
         "zeit": "07:45",
@@ -713,8 +715,8 @@
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
-        "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:05"
+        "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "06:08"
     },
     {
         "zeit": "07:46",
@@ -744,7 +746,7 @@
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
-        "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "06:05"
+        "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "06:08"
     }
 ]
