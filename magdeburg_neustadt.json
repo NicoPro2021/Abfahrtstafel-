@@ -1,36 +1,5 @@
 [
     {
-        "zeit": "08:22",
-        "echte_zeit": "08:35",
-        "linie": "RB 36",
-        "zug_nr": "RB 80347",
-        "fahrt_nr": "80347",
-        "kategorie": "RB",
-        "ziel": "Magdeburg Hbf",
-        "ziel_geplant": "Magdeburg Hbf",
-        "via": [],
-        "entfallende_halte": [],
-        "gleis": "2",
-        "gleis_geplant": "2",
-        "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "Keine Wagenreihung verfügbar",
-        "reihung_quelle": "keine",
-        "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RB&date=2026-11-09&evaNumber=8010226&number=80347&time=2026-11-09T07:22:00.000Z",
-        "info": "+13",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "08:44"
-    },
-    {
         "zeit": "08:41",
         "echte_zeit": "08:46",
         "linie": "S 1",
@@ -49,13 +18,102 @@
         "gleis": "2",
         "gleis_geplant": "2",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "Keine Wagenreihung verfügbar",
-        "reihung_quelle": "keine",
+        "sektoren": "D–C",
+        "zug_modell": "BR 425 • 4-Teiler",
+        "formation": "4-Teiler",
+        "zugteile": [
+            {
+                "teil_nr": 1,
+                "bezeichnung": "4-Teiler",
+                "ziel": "Schönebeck-Bad Salzelmen",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "D",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "C",
+                        "klima": true,
+                        "fahrrad": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "C",
+                        "klima": true,
+                        "fahrrad": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "C",
+                        "klima": true,
+                        "fahrrad": false,
+                        "rollstuhl": true,
+                        "wc": false,
+                        "zugteil": 1
+                    }
+                ]
+            }
+        ],
+        "wagenreihung": [
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "D",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "C",
+                "klima": true,
+                "fahrrad": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "C",
+                "klima": true,
+                "fahrrad": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "C",
+                "klima": true,
+                "fahrrad": false,
+                "rollstuhl": true,
+                "wc": false,
+                "zugteil": 1
+            }
+        ],
+        "wagenreihung_text": "BR 425 • 4-Teiler • Sektor D–C",
+        "reihung_quelle": "live",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=S&date=2026-11-09&evaNumber=8010226&number=39011&time=2026-11-09T07:41:00.000Z",
         "info": "+5",
@@ -64,7 +122,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "08:44"
+        "update": "08:45"
     },
     {
         "zeit": "08:45",
@@ -100,7 +158,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "08:44"
+        "update": "08:45"
     },
     {
         "zeit": "08:43",
@@ -131,7 +189,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "08:44"
+        "update": "08:45"
     },
     {
         "zeit": "09:12",
@@ -167,11 +225,11 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "08:44"
+        "update": "08:45"
     },
     {
         "zeit": "09:13",
-        "echte_zeit": "09:13",
+        "echte_zeit": "09:14",
         "linie": "S 1",
         "zug_nr": "S 39008",
         "fahrt_nr": "39008",
@@ -197,13 +255,13 @@
         "reihung_quelle": "keine",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=S&date=2026-11-09&evaNumber=8010226&number=39008&time=2026-11-09T08:13:00.000Z",
-        "info": "pünktlich",
+        "info": "+1",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "08:44"
+        "update": "08:45"
     },
     {
         "zeit": "09:16",
@@ -239,7 +297,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "08:44"
+        "update": "08:45"
     },
     {
         "zeit": "09:31",
@@ -275,7 +333,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "08:44"
+        "update": "08:45"
     },
     {
         "zeit": "09:29",
@@ -306,7 +364,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "08:44"
+        "update": "08:45"
     },
     {
         "zeit": "09:41",
@@ -342,7 +400,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "08:44"
+        "update": "08:45"
     },
     {
         "zeit": "09:45",
@@ -378,7 +436,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "08:44"
+        "update": "08:45"
     },
     {
         "zeit": "09:46",
@@ -409,6 +467,6 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "08:44"
+        "update": "08:45"
     }
 ]
