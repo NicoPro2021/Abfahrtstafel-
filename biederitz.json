@@ -1,251 +1,7 @@
 [
     {
-        "zeit": "16:44",
-        "echte_zeit": "16:50",
-        "linie": "RE 13",
-        "zug_nr": "RE 16126",
-        "fahrt_nr": "16126",
-        "kategorie": "RE",
-        "ziel": "Magdeburg Hbf",
-        "ziel_geplant": "Magdeburg Hbf",
-        "via": [
-            "Magdeburg Herrenkrug",
-            "Magdeburg-Neustadt"
-        ],
-        "entfallende_halte": [],
-        "gleis": "3",
-        "gleis_geplant": "3",
-        "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "Keine Wagenreihung verfügbar",
-        "reihung_quelle": "keine",
-        "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-10&evaNumber=8010047&number=16126&time=2026-11-10T15:44:00.000Z",
-        "info": "+6",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "station_ticker": "🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "16:59"
-    },
-    {
-        "zeit": "16:41",
-        "echte_zeit": "16:56",
-        "linie": "RB 40",
-        "zug_nr": "RB 16427",
-        "fahrt_nr": "16427",
-        "kategorie": "RB",
-        "ziel": "Burg(Magdeburg)",
-        "ziel_geplant": "Burg(Magdeburg)",
-        "via": [
-            "Gerwisch",
-            "Möser"
-        ],
-        "entfallende_halte": [],
-        "gleis": "2",
-        "gleis_geplant": "2",
-        "gleiswechsel": false,
-        "sektoren": "F–D",
-        "zug_modell": "BR 6146 + RP4147143 • 3-Teiler",
-        "formation": "3-Teiler",
-        "zugteile": [
-            {
-                "teil_nr": 2,
-                "bezeichnung": "2. Zugteil (3-Teiler)",
-                "ziel": "Burg(Magdeburg)",
-                "wagen": [
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "E",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 2
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "E",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 2
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2+1",
-                        "sektor": "D",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": true,
-                        "wc": true,
-                        "zugteil": 2
-                    }
-                ]
-            }
-        ],
-        "wagenreihung": [
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "E",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 2
-            },
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "E",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 2
-            },
-            {
-                "wagen": "",
-                "klasse": "2+1",
-                "sektor": "D",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": true,
-                "wc": true,
-                "zugteil": 2
-            }
-        ],
-        "wagenreihung_text": "BR 6146 + RP4147143 • 3-Teiler • Sektor F–D",
-        "reihung_quelle": "live",
-        "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RB&date=2026-11-10&evaNumber=8010047&number=16427&time=2026-11-10T15:41:00.000Z",
-        "info": "+15",
-        "begruendung": "Streckensperrung",
-        "meldungen": [
-            "Streckensperrung"
-        ],
-        "bauarbeiten": true,
-        "defekte_aufzuege": [],
-        "station_ticker": "🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "16:59"
-    },
-    {
-        "zeit": "16:46",
-        "echte_zeit": "16:59",
-        "linie": "RE 14",
-        "zug_nr": "RE 16495",
-        "fahrt_nr": "16495",
-        "kategorie": "RE",
-        "ziel": "Dessau Hbf",
-        "ziel_geplant": "Dessau Hbf",
-        "via": [
-            "Gommern",
-            "Zerbst/Anhalt",
-            "Rodleben",
-            "Roßlau(Elbe)"
-        ],
-        "entfallende_halte": [],
-        "gleis": "5",
-        "gleis_geplant": "5",
-        "gleiswechsel": false,
-        "sektoren": "C",
-        "zug_modell": "Talent 2 (BR 442) • 3-Teiler",
-        "formation": "3-Teiler",
-        "zugteile": [
-            {
-                "teil_nr": 1,
-                "bezeichnung": "3-Teiler",
-                "ziel": "Dessau Hbf",
-                "wagen": [
-                    {
-                        "wagen": "",
-                        "klasse": "2+1",
-                        "sektor": "C",
-                        "klima": true,
-                        "fahrrad": true,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "C",
-                        "klima": true,
-                        "fahrrad": true,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "C",
-                        "klima": true,
-                        "fahrrad": true,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    }
-                ]
-            }
-        ],
-        "wagenreihung": [
-            {
-                "wagen": "",
-                "klasse": "2+1",
-                "sektor": "C",
-                "klima": true,
-                "fahrrad": true,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "C",
-                "klima": true,
-                "fahrrad": true,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "C",
-                "klima": true,
-                "fahrrad": true,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            }
-        ],
-        "wagenreihung_text": "Talent 2 (BR 442) • 3-Teiler • Sektor C",
-        "reihung_quelle": "live",
-        "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-10&evaNumber=8010047&number=16495&time=2026-11-10T15:46:00.000Z",
-        "info": "+13",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "station_ticker": "🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "16:59"
-    },
-    {
         "zeit": "17:16",
-        "echte_zeit": "17:17",
+        "echte_zeit": "17:18",
         "linie": "RE 13",
         "zug_nr": "RE 16127",
         "fahrt_nr": "16127",
@@ -340,13 +96,13 @@
         "reihung_quelle": "live",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-10&evaNumber=8010047&number=16127&time=2026-11-10T16:16:00.000Z",
-        "info": "+1",
+        "info": "+2",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "16:59"
+        "update": "17:00"
     },
     {
         "zeit": "17:19",
@@ -382,7 +138,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "16:59"
+        "update": "17:00"
     },
     {
         "zeit": "17:44",
@@ -416,7 +172,149 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "16:59"
+        "update": "17:00"
+    },
+    {
+        "zeit": "18:16",
+        "echte_zeit": "18:16",
+        "linie": "RE 13",
+        "zug_nr": "RE 16129",
+        "fahrt_nr": "16129",
+        "kategorie": "RE",
+        "ziel": "Leipzig Hbf",
+        "ziel_geplant": "Leipzig Hbf",
+        "via": [
+            "Königsborn",
+            "Wahlitz",
+            "Gommern",
+            "Prödel"
+        ],
+        "entfallende_halte": [],
+        "gleis": "5",
+        "gleis_geplant": "5",
+        "gleiswechsel": false,
+        "sektoren": "",
+        "zug_modell": "",
+        "formation": "",
+        "zugteile": [],
+        "wagenreihung": [],
+        "wagenreihung_text": "Keine Wagenreihung verfügbar",
+        "reihung_quelle": "keine",
+        "reihung_richtung": "",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-10&evaNumber=8010047&number=16129&time=2026-11-10T17:16:00.000Z",
+        "info": "pünktlich",
+        "begruendung": "",
+        "meldungen": [],
+        "bauarbeiten": false,
+        "defekte_aufzuege": [],
+        "station_ticker": "🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "17:00"
+    },
+    {
+        "zeit": "18:19",
+        "echte_zeit": "18:19",
+        "linie": "RB 40",
+        "zug_nr": "RB 16428",
+        "fahrt_nr": "16428",
+        "kategorie": "RB",
+        "ziel": "Braunschweig Hbf",
+        "ziel_geplant": "Braunschweig Hbf",
+        "via": [
+            "Magdeburg Herrenkrug",
+            "Magdeburg-Neustadt",
+            "Magdeburg Hbf",
+            "Magdeburg-Sudenburg"
+        ],
+        "entfallende_halte": [],
+        "gleis": "1",
+        "gleis_geplant": "1",
+        "gleiswechsel": false,
+        "sektoren": "",
+        "zug_modell": "",
+        "formation": "",
+        "zugteile": [],
+        "wagenreihung": [],
+        "wagenreihung_text": "Keine Wagenreihung verfügbar",
+        "reihung_quelle": "keine",
+        "reihung_richtung": "",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RB&date=2026-11-10&evaNumber=8010047&number=16428&time=2026-11-10T17:19:00.000Z",
+        "info": "pünktlich",
+        "begruendung": "",
+        "meldungen": [],
+        "bauarbeiten": false,
+        "defekte_aufzuege": [],
+        "station_ticker": "🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "17:00"
+    },
+    {
+        "zeit": "18:41",
+        "echte_zeit": "18:41",
+        "linie": "RB 40",
+        "zug_nr": "RB 16431",
+        "fahrt_nr": "16431",
+        "kategorie": "RB",
+        "ziel": "Burg(Magdeburg)",
+        "ziel_geplant": "Burg(Magdeburg)",
+        "via": [
+            "Gerwisch",
+            "Möser"
+        ],
+        "entfallende_halte": [],
+        "gleis": "2",
+        "gleis_geplant": "2",
+        "gleiswechsel": false,
+        "sektoren": "",
+        "zug_modell": "",
+        "formation": "",
+        "zugteile": [],
+        "wagenreihung": [],
+        "wagenreihung_text": "Keine Wagenreihung verfügbar",
+        "reihung_quelle": "keine",
+        "reihung_richtung": "",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RB&date=2026-11-10&evaNumber=8010047&number=16431&time=2026-11-10T17:41:00.000Z",
+        "info": "pünktlich",
+        "begruendung": "Streckensperrung",
+        "meldungen": [
+            "Streckensperrung"
+        ],
+        "bauarbeiten": true,
+        "defekte_aufzuege": [],
+        "station_ticker": "🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "17:00"
+    },
+    {
+        "zeit": "18:44",
+        "echte_zeit": "18:44",
+        "linie": "RE 13",
+        "zug_nr": "RE 16130",
+        "fahrt_nr": "16130",
+        "kategorie": "RE",
+        "ziel": "Magdeburg Hbf",
+        "ziel_geplant": "Magdeburg Hbf",
+        "via": [
+            "Magdeburg Herrenkrug",
+            "Magdeburg-Neustadt"
+        ],
+        "entfallende_halte": [],
+        "gleis": "3",
+        "gleis_geplant": "3",
+        "gleiswechsel": false,
+        "sektoren": "",
+        "zug_modell": "",
+        "formation": "",
+        "zugteile": [],
+        "wagenreihung": [],
+        "wagenreihung_text": "Keine Wagenreihung verfügbar",
+        "reihung_quelle": "keine",
+        "reihung_richtung": "",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-10&evaNumber=8010047&number=16130&time=2026-11-10T17:44:00.000Z",
+        "info": "pünktlich",
+        "begruendung": "",
+        "meldungen": [],
+        "bauarbeiten": false,
+        "defekte_aufzuege": [],
+        "station_ticker": "🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "17:00"
     },
     {
         "zeit": "17:41",
@@ -629,6 +527,6 @@
         "bauarbeiten": true,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "16:59"
+        "update": "17:00"
     }
 ]
