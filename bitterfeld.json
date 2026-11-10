@@ -6,7 +6,7 @@
         "zug_nr": "S 37247",
         "fahrt_nr": "37247",
         "kategorie": "S",
-        "ziel": "Leipzig-Connewitz",
+        "ziel": "Leipzig Hbf",
         "ziel_geplant": "Leipzig-Connewitz",
         "via": [
             "Petersroda",
@@ -14,7 +14,14 @@
             "Zschortau",
             "Rackwitz(Leipzig)"
         ],
-        "entfallende_halte": [],
+        "entfallende_halte": [
+            "Leipzig Hbf (tief)",
+            "Leipzig Markt",
+            "Leipzig Wilhelm-Leuschner-Platz",
+            "Leipzig Bayerischer Bahnhof",
+            "Leipzig MDR",
+            "Leipzig-Connewitz"
+        ],
         "gleis": "4",
         "gleis_geplant": "4",
         "gleiswechsel": false,
@@ -137,16 +144,18 @@
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=S&date=2026-11-10&evaNumber=8010050&number=37247&time=2026-11-10T13:36:00.000Z",
         "info": "+13",
-        "begruendung": "Reparatur am Zug",
+        "begruendung": "Fährt heute nur bis Leipzig Hbf +++ Reparatur am Zug +++ Halt entfällt in: Leipzig Hbf (tief), Leipzig Markt, Leipzig Wilhelm-Leuschner-Platz, Leipzig Bayerischer Bahnhof",
         "meldungen": [
-            "Reparatur am Zug"
+            "Fährt heute nur bis Leipzig Hbf",
+            "Reparatur am Zug",
+            "Halt entfällt in: Leipzig Hbf (tief), Leipzig Markt, Leipzig Wilhelm-Leuschner-Platz, Leipzig Bayerischer Bahnhof"
         ],
-        "bauarbeiten": false,
+        "bauarbeiten": true,
         "defekte_aufzuege": [
             "🛗 Aufzug außer Betrieb (vom Bahnsteig 3/4 zur PU)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (vom Bahnsteig 3/4 zur PU) +++ 🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "14:56"
+        "update": "14:57"
     },
     {
         "zeit": "14:44",
@@ -186,7 +195,7 @@
             "🛗 Aufzug außer Betrieb (vom Bahnsteig 3/4 zur PU)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (vom Bahnsteig 3/4 zur PU) +++ 🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "14:56"
+        "update": "14:57"
     },
     {
         "zeit": "14:54",
@@ -224,7 +233,7 @@
             "🛗 Aufzug außer Betrieb (vom Bahnsteig 3/4 zur PU)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (vom Bahnsteig 3/4 zur PU) +++ 🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "14:56"
+        "update": "14:57"
     },
     {
         "zeit": "15:06",
@@ -371,11 +380,11 @@
             "🛗 Aufzug außer Betrieb (vom Bahnsteig 3/4 zur PU)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (vom Bahnsteig 3/4 zur PU) +++ 🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "14:56"
+        "update": "14:57"
     },
     {
         "zeit": "15:13",
-        "echte_zeit": "15:14",
+        "echte_zeit": "15:13",
         "linie": "S 8",
         "zug_nr": "S 37847",
         "fahrt_nr": "37847",
@@ -401,7 +410,7 @@
         "reihung_quelle": "keine",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=S&date=2026-11-10&evaNumber=8010050&number=37847&time=2026-11-10T14:13:00.000Z",
-        "info": "+1",
+        "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
@@ -409,7 +418,7 @@
             "🛗 Aufzug außer Betrieb (vom Bahnsteig 3/4 zur PU)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (vom Bahnsteig 3/4 zur PU) +++ 🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "14:56"
+        "update": "14:57"
     },
     {
         "zeit": "15:17",
@@ -581,7 +590,7 @@
             "🛗 Aufzug außer Betrieb (vom Bahnsteig 3/4 zur PU)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (vom Bahnsteig 3/4 zur PU) +++ 🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "14:56"
+        "update": "14:57"
     },
     {
         "zeit": "15:23",
@@ -619,7 +628,7 @@
             "🛗 Aufzug außer Betrieb (vom Bahnsteig 3/4 zur PU)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (vom Bahnsteig 3/4 zur PU) +++ 🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "14:56"
+        "update": "14:57"
     },
     {
         "zeit": "15:29",
@@ -657,7 +666,7 @@
             "🛗 Aufzug außer Betrieb (vom Bahnsteig 3/4 zur PU)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (vom Bahnsteig 3/4 zur PU) +++ 🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "14:56"
+        "update": "14:57"
     },
     {
         "zeit": "15:36",
@@ -695,7 +704,7 @@
             "🛗 Aufzug außer Betrieb (vom Bahnsteig 3/4 zur PU)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (vom Bahnsteig 3/4 zur PU) +++ 🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "14:56"
+        "update": "14:57"
     },
     {
         "zeit": "15:38",
@@ -733,7 +742,7 @@
             "🛗 Aufzug außer Betrieb (vom Bahnsteig 3/4 zur PU)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (vom Bahnsteig 3/4 zur PU) +++ 🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "14:56"
+        "update": "14:57"
     },
     {
         "zeit": "15:44",
@@ -771,7 +780,7 @@
             "🛗 Aufzug außer Betrieb (vom Bahnsteig 3/4 zur PU)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (vom Bahnsteig 3/4 zur PU) +++ 🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "14:56"
+        "update": "14:57"
     },
     {
         "zeit": "15:52",
@@ -809,7 +818,7 @@
             "🛗 Aufzug außer Betrieb (vom Bahnsteig 3/4 zur PU)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (vom Bahnsteig 3/4 zur PU) +++ 🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "14:56"
+        "update": "14:57"
     },
     {
         "zeit": "15:53",
@@ -847,7 +856,7 @@
             "🛗 Aufzug außer Betrieb (vom Bahnsteig 3/4 zur PU)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (vom Bahnsteig 3/4 zur PU) +++ 🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "14:56"
+        "update": "14:57"
     },
     {
         "zeit": "16:06",
@@ -885,6 +894,6 @@
             "🛗 Aufzug außer Betrieb (vom Bahnsteig 3/4 zur PU)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (vom Bahnsteig 3/4 zur PU) +++ 🚧 Defekte Oberleitung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "14:56"
+        "update": "14:57"
     }
 ]
