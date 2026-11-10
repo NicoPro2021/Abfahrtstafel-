@@ -82,7 +82,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Streckensperrung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:43"
+        "update": "15:45"
     },
     {
         "zeit": "15:38",
@@ -103,13 +103,82 @@
         "gleis": "7",
         "gleis_geplant": "8",
         "gleiswechsel": true,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "Keine Wagenreihung verfügbar",
-        "reihung_quelle": "keine",
+        "sektoren": "F–E",
+        "zug_modell": "Talent 2 (BR 442) • 3-Teiler",
+        "formation": "3-Teiler",
+        "zugteile": [
+            {
+                "teil_nr": 1,
+                "bezeichnung": "3-Teiler",
+                "ziel": "Falkenberg(Elster)",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "F",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "E",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "E",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    }
+                ]
+            }
+        ],
+        "wagenreihung": [
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "F",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "E",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "E",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            }
+        ],
+        "wagenreihung_text": "Talent 2 (BR 442) • 3-Teiler • Sektor F–E",
+        "reihung_quelle": "live",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-10&evaNumber=8010224&number=16493&time=2026-11-10T14:38:00.000Z",
         "info": "+1",
@@ -120,7 +189,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Streckensperrung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:43"
+        "update": "15:45"
     },
     {
         "zeit": "15:35",
@@ -227,7 +296,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Streckensperrung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:43"
+        "update": "15:45"
     },
     {
         "zeit": "15:40",
@@ -334,7 +403,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Streckensperrung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:43"
+        "update": "15:45"
     },
     {
         "zeit": "15:43",
@@ -355,13 +424,62 @@
         "gleis": "6",
         "gleis_geplant": "6",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "Keine Wagenreihung verfügbar",
-        "reihung_quelle": "keine",
+        "sektoren": "C",
+        "zug_modell": "LINT 41 (BR 1648) • 2-Teiler",
+        "formation": "2-Teiler",
+        "zugteile": [
+            {
+                "teil_nr": 1,
+                "bezeichnung": "2-Teiler",
+                "ziel": "Oschersleben(Bode)",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "C",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "C",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    }
+                ]
+            }
+        ],
+        "wagenreihung": [
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "C",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "C",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            }
+        ],
+        "wagenreihung_text": "LINT 41 (BR 1648) • 2-Teiler • Sektor C",
+        "reihung_quelle": "live",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RB&date=2026-11-10&evaNumber=8010224&number=75658&time=2026-11-10T14:43:00.000Z",
         "info": "pünktlich",
@@ -370,7 +488,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Streckensperrung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:43"
+        "update": "15:45"
     },
     {
         "zeit": "15:33",
@@ -542,7 +660,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Streckensperrung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:43"
+        "update": "15:45"
     },
     {
         "zeit": "15:48",
@@ -687,7 +805,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Streckensperrung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:43"
+        "update": "15:45"
     },
     {
         "zeit": "15:47",
@@ -814,11 +932,11 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Streckensperrung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:43"
+        "update": "15:45"
     },
     {
         "zeit": "16:00",
-        "echte_zeit": "16:02",
+        "echte_zeit": "16:03",
         "linie": "ICE 856",
         "zug_nr": "ICE 856",
         "fahrt_nr": "856",
@@ -1140,7 +1258,7 @@
         "reihung_quelle": "live",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-10&evaNumber=8010224&number=856&time=2026-11-10T15:00:00.000Z",
-        "info": "+2",
+        "info": "+3",
         "begruendung": "Defekt an fahrzeuggebundener Einstiegshilfe +++ Verspätete Bereitstellung des Zuges",
         "meldungen": [
             "Defekt an fahrzeuggebundener Einstiegshilfe",
@@ -1149,11 +1267,11 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Streckensperrung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:43"
+        "update": "15:45"
     },
     {
         "zeit": "16:00",
-        "echte_zeit": "16:02",
+        "echte_zeit": "16:03",
         "linie": "ICE 846",
         "zug_nr": "ICE 846",
         "fahrt_nr": "846",
@@ -1475,7 +1593,7 @@
         "reihung_quelle": "live",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-10&evaNumber=8010224&number=846&time=2026-11-10T15:00:00.000Z",
-        "info": "+2",
+        "info": "+3",
         "begruendung": "Verspätete Bereitstellung des Zuges",
         "meldungen": [
             "Verspätete Bereitstellung des Zuges"
@@ -1483,7 +1601,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Streckensperrung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:43"
+        "update": "15:45"
     },
     {
         "zeit": "16:06",
@@ -1519,7 +1637,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Streckensperrung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:43"
+        "update": "15:45"
     },
     {
         "zeit": "16:08",
@@ -1555,7 +1673,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Streckensperrung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:43"
+        "update": "15:45"
     },
     {
         "zeit": "16:08",
@@ -1591,7 +1709,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Streckensperrung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:43"
+        "update": "15:45"
     },
     {
         "zeit": "16:10",
@@ -1627,7 +1745,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Streckensperrung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:43"
+        "update": "15:45"
     },
     {
         "zeit": "16:12",
@@ -1663,7 +1781,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Streckensperrung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:43"
+        "update": "15:45"
     },
     {
         "zeit": "16:18",
@@ -1684,13 +1802,82 @@
         "gleis": "3",
         "gleis_geplant": "3",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "Keine Wagenreihung verfügbar",
-        "reihung_quelle": "keine",
+        "sektoren": "D–C",
+        "zug_modell": "BR 6146 + RP4147134 • 3-Teiler",
+        "formation": "3-Teiler",
+        "zugteile": [
+            {
+                "teil_nr": 2,
+                "bezeichnung": "2. Zugteil (3-Teiler)",
+                "ziel": "Schönebeck-Bad Salzelmen",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "D",
+                        "klima": true,
+                        "fahrrad": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 2
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "C",
+                        "klima": true,
+                        "fahrrad": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 2
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "C",
+                        "klima": true,
+                        "fahrrad": false,
+                        "rollstuhl": true,
+                        "wc": true,
+                        "zugteil": 2
+                    }
+                ]
+            }
+        ],
+        "wagenreihung": [
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "D",
+                "klima": true,
+                "fahrrad": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 2
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "C",
+                "klima": true,
+                "fahrrad": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 2
+            },
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "C",
+                "klima": true,
+                "fahrrad": false,
+                "rollstuhl": true,
+                "wc": true,
+                "zugteil": 2
+            }
+        ],
+        "wagenreihung_text": "BR 6146 + RP4147134 • 3-Teiler • Sektor D–C",
+        "reihung_quelle": "live",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-10&evaNumber=8010224&number=16941&time=2026-11-10T15:18:00.000Z",
         "info": "pünktlich",
@@ -1699,7 +1886,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Streckensperrung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:43"
+        "update": "15:45"
     },
     {
         "zeit": "16:18",
@@ -1735,7 +1922,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Streckensperrung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:43"
+        "update": "15:45"
     },
     {
         "zeit": "16:25",
@@ -1771,7 +1958,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Streckensperrung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:43"
+        "update": "15:45"
     },
     {
         "zeit": "16:33",
@@ -1807,7 +1994,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Streckensperrung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:43"
+        "update": "15:45"
     },
     {
         "zeit": "16:34",
@@ -1843,7 +2030,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Streckensperrung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:43"
+        "update": "15:45"
     },
     {
         "zeit": "16:35",
@@ -1879,7 +2066,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Streckensperrung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:43"
+        "update": "15:45"
     },
     {
         "zeit": "16:36",
@@ -1915,7 +2102,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Streckensperrung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:43"
+        "update": "15:45"
     },
     {
         "zeit": "16:41",
@@ -1951,7 +2138,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Streckensperrung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:43"
+        "update": "15:45"
     },
     {
         "zeit": "16:43",
@@ -1987,7 +2174,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Streckensperrung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:43"
+        "update": "15:45"
     },
     {
         "zeit": "16:47",
@@ -2023,7 +2210,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Streckensperrung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:43"
+        "update": "15:45"
     },
     {
         "zeit": "17:00",
@@ -2063,7 +2250,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Streckensperrung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:43"
+        "update": "15:45"
     },
     {
         "zeit": "16:56",
@@ -2099,7 +2286,7 @@
         "bauarbeiten": true,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Streckensperrung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:43"
+        "update": "15:45"
     },
     {
         "zeit": "17:04",
@@ -2118,13 +2305,122 @@
         "gleis": "8",
         "gleis_geplant": "8",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "Keine Wagenreihung verfügbar",
-        "reihung_quelle": "keine",
+        "sektoren": "E–B",
+        "zug_modell": "BR 6146 • 5 Wagen",
+        "formation": "5 Wagen",
+        "zugteile": [
+            {
+                "teil_nr": 1,
+                "bezeichnung": "5 Wagen",
+                "ziel": "Leipzig Hbf",
+                "wagen": [
+                    {
+                        "wagen": "5",
+                        "klasse": "1",
+                        "sektor": "D",
+                        "klima": true,
+                        "fahrrad": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "4",
+                        "klasse": "2",
+                        "sektor": "D",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "3",
+                        "klasse": "2",
+                        "sektor": "C",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "2",
+                        "klasse": "2",
+                        "sektor": "C",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "1",
+                        "klasse": "2",
+                        "sektor": "B",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": true,
+                        "wc": true,
+                        "zugteil": 1
+                    }
+                ]
+            }
+        ],
+        "wagenreihung": [
+            {
+                "wagen": "5",
+                "klasse": "1",
+                "sektor": "D",
+                "klima": true,
+                "fahrrad": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "4",
+                "klasse": "2",
+                "sektor": "D",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "3",
+                "klasse": "2",
+                "sektor": "C",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "2",
+                "klasse": "2",
+                "sektor": "C",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "1",
+                "klasse": "2",
+                "sektor": "B",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": true,
+                "wc": true,
+                "zugteil": 1
+            }
+        ],
+        "wagenreihung_text": "BR 6146 • 5 Wagen • Sektor E–B",
+        "reihung_quelle": "live",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=IC&date=2026-11-10&evaNumber=8010224&number=2239&time=2026-11-10T16:04:00.000Z",
         "info": "pünktlich",
@@ -2133,7 +2429,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Streckensperrung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:43"
+        "update": "15:45"
     },
     {
         "zeit": "16:31",
@@ -2171,7 +2467,7 @@
         "bauarbeiten": true,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Streckensperrung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:43"
+        "update": "15:45"
     },
     {
         "zeit": "16:14",
@@ -2192,13 +2488,122 @@
         "gleis": "7",
         "gleis_geplant": "7",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "Keine Wagenreihung verfügbar",
-        "reihung_quelle": "keine",
+        "sektoren": "F–C",
+        "zug_modell": "BR 6147 • 5 Wagen",
+        "formation": "5 Wagen",
+        "zugteile": [
+            {
+                "teil_nr": 1,
+                "bezeichnung": "5 Wagen",
+                "ziel": "Dresden Hbf",
+                "wagen": [
+                    {
+                        "wagen": "1",
+                        "klasse": "2",
+                        "sektor": "F",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": true,
+                        "wc": true,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "2",
+                        "klasse": "2",
+                        "sektor": "E",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "3",
+                        "klasse": "2",
+                        "sektor": "D",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "4",
+                        "klasse": "2",
+                        "sektor": "D",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "5",
+                        "klasse": "1",
+                        "sektor": "C",
+                        "klima": true,
+                        "fahrrad": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    }
+                ]
+            }
+        ],
+        "wagenreihung": [
+            {
+                "wagen": "1",
+                "klasse": "2",
+                "sektor": "F",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": true,
+                "wc": true,
+                "zugteil": 1
+            },
+            {
+                "wagen": "2",
+                "klasse": "2",
+                "sektor": "E",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "3",
+                "klasse": "2",
+                "sektor": "D",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "4",
+                "klasse": "2",
+                "sektor": "D",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "5",
+                "klasse": "1",
+                "sektor": "C",
+                "klima": true,
+                "fahrrad": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            }
+        ],
+        "wagenreihung_text": "BR 6147 • 5 Wagen • Sektor F–C",
+        "reihung_quelle": "live",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=IC&date=2026-11-10&evaNumber=8010224&number=2049&time=2026-11-10T15:14:00.000Z",
         "info": "+118",
@@ -2210,6 +2615,6 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Streckensperrung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:43"
+        "update": "15:45"
     }
 ]
