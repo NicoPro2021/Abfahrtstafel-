@@ -18,13 +18,109 @@
         "gleis": "5",
         "gleis_geplant": "5",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "Keine Wagenreihung verfügbar",
-        "reihung_quelle": "keine",
+        "sektoren": "E",
+        "zug_modell": "LINT 41 (BR 1648) • 2x 2-Teiler (2 Züge)",
+        "formation": "2x 2-Teiler (2 Züge)",
+        "zugteile": [
+            {
+                "teil_nr": 1,
+                "bezeichnung": "1. Zugteil (2-Teiler)",
+                "ziel": "Wolfsburg Hbf",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "E",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "E",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    }
+                ]
+            },
+            {
+                "teil_nr": 2,
+                "bezeichnung": "2. Zugteil (2-Teiler)",
+                "ziel": "Wolfsburg Hbf",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "E",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 2
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "E",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 2
+                    }
+                ]
+            }
+        ],
+        "wagenreihung": [
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "E",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "E",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "E",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 2
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "E",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 2
+            }
+        ],
+        "wagenreihung_text": "LINT 41 (BR 1648) • 2x 2-Teiler (2 Züge) • Sektor E",
+        "reihung_quelle": "live",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RB&date=2026-11-10&evaNumber=8010224&number=80362&time=2026-11-10T12:28:00.000Z",
         "info": "pünktlich",
@@ -33,7 +129,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:33"
+        "update": "13:34"
     },
     {
         "zeit": "13:35",
@@ -71,7 +167,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:33"
+        "update": "13:34"
     },
     {
         "zeit": "13:36",
@@ -178,7 +274,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:33"
+        "update": "13:34"
     },
     {
         "zeit": "13:41",
@@ -283,7 +379,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:33"
+        "update": "13:34"
     },
     {
         "zeit": "13:33",
@@ -388,7 +484,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:33"
+        "update": "13:34"
     },
     {
         "zeit": "13:43",
@@ -424,11 +520,11 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:33"
+        "update": "13:34"
     },
     {
         "zeit": "13:31",
-        "echte_zeit": "13:45",
+        "echte_zeit": "13:44",
         "linie": "RB 40",
         "zug_nr": "RB 16421",
         "fahrt_nr": "16421",
@@ -630,13 +726,15 @@
         "reihung_quelle": "live",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RB&date=2026-11-10&evaNumber=8010224&number=16421&time=2026-11-10T12:31:00.000Z",
-        "info": "+14",
-        "begruendung": "",
-        "meldungen": [],
+        "info": "+13",
+        "begruendung": "Verspätung eines vorausfahrenden Zuges",
+        "meldungen": [
+            "Verspätung eines vorausfahrenden Zuges"
+        ],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:33"
+        "update": "13:34"
     },
     {
         "zeit": "13:47",
@@ -783,7 +881,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:33"
+        "update": "13:34"
     },
     {
         "zeit": "13:47",
@@ -908,7 +1006,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:33"
+        "update": "13:34"
     },
     {
         "zeit": "14:00",
@@ -946,11 +1044,11 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:33"
+        "update": "13:34"
     },
     {
         "zeit": "14:00",
-        "echte_zeit": "14:02",
+        "echte_zeit": "14:03",
         "linie": "ICE 848",
         "zug_nr": "ICE 848",
         "fahrt_nr": "848",
@@ -1125,13 +1223,13 @@
         "reihung_quelle": "live",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-10&evaNumber=8010224&number=848&time=2026-11-10T13:00:00.000Z",
-        "info": "+2",
+        "info": "+3",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:33"
+        "update": "13:34"
     },
     {
         "zeit": "14:06",
@@ -1303,7 +1401,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:33"
+        "update": "13:34"
     },
     {
         "zeit": "14:08",
@@ -1339,7 +1437,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:33"
+        "update": "13:34"
     },
     {
         "zeit": "14:08",
@@ -1375,7 +1473,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:33"
+        "update": "13:34"
     },
     {
         "zeit": "14:10",
@@ -1411,7 +1509,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:33"
+        "update": "13:34"
     },
     {
         "zeit": "14:12",
@@ -1447,7 +1545,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:33"
+        "update": "13:34"
     },
     {
         "zeit": "14:14",
@@ -1485,7 +1583,7 @@
         "bauarbeiten": true,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:33"
+        "update": "13:34"
     },
     {
         "zeit": "14:18",
@@ -1521,7 +1619,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:33"
+        "update": "13:34"
     },
     {
         "zeit": "14:18",
@@ -1557,7 +1655,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:33"
+        "update": "13:34"
     },
     {
         "zeit": "14:25",
@@ -1593,45 +1691,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:33"
-    },
-    {
-        "zeit": "14:31",
-        "echte_zeit": "14:31",
-        "linie": "RB 40",
-        "zug_nr": "RB 16423",
-        "fahrt_nr": "16423",
-        "kategorie": "RB",
-        "ziel": "Burg(Magdeburg)",
-        "ziel_geplant": "Burg(Magdeburg)",
-        "via": [
-            "Magdeburg-Neustadt",
-            "Magdeburg Herrenkrug",
-            "Biederitz",
-            "Gerwisch"
-        ],
-        "entfallende_halte": [],
-        "gleis": "7",
-        "gleis_geplant": "7",
-        "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "Keine Wagenreihung verfügbar",
-        "reihung_quelle": "keine",
-        "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RB&date=2026-11-10&evaNumber=8010224&number=16423&time=2026-11-10T13:31:00.000Z",
-        "info": "pünktlich",
-        "begruendung": "Verspätung eines vorausfahrenden Zuges",
-        "meldungen": [
-            "Verspätung eines vorausfahrenden Zuges"
-        ],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:33"
+        "update": "13:34"
     },
     {
         "zeit": "14:33",
@@ -1667,7 +1727,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:33"
+        "update": "13:34"
     },
     {
         "zeit": "14:34",
@@ -1703,7 +1763,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:33"
+        "update": "13:34"
     },
     {
         "zeit": "14:35",
@@ -1739,7 +1799,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:33"
+        "update": "13:34"
     },
     {
         "zeit": "14:41",
@@ -1775,7 +1835,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:33"
+        "update": "13:34"
     },
     {
         "zeit": "14:43",
@@ -1811,7 +1871,45 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:33"
+        "update": "13:34"
+    },
+    {
+        "zeit": "14:31",
+        "echte_zeit": "14:44",
+        "linie": "RB 40",
+        "zug_nr": "RB 16423",
+        "fahrt_nr": "16423",
+        "kategorie": "RB",
+        "ziel": "Burg(Magdeburg)",
+        "ziel_geplant": "Burg(Magdeburg)",
+        "via": [
+            "Magdeburg-Neustadt",
+            "Magdeburg Herrenkrug",
+            "Biederitz",
+            "Gerwisch"
+        ],
+        "entfallende_halte": [],
+        "gleis": "7",
+        "gleis_geplant": "7",
+        "gleiswechsel": false,
+        "sektoren": "",
+        "zug_modell": "",
+        "formation": "",
+        "zugteile": [],
+        "wagenreihung": [],
+        "wagenreihung_text": "Keine Wagenreihung verfügbar",
+        "reihung_quelle": "keine",
+        "reihung_richtung": "",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RB&date=2026-11-10&evaNumber=8010224&number=16423&time=2026-11-10T13:31:00.000Z",
+        "info": "+13",
+        "begruendung": "Verspätung eines vorausfahrenden Zuges",
+        "meldungen": [
+            "Verspätung eines vorausfahrenden Zuges"
+        ],
+        "bauarbeiten": false,
+        "defekte_aufzuege": [],
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "13:34"
     },
     {
         "zeit": "14:47",
@@ -1847,7 +1945,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:33"
+        "update": "13:34"
     },
     {
         "zeit": "14:56",
@@ -1882,7 +1980,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:33"
+        "update": "13:34"
     },
     {
         "zeit": "14:56",
@@ -1918,6 +2016,6 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Streckensperrung +++ 🚧 Weichenstörung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:33"
+        "update": "13:34"
     }
 ]
