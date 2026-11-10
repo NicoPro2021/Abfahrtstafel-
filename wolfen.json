@@ -35,7 +35,7 @@
             "🛗 Aufzug außer Betrieb (zu Gleis 1)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (zu Gleis 1) +++ 🚧 Defekte Oberleitung +++ 🚧 Weichenstörung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "09:55"
+        "update": "09:57"
     },
     {
         "zeit": "09:55",
@@ -73,7 +73,7 @@
             "🛗 Aufzug außer Betrieb (zu Gleis 1)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (zu Gleis 1) +++ 🚧 Defekte Oberleitung +++ 🚧 Weichenstörung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "09:55"
+        "update": "09:57"
     },
     {
         "zeit": "09:59",
@@ -94,13 +94,122 @@
         "gleis": "2",
         "gleis_geplant": "2",
         "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "Keine Wagenreihung verfügbar",
-        "reihung_quelle": "keine",
+        "sektoren": "C–E",
+        "zug_modell": "Talent 2 (BR 442) • 5-Teiler",
+        "formation": "5-Teiler",
+        "zugteile": [
+            {
+                "teil_nr": 1,
+                "bezeichnung": "5-Teiler",
+                "ziel": "Dessau Hbf",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "C",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "D",
+                        "klima": true,
+                        "fahrrad": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "D",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "D",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "E",
+                        "klima": true,
+                        "fahrrad": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    }
+                ]
+            }
+        ],
+        "wagenreihung": [
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "C",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "D",
+                "klima": true,
+                "fahrrad": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "D",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "D",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "E",
+                "klima": true,
+                "fahrrad": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            }
+        ],
+        "wagenreihung_text": "Talent 2 (BR 442) • 5-Teiler • Sektor C–E",
+        "reihung_quelle": "live",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=S&date=2026-11-10&evaNumber=8013335&number=37824&time=2026-11-10T08:59:00.000Z",
         "info": "pünktlich",
@@ -111,7 +220,7 @@
             "🛗 Aufzug außer Betrieb (zu Gleis 1)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (zu Gleis 1) +++ 🚧 Defekte Oberleitung +++ 🚧 Weichenstörung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "09:55"
+        "update": "09:57"
     },
     {
         "zeit": "10:12",
@@ -148,7 +257,7 @@
             "🛗 Aufzug außer Betrieb (zu Gleis 1)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (zu Gleis 1) +++ 🚧 Defekte Oberleitung +++ 🚧 Weichenstörung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "09:55"
+        "update": "09:57"
     },
     {
         "zeit": "10:23",
@@ -186,7 +295,7 @@
             "🛗 Aufzug außer Betrieb (zu Gleis 1)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (zu Gleis 1) +++ 🚧 Defekte Oberleitung +++ 🚧 Weichenstörung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "09:55"
+        "update": "09:57"
     },
     {
         "zeit": "10:29",
@@ -224,7 +333,7 @@
             "🛗 Aufzug außer Betrieb (zu Gleis 1)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (zu Gleis 1) +++ 🚧 Defekte Oberleitung +++ 🚧 Weichenstörung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "09:55"
+        "update": "09:57"
     },
     {
         "zeit": "10:48",
@@ -262,6 +371,6 @@
             "🛗 Aufzug außer Betrieb (zu Gleis 1)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (zu Gleis 1) +++ 🚧 Defekte Oberleitung +++ 🚧 Weichenstörung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "09:55"
+        "update": "09:57"
     }
 ]
