@@ -1,7 +1,7 @@
 [
     {
         "zeit": "16:15",
-        "echte_zeit": "16:17",
+        "echte_zeit": "16:18",
         "linie": "RE 14",
         "zug_nr": "RE 16494",
         "fahrt_nr": "16494",
@@ -24,13 +24,13 @@
         "reihung_quelle": "keine",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-10&evaNumber=8013455&number=16494&time=2026-11-10T15:15:00.000Z",
-        "info": "+2",
+        "info": "+3",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "16:07"
+        "update": "16:09"
     },
     {
         "zeit": "16:12",
@@ -204,7 +204,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "16:07"
+        "update": "16:09"
     },
     {
         "zeit": "16:22",
@@ -213,15 +213,28 @@
         "zug_nr": "RB 16424",
         "fahrt_nr": "16424",
         "kategorie": "RB",
-        "ziel": "Braunschweig Hbf",
+        "ziel": "Magdeburg Hbf",
         "ziel_geplant": "Braunschweig Hbf",
         "via": [
-            "Magdeburg-Neustadt",
-            "Magdeburg Hbf",
-            "Magdeburg-Sudenburg",
-            "Niederndodeleben"
+            "Magdeburg-Neustadt"
         ],
-        "entfallende_halte": [],
+        "entfallende_halte": [
+            "Magdeburg-Sudenburg",
+            "Niederndodeleben",
+            "Wellen(Magdeburg)",
+            "Ochtmersleben",
+            "Dreileben-Drackenstedt",
+            "Ovelgünne",
+            "Eilsleben(b Magdeburg)",
+            "Wefensleben",
+            "Marienborn",
+            "Helmstedt",
+            "Frellstedt",
+            "Königslutter",
+            "Schandelah",
+            "Weddel(Braunschw)",
+            "Braunschweig Hbf"
+        ],
         "gleis": "2",
         "gleis_geplant": "2",
         "gleiswechsel": false,
@@ -304,12 +317,16 @@
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RB&date=2026-11-10&evaNumber=8013455&number=16424&time=2026-11-10T15:22:00.000Z",
         "info": "+1",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
+        "begruendung": "Fährt heute nur bis Magdeburg Hbf +++ Streckensperrung +++ Halt entfällt in: Magdeburg-Sudenburg, Niederndodeleben, Wellen(Magdeburg), Ochtmersleben",
+        "meldungen": [
+            "Fährt heute nur bis Magdeburg Hbf",
+            "Streckensperrung",
+            "Halt entfällt in: Magdeburg-Sudenburg, Niederndodeleben, Wellen(Magdeburg), Ochtmersleben"
+        ],
+        "bauarbeiten": true,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "16:07"
+        "update": "16:09"
     },
     {
         "zeit": "16:48",
@@ -342,7 +359,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "16:07"
+        "update": "16:09"
     },
     {
         "zeit": "17:12",
@@ -378,7 +395,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "16:07"
+        "update": "16:09"
     },
     {
         "zeit": "16:38",
@@ -484,7 +501,7 @@
         "bauarbeiten": true,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "16:07"
+        "update": "16:09"
     },
     {
         "zeit": "17:22",
@@ -520,7 +537,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "16:07"
+        "update": "16:09"
     },
     {
         "zeit": "17:38",
@@ -555,7 +572,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "16:07"
+        "update": "16:09"
     },
     {
         "zeit": "17:48",
@@ -588,6 +605,6 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Streckensperrung +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "16:07"
+        "update": "16:09"
     }
 ]
