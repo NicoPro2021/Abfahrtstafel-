@@ -1,41 +1,5 @@
 [
     {
-        "zeit": "23:16",
-        "echte_zeit": "23:43",
-        "linie": "RE 30",
-        "zug_nr": "RE 16341",
-        "fahrt_nr": "16341",
-        "kategorie": "RE",
-        "ziel": "Halle(Saale)Hbf",
-        "ziel_geplant": "Halle(Saale)Hbf",
-        "via": [
-            "Magdeburg-Buckau",
-            "Magdeburg Südost",
-            "Schönebeck(Elbe)",
-            "Schönebeck-Felgeleben"
-        ],
-        "entfallende_halte": [],
-        "gleis": "3",
-        "gleis_geplant": "3",
-        "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "Keine Wagenreihung verfügbar",
-        "reihung_quelle": "keine",
-        "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-11&evaNumber=8010224&number=16341&time=2026-11-11T22:16:00.000Z",
-        "info": "+27",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "station_ticker": "🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:51"
-    },
-    {
         "zeit": "00:01",
         "echte_zeit": "00:01",
         "linie": "S 1",
@@ -51,10 +15,10 @@
             "Magdeburg Südost"
         ],
         "entfallende_halte": [],
-        "gleis": "4",
+        "gleis": "3",
         "gleis_geplant": "4",
-        "gleiswechsel": false,
-        "sektoren": "",
+        "gleiswechsel": true,
+        "sektoren": "A–C",
         "zug_modell": "",
         "formation": "",
         "zugteile": [],
@@ -64,16 +28,18 @@
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=S&date=2026-11-11&evaNumber=8010224&number=39041&time=2026-11-11T23:01:00.000Z",
         "info": "pünktlich",
-        "begruendung": "",
-        "meldungen": [],
+        "begruendung": "Heute von Gleis 3 (statt Gleis 4)",
+        "meldungen": [
+            "Heute von Gleis 3 (statt Gleis 4)"
+        ],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:51"
+        "update": "23:53"
     },
     {
         "zeit": "00:04",
-        "echte_zeit": "00:44",
+        "echte_zeit": "00:34",
         "linie": "ICE 947",
         "zug_nr": "ICE 947",
         "fahrt_nr": "947",
@@ -97,7 +63,7 @@
         "reihung_quelle": "keine",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-11&evaNumber=8010224&number=947&time=2026-11-11T23:04:00.000Z",
-        "info": "+40",
+        "info": "+30",
         "begruendung": "Verspätung eines vorausfahrenden Zuges",
         "meldungen": [
             "Verspätung eines vorausfahrenden Zuges"
@@ -105,6 +71,6 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:51"
+        "update": "23:53"
     }
 ]
