@@ -1,219 +1,5 @@
 [
     {
-        "zeit": "13:00",
-        "echte_zeit": "13:00",
-        "linie": "RE 50",
-        "zug_nr": "RE 16519",
-        "fahrt_nr": "16519",
-        "kategorie": "RE",
-        "ziel": "Dresden Hbf",
-        "ziel_geplant": "Dresden Hbf",
-        "via": [
-            "Leipzig-Engelsdorf",
-            "Borsdorf(Sachs)",
-            "Wurzen",
-            "Kühren"
-        ],
-        "entfallende_halte": [],
-        "gleis": "21",
-        "gleis_geplant": "21",
-        "gleiswechsel": false,
-        "sektoren": "A–C",
-        "zug_modell": "Talent 2 (BR 442) • 3-Teiler + 5-Teiler (2 Züge)",
-        "formation": "3-Teiler + 5-Teiler (2 Züge)",
-        "zugteile": [
-            {
-                "teil_nr": 1,
-                "bezeichnung": "1. Zugteil (3-Teiler)",
-                "ziel": "Dresden Hbf",
-                "wagen": [
-                    {
-                        "wagen": "",
-                        "klasse": "2+1",
-                        "sektor": "A",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "A",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "A",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    }
-                ]
-            },
-            {
-                "teil_nr": 2,
-                "bezeichnung": "2. Zugteil (5-Teiler)",
-                "ziel": "Dresden Hbf",
-                "wagen": [
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "B",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 2
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2+1",
-                        "sektor": "B",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 2
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "B",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 2
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "B",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 2
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "C",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 2
-                    }
-                ]
-            }
-        ],
-        "wagenreihung": [
-            {
-                "wagen": "",
-                "klasse": "2+1",
-                "sektor": "A",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "A",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "A",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "B",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 2
-            },
-            {
-                "wagen": "",
-                "klasse": "2+1",
-                "sektor": "B",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 2
-            },
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "B",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 2
-            },
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "B",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 2
-            },
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "C",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 2
-            }
-        ],
-        "wagenreihung_text": "Talent 2 (BR 442) • 3-Teiler + 5-Teiler (2 Züge) • Sektor A–C",
-        "reihung_quelle": "live",
-        "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-11&evaNumber=8010205&number=16519&time=2026-11-11T12:00:00.000Z",
-        "info": "pünktlich",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [
-            "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
-        ],
-        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:09"
-    },
-    {
         "zeit": "13:02",
         "echte_zeit": "13:02",
         "linie": "ABR RE15",
@@ -249,7 +35,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:09"
+        "update": "13:10"
     },
     {
         "zeit": "13:06",
@@ -376,7 +162,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:09"
+        "update": "13:10"
     },
     {
         "zeit": "13:13",
@@ -414,7 +200,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:09"
+        "update": "13:10"
     },
     {
         "zeit": "13:21",
@@ -452,7 +238,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:09"
+        "update": "13:10"
     },
     {
         "zeit": "13:21",
@@ -626,7 +412,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:09"
+        "update": "13:10"
     },
     {
         "zeit": "13:23",
@@ -664,7 +450,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:09"
+        "update": "13:10"
     },
     {
         "zeit": "13:27",
@@ -891,7 +677,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:09"
+        "update": "13:10"
     },
     {
         "zeit": "13:16",
@@ -1179,7 +965,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:09"
+        "update": "13:10"
     },
     {
         "zeit": "13:32",
@@ -1217,7 +1003,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:09"
+        "update": "13:10"
     },
     {
         "zeit": "13:39",
@@ -1364,7 +1150,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:09"
+        "update": "13:10"
     },
     {
         "zeit": "13:43",
@@ -1402,7 +1188,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:09"
+        "update": "13:10"
     },
     {
         "zeit": "13:54",
@@ -1442,7 +1228,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:09"
+        "update": "13:10"
     },
     {
         "zeit": "13:54",
@@ -1480,7 +1266,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:09"
+        "update": "13:10"
     },
     {
         "zeit": "13:55",
@@ -1768,7 +1554,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:09"
+        "update": "13:10"
     },
     {
         "zeit": "14:00",
@@ -1806,7 +1592,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:09"
+        "update": "13:10"
     },
     {
         "zeit": "14:06",
@@ -1844,7 +1630,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:09"
+        "update": "13:10"
     },
     {
         "zeit": "14:12",
@@ -1882,7 +1668,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:09"
+        "update": "13:10"
     },
     {
         "zeit": "14:14",
@@ -1920,7 +1706,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:09"
+        "update": "13:10"
     },
     {
         "zeit": "14:21",
@@ -1958,7 +1744,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:09"
+        "update": "13:10"
     },
     {
         "zeit": "14:21",
@@ -1996,7 +1782,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:09"
+        "update": "13:10"
     },
     {
         "zeit": "14:23",
@@ -2034,7 +1820,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:09"
+        "update": "13:10"
     },
     {
         "zeit": "14:23",
@@ -2072,7 +1858,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:09"
+        "update": "13:10"
     },
     {
         "zeit": "14:32",
@@ -2110,7 +1896,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:09"
+        "update": "13:10"
     },
     {
         "zeit": "14:43",
@@ -2148,7 +1934,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:09"
+        "update": "13:10"
     },
     {
         "zeit": "14:48",
@@ -2188,7 +1974,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:09"
+        "update": "13:10"
     },
     {
         "zeit": "14:49",
@@ -2226,7 +2012,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:09"
+        "update": "13:10"
     },
     {
         "zeit": "14:51",
@@ -2264,7 +2050,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:09"
+        "update": "13:10"
     },
     {
         "zeit": "14:55",
@@ -2304,7 +2090,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:09"
+        "update": "13:10"
     },
     {
         "zeit": "14:38",
@@ -2341,6 +2127,6 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Bauarbeiten +++ 🚧 Umleitung des Zuges +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:09"
+        "update": "13:10"
     }
 ]
