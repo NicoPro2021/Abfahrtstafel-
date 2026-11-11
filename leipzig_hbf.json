@@ -1,217 +1,5 @@
 [
     {
-        "zeit": "17:21",
-        "echte_zeit": "17:21",
-        "linie": "MRB RE6",
-        "zug_nr": "MRB 74184",
-        "fahrt_nr": "74184",
-        "kategorie": "MRB",
-        "ziel": "Chemnitz Hbf",
-        "ziel_geplant": "Chemnitz Hbf",
-        "via": [
-            "Bad Lausick",
-            "Geithain",
-            "Narsdorf",
-            "Burgstädt"
-        ],
-        "entfallende_halte": [],
-        "gleis": "23",
-        "gleis_geplant": "23",
-        "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "Keine Wagenreihung verfügbar",
-        "reihung_quelle": "keine",
-        "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=MRB&date=2026-11-11&evaNumber=8010205&number=74184&time=2026-11-11T16:21:00.000Z",
-        "info": "pünktlich",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [
-            "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
-        ],
-        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "17:30"
-    },
-    {
-        "zeit": "17:21",
-        "echte_zeit": "17:21",
-        "linie": "RE 13",
-        "zug_nr": "RE 16130",
-        "fahrt_nr": "16130",
-        "kategorie": "RE",
-        "ziel": "Magdeburg Hbf",
-        "ziel_geplant": "Magdeburg Hbf",
-        "via": [
-            "Leipzig Messe",
-            "Delitzsch unt Bf",
-            "Bitterfeld",
-            "Wolfen(Bitterfeld)"
-        ],
-        "entfallende_halte": [],
-        "gleis": "12",
-        "gleis_geplant": "12",
-        "gleiswechsel": false,
-        "sektoren": "C–E",
-        "zug_modell": "Talent 2 (BR 442) • 2x 3-Teiler (2 Züge)",
-        "formation": "2x 3-Teiler (2 Züge)",
-        "zugteile": [
-            {
-                "teil_nr": 1,
-                "bezeichnung": "1. Zugteil (3-Teiler)",
-                "ziel": "Magdeburg Hbf",
-                "wagen": [
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "C",
-                        "klima": true,
-                        "fahrrad": true,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "C",
-                        "klima": true,
-                        "fahrrad": true,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2+1",
-                        "sektor": "D",
-                        "klima": true,
-                        "fahrrad": true,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    }
-                ]
-            },
-            {
-                "teil_nr": 2,
-                "bezeichnung": "2. Zugteil (3-Teiler)",
-                "ziel": "Magdeburg Hbf",
-                "wagen": [
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "D",
-                        "klima": true,
-                        "fahrrad": true,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 2
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "D",
-                        "klima": true,
-                        "fahrrad": true,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 2
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2+1",
-                        "sektor": "E",
-                        "klima": true,
-                        "fahrrad": true,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 2
-                    }
-                ]
-            }
-        ],
-        "wagenreihung": [
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "C",
-                "klima": true,
-                "fahrrad": true,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "C",
-                "klima": true,
-                "fahrrad": true,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "",
-                "klasse": "2+1",
-                "sektor": "D",
-                "klima": true,
-                "fahrrad": true,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "D",
-                "klima": true,
-                "fahrrad": true,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 2
-            },
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "D",
-                "klima": true,
-                "fahrrad": true,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 2
-            },
-            {
-                "wagen": "",
-                "klasse": "2+1",
-                "sektor": "E",
-                "klima": true,
-                "fahrrad": true,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 2
-            }
-        ],
-        "wagenreihung_text": "Talent 2 (BR 442) • 2x 3-Teiler (2 Züge) • Sektor C–E",
-        "reihung_quelle": "live",
-        "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-11&evaNumber=8010205&number=16130&time=2026-11-11T16:21:00.000Z",
-        "info": "pünktlich",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [
-            "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
-        ],
-        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "17:30"
-    },
-    {
         "zeit": "17:23",
         "echte_zeit": "17:23",
         "linie": "S 30",
@@ -247,11 +35,11 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "17:30"
+        "update": "17:31"
     },
     {
         "zeit": "17:27",
-        "echte_zeit": "17:31",
+        "echte_zeit": "17:30",
         "linie": "ICE 1554",
         "zug_nr": "ICE 1554",
         "fahrt_nr": "1554",
@@ -466,7 +254,7 @@
         "reihung_quelle": "live",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-11&evaNumber=8010205&number=1554&time=2026-11-11T16:27:00.000Z",
-        "info": "+4",
+        "info": "+3",
         "begruendung": "Verspätung aus vorheriger Fahrt",
         "meldungen": [
             "Verspätung aus vorheriger Fahrt"
@@ -476,7 +264,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "17:30"
+        "update": "17:31"
     },
     {
         "zeit": "17:32",
@@ -514,7 +302,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "17:30"
+        "update": "17:31"
     },
     {
         "zeit": "17:43",
@@ -552,7 +340,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "17:30"
+        "update": "17:31"
     },
     {
         "zeit": "17:54",
@@ -590,7 +378,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "17:30"
+        "update": "17:31"
     },
     {
         "zeit": "17:54",
@@ -628,7 +416,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "17:30"
+        "update": "17:31"
     },
     {
         "zeit": "18:00",
@@ -668,7 +456,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "17:30"
+        "update": "17:31"
     },
     {
         "zeit": "17:53",
@@ -956,7 +744,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "17:30"
+        "update": "17:31"
     },
     {
         "zeit": "18:06",
@@ -994,7 +782,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "17:30"
+        "update": "17:31"
     },
     {
         "zeit": "18:12",
@@ -1032,7 +820,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "17:30"
+        "update": "17:31"
     },
     {
         "zeit": "18:14",
@@ -1070,7 +858,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "17:30"
+        "update": "17:31"
     },
     {
         "zeit": "18:19",
@@ -1110,7 +898,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "17:30"
+        "update": "17:31"
     },
     {
         "zeit": "18:21",
@@ -1148,7 +936,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "17:30"
+        "update": "17:31"
     },
     {
         "zeit": "18:23",
@@ -1186,7 +974,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "17:30"
+        "update": "17:31"
     },
     {
         "zeit": "18:32",
@@ -1224,45 +1012,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "17:30"
-    },
-    {
-        "zeit": "18:38",
-        "echte_zeit": "18:42",
-        "linie": "ICE 1653",
-        "zug_nr": "ICE 1653",
-        "fahrt_nr": "1653",
-        "kategorie": "ICE",
-        "ziel": "Dresden Hbf",
-        "ziel_geplant": "Dresden Hbf",
-        "via": [
-            "Riesa",
-            "Dresden-Neustadt"
-        ],
-        "entfallende_halte": [],
-        "gleis": "14",
-        "gleis_geplant": "14",
-        "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "Keine Wagenreihung verfügbar",
-        "reihung_quelle": "keine",
-        "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-11&evaNumber=8010205&number=1653&time=2026-11-11T17:38:00.000Z",
-        "info": "+4",
-        "begruendung": "Reparatur an der Strecke",
-        "meldungen": [
-            "Reparatur an der Strecke"
-        ],
-        "bauarbeiten": true,
-        "defekte_aufzuege": [
-            "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
-        ],
-        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "17:30"
+        "update": "17:31"
     },
     {
         "zeit": "18:43",
@@ -1300,7 +1050,45 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "17:30"
+        "update": "17:31"
+    },
+    {
+        "zeit": "18:38",
+        "echte_zeit": "18:45",
+        "linie": "ICE 1653",
+        "zug_nr": "ICE 1653",
+        "fahrt_nr": "1653",
+        "kategorie": "ICE",
+        "ziel": "Dresden Hbf",
+        "ziel_geplant": "Dresden Hbf",
+        "via": [
+            "Riesa",
+            "Dresden-Neustadt"
+        ],
+        "entfallende_halte": [],
+        "gleis": "14",
+        "gleis_geplant": "14",
+        "gleiswechsel": false,
+        "sektoren": "",
+        "zug_modell": "",
+        "formation": "",
+        "zugteile": [],
+        "wagenreihung": [],
+        "wagenreihung_text": "Keine Wagenreihung verfügbar",
+        "reihung_quelle": "keine",
+        "reihung_richtung": "",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-11&evaNumber=8010205&number=1653&time=2026-11-11T17:38:00.000Z",
+        "info": "+7",
+        "begruendung": "Reparatur an der Strecke",
+        "meldungen": [
+            "Reparatur an der Strecke"
+        ],
+        "bauarbeiten": true,
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
+        ],
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "17:31"
     },
     {
         "zeit": "18:49",
@@ -1338,47 +1126,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "17:30"
-    },
-    {
-        "zeit": "18:48",
-        "echte_zeit": "18:50",
-        "linie": "ICE 695",
-        "zug_nr": "ICE 695",
-        "fahrt_nr": "695",
-        "kategorie": "ICE",
-        "ziel": "Stuttgart Hbf",
-        "ziel_geplant": "Stuttgart Hbf",
-        "via": [
-            "Erfurt Hbf",
-            "Eisenach Hbf",
-            "Fulda",
-            "Frankfurt(Main)Hbf"
-        ],
-        "entfallende_halte": [],
-        "gleis": "11",
-        "gleis_geplant": "11",
-        "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "Keine Wagenreihung verfügbar",
-        "reihung_quelle": "keine",
-        "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-11&evaNumber=8010205&number=695&time=2026-11-11T17:48:00.000Z",
-        "info": "+2",
-        "begruendung": "Verspätete Bereitstellung des Zuges",
-        "meldungen": [
-            "Verspätete Bereitstellung des Zuges"
-        ],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [
-            "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
-        ],
-        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "17:30"
+        "update": "17:31"
     },
     {
         "zeit": "18:51",
@@ -1416,7 +1164,7 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "17:30"
+        "update": "17:31"
     },
     {
         "zeit": "17:39",
@@ -1563,6 +1311,46 @@
             "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
         ],
         "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "17:30"
+        "update": "17:31"
+    },
+    {
+        "zeit": "18:48",
+        "echte_zeit": "18:54",
+        "linie": "ICE 695",
+        "zug_nr": "ICE 695",
+        "fahrt_nr": "695",
+        "kategorie": "ICE",
+        "ziel": "Stuttgart Hbf",
+        "ziel_geplant": "Stuttgart Hbf",
+        "via": [
+            "Erfurt Hbf",
+            "Eisenach Hbf",
+            "Fulda",
+            "Frankfurt(Main)Hbf"
+        ],
+        "entfallende_halte": [],
+        "gleis": "11",
+        "gleis_geplant": "11",
+        "gleiswechsel": false,
+        "sektoren": "",
+        "zug_modell": "",
+        "formation": "",
+        "zugteile": [],
+        "wagenreihung": [],
+        "wagenreihung_text": "Keine Wagenreihung verfügbar",
+        "reihung_quelle": "keine",
+        "reihung_richtung": "",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-11&evaNumber=8010205&number=695&time=2026-11-11T17:48:00.000Z",
+        "info": "+6",
+        "begruendung": "Verspätete Bereitstellung des Zuges",
+        "meldungen": [
+            "Verspätete Bereitstellung des Zuges"
+        ],
+        "bauarbeiten": false,
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2)"
+        ],
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 1/2) +++ 🚧 Weichenstörung +++ 🚧 Umleitung des Zuges +++ 🚧 Bauarbeiten +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "17:31"
     }
 ]
