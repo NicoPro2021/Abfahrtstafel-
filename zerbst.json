@@ -1,44 +1,5 @@
 [
     {
-        "zeit": "13:45",
-        "echte_zeit": "14:12",
-        "linie": "RE 13",
-        "zug_nr": "RE 16119",
-        "fahrt_nr": "16119",
-        "kategorie": "RE",
-        "ziel": "Leipzig Hbf",
-        "ziel_geplant": "Leipzig Hbf",
-        "via": [
-            "Rodleben",
-            "Roßlau(Elbe)",
-            "Dessau Hbf",
-            "Wolfen(Bitterfeld)"
-        ],
-        "entfallende_halte": [],
-        "gleis": "2",
-        "gleis_geplant": "2",
-        "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "Keine Wagenreihung verfügbar",
-        "reihung_quelle": "keine",
-        "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-11&evaNumber=8013389&number=16119&time=2026-11-11T12:45:00.000Z",
-        "info": "+27",
-        "begruendung": "Verspätung aus vorheriger Fahrt +++ Verspätung eines vorausfahrenden Zuges",
-        "meldungen": [
-            "Verspätung aus vorheriger Fahrt",
-            "Verspätung eines vorausfahrenden Zuges"
-        ],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:59"
-    },
-    {
         "zeit": "14:07",
         "echte_zeit": "14:14",
         "linie": "RE 14",
@@ -72,7 +33,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:59"
+        "update": "14:01"
     },
     {
         "zeit": "14:16",
@@ -244,7 +205,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:59"
+        "update": "14:01"
     },
     {
         "zeit": "14:45",
@@ -280,6 +241,250 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:59"
+        "update": "14:01"
+    },
+    {
+        "zeit": "15:16",
+        "echte_zeit": "15:16",
+        "linie": "RE 13",
+        "zug_nr": "RE 16124",
+        "fahrt_nr": "16124",
+        "kategorie": "RE",
+        "ziel": "Magdeburg Hbf",
+        "ziel_geplant": "Magdeburg Hbf",
+        "via": [
+            "Güterglück",
+            "Lübs(Magdeburg)",
+            "Prödel",
+            "Gommern"
+        ],
+        "entfallende_halte": [],
+        "gleis": "1",
+        "gleis_geplant": "1",
+        "gleiswechsel": false,
+        "sektoren": "A–B",
+        "zug_modell": "Talent 2 (BR 442) • 2x 3-Teiler (2 Züge)",
+        "formation": "2x 3-Teiler (2 Züge)",
+        "zugteile": [
+            {
+                "teil_nr": 1,
+                "bezeichnung": "1. Zugteil (3-Teiler)",
+                "ziel": "Magdeburg Hbf",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "A",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "A",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": true,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "B",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    }
+                ]
+            },
+            {
+                "teil_nr": 2,
+                "bezeichnung": "2. Zugteil (3-Teiler)",
+                "ziel": "Magdeburg Hbf",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "B",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 2
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "B",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": true,
+                        "wc": false,
+                        "zugteil": 2
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "B",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 2
+                    }
+                ]
+            }
+        ],
+        "wagenreihung": [
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "A",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "A",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": true,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "B",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "B",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 2
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "B",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": true,
+                "wc": false,
+                "zugteil": 2
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "B",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 2
+            }
+        ],
+        "wagenreihung_text": "Talent 2 (BR 442) • 2x 3-Teiler (2 Züge) • Sektor A–B",
+        "reihung_quelle": "live",
+        "reihung_richtung": "",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-11&evaNumber=8013389&number=16124&time=2026-11-11T14:16:00.000Z",
+        "info": "pünktlich",
+        "begruendung": "",
+        "meldungen": [],
+        "bauarbeiten": false,
+        "defekte_aufzuege": [],
+        "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "14:01"
+    },
+    {
+        "zeit": "15:43",
+        "echte_zeit": "15:43",
+        "linie": "RE 14",
+        "zug_nr": "RE 16494",
+        "fahrt_nr": "16494",
+        "kategorie": "RE",
+        "ziel": "Magdeburg Hbf",
+        "ziel_geplant": "Magdeburg Hbf",
+        "via": [
+            "Güterglück",
+            "Lübs(Magdeburg)",
+            "Prödel",
+            "Gommern"
+        ],
+        "entfallende_halte": [],
+        "gleis": "1",
+        "gleis_geplant": "1",
+        "gleiswechsel": false,
+        "sektoren": "",
+        "zug_modell": "",
+        "formation": "",
+        "zugteile": [],
+        "wagenreihung": [],
+        "wagenreihung_text": "Keine Wagenreihung verfügbar",
+        "reihung_quelle": "keine",
+        "reihung_richtung": "",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-11&evaNumber=8013389&number=16494&time=2026-11-11T14:43:00.000Z",
+        "info": "pünktlich",
+        "begruendung": "",
+        "meldungen": [],
+        "bauarbeiten": false,
+        "defekte_aufzuege": [],
+        "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "14:01"
+    },
+    {
+        "zeit": "15:45",
+        "echte_zeit": "15:45",
+        "linie": "RE 13",
+        "zug_nr": "RE 16123",
+        "fahrt_nr": "16123",
+        "kategorie": "RE",
+        "ziel": "Leipzig Hbf",
+        "ziel_geplant": "Leipzig Hbf",
+        "via": [
+            "Rodleben",
+            "Roßlau(Elbe)",
+            "Dessau Hbf",
+            "Wolfen(Bitterfeld)"
+        ],
+        "entfallende_halte": [],
+        "gleis": "2",
+        "gleis_geplant": "2",
+        "gleiswechsel": false,
+        "sektoren": "",
+        "zug_modell": "",
+        "formation": "",
+        "zugteile": [],
+        "wagenreihung": [],
+        "wagenreihung_text": "Keine Wagenreihung verfügbar",
+        "reihung_quelle": "keine",
+        "reihung_richtung": "",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-11&evaNumber=8013389&number=16123&time=2026-11-11T14:45:00.000Z",
+        "info": "pünktlich",
+        "begruendung": "",
+        "meldungen": [],
+        "bauarbeiten": false,
+        "defekte_aufzuege": [],
+        "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "14:01"
     }
 ]
