@@ -1,262 +1,5 @@
 [
     {
-        "zeit": "11:44",
-        "echte_zeit": "11:47",
-        "linie": "S 2",
-        "zug_nr": "S 37234",
-        "fahrt_nr": "37234",
-        "kategorie": "S",
-        "ziel": "Lutherstadt Wittenberg Hb",
-        "ziel_geplant": "Lutherstadt Wittenberg Hb",
-        "via": [
-            "Bitterfeld",
-            "Muldenstein",
-            "Burgkemnitz",
-            "Gräfenhainichen"
-        ],
-        "entfallende_halte": [],
-        "gleis": "3",
-        "gleis_geplant": "2",
-        "gleiswechsel": true,
-        "sektoren": "C–D",
-        "zug_modell": "Talent 2 (BR 442) • 3-Teiler",
-        "formation": "3-Teiler",
-        "zugteile": [
-            {
-                "teil_nr": 1,
-                "bezeichnung": "3-Teiler",
-                "ziel": "Lutherstadt Wittenberg Hbf",
-                "wagen": [
-                    {
-                        "wagen": "",
-                        "klasse": "2+1",
-                        "sektor": "C",
-                        "klima": true,
-                        "fahrrad": true,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "D",
-                        "klima": true,
-                        "fahrrad": true,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "D",
-                        "klima": true,
-                        "fahrrad": true,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    }
-                ]
-            }
-        ],
-        "wagenreihung": [
-            {
-                "wagen": "",
-                "klasse": "2+1",
-                "sektor": "C",
-                "klima": true,
-                "fahrrad": true,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "D",
-                "klima": true,
-                "fahrrad": true,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "D",
-                "klima": true,
-                "fahrrad": true,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            }
-        ],
-        "wagenreihung_text": "Talent 2 (BR 442) • 3-Teiler • Sektor C–D",
-        "reihung_quelle": "live",
-        "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=S&date=2026-11-11&evaNumber=8010076&number=37234&time=2026-11-11T10:44:00.000Z",
-        "info": "+3",
-        "begruendung": "Heute von Gleis 3 (statt Gleis 2) +++ Vorfahrt eines anderen Zuges",
-        "meldungen": [
-            "Heute von Gleis 3 (statt Gleis 2)",
-            "Vorfahrt eines anderen Zuges"
-        ],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [
-            "🛗 Aufzug außer Betrieb (zu Gleis 1)"
-        ],
-        "station_ticker": "🛗 Aufzug außer Betrieb (zu Gleis 1) +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "11:55"
-    },
-    {
-        "zeit": "11:46",
-        "echte_zeit": "11:47",
-        "linie": "S 2",
-        "zug_nr": "S 37235",
-        "fahrt_nr": "37235",
-        "kategorie": "S",
-        "ziel": "Leipzig-Connewitz",
-        "ziel_geplant": "Leipzig-Connewitz",
-        "via": [
-            "Zschortau",
-            "Rackwitz(Leipzig)",
-            "Leipzig Messe",
-            "Leipzig Essener Straße"
-        ],
-        "entfallende_halte": [],
-        "gleis": "1",
-        "gleis_geplant": "1",
-        "gleiswechsel": false,
-        "sektoren": "C–A",
-        "zug_modell": "Talent 2 (BR 442) • 5-Teiler",
-        "formation": "5-Teiler",
-        "zugteile": [
-            {
-                "teil_nr": 1,
-                "bezeichnung": "5-Teiler",
-                "ziel": "Leipzig-Connewitz",
-                "wagen": [
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "C",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "B",
-                        "klima": true,
-                        "fahrrad": true,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "B",
-                        "klima": true,
-                        "fahrrad": true,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "B",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2+1",
-                        "sektor": "A",
-                        "klima": true,
-                        "fahrrad": true,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    }
-                ]
-            }
-        ],
-        "wagenreihung": [
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "C",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "B",
-                "klima": true,
-                "fahrrad": true,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "B",
-                "klima": true,
-                "fahrrad": true,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "B",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "",
-                "klasse": "2+1",
-                "sektor": "A",
-                "klima": true,
-                "fahrrad": true,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            }
-        ],
-        "wagenreihung_text": "Talent 2 (BR 442) • 5-Teiler • Sektor C–A",
-        "reihung_quelle": "live",
-        "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=S&date=2026-11-11&evaNumber=8010076&number=37235&time=2026-11-11T10:46:00.000Z",
-        "info": "+1",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [
-            "🛗 Aufzug außer Betrieb (zu Gleis 1)"
-        ],
-        "station_ticker": "🛗 Aufzug außer Betrieb (zu Gleis 1) +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "11:55"
-    },
-    {
         "zeit": "12:14",
         "echte_zeit": "12:15",
         "linie": "S 2",
@@ -401,7 +144,7 @@
             "🛗 Aufzug außer Betrieb (zu Gleis 1)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (zu Gleis 1) +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "11:55"
+        "update": "11:57"
     },
     {
         "zeit": "12:16",
@@ -508,7 +251,7 @@
             "🛗 Aufzug außer Betrieb (zu Gleis 1)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (zu Gleis 1) +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "11:55"
+        "update": "11:57"
     },
     {
         "zeit": "12:35",
@@ -682,11 +425,11 @@
             "🛗 Aufzug außer Betrieb (zu Gleis 1)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (zu Gleis 1) +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "11:55"
+        "update": "11:57"
     },
     {
         "zeit": "12:25",
-        "echte_zeit": "12:36",
+        "echte_zeit": "12:37",
         "linie": "RE 13",
         "zug_nr": "RE 16115",
         "fahrt_nr": "16115",
@@ -845,7 +588,7 @@
         "reihung_quelle": "live",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-11&evaNumber=8010076&number=16115&time=2026-11-11T11:25:00.000Z",
-        "info": "+11",
+        "info": "+12",
         "begruendung": "Verspätung aus vorheriger Fahrt",
         "meldungen": [
             "Verspätung aus vorheriger Fahrt"
@@ -855,7 +598,7 @@
             "🛗 Aufzug außer Betrieb (zu Gleis 1)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (zu Gleis 1) +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "11:55"
+        "update": "11:57"
     },
     {
         "zeit": "12:44",
@@ -890,7 +633,7 @@
             "🛗 Aufzug außer Betrieb (zu Gleis 1)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (zu Gleis 1) +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "11:55"
+        "update": "11:57"
     },
     {
         "zeit": "12:46",
@@ -1037,6 +780,6 @@
             "🛗 Aufzug außer Betrieb (zu Gleis 1)"
         ],
         "station_ticker": "🛗 Aufzug außer Betrieb (zu Gleis 1) +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "11:55"
+        "update": "11:57"
     }
 ]
