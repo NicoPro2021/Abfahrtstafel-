@@ -1,293 +1,5 @@
 [
     {
-        "zeit": "13:29",
-        "echte_zeit": "13:30",
-        "linie": "ICE 509",
-        "zug_nr": "ICE 509",
-        "fahrt_nr": "509",
-        "kategorie": "ICE",
-        "ziel": "Nürnberg Hbf",
-        "ziel_geplant": "Nürnberg Hbf",
-        "via": [
-            "Leipzig Hbf",
-            "Erfurt Hbf",
-            "Bamberg",
-            "Erlangen"
-        ],
-        "entfallende_halte": [],
-        "gleis": "3",
-        "gleis_geplant": "4",
-        "gleiswechsel": true,
-        "sektoren": "A–F",
-        "zug_modell": "BR 812 • 12 Wagen",
-        "formation": "12 Wagen",
-        "zugteile": [
-            {
-                "teil_nr": 1,
-                "bezeichnung": "12 Wagen",
-                "ziel": "Nürnberg Hbf",
-                "wagen": [
-                    {
-                        "wagen": "14",
-                        "klasse": "1",
-                        "sektor": "A",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "12",
-                        "klasse": "1",
-                        "sektor": "B",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "11",
-                        "klasse": "1",
-                        "sektor": "B",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "10",
-                        "klasse": "1",
-                        "sektor": "B",
-                        "klima": false,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "9",
-                        "klasse": "2",
-                        "sektor": "C",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": true,
-                        "wc": true,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "7",
-                        "klasse": "2",
-                        "sektor": "C",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "6",
-                        "klasse": "2",
-                        "sektor": "D",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "5",
-                        "klasse": "2",
-                        "sektor": "D",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "4",
-                        "klasse": "2",
-                        "sektor": "E",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "3",
-                        "klasse": "2",
-                        "sektor": "F",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "2",
-                        "klasse": "2",
-                        "sektor": "F",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "1",
-                        "klasse": "2",
-                        "sektor": "F",
-                        "klima": true,
-                        "fahrrad": true,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    }
-                ]
-            }
-        ],
-        "wagenreihung": [
-            {
-                "wagen": "14",
-                "klasse": "1",
-                "sektor": "A",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "12",
-                "klasse": "1",
-                "sektor": "B",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "11",
-                "klasse": "1",
-                "sektor": "B",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "10",
-                "klasse": "1",
-                "sektor": "B",
-                "klima": false,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "9",
-                "klasse": "2",
-                "sektor": "C",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": true,
-                "wc": true,
-                "zugteil": 1
-            },
-            {
-                "wagen": "7",
-                "klasse": "2",
-                "sektor": "C",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "6",
-                "klasse": "2",
-                "sektor": "D",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "5",
-                "klasse": "2",
-                "sektor": "D",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "4",
-                "klasse": "2",
-                "sektor": "E",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "3",
-                "klasse": "2",
-                "sektor": "F",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "2",
-                "klasse": "2",
-                "sektor": "F",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "1",
-                "klasse": "2",
-                "sektor": "F",
-                "klima": true,
-                "fahrrad": true,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            }
-        ],
-        "wagenreihung_text": "BR 812 • 12 Wagen • Sektor A–F",
-        "reihung_quelle": "live",
-        "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-11&evaNumber=8010050&number=509&time=2026-11-11T12:29:00.000Z",
-        "info": "+1",
-        "begruendung": "Heute von Gleis 3 (statt Gleis 4) +++ Verspätung eines vorausfahrenden Zuges",
-        "meldungen": [
-            "Heute von Gleis 3 (statt Gleis 4)",
-            "Verspätung eines vorausfahrenden Zuges"
-        ],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:39"
-    },
-    {
         "zeit": "13:36",
         "echte_zeit": "13:38",
         "linie": "S 2",
@@ -321,7 +33,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:39"
+        "update": "13:41"
     },
     {
         "zeit": "13:38",
@@ -357,7 +69,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:39"
+        "update": "13:41"
     },
     {
         "zeit": "13:44",
@@ -529,7 +241,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:39"
+        "update": "13:41"
     },
     {
         "zeit": "13:53",
@@ -565,7 +277,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:39"
+        "update": "13:41"
     },
     {
         "zeit": "13:52",
@@ -601,7 +313,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:39"
+        "update": "13:41"
     },
     {
         "zeit": "14:06",
@@ -637,7 +349,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:39"
+        "update": "13:41"
     },
     {
         "zeit": "14:06",
@@ -673,7 +385,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:39"
+        "update": "13:41"
     },
     {
         "zeit": "14:23",
@@ -709,7 +421,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:39"
+        "update": "13:41"
     },
     {
         "zeit": "14:31",
@@ -994,7 +706,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:39"
+        "update": "13:41"
     },
     {
         "zeit": "14:33",
@@ -1030,7 +742,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:39"
+        "update": "13:41"
     },
     {
         "zeit": "14:36",
@@ -1066,7 +778,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:39"
+        "update": "13:41"
     },
     {
         "zeit": "14:17",
@@ -1103,7 +815,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:39"
+        "update": "13:41"
     },
     {
         "zeit": "14:44",
@@ -1139,7 +851,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:39"
+        "update": "13:41"
     },
     {
         "zeit": "14:44",
@@ -1175,7 +887,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:39"
+        "update": "13:41"
     },
     {
         "zeit": "14:54",
@@ -1211,6 +923,6 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "13:39"
+        "update": "13:41"
     }
 ]
