@@ -1,7 +1,134 @@
 [
     {
-        "zeit": "23:00",
+        "zeit": "23:10",
         "echte_zeit": "23:10",
+        "linie": "S 1",
+        "zug_nr": "S 39036",
+        "fahrt_nr": "39036",
+        "kategorie": "S",
+        "ziel": "Tangerhütte",
+        "ziel_geplant": "Tangerhütte",
+        "via": [
+            "Magdeburg-Neustadt",
+            "Magdeburg-Eichenweiler",
+            "Magdeburg-Rothensee",
+            "Wolmirstedt"
+        ],
+        "entfallende_halte": [],
+        "gleis": "4",
+        "gleis_geplant": "3",
+        "gleiswechsel": true,
+        "sektoren": "G–F",
+        "zug_modell": "BR 425 • 4-Teiler",
+        "formation": "4-Teiler",
+        "zugteile": [
+            {
+                "teil_nr": 1,
+                "bezeichnung": "4-Teiler",
+                "ziel": "Tangerhütte",
+                "wagen": [
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "G",
+                        "klima": true,
+                        "fahrrad": true,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "F",
+                        "klima": true,
+                        "fahrrad": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2",
+                        "sektor": "F",
+                        "klima": true,
+                        "fahrrad": false,
+                        "rollstuhl": false,
+                        "wc": false,
+                        "zugteil": 1
+                    },
+                    {
+                        "wagen": "",
+                        "klasse": "2+1",
+                        "sektor": "F",
+                        "klima": true,
+                        "fahrrad": false,
+                        "rollstuhl": true,
+                        "wc": false,
+                        "zugteil": 1
+                    }
+                ]
+            }
+        ],
+        "wagenreihung": [
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "G",
+                "klima": true,
+                "fahrrad": true,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "F",
+                "klima": true,
+                "fahrrad": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2",
+                "sektor": "F",
+                "klima": true,
+                "fahrrad": false,
+                "rollstuhl": false,
+                "wc": false,
+                "zugteil": 1
+            },
+            {
+                "wagen": "",
+                "klasse": "2+1",
+                "sektor": "F",
+                "klima": true,
+                "fahrrad": false,
+                "rollstuhl": true,
+                "wc": false,
+                "zugteil": 1
+            }
+        ],
+        "wagenreihung_text": "BR 425 • 4-Teiler • Sektor G–F",
+        "reihung_quelle": "live",
+        "reihung_richtung": "",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=S&date=2026-11-12&evaNumber=8010224&number=39036&time=2026-11-12T22:10:00.000Z",
+        "info": "pünktlich",
+        "begruendung": "Heute von Gleis 4 (statt Gleis 3)",
+        "meldungen": [
+            "Heute von Gleis 4 (statt Gleis 3)"
+        ],
+        "bauarbeiten": false,
+        "defekte_aufzuege": [],
+        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Defektes Stellwerk +++ 🚧 Defekte Oberleitung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "23:05"
+    },
+    {
+        "zeit": "23:00",
+        "echte_zeit": "23:11",
         "linie": "ICE 648",
         "zug_nr": "ICE 648",
         "fahrt_nr": "648",
@@ -173,7 +300,7 @@
         "reihung_quelle": "live",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-12&evaNumber=8010224&number=648&time=2026-11-12T22:00:00.000Z",
-        "info": "+10",
+        "info": "+11",
         "begruendung": "Verspätetes Personal aus vorheriger Fahrt",
         "meldungen": [
             "Verspätetes Personal aus vorheriger Fahrt"
@@ -181,134 +308,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Defektes Stellwerk +++ 🚧 Defekte Oberleitung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:04"
-    },
-    {
-        "zeit": "23:10",
-        "echte_zeit": "23:10",
-        "linie": "S 1",
-        "zug_nr": "S 39036",
-        "fahrt_nr": "39036",
-        "kategorie": "S",
-        "ziel": "Tangerhütte",
-        "ziel_geplant": "Tangerhütte",
-        "via": [
-            "Magdeburg-Neustadt",
-            "Magdeburg-Eichenweiler",
-            "Magdeburg-Rothensee",
-            "Wolmirstedt"
-        ],
-        "entfallende_halte": [],
-        "gleis": "4",
-        "gleis_geplant": "3",
-        "gleiswechsel": true,
-        "sektoren": "G–F",
-        "zug_modell": "BR 425 • 4-Teiler",
-        "formation": "4-Teiler",
-        "zugteile": [
-            {
-                "teil_nr": 1,
-                "bezeichnung": "4-Teiler",
-                "ziel": "Tangerhütte",
-                "wagen": [
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "G",
-                        "klima": true,
-                        "fahrrad": true,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "F",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2",
-                        "sektor": "F",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": false,
-                        "wc": false,
-                        "zugteil": 1
-                    },
-                    {
-                        "wagen": "",
-                        "klasse": "2+1",
-                        "sektor": "F",
-                        "klima": true,
-                        "fahrrad": false,
-                        "rollstuhl": true,
-                        "wc": false,
-                        "zugteil": 1
-                    }
-                ]
-            }
-        ],
-        "wagenreihung": [
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "G",
-                "klima": true,
-                "fahrrad": true,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "F",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "",
-                "klasse": "2",
-                "sektor": "F",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": false,
-                "wc": false,
-                "zugteil": 1
-            },
-            {
-                "wagen": "",
-                "klasse": "2+1",
-                "sektor": "F",
-                "klima": true,
-                "fahrrad": false,
-                "rollstuhl": true,
-                "wc": false,
-                "zugteil": 1
-            }
-        ],
-        "wagenreihung_text": "BR 425 • 4-Teiler • Sektor G–F",
-        "reihung_quelle": "live",
-        "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=S&date=2026-11-12&evaNumber=8010224&number=39036&time=2026-11-12T22:10:00.000Z",
-        "info": "pünktlich",
-        "begruendung": "Heute von Gleis 4 (statt Gleis 3)",
-        "meldungen": [
-            "Heute von Gleis 4 (statt Gleis 3)"
-        ],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "station_ticker": "🚧 Bauarbeiten +++ 🚧 Defektes Stellwerk +++ 🚧 Defekte Oberleitung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:04"
+        "update": "23:05"
     },
     {
         "zeit": "23:20",
@@ -329,7 +329,7 @@
         "gleis": "5",
         "gleis_geplant": "5",
         "gleiswechsel": false,
-        "sektoren": "",
+        "sektoren": "A–C",
         "zug_modell": "",
         "formation": "",
         "zugteile": [],
@@ -344,7 +344,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Defektes Stellwerk +++ 🚧 Defekte Oberleitung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:04"
+        "update": "23:05"
     },
     {
         "zeit": "23:20",
@@ -365,7 +365,7 @@
         "gleis": "5",
         "gleis_geplant": "5",
         "gleiswechsel": false,
-        "sektoren": "",
+        "sektoren": "A–C",
         "zug_modell": "",
         "formation": "",
         "zugteile": [],
@@ -380,7 +380,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Defektes Stellwerk +++ 🚧 Defekte Oberleitung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:04"
+        "update": "23:05"
     },
     {
         "zeit": "23:14",
@@ -485,7 +485,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Defektes Stellwerk +++ 🚧 Defekte Oberleitung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:04"
+        "update": "23:05"
     },
     {
         "zeit": "23:16",
@@ -632,7 +632,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Defektes Stellwerk +++ 🚧 Defekte Oberleitung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:04"
+        "update": "23:05"
     },
     {
         "zeit": "23:16",
@@ -739,7 +739,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Defektes Stellwerk +++ 🚧 Defekte Oberleitung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:04"
+        "update": "23:05"
     },
     {
         "zeit": "23:21",
@@ -907,7 +907,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Defektes Stellwerk +++ 🚧 Defekte Oberleitung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:04"
+        "update": "23:05"
     },
     {
         "zeit": "23:28",
@@ -994,7 +994,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Defektes Stellwerk +++ 🚧 Defekte Oberleitung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:04"
+        "update": "23:05"
     },
     {
         "zeit": "00:04",
@@ -1028,7 +1028,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Defektes Stellwerk +++ 🚧 Defekte Oberleitung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:04"
+        "update": "23:05"
     },
     {
         "zeit": "00:04",
@@ -1064,7 +1064,7 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Defektes Stellwerk +++ 🚧 Defekte Oberleitung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:04"
+        "update": "23:05"
     },
     {
         "zeit": "00:48",
@@ -1100,6 +1100,6 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚧 Defektes Stellwerk +++ 🚧 Defekte Oberleitung +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:04"
+        "update": "23:05"
     }
 ]
