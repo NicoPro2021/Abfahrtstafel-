@@ -1,43 +1,7 @@
 [
     {
-        "zeit": "15:16",
-        "echte_zeit": "15:16",
-        "linie": "RE 13",
-        "zug_nr": "RE 16124",
-        "fahrt_nr": "16124",
-        "kategorie": "RE",
-        "ziel": "Magdeburg Hbf",
-        "ziel_geplant": "Magdeburg Hbf",
-        "via": [
-            "Güterglück",
-            "Lübs(Magdeburg)",
-            "Prödel",
-            "Gommern"
-        ],
-        "entfallende_halte": [],
-        "gleis": "1",
-        "gleis_geplant": "1",
-        "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "Keine Wagenreihung verfügbar",
-        "reihung_quelle": "keine",
-        "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-14&evaNumber=8013389&number=16124&time=2026-11-14T14:16:00.000Z",
-        "info": "pünktlich",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:25"
-    },
-    {
         "zeit": "15:45",
-        "echte_zeit": "15:58",
+        "echte_zeit": "15:59",
         "linie": "RE 13",
         "zug_nr": "RE 16123",
         "fahrt_nr": "16123",
@@ -63,13 +27,15 @@
         "reihung_quelle": "keine",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-14&evaNumber=8013389&number=16123&time=2026-11-14T14:45:00.000Z",
-        "info": "+13",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
+        "info": "+14",
+        "begruendung": "Bauarbeiten",
+        "meldungen": [
+            "Bauarbeiten"
+        ],
+        "bauarbeiten": true,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:25"
+        "update": "15:27"
     },
     {
         "zeit": "16:16",
@@ -107,7 +73,7 @@
         "bauarbeiten": true,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:25"
+        "update": "15:27"
     },
     {
         "zeit": "16:45",
@@ -143,6 +109,6 @@
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "station_ticker": "🚧 Bauarbeiten +++ 🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "15:25"
+        "update": "15:27"
     }
 ]
