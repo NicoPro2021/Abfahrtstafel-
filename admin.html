@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tafel-Admin</title>
+    <style>
+        body { background: #111; color: #eee; font-family: sans-serif; padding: 20px; }
+        input, textarea { width: 100%; background: #222; color: #fff; border: 1px solid #444; padding: 10px; margin: 10px 0; }
+        button { background: #ff9900; color: #000; border: none; padding: 15px; width: 100%; cursor: pointer; font-weight: bold; }
+        .hint { font-size: 0.8em; color: #888; }
+    </style>
+</head>
+<body>
+    <h2>Abfahrtstafel Editor</h2>
+    
+    <label>GitHub Personal Access Token:</label>
+    <input type="password" id="token" placeholder="Dein GitHub Token">
+    <p class="hint">Das ist dein "Passwort". Der Token wird nicht gespeichert.</p>
+
+    <label>Daten (JSON Format):</label>
+    <textarea id="jsonContent" rows="10"></textarea>
+
+    <button onclick="saveData()">Speichern & Veröffentlichen</button>
+    <p id="status"></p>
+
+    <script>
+        const repo = "NicoPro2021/Abfahrtstafel-";
+        const path = "daten.json";
+
+        // Aktuelle Daten laden beim Öffnen
+        async function loadCurrent() {
+            const r = await fetch('daten.json?t=' + Date.now());
+            const data = await r.json();
+            document.getElementById('jsonContent').value = JSON.stringify(data, null, 2);
+        }
+
+        async function saveData() {
+            const token = document.getElementById('token').value;
+            const content = document.getElementById('jsonContent').value;
+            const status = document.getElementById('status');
+
+            if(!token) { alert("Bitte Token eingeben!"); return; }
+
+            status.innerText = "Speichere...";
+
+            try {
+                // 1. Aktuelle Datei-Info holen (für den SHA-Hash)
+                const getRes = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+                    headers: { "Authorization": `token ${token}` }
+                });
+                const fileData = await getRes.json();
+
+                // 2. Datei überschreiben
+                const putRes = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+                    method: "PUT",
+                    headers: {
+                        "Authorization": `token ${token}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        message: "Update via Web-Admin",
+                        content: btoa(unescape(encodeURIComponent(content))), // Base64 encoding
+                        sha: fileData.sha
+                    })
+                });
+
+                if(putRes.ok) {
+                    status.innerText = "Erfolgreich gespeichert! Die Tafel aktualisiert sich gleich.";
+                    status.style.color = "#00ff00";
+                } else {
+                    status.innerText = "Fehler: Falscher Token oder Berechtigung.";
+                    status.style.color = "#ff0000";
+                }
+            } catch (e) {
+                status.innerText = "Fehler: " + e;
+            }
+        }
+        loadCurrent();
+    </script>
+</body>
+</html>
