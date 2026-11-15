@@ -1,0 +1,104 @@
+{
+  "continuationFor": [
+    {
+      "administrationId": "8004A9",
+      "category": "S",
+      "categoryInternal": "DBS",
+      "journeyDescription": "S2",
+      "journeyID": "20261122-d9af33e3-ede0-3adf-b3c3-f382f2b637a3",
+      "journeyNumber": 37272,
+      "line": {
+        "name": "S2"
+      },
+      "operationalJourneyNumber": "37272",
+      "origin": {
+        "evaNumber": "8010206"
+      },
+      "type": "CITY_TRAIN"
+    }
+  ],
+  "departureId": "8010077_D_1",
+  "evaNumber": "8010077",
+  "journeyId": "20261122-a738c5a1-d233-3828-8a13-c5c972543931",
+  "journeyInfo": {
+    "destination": {
+      "evaNumber": "8010224"
+    },
+    "headerAdministrationId": "8004A9",
+    "headerJourneyNumber": 16138,
+    "origin": {
+      "evaNumber": "8010077"
+    },
+    "scheduledStartTime": "2026-11-22T21:52:00+01:00",
+    "transportAtStart": {
+      "administrationId": "8004A9",
+      "category": "RE",
+      "categoryInternal": "NRE",
+      "dfid": "de:nasa:15|RZug|RE14:DBRegio:16138|2152",
+      "dtid": "de:nasa:15|RZug|RE14:DBRegio",
+      "journeyDescription": "RE14",
+      "journeyNumber": 16138,
+      "line": {
+        "name": "RE14"
+      },
+      "operationalJourneyNumber": "16138",
+      "type": "REGIONAL_TRAIN"
+    },
+    "type": "REGULAR"
+  },
+  "messages": [
+    1,
+    2
+  ],
+  "platform": {
+    "ifopt": "de:15001:8010077:2:02",
+    "name": "2"
+  },
+  "platformSchedule": {
+    "ifopt": "de:15001:8010077:2:02",
+    "name": "2"
+  },
+  "time": "2026-11-22T21:54:23+01:00",
+  "timeSchedule": "2026-11-22T21:52:00+01:00",
+  "timeType": "REAL",
+  "transport": {
+    "administrationId": "8004A9",
+    "category": "RE",
+    "categoryInternal": "NRE",
+    "dfid": "de:nasa:15|RZug|RE14:DBRegio:16138|2152",
+    "direction": {
+      "stopPlaces": [
+        {
+          "evaNumber": "8010224"
+        }
+      ]
+    },
+    "dtid": "de:nasa:15|RZug|RE14:DBRegio",
+    "journeyDescription": "RE14",
+    "journeyNumber": 16138,
+    "line": {
+      "name": "RE14"
+    },
+    "operationalJourneyNumber": "16138",
+    "type": "REGIONAL_TRAIN",
+    "via": [
+      {
+        "displayPriority": 2,
+        "evaNumber": "8010302"
+      },
+      {
+        "displayPriority": 4,
+        "evaNumber": "8012777"
+      },
+      {
+        "displayPriority": 3,
+        "evaNumber": "8010047"
+      },
+      {
+        "displayPriority": 1,
+        "evaNumber": "8010226"
+      }
+    ]
+  },
+  "vehicleSequenceAvailable": true
+}
