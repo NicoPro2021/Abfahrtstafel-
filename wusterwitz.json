@@ -2,21 +2,16 @@
     {
         "zeit": "00:07",
         "echte_zeit": "00:07",
-        "linie": "RE 1",
+        "linie": "OE {'name': 'RE1'}",
         "zug_nr": "OE 73792",
         "fahrt_nr": "73792",
         "kategorie": "OE",
-        "ziel": "Magdeburg Hbf",
-        "ziel_geplant": "Magdeburg Hbf",
-        "via": [
-            "Genthin",
-            "Güsen(b Genthin)",
-            "Burg(Magdeburg)",
-            "Magdeburg-Neustadt"
-        ],
+        "ziel": "Unbekannt",
+        "ziel_geplant": "Unbekannt",
+        "via": [],
         "entfallende_halte": [],
-        "gleis": "1",
-        "gleis_geplant": "1",
+        "gleis": "{'ifopt': 'de:12069:900220249:2:51', 'name': '1'}",
+        "gleis_geplant": "{'ifopt': 'de:12069:900220249:2:51', 'name': '1'}",
         "gleiswechsel": false,
         "sektoren": "",
         "zug_modell": "",
@@ -26,7 +21,7 @@
         "wagenreihung_text": "Keine Wagenreihung verfügbar",
         "reihung_quelle": "keine",
         "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-24&evaNumber=8013365&number=73792&time=2026-11-24T23:07:00.000Z",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=OE&date=2026-11-24&evaNumber=8013365&number=73792&time=2026-11-24T23:07:00.000Z",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
@@ -34,26 +29,21 @@
         "defekte_aufzuege": [],
         "echtzeit": true,
         "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:21"
+        "update": "23:23"
     },
     {
         "zeit": "00:10",
         "echte_zeit": "00:10",
-        "linie": "RE 1",
+        "linie": "OE {'name': 'RE1'}",
         "zug_nr": "OE 73791",
         "fahrt_nr": "73791",
         "kategorie": "OE",
-        "ziel": "Berlin-Wannsee",
-        "ziel_geplant": "Berlin-Wannsee",
-        "via": [
-            "Kirchmöser",
-            "Werder(Havel)",
-            "Potsdam Park Sanssouci",
-            "Potsdam Charlottenhof"
-        ],
+        "ziel": "Unbekannt",
+        "ziel_geplant": "Unbekannt",
+        "via": [],
         "entfallende_halte": [],
-        "gleis": "2",
-        "gleis_geplant": "2",
+        "gleis": "{'ifopt': 'de:12069:900220249:1:50', 'name': '2'}",
+        "gleis_geplant": "{'ifopt': 'de:12069:900220249:1:50', 'name': '2'}",
         "gleiswechsel": false,
         "sektoren": "",
         "zug_modell": "",
@@ -63,7 +53,7 @@
         "wagenreihung_text": "Keine Wagenreihung verfügbar",
         "reihung_quelle": "keine",
         "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-24&evaNumber=8013365&number=73791&time=2026-11-24T23:10:00.000Z",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=OE&date=2026-11-24&evaNumber=8013365&number=73791&time=2026-11-24T23:10:00.000Z",
         "info": "pünktlich",
         "begruendung": "",
         "meldungen": [],
@@ -71,6 +61,6 @@
         "defekte_aufzuege": [],
         "echtzeit": true,
         "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "23:21"
+        "update": "23:23"
     }
 ]
