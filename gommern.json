@@ -29,7 +29,7 @@
         "defekte_aufzuege": [],
         "echtzeit": true,
         "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "10:51"
+        "update": "10:54"
     },
     {
         "zeit": "10:33",
@@ -69,7 +69,7 @@
         "defekte_aufzuege": [],
         "echtzeit": true,
         "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "10:51"
+        "update": "10:54"
     },
     {
         "zeit": "11:27",
@@ -81,7 +81,11 @@
         "ziel": "Unbekannt",
         "ziel_geplant": "Unbekannt",
         "via": [],
-        "entfallende_halte": [],
+        "entfallende_halte": [
+            "",
+            "",
+            ""
+        ],
         "gleis": "{'ifopt': 'de:15086:8011673:1:01', 'name': '1'}",
         "gleis_geplant": "{'ifopt': 'de:15086:8011673:1:01', 'name': '1'}",
         "gleiswechsel": false,
@@ -93,15 +97,17 @@
         "wagenreihung_text": "Keine Wagenreihung verfügbar",
         "reihung_quelle": "keine",
         "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-25&evaNumber=8011673&number=16115&time=2026-11-25T10:27:00.000Z",
-        "info": "+2",
-        "begruendung": "",
-        "meldungen": [],
+        "reihung_url": "",
+        "info": "FÄLLT AUS",
+        "begruendung": "Fahrt fällt heute aus",
+        "meldungen": [
+            "Fahrt fällt heute aus"
+        ],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "echtzeit": true,
         "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "10:51"
+        "update": "10:54"
     },
     {
         "zeit": "11:33",
@@ -133,7 +139,7 @@
         "defekte_aufzuege": [],
         "echtzeit": true,
         "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "10:51"
+        "update": "10:54"
     },
     {
         "zeit": "12:27",
@@ -165,7 +171,7 @@
         "defekte_aufzuege": [],
         "echtzeit": false,
         "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "10:51"
+        "update": "10:54"
     },
     {
         "zeit": "12:33",
@@ -195,8 +201,8 @@
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
-        "echtzeit": false,
+        "echtzeit": true,
         "station_ticker": "🚭 Hinweis: Bitte beachten Sie das Rauchverbot auf dem gesamten Bahnhof sowie die Regelungen zum Alkoholverbot in den Zügen. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "10:51"
+        "update": "10:54"
     }
 ]
