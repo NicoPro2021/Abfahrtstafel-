@@ -29,7 +29,7 @@
         "defekte_aufzuege": [],
         "echtzeit": true,
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:27"
+        "update": "07:30"
     },
     {
         "zeit": "07:17",
@@ -61,39 +61,7 @@
         "defekte_aufzuege": [],
         "echtzeit": true,
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:27"
-    },
-    {
-        "zeit": "07:29",
-        "echte_zeit": "07:34",
-        "linie": "ICE 503",
-        "zug_nr": "ICE 503",
-        "fahrt_nr": "503",
-        "kategorie": "ICE",
-        "ziel": "Unbekannt",
-        "ziel_geplant": "Unbekannt",
-        "via": [],
-        "entfallende_halte": [],
-        "gleis": "{'ifopt': 'de:15082:8010050:2:04', 'name': '4'}",
-        "gleis_geplant": "{'ifopt': 'de:15082:8010050:2:04', 'name': '4'}",
-        "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "Keine Wagenreihung verfügbar",
-        "reihung_quelle": "keine",
-        "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-27&evaNumber=8010050&number=503&time=2026-11-27T06:29:00.000Z",
-        "info": "+5",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:27"
+        "update": "07:30"
     },
     {
         "zeit": "07:29",
@@ -106,9 +74,9 @@
         "ziel_geplant": "Unbekannt",
         "via": [],
         "entfallende_halte": [],
-        "gleis": "{'ifopt': 'de:15082:8010050:2:04', 'name': '4'}",
+        "gleis": "{'ifopt': 'de:15082:8010050:2:03', 'name': '3'}",
         "gleis_geplant": "{'ifopt': 'de:15082:8010050:2:04', 'name': '4'}",
-        "gleiswechsel": false,
+        "gleiswechsel": true,
         "sektoren": "",
         "zug_modell": "",
         "formation": "",
@@ -119,13 +87,49 @@
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-27&evaNumber=8010050&number=2793&time=2026-11-27T06:29:00.000Z",
         "info": "+5",
-        "begruendung": "",
-        "meldungen": [],
+        "begruendung": "Heute von Gleis {'ifopt': 'de:15082:8010050:2:03', 'name': '3'} (statt Gleis {'ifopt': 'de:15082:8010050:2:04', 'name': '4'})",
+        "meldungen": [
+            "Heute von Gleis {'ifopt': 'de:15082:8010050:2:03', 'name': '3'} (statt Gleis {'ifopt': 'de:15082:8010050:2:04', 'name': '4'})"
+        ],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "echtzeit": true,
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:27"
+        "update": "07:30"
+    },
+    {
+        "zeit": "07:29",
+        "echte_zeit": "07:34",
+        "linie": "ICE 503",
+        "zug_nr": "ICE 503",
+        "fahrt_nr": "503",
+        "kategorie": "ICE",
+        "ziel": "Unbekannt",
+        "ziel_geplant": "Unbekannt",
+        "via": [],
+        "entfallende_halte": [],
+        "gleis": "{'ifopt': 'de:15082:8010050:2:03', 'name': '3'}",
+        "gleis_geplant": "{'ifopt': 'de:15082:8010050:2:04', 'name': '4'}",
+        "gleiswechsel": true,
+        "sektoren": "",
+        "zug_modell": "",
+        "formation": "",
+        "zugteile": [],
+        "wagenreihung": [],
+        "wagenreihung_text": "Keine Wagenreihung verfügbar",
+        "reihung_quelle": "keine",
+        "reihung_richtung": "",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-27&evaNumber=8010050&number=503&time=2026-11-27T06:29:00.000Z",
+        "info": "+5",
+        "begruendung": "Heute von Gleis {'ifopt': 'de:15082:8010050:2:03', 'name': '3'} (statt Gleis {'ifopt': 'de:15082:8010050:2:04', 'name': '4'})",
+        "meldungen": [
+            "Heute von Gleis {'ifopt': 'de:15082:8010050:2:03', 'name': '3'} (statt Gleis {'ifopt': 'de:15082:8010050:2:04', 'name': '4'})"
+        ],
+        "bauarbeiten": false,
+        "defekte_aufzuege": [],
+        "echtzeit": true,
+        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:30"
     },
     {
         "zeit": "07:36",
@@ -157,7 +161,7 @@
         "defekte_aufzuege": [],
         "echtzeit": true,
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:27"
+        "update": "07:30"
     },
     {
         "zeit": "07:38",
@@ -189,7 +193,7 @@
         "defekte_aufzuege": [],
         "echtzeit": true,
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:27"
+        "update": "07:30"
     },
     {
         "zeit": "07:44",
@@ -221,7 +225,7 @@
         "defekte_aufzuege": [],
         "echtzeit": true,
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:27"
+        "update": "07:30"
     },
     {
         "zeit": "07:52",
@@ -253,7 +257,7 @@
         "defekte_aufzuege": [],
         "echtzeit": true,
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:27"
+        "update": "07:30"
     },
     {
         "zeit": "07:53",
@@ -285,7 +289,7 @@
         "defekte_aufzuege": [],
         "echtzeit": true,
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:27"
+        "update": "07:30"
     },
     {
         "zeit": "08:06",
@@ -317,7 +321,7 @@
         "defekte_aufzuege": [],
         "echtzeit": true,
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:27"
+        "update": "07:30"
     },
     {
         "zeit": "08:06",
@@ -349,11 +353,11 @@
         "defekte_aufzuege": [],
         "echtzeit": true,
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:27"
+        "update": "07:30"
     },
     {
         "zeit": "07:02",
-        "echte_zeit": "08:20",
+        "echte_zeit": "08:21",
         "linie": "ICE 698",
         "zug_nr": "ICE 698",
         "fahrt_nr": "698",
@@ -374,46 +378,14 @@
         "reihung_quelle": "keine",
         "reihung_richtung": "",
         "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-27&evaNumber=8010050&number=698&time=2026-11-27T06:02:00.000Z",
-        "info": "+78",
+        "info": "+79",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
         "defekte_aufzuege": [],
         "echtzeit": true,
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:27"
-    },
-    {
-        "zeit": "08:17",
-        "echte_zeit": "08:23",
-        "linie": "RE {'name': 'RE13'}",
-        "zug_nr": "RE 16107",
-        "fahrt_nr": "16107",
-        "kategorie": "RE",
-        "ziel": "Unbekannt",
-        "ziel_geplant": "Unbekannt",
-        "via": [],
-        "entfallende_halte": [],
-        "gleis": "{'ifopt': 'de:15082:8010050:2:04', 'name': '4'}",
-        "gleis_geplant": "{'ifopt': 'de:15082:8010050:2:04', 'name': '4'}",
-        "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "Keine Wagenreihung verfügbar",
-        "reihung_quelle": "keine",
-        "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-27&evaNumber=8010050&number=16107&time=2026-11-27T07:17:00.000Z",
-        "info": "+6",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:27"
+        "update": "07:30"
     },
     {
         "zeit": "08:23",
@@ -445,7 +417,39 @@
         "defekte_aufzuege": [],
         "echtzeit": true,
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:27"
+        "update": "07:30"
+    },
+    {
+        "zeit": "08:17",
+        "echte_zeit": "08:24",
+        "linie": "RE {'name': 'RE13'}",
+        "zug_nr": "RE 16107",
+        "fahrt_nr": "16107",
+        "kategorie": "RE",
+        "ziel": "Unbekannt",
+        "ziel_geplant": "Unbekannt",
+        "via": [],
+        "entfallende_halte": [],
+        "gleis": "{'ifopt': 'de:15082:8010050:2:04', 'name': '4'}",
+        "gleis_geplant": "{'ifopt': 'de:15082:8010050:2:04', 'name': '4'}",
+        "gleiswechsel": false,
+        "sektoren": "",
+        "zug_modell": "",
+        "formation": "",
+        "zugteile": [],
+        "wagenreihung": [],
+        "wagenreihung_text": "Keine Wagenreihung verfügbar",
+        "reihung_quelle": "keine",
+        "reihung_richtung": "",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-27&evaNumber=8010050&number=16107&time=2026-11-27T07:17:00.000Z",
+        "info": "+7",
+        "begruendung": "",
+        "meldungen": [],
+        "bauarbeiten": false,
+        "defekte_aufzuege": [],
+        "echtzeit": true,
+        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:30"
     },
     {
         "zeit": "08:31",
@@ -477,7 +481,7 @@
         "defekte_aufzuege": [],
         "echtzeit": true,
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:27"
+        "update": "07:30"
     },
     {
         "zeit": "08:33",
@@ -509,7 +513,7 @@
         "defekte_aufzuege": [],
         "echtzeit": false,
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:27"
+        "update": "07:30"
     },
     {
         "zeit": "08:36",
@@ -541,7 +545,7 @@
         "defekte_aufzuege": [],
         "echtzeit": false,
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:27"
+        "update": "07:30"
     },
     {
         "zeit": "08:43",
@@ -573,7 +577,7 @@
         "defekte_aufzuege": [],
         "echtzeit": false,
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:27"
+        "update": "07:30"
     },
     {
         "zeit": "08:44",
@@ -605,7 +609,7 @@
         "defekte_aufzuege": [],
         "echtzeit": true,
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:27"
+        "update": "07:30"
     },
     {
         "zeit": "09:06",
@@ -637,7 +641,7 @@
         "defekte_aufzuege": [],
         "echtzeit": false,
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:27"
+        "update": "07:30"
     },
     {
         "zeit": "09:13",
@@ -669,7 +673,7 @@
         "defekte_aufzuege": [],
         "echtzeit": false,
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:27"
+        "update": "07:30"
     },
     {
         "zeit": "09:17",
@@ -701,6 +705,38 @@
         "defekte_aufzuege": [],
         "echtzeit": false,
         "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:27"
+        "update": "07:30"
+    },
+    {
+        "zeit": "09:23",
+        "echte_zeit": "09:23",
+        "linie": "S {'name': 'S2'}",
+        "zug_nr": "S 37224",
+        "fahrt_nr": "37224",
+        "kategorie": "S",
+        "ziel": "Unbekannt",
+        "ziel_geplant": "Unbekannt",
+        "via": [],
+        "entfallende_halte": [],
+        "gleis": "{'ifopt': 'de:15082:8010050:1:01', 'name': '1'}",
+        "gleis_geplant": "{'ifopt': 'de:15082:8010050:1:01', 'name': '1'}",
+        "gleiswechsel": false,
+        "sektoren": "",
+        "zug_modell": "",
+        "formation": "",
+        "zugteile": [],
+        "wagenreihung": [],
+        "wagenreihung_text": "Keine Wagenreihung verfügbar",
+        "reihung_quelle": "keine",
+        "reihung_richtung": "",
+        "reihung_url": "",
+        "info": "pünktlich",
+        "begruendung": "",
+        "meldungen": [],
+        "bauarbeiten": false,
+        "defekte_aufzuege": [],
+        "echtzeit": false,
+        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:30"
     }
 ]
