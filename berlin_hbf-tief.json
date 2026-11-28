@@ -1,103 +1,5 @@
 [
     {
-        "zeit": "07:28",
-        "echte_zeit": "07:29",
-        "linie": "RJ 171",
-        "zug_nr": "RJ 171",
-        "fahrt_nr": "171",
-        "kategorie": "RJ",
-        "ziel": "Unbekannt",
-        "ziel_geplant": "Unbekannt",
-        "via": [],
-        "entfallende_halte": [],
-        "gleis": "{'ifopt': 'de:11000:900003200:1:50', 'name': '1'}",
-        "gleis_geplant": "{'ifopt': 'de:11000:900003200:2:52', 'name': '3'}",
-        "gleiswechsel": true,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "Keine Wagenreihung verfügbar",
-        "reihung_quelle": "keine",
-        "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RJ&date=2026-11-28&evaNumber=8011160&number=171&time=2026-11-28T06:28:00.000Z",
-        "info": "+1",
-        "begruendung": "Heute von Gleis {'ifopt': 'de:11000:900003200:1:50', 'name': '1'} (statt Gleis {'ifopt': 'de:11000:900003200:2:52', 'name': '3'})",
-        "meldungen": [
-            "Heute von Gleis {'ifopt': 'de:11000:900003200:1:50', 'name': '1'} (statt Gleis {'ifopt': 'de:11000:900003200:2:52', 'name': '3'})"
-        ],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
-    },
-    {
-        "zeit": "07:28",
-        "echte_zeit": "07:29",
-        "linie": "S {'name': 'S7'}",
-        "zug_nr": "S 7525",
-        "fahrt_nr": "7525",
-        "kategorie": "S",
-        "ziel": "Unbekannt",
-        "ziel_geplant": "Unbekannt",
-        "via": [],
-        "entfallende_halte": [],
-        "gleis": "{'ifopt': 'de:11000:900003201:3:54', 'name': '15'}",
-        "gleis_geplant": "{'ifopt': 'de:11000:900003201:3:54', 'name': '15'}",
-        "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "Keine Wagenreihung verfügbar",
-        "reihung_quelle": "keine",
-        "reihung_richtung": "",
-        "reihung_url": "",
-        "info": "+1",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
-    },
-    {
-        "zeit": "07:29",
-        "echte_zeit": "07:30",
-        "linie": "S {'name': 'S3'}",
-        "zug_nr": "S 3528",
-        "fahrt_nr": "3528",
-        "kategorie": "S",
-        "ziel": "Unbekannt",
-        "ziel_geplant": "Unbekannt",
-        "via": [],
-        "entfallende_halte": [],
-        "gleis": "{'ifopt': 'de:11000:900003201:3:55', 'name': '16'}",
-        "gleis_geplant": "{'ifopt': 'de:11000:900003201:3:55', 'name': '16'}",
-        "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "Keine Wagenreihung verfügbar",
-        "reihung_quelle": "keine",
-        "reihung_richtung": "",
-        "reihung_url": "",
-        "info": "+1",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
-    },
-    {
         "zeit": "07:31",
         "echte_zeit": "07:32",
         "linie": "S {'name': 'S5'}",
@@ -124,42 +26,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
-    },
-    {
-        "zeit": "07:33",
-        "echte_zeit": "07:33",
-        "linie": "RE {'name': 'RE3'}",
-        "zug_nr": "RE 3343",
-        "fahrt_nr": "3343",
-        "kategorie": "RE",
-        "ziel": "Unbekannt",
-        "ziel_geplant": "Unbekannt",
-        "via": [],
-        "entfallende_halte": [],
-        "gleis": "{'ifopt': 'de:11000:900003200:1:51', 'name': '2'}",
-        "gleis_geplant": "{'ifopt': 'de:11000:900003200:1:51', 'name': '2'}",
-        "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "Keine Wagenreihung verfügbar",
-        "reihung_quelle": "keine",
-        "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-28&evaNumber=8011160&number=3343&time=2026-11-28T06:33:00.000Z",
-        "info": "pünktlich",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "07:32",
@@ -190,10 +64,14 @@
             "Heute von Gleis {'ifopt': 'de:11000:900003200:4:57', 'name': '8'} (statt Gleis {'ifopt': 'de:11000:900003200:4:56', 'name': '7'})"
         ],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "07:35",
@@ -222,10 +100,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": true,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "07:36",
@@ -254,10 +136,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "07:37",
@@ -292,10 +178,14 @@
             "Halt entfällt in: , "
         ],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "07:37",
@@ -324,10 +214,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "07:37",
@@ -356,42 +250,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
-    },
-    {
-        "zeit": "07:38",
-        "echte_zeit": "07:38",
-        "linie": "S {'name': 'S7'}",
-        "zug_nr": "S 7061",
-        "fahrt_nr": "7061",
-        "kategorie": "S",
-        "ziel": "Unbekannt",
-        "ziel_geplant": "Unbekannt",
-        "via": [],
-        "entfallende_halte": [],
-        "gleis": "{'ifopt': 'de:11000:900003201:3:54', 'name': '15'}",
-        "gleis_geplant": "{'ifopt': 'de:11000:900003201:3:54', 'name': '15'}",
-        "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "Keine Wagenreihung verfügbar",
-        "reihung_quelle": "keine",
-        "reihung_richtung": "",
-        "reihung_url": "",
-        "info": "pünktlich",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "07:34",
@@ -420,10 +286,50 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
+    },
+    {
+        "zeit": "07:38",
+        "echte_zeit": "07:39",
+        "linie": "S {'name': 'S7'}",
+        "zug_nr": "S 7061",
+        "fahrt_nr": "7061",
+        "kategorie": "S",
+        "ziel": "Unbekannt",
+        "ziel_geplant": "Unbekannt",
+        "via": [],
+        "entfallende_halte": [],
+        "gleis": "{'ifopt': 'de:11000:900003201:3:54', 'name': '15'}",
+        "gleis_geplant": "{'ifopt': 'de:11000:900003201:3:54', 'name': '15'}",
+        "gleiswechsel": false,
+        "sektoren": "",
+        "zug_modell": "",
+        "formation": "",
+        "zugteile": [],
+        "wagenreihung": [],
+        "wagenreihung_text": "Keine Wagenreihung verfügbar",
+        "reihung_quelle": "keine",
+        "reihung_richtung": "",
+        "reihung_url": "",
+        "info": "+1",
+        "begruendung": "",
+        "meldungen": [],
+        "bauarbeiten": false,
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
+        "echtzeit": true,
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "07:39",
@@ -452,42 +358,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
-    },
-    {
-        "zeit": "07:37",
-        "echte_zeit": "07:41",
-        "linie": "ICE 606",
-        "zug_nr": "ICE 606",
-        "fahrt_nr": "606",
-        "kategorie": "ICE",
-        "ziel": "Unbekannt",
-        "ziel_geplant": "Unbekannt",
-        "via": [],
-        "entfallende_halte": [],
-        "gleis": "{'ifopt': 'de:11000:900003200:3:55', 'name': '6'}",
-        "gleis_geplant": "{'ifopt': 'de:11000:900003200:3:55', 'name': '6'}",
-        "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "Keine Wagenreihung verfügbar",
-        "reihung_quelle": "keine",
-        "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-28&evaNumber=8011160&number=606&time=2026-11-28T06:37:00.000Z",
-        "info": "+4",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "07:41",
@@ -516,10 +394,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "07:41",
@@ -548,24 +430,28 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "07:37",
         "echte_zeit": "07:42",
-        "linie": "ICE 1503",
-        "zug_nr": "ICE 1503",
-        "fahrt_nr": "1503",
+        "linie": "ICE 606",
+        "zug_nr": "ICE 606",
+        "fahrt_nr": "606",
         "kategorie": "ICE",
         "ziel": "Unbekannt",
         "ziel_geplant": "Unbekannt",
         "via": [],
         "entfallende_halte": [],
-        "gleis": "{'ifopt': 'de:11000:900003200:2:53', 'name': '4'}",
-        "gleis_geplant": "{'ifopt': 'de:11000:900003200:2:53', 'name': '4'}",
+        "gleis": "{'ifopt': 'de:11000:900003200:3:55', 'name': '6'}",
+        "gleis_geplant": "{'ifopt': 'de:11000:900003200:3:55', 'name': '6'}",
         "gleiswechsel": false,
         "sektoren": "",
         "zug_modell": "",
@@ -575,15 +461,19 @@
         "wagenreihung_text": "Keine Wagenreihung verfügbar",
         "reihung_quelle": "keine",
         "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-28&evaNumber=8011160&number=1503&time=2026-11-28T06:37:00.000Z",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-28&evaNumber=8011160&number=606&time=2026-11-28T06:37:00.000Z",
         "info": "+5",
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "07:43",
@@ -612,10 +502,86 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
+    },
+    {
+        "zeit": "07:37",
+        "echte_zeit": "07:43",
+        "linie": "ICE 1503",
+        "zug_nr": "ICE 1503",
+        "fahrt_nr": "1503",
+        "kategorie": "ICE",
+        "ziel": "Unbekannt",
+        "ziel_geplant": "Unbekannt",
+        "via": [],
+        "entfallende_halte": [],
+        "gleis": "{'ifopt': 'de:11000:900003200:2:53', 'name': '4'}",
+        "gleis_geplant": "{'ifopt': 'de:11000:900003200:2:53', 'name': '4'}",
+        "gleiswechsel": false,
+        "sektoren": "",
+        "zug_modell": "",
+        "formation": "",
+        "zugteile": [],
+        "wagenreihung": [],
+        "wagenreihung_text": "Keine Wagenreihung verfügbar",
+        "reihung_quelle": "keine",
+        "reihung_richtung": "",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=ICE&date=2026-11-28&evaNumber=8011160&number=1503&time=2026-11-28T06:37:00.000Z",
+        "info": "+6",
+        "begruendung": "",
+        "meldungen": [],
+        "bauarbeiten": false,
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
+        "echtzeit": true,
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
+    },
+    {
+        "zeit": "07:33",
+        "echte_zeit": "07:43",
+        "linie": "RE {'name': 'RE3'}",
+        "zug_nr": "RE 3343",
+        "fahrt_nr": "3343",
+        "kategorie": "RE",
+        "ziel": "Unbekannt",
+        "ziel_geplant": "Unbekannt",
+        "via": [],
+        "entfallende_halte": [],
+        "gleis": "{'ifopt': 'de:11000:900003200:1:51', 'name': '2'}",
+        "gleis_geplant": "{'ifopt': 'de:11000:900003200:1:51', 'name': '2'}",
+        "gleiswechsel": false,
+        "sektoren": "",
+        "zug_modell": "",
+        "formation": "",
+        "zugteile": [],
+        "wagenreihung": [],
+        "wagenreihung_text": "Keine Wagenreihung verfügbar",
+        "reihung_quelle": "keine",
+        "reihung_richtung": "",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RE&date=2026-11-28&evaNumber=8011160&number=3343&time=2026-11-28T06:33:00.000Z",
+        "info": "+10",
+        "begruendung": "",
+        "meldungen": [],
+        "bauarbeiten": false,
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
+        "echtzeit": true,
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "07:44",
@@ -644,10 +610,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "07:46",
@@ -676,10 +646,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "07:47",
@@ -708,10 +682,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "07:47",
@@ -740,10 +718,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "07:48",
@@ -772,42 +754,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
-    },
-    {
-        "zeit": "07:48",
-        "echte_zeit": "07:48",
-        "linie": "S {'name': 'S7'}",
-        "zug_nr": "S 7527",
-        "fahrt_nr": "7527",
-        "kategorie": "S",
-        "ziel": "Unbekannt",
-        "ziel_geplant": "Unbekannt",
-        "via": [],
-        "entfallende_halte": [],
-        "gleis": "{'ifopt': 'de:11000:900003201:3:54', 'name': '15'}",
-        "gleis_geplant": "{'ifopt': 'de:11000:900003201:3:54', 'name': '15'}",
-        "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "Keine Wagenreihung verfügbar",
-        "reihung_quelle": "keine",
-        "reihung_richtung": "",
-        "reihung_url": "",
-        "info": "pünktlich",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "07:49",
@@ -836,10 +790,50 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
+    },
+    {
+        "zeit": "07:48",
+        "echte_zeit": "07:49",
+        "linie": "S {'name': 'S7'}",
+        "zug_nr": "S 7527",
+        "fahrt_nr": "7527",
+        "kategorie": "S",
+        "ziel": "Unbekannt",
+        "ziel_geplant": "Unbekannt",
+        "via": [],
+        "entfallende_halte": [],
+        "gleis": "{'ifopt': 'de:11000:900003201:3:54', 'name': '15'}",
+        "gleis_geplant": "{'ifopt': 'de:11000:900003201:3:54', 'name': '15'}",
+        "gleiswechsel": false,
+        "sektoren": "",
+        "zug_modell": "",
+        "formation": "",
+        "zugteile": [],
+        "wagenreihung": [],
+        "wagenreihung_text": "Keine Wagenreihung verfügbar",
+        "reihung_quelle": "keine",
+        "reihung_richtung": "",
+        "reihung_url": "",
+        "info": "+1",
+        "begruendung": "",
+        "meldungen": [],
+        "bauarbeiten": false,
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
+        "echtzeit": true,
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "07:51",
@@ -868,10 +862,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "07:52",
@@ -906,10 +904,14 @@
             "Halt entfällt in: , "
         ],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "07:54",
@@ -938,10 +940,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "07:54",
@@ -970,10 +976,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "07:55",
@@ -1002,10 +1012,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "07:56",
@@ -1034,10 +1048,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "07:57",
@@ -1066,10 +1084,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "07:57",
@@ -1098,10 +1120,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "07:57",
@@ -1130,10 +1156,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "07:58",
@@ -1162,10 +1192,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "07:59",
@@ -1208,10 +1242,14 @@
             "Fahrt fällt heute aus"
         ],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:01",
@@ -1245,10 +1283,14 @@
             "Halt entfällt in: , "
         ],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:04",
@@ -1277,10 +1319,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
+        "echtzeit": true,
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:04",
@@ -1309,10 +1355,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:06",
@@ -1341,10 +1391,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:07",
@@ -1373,10 +1427,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:07",
@@ -1405,10 +1463,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:07",
@@ -1437,10 +1499,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:08",
@@ -1469,10 +1535,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:09",
@@ -1515,10 +1585,14 @@
             "Fahrt fällt heute aus"
         ],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:09",
@@ -1547,10 +1621,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:11",
@@ -1579,10 +1657,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:14",
@@ -1611,10 +1693,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:14",
@@ -1643,10 +1729,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:14",
@@ -1684,10 +1774,14 @@
             "Fahrt fällt heute aus"
         ],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:16",
@@ -1716,10 +1810,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:17",
@@ -1748,10 +1846,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:17",
@@ -1780,10 +1882,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:18",
@@ -1812,10 +1918,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:18",
@@ -1844,10 +1954,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:19",
@@ -1876,10 +1990,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:21",
@@ -1913,10 +2031,14 @@
             "Halt entfällt in: , "
         ],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:21",
@@ -1950,10 +2072,14 @@
             "Halt entfällt in: , "
         ],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:23",
@@ -1986,10 +2112,14 @@
             "Halt entfällt in: "
         ],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:24",
@@ -2018,10 +2148,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:25",
@@ -2050,10 +2184,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:26",
@@ -2082,10 +2220,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:27",
@@ -2114,10 +2256,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:27",
@@ -2146,10 +2292,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:28",
@@ -2178,10 +2328,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:29",
@@ -2210,10 +2364,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:29",
@@ -2242,10 +2400,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:31",
@@ -2274,10 +2436,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:34",
@@ -2306,42 +2472,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
-    },
-    {
-        "zeit": "08:34",
-        "echte_zeit": "08:34",
-        "linie": "RJ 870",
-        "zug_nr": "RJ 870",
-        "fahrt_nr": "870",
-        "kategorie": "RJ",
-        "ziel": "Unbekannt",
-        "ziel_geplant": "Unbekannt",
-        "via": [],
-        "entfallende_halte": [],
-        "gleis": "{'ifopt': 'de:11000:900003200:3:55', 'name': '6'}",
-        "gleis_geplant": "{'ifopt': 'de:11000:900003200:3:55', 'name': '6'}",
-        "gleiswechsel": false,
-        "sektoren": "",
-        "zug_modell": "",
-        "formation": "",
-        "zugteile": [],
-        "wagenreihung": [],
-        "wagenreihung_text": "Keine Wagenreihung verfügbar",
-        "reihung_quelle": "keine",
-        "reihung_richtung": "",
-        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RJ&date=2026-11-28&evaNumber=8011160&number=870&time=2026-11-28T07:34:00.000Z",
-        "info": "pünktlich",
-        "begruendung": "",
-        "meldungen": [],
-        "bauarbeiten": false,
-        "defekte_aufzuege": [],
-        "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:35",
@@ -2370,10 +2508,50 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": true,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
+    },
+    {
+        "zeit": "08:34",
+        "echte_zeit": "08:36",
+        "linie": "RJ 870",
+        "zug_nr": "RJ 870",
+        "fahrt_nr": "870",
+        "kategorie": "RJ",
+        "ziel": "Unbekannt",
+        "ziel_geplant": "Unbekannt",
+        "via": [],
+        "entfallende_halte": [],
+        "gleis": "{'ifopt': 'de:11000:900003200:3:55', 'name': '6'}",
+        "gleis_geplant": "{'ifopt': 'de:11000:900003200:3:55', 'name': '6'}",
+        "gleiswechsel": false,
+        "sektoren": "",
+        "zug_modell": "",
+        "formation": "",
+        "zugteile": [],
+        "wagenreihung": [],
+        "wagenreihung_text": "Keine Wagenreihung verfügbar",
+        "reihung_quelle": "keine",
+        "reihung_richtung": "",
+        "reihung_url": "https://www.bahn.de/web/api/reisebegleitung/wagenreihung/vehicle-sequence?administrationId=80&category=RJ&date=2026-11-28&evaNumber=8011160&number=870&time=2026-11-28T07:34:00.000Z",
+        "info": "+2",
+        "begruendung": "",
+        "meldungen": [],
+        "bauarbeiten": false,
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
+        "echtzeit": true,
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:36",
@@ -2402,10 +2580,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:36",
@@ -2434,10 +2616,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:37",
@@ -2466,10 +2652,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:37",
@@ -2498,10 +2688,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:37",
@@ -2530,10 +2724,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:38",
@@ -2562,10 +2760,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:38",
@@ -2594,10 +2796,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:38",
@@ -2626,10 +2832,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:39",
@@ -2658,10 +2868,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:41",
@@ -2690,10 +2904,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:41",
@@ -2722,10 +2940,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:43",
@@ -2754,10 +2976,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:44",
@@ -2786,10 +3012,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:46",
@@ -2818,10 +3048,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:46",
@@ -2850,10 +3084,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:47",
@@ -2882,10 +3120,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:47",
@@ -2914,10 +3156,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:48",
@@ -2946,10 +3192,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:48",
@@ -2978,10 +3228,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:49",
@@ -3010,10 +3264,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:51",
@@ -3042,10 +3300,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:52",
@@ -3074,10 +3336,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:54",
@@ -3106,10 +3372,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:54",
@@ -3148,10 +3418,14 @@
             "Fahrt fällt heute aus"
         ],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:54",
@@ -3180,10 +3454,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:56",
@@ -3212,10 +3490,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:57",
@@ -3244,10 +3526,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:57",
@@ -3276,10 +3562,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:58",
@@ -3308,10 +3598,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:58",
@@ -3340,10 +3634,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "08:59",
@@ -3372,10 +3670,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "09:01",
@@ -3404,10 +3706,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "09:04",
@@ -3436,10 +3742,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "09:06",
@@ -3487,10 +3797,14 @@
             "Fahrt fällt heute aus"
         ],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "09:07",
@@ -3519,10 +3833,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "09:07",
@@ -3551,10 +3869,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "09:07",
@@ -3583,10 +3905,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "09:08",
@@ -3615,10 +3941,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "09:09",
@@ -3647,10 +3977,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "09:09",
@@ -3679,10 +4013,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "09:09",
@@ -3711,10 +4049,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "09:11",
@@ -3743,10 +4085,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "09:14",
@@ -3775,10 +4121,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "09:14",
@@ -3807,10 +4157,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "09:16",
@@ -3839,10 +4193,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "09:17",
@@ -3871,10 +4229,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "09:17",
@@ -3903,10 +4265,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "09:18",
@@ -3935,10 +4301,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "09:19",
@@ -3967,10 +4337,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "09:20",
@@ -3999,10 +4373,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "09:21",
@@ -4031,10 +4409,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "09:22",
@@ -4063,10 +4445,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "09:24",
@@ -4095,10 +4481,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "09:24",
@@ -4127,10 +4517,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "09:26",
@@ -4159,10 +4553,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "09:27",
@@ -4191,10 +4589,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "09:27",
@@ -4223,10 +4625,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "09:27",
@@ -4255,10 +4661,14 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "09:28",
@@ -4287,10 +4697,86 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": false,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
+    },
+    {
+        "zeit": "09:29",
+        "echte_zeit": "09:29",
+        "linie": "S {'name': 'S3'}",
+        "zug_nr": "S 3540",
+        "fahrt_nr": "3540",
+        "kategorie": "S",
+        "ziel": "Unbekannt",
+        "ziel_geplant": "Unbekannt",
+        "via": [],
+        "entfallende_halte": [],
+        "gleis": "{'ifopt': 'de:11000:900003201:3:55', 'name': '16'}",
+        "gleis_geplant": "{'ifopt': 'de:11000:900003201:3:55', 'name': '16'}",
+        "gleiswechsel": false,
+        "sektoren": "",
+        "zug_modell": "",
+        "formation": "",
+        "zugteile": [],
+        "wagenreihung": [],
+        "wagenreihung_text": "Keine Wagenreihung verfügbar",
+        "reihung_quelle": "keine",
+        "reihung_richtung": "",
+        "reihung_url": "",
+        "info": "pünktlich",
+        "begruendung": "",
+        "meldungen": [],
+        "bauarbeiten": false,
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
+        "echtzeit": false,
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
+    },
+    {
+        "zeit": "09:31",
+        "echte_zeit": "09:31",
+        "linie": "S {'name': 'S5'}",
+        "zug_nr": "S 55545",
+        "fahrt_nr": "55545",
+        "kategorie": "S",
+        "ziel": "Unbekannt",
+        "ziel_geplant": "Unbekannt",
+        "via": [],
+        "entfallende_halte": [],
+        "gleis": "{'ifopt': 'de:11000:900003201:3:54', 'name': '15'}",
+        "gleis_geplant": "{'ifopt': 'de:11000:900003201:3:54', 'name': '15'}",
+        "gleiswechsel": false,
+        "sektoren": "",
+        "zug_modell": "",
+        "formation": "",
+        "zugteile": [],
+        "wagenreihung": [],
+        "wagenreihung_text": "Keine Wagenreihung verfügbar",
+        "reihung_quelle": "keine",
+        "reihung_richtung": "",
+        "reihung_url": "",
+        "info": "pünktlich",
+        "begruendung": "",
+        "meldungen": [],
+        "bauarbeiten": false,
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
+        "echtzeit": false,
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     },
     {
         "zeit": "09:28",
@@ -4319,9 +4805,13 @@
         "begruendung": "",
         "meldungen": [],
         "bauarbeiten": false,
-        "defekte_aufzuege": [],
+        "defekte_aufzuege": [
+            "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16)",
+            "🛗 Rolltreppe außer Betrieb (von EG zu 1.OG)",
+            "🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4)"
+        ],
         "echtzeit": true,
-        "station_ticker": "🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
-        "update": "07:33"
+        "station_ticker": "🛗 Rolltreppe außer Betrieb (zu Gleis 15/16) +++ 🛗 Rolltreppe außer Betrieb (von EG zu 1.OG) +++ 🛗 Rolltreppe außer Betrieb (1.UG - Tram Haltestelle 4) +++ 🚭🍺 Hinweis der Deutschen Bahn: Im gesamten Bahnhofsbereich gilt das Hausrecht der DB InfraGO AG. Der Konsum von Alkohol außerhalb der Gastronomie sowie das Rauchen außerhalb gekennzeichneter Bereiche sind untersagt. +++ 🧳 Sicherheitshinweis: Bitte lassen Sie Ihr Gepäck nicht unbeaufsichtigt und achten Sie auf Ihre Wertgegenstände.",
+        "update": "07:36"
     }
 ]
